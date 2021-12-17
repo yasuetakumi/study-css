@@ -1,45 +1,228 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# Laravel 6 Starter Kit
+### Getting Started
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+Clone the repository from [here](https://bitbucket.org/gruneasia/laravel6-starter-kit/src/dev_main/).
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+**Requirements:**
 
----
+*    laravel/framework: "^6.2"
+*    PHP: "^7.2" -> changed it to "^7.4"
+*    yajra/laravel-datatables-oracle: "~9.0"
 
-## Edit a file
+**Development requirements:**
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+*    laravel/dusk: "5.8"
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+For more complete requirements, refer to laravel6-starter-kit/composer.json. It is recommended to run using Docker to ensure cross-compatibility.
 
----
 
-## Create a file
 
-Next, you’ll add a new file to this repository.
+##### Environment setup using Docker
+* **Docker ToolBox (for Windows Home)** - any windows other than Professional version.
+_2020/02/05 on Windows-10/DockerToolbox._
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+1. Virtual machine settings & Start container.
+    1-1. Settings -> Network -> Advanced -> Port fowarding.  
+    Add the following settings:
 
----
+    * http 80:80
+    * mysql 3036:3036
+    * phpmyadmin 8087:8087
+        
+    1-2. Settings -> Share Folders. 
+    Add project root path. (for naming convention please follow [here](https://docs.google.com/presentation/d/1pr75mvI1F40HeJAco7huWtuvTVkTXuYVX8_9hsqhorE/edit#slide=id.g5791ad7b9d_2_110))
+2. Building Docker containers.
+    2-1. Execute "Docker Quickstart Terminal" shortcut. (_Created by Docker Toolbox._)
+    2-2. Move to the directory where docker-compose.yml exists.
+    2-3. Create and start container from Docker Quickstart Terminal
+    ```$ docker-compose up -d --build ```
+3. Log in to container
+ ```$ docker exec -it --user=dev_user laravel6kit_php-fpm bash```
 
-## Clone a repository
+4. Setup laravel environment.
+    4-1. ```$ cp .env.example .env```
+    4-2. Modify .env file as follows.
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+        APP_URL=http://nginx
+    DB_HOST=mysql  
+    DB_DATABASE=db_laravel6kit  
+    DB_USERNAME=dev_user  
+    DB_PASSWORD=dev_pass
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+    4-3. ```$ composer install```
+    4-4. ```$ php artisan key:generate```
+5. Run migration and seed.
+```$ php artisan migrate:fresh --seed```
+6. Access to http://127.0.0.1:80 or [localhost](localhost).
+    Mail : admin@admin.com
+    Pass : 12345678
+7. Access to phpMyAdmin is http://127.0.0.1:8087
+8. In case the seeded table has not appeared in phpMyAdmin, rebuild the docker image.
+```$ exit``` to exit from the container.
+```$ docker-compose down```
+```$ docker-compose up -d --build```
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+* **Docker Desktop (_for macOS system_)**.
+Follow the step for Docker Toolbox from 2-2.
+
+##### Routing
+In the current laravel starter kit, most routing are defined using laravel's resource controller. However, as most data are shown using yajrabox datatables tool (instead of showing single data on single page), the show controller is not used. Instead, the show controller is used to create AJAX request to retrieve json data for datatables.
+
+##### Components
+The starter template for the backend views are provided within _laravel6-starter-kit/resources/views/backend_ folder. All views extend _```/_base/app.blade.php```_, which includes _```/_base/nav_left.blade.php```_ in default. The contents are wrapped within ```@yield('content-wrapper')``` where two initial layout has been provided, they are _```/_base/content_datatables.blade.php```_ to show tables using yajrabox datatable and _```/_base/form.blade.php```_ to show form page. 
+
+Upon creating a new view page, we can readily utilize the provided template. Depending on the page type (form or index), we need to define the following things.
+```php
+@extends('backend._base.content_datatables')
+```
+
+, or
+ 
+ ```php
+@extends('backend._base.content_form')
+```
+
+depending on the page type. Then,
+
+```php
+@section('breadcrumbs')
+    // breadcrumbs section goes here
+@endsection
+
+@section('top-buttons')
+    // top button section goes here
+@endsection
+```
+
+More importantly is the content section. 
+
+```php
+@section('content')
+    // content section goes here
+@endsection
+```
+
+Form page retrieves the html elements using the provided internal components, while index page retrieves the table using yajrabox datatables tool.
+
+**Internal components**
+Several initial components are provided under _```/_components```_ directory. They can be readily used to build up form group. 
+
+
+To use these components, start with adding the following code.
+
+```php
+@component('backend._components.form_container', ["action" => $form_action, "page_type" => $page_type, "files" => false])
+    
+    //individual input component goes here
+    //example
+    @component('backend._components.input_text', ['name' => 'display_name', 'label' => __('label.name'), 'required' => 1, 'value' => $item->display_name]) @endcomponent
+    @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
+        
+@endcomponent
+```
+
+where the second argument in ```@component``` is an array to pass the data into the component. The available keys for _```/_components/form_container.blade.php```_ are, ```"id"```, "```action"```, ```"files"```, ```"method"```, and ```"page_type"```. 
+
+
+More complete explanation is given by [Blade components and slots](https://laravel.com/docs/6.x/blade#components-and-slots).
+
+**Yajrabox Datatables**
+[Yajrabox Datatables](https://yajrabox.com/docs/laravel-datatables/master) provides a good way to manipulate table within laravel. In this laravel starter kit, the datatables uses the show controller to make an AJAX request and return json data to be used by datatables. The AJAX request is called from _```/content_datatables.blade.php```_ which includes the following javascript code for datatables setup..
+
+```javascript
+let table = $('#datatable').DataTable({
+    //
+    "ajax": "{{ url()->current() . "/json" }}",
+    //
+});
+```
+
+It then passed to ```show``` controller as follows.
+
+```php
+public function show( $param ){
+    if( $param == 'json' ){
+
+        $model = admin::where('admin_role_id', AdminRole::ROLE_GENERAL_ADMIN);
+        return DatatablesHelper::json($model);
+
+    }
+    abort(404);
+}
+```
+
+Finally, it calls ```/app/Helpers/DatatablesHelper.php``` where its main functionality is to retrieve data from database and add action columns to enable edit and delete data.
+
+To use this datatable, all we need to do is to define our content section such as example below.
+
+```php
+@section('content')
+    <th data-col="id">ID</th>
+    <th data-col="display_name">@lang('label.name')</th>
+    <th data-col="email">@lang('label.email')</th>
+    <th data-col="action">@lang('label.action')</th>
+@endsection
+```
+
+where ```data-col``` attribute is filled with the name of the column we want to retrieve from our database.
+
+# history
+- 13 feb 2020 described by Hilmi
+---------------------------------
+old document
+
+##Installation
+- cd docker/docker-compose/docker-desktop
+- Create and start container: `docker-compose up -d --build`
+- Log in to container: `docker exec -it --user=dev_user laravel6kit_php-fpm bash`
+- Create env fie: `cp .env.example .env`
+- Run composer install: `composer install`
+- Create application key: `php artisan key:generate`
+- Run migration and seed: php artisan migrate:fresh --seed
+- Access app to http://127.0.0.1:8086
+- Access to phpMyAdmin is http://127.0.0.1:8087
+
+##Login to app
+http://127.0.0.1:8086/admin/login
+
+Super Admin `admin@admin` `12345678`
+
+Company Admin `company@admin` `12345678`
+
+Company User `user@company` `12345678`
+
+# Note
+- 17 Mar 2021 described by Satoshi
+---------------------------------
+
+In case you have an `Undefined index: name` problem on line 131 in PackageManifest.php when execute `$ composer install` 
+on step 4-3, here is what you can do to fix it. Even though it's a temporary solution, it worked for me.
+
+
+Open up /vendor/laravel/framework/src/Illuminate/Foudation/PackageManifest.php, and insert a chank of code below around line129
+```php
+128 $ignoreAll = in_array('*', $ignore = $this->packagesToIgnore());
+129 // ------------------:::::::::FIX::::::::::------------
+130 if (isset($packages['packages'])){
+131     $packages = $packages['packages'];
+132 }
+133 // ---------------------------ENDFIX-------------------
+134 $this->write(collect($packages)->mapWithKeys(function ($package) {
+135     return [$this->format($package['name']) => $package['extra']['laravel'] ?? []];
+```
+You can see the detail [here](https://stackoverflow.com/questions/64620849/laravel-packagemanifest-php-line-131-undefined-index-name)
+
+
+
+When occur the following issue
+> In PackageManifest.php line 122:
+>                
+>  Undefined index: name  
+>                         
+Since it is due not to correspond composer update (php7.4-) by Laravel 6.x , we need to manually fix vendor code.
+> https://github.com/laravel/framework/pull/32310/files#diff-f23f27e11552f50c073957465c42205556b39fd668e919e1288323c0f3f77bdd
+Fix > [project root]/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php
+
+
+
