@@ -1,0 +1,236 @@
+/* override old value*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+a {
+    color: rgba(0, 0, 0, 0.5);
+}
+body {
+    font-size: 0.85rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+}
+.content-header h1.h1title{
+    font-size: 1.5rem !important;
+}
+.rightNavbar li{
+    font-size: 0.8rem;
+}
+.btn-warning {
+    color: #fff;
+}
+
+.page-link {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    color: #17a2b8;
+}
+#nav-left > li {
+    margin-bottom: 15px;
+}
+#nav-left i {
+    font-size: 14px;
+}
+/* It need to set same to "#nav-left i" to fix vertical position  */
+.nav-sidebar .nav-link p{
+    font-size: 14px;
+}
+.btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active, .show > .btn-warning.dropdown-toggle {
+    color: #FFFFFF;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    content: '>\00a0';
+    color: #acacac;
+}
+li.breadcrumb-item {
+    font-size: 0.75rem;
+}
+div#alert-wrapper {
+    padding: 15px;
+}
+div#alert-wrapper ul, div#alert-wrapper ol{
+    margin-bottom: 0px;
+}
+.note-toolbar.panel-heading {
+    background: #efefef;
+}
+.image-preview {
+    width: 120px;
+    margin-top: 10px;
+    position: relative;
+}
+.remove-image {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+body div#datatable_processing {
+    background: #000000ba;
+    color: #fff;
+    position: fixed;
+    top: 20% !important;
+    bottom: auto;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+    margin-bottom: 0px;
+    border-bottom: 1px dashed #eaeaea;
+}
+span.brand-text {
+    letter-spacing: 1px;
+    margin-left: 8px;
+    font-weight: 500;
+}
+.btn-group-normal a {
+    margin: 0 3px;
+}
+.btn-group-normal .fa-edit {
+    margin-right: -4px;
+}
+.field-group.is-invalid {
+    border: 1px solid #dc3545;
+    padding: 10px;
+}
+.actionDatatables {
+    min-width: 100px;
+}
+@media (max-width: 1112px) {
+    .actionDatatables {
+        min-width: 130px;
+    }
+}
+.img-lang {
+    width: 30px;
+}
+span.span-locale {
+    text-transform: uppercase;
+}
+.icheck-cyan label {
+    min-width: 110px;
+}
+.icheck-cyan.d-inline {
+    display: inline-block !important;
+}
+body label:not(.form-check-label):not(.custom-file-label) {
+    font-weight: normal;
+}
+
+/* Sidebar */
+.brand-text {
+    color: #444;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+/* Form */
+.label-attach {
+    font-size: 8.5px;
+    position: relative;
+    padding: 2px 10px;
+    border-radius: 10px 15px;
+    display:inline-block;
+    margin-left: 0px;
+    margin-top: 6px;
+}
+.label-attach.required {
+    color: red;
+    border: solid 1px red ;
+}
+.label-attach.optional {
+    color: green;
+    border: solid 1px green ;
+}
+.field-title {
+    font-size: 17px;
+    display: block;
+}
+.error {
+    color: red;
+}
+
+/* Parsley */
+.parsley-errors-list {
+    list-style: none;
+    padding: 5px 0;
+    font-size: 12px;
+    color: #dc3545;
+}
+
+/* Datatables */
+.actionDatatables{
+    border-left: 1px solid #dee2e6 !important;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+}
+
+.card-header-link a {
+    margin-left: 10px;
+    float: right;
+}
+#datatable tbody tr > td:last-of-type {
+    text-align: center;
+}
+
+.dataTable thead tr:nth-child(2) th{
+    padding: 6px!important;
+}
+
+.dataTable thead tr:nth-child(2) th input{
+    padding: 6px!important;
+    line-height: 100%;
+}
+
+/* Custom Font Size Base */
+.custom-select-sm{
+    font-size: 14px;
+}
+.btn-group-normal a{
+    font-size: 12px;
+}
+li.breadcrumb-item{
+    font-size: 13px;
+}
+
+.video-preview {
+    width: 240px;
+    margin-top: 10px;
+    position: relative;
+}
+.remove-image, .remove-video {
+    position: absolute;
+    right: -30px;
+    top: 5px;
+}
+.form-control{
+    font-size: 12px;
+}
+.table thead th{
+    font-size: 14px;
+}
+.form-text{
+    font-size: 12px;
+}
+
+
+/* Override appearance following Grune design */
+/* .table-bordered {
+    border: 1px solid #17a2b8 !important;
+}
+.dataTables_scrollHead th{
+  background-color:#17a2b8;
+  color:#eee;
+} */
+
+/* As default of AdminLTE3, set bg-color #17a2b8 (= --cyan) on .navbar-info  */
+div.wrapper .navbar-info {
+    background-color: #dddddd;
+    color: #444;
+}
+/* div.wrapper .btn-info {
+    background-color: #dddddd;
+    border-color: #dddddd;
+    color: #444;
+} */
