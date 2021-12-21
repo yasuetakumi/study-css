@@ -1,7 +1,7 @@
 # Laravel 6 Starter Kit
 ### Getting Started
 
-Clone the repository from [here](https://bitbucket.org/gruneasia/laravel6-starter-kit/src/dev_main/).
+Clone the repository from [here](https://bitbucket.org/gruneasia/real-estate-search/src/dev_main/).
 
 **Requirements:**
 
@@ -38,7 +38,7 @@ _2020/02/05 on Windows-10/DockerToolbox._
     2-3. Create and start container from Docker Quickstart Terminal
     ```$ docker-compose up -d --build ```
 3. Log in to container
- ```$ docker exec -it --user=dev_user laravel6kit_php-fpm bash```
+ ```$ docker exec -it --user=dev_user real_estate_media_php-fpm bash```
 
 4. Setup laravel environment.
     4-1. ```$ cp .env.example .env```
@@ -46,7 +46,7 @@ _2020/02/05 on Windows-10/DockerToolbox._
 
         APP_URL=http://nginx
     DB_HOST=mysql  
-    DB_DATABASE=db_laravel6kit  
+    DB_DATABASE=db_real_estate_media  
     DB_USERNAME=dev_user  
     DB_PASSWORD=dev_pass
 
@@ -175,7 +175,7 @@ old document
 ##Installation
 - cd docker/docker-compose/docker-desktop
 - Create and start container: `docker-compose up -d --build`
-- Log in to container: `docker exec -it --user=dev_user laravel6kit_php-fpm bash`
+- Log in to container: `docker exec -it --user=dev_user real_estate_media_php-fpm bash`
 - Create env fie: `cp .env.example .env`
 - Run composer install: `composer install`
 - Create application key: `php artisan key:generate`
