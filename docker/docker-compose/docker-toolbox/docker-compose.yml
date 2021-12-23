@@ -55,7 +55,7 @@ services:
         build: ../../php-fpm
         container_name: real_estate_media_php-fpm
         volumes:
-            - /laravel6-starter-kit:/var/www/html
+            - /real_estate_media:/var/www/html
         networks:
             - my_network
         extra_hosts:
