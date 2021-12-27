@@ -17,7 +17,7 @@ pipelines:
           script:
             - apt-get update
             - apt-get -qq install git-ftp
-            - git ftp init --user $FTP_USERNAME_TEST --passwd $FTP_PASSWORD_TEST $FTP_HOST_PATH_TEST -s deploy_test_to_xserver
+            - git ftp init --user $FTP_USERNAME_TEST --passwd $FTP_PASSWORD_TEST $FTP_HOST_PATH_TEST -s deploy_test_to_xserver 
     release/deploy_demo_site:
       - step:
           caches:
