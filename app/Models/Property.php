@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Models\BusinessTerm;
 use App\Models\Cuisine;
@@ -73,7 +73,7 @@ class Property extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     public function prefectures()
@@ -83,17 +83,17 @@ class Property extends Model
 
     public function rent_amount()
     {
-        return $this->belongsTo(RentPriceOption::class);
+        return $this->belongsTo(RentPriceOption::class, 'rent_amount');
     }
 
     public function floor_underground()
     {
-        return $this->belongsTo(NumberOfFloorsUnderGround::class);
+        return $this->belongsTo(NumberOfFloorsUnderGround::class, 'number_of_floors_under_ground');
     }
 
     public function floor_aboveground()
     {
-        return $this->belongsTo(NumberOfFloorsAboveGround::class);
+        return $this->belongsTo(NumberOfFloorsAboveGround::class, 'number_of_floors_above_ground');
     }
 
     public function property_type()
@@ -118,7 +118,7 @@ class Property extends Model
 
     public function surface_area()
     {
-        return $this->belongsTo(SurfaceAreaOption::class);
+        return $this->belongsTo(SurfaceAreaOption::class, 'surface_area');
     }
 
     public function stations()
@@ -134,5 +134,10 @@ class Property extends Model
     public function permitted_activities()
     {
         return $this->belongsToMany(PermittedActivity::class, 'properties_permitted_activities');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

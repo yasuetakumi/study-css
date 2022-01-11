@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Models\Area;
 use App\Models\Cuisine;
@@ -44,7 +44,7 @@ class Plan extends Model
 
     public function area_group()
     {
-        return $this->belongsTo(SurfaceAreaOption::class);
+        return $this->belongsTo(SurfaceAreaOption::class, 'area_group_id');
     }
 
     public function design_plan_status()

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PermittedActivity extends Model
+class City extends Model
 {
     protected $fillable = [
         'label_en',
@@ -13,6 +13,6 @@ class PermittedActivity extends Model
 
     public function properties()
     {
-        return $this->belongsToMany(Property::class, 'properties_permitted_activities');
+        return $this->hasMany(Property::class);
     }
 }
