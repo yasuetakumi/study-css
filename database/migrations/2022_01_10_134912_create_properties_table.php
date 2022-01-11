@@ -63,7 +63,7 @@ class CreatePropertiesTable extends Migration
             $table->softDeletes();
 
             //add relation
-            $table->foreign('users_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('postcode_id')->references('id')->on('postcodes')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('prefecture_id')->references('id')->on('prefectures')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('property_type_id')->references('id')->on('property_types')->onUpdate('cascade')->onDelete('set null');
