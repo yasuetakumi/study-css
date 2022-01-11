@@ -15,14 +15,14 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('users_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('postcode_id')->nullable();
             $table->unsignedBigInteger('prefecture_id')->nullable();
             $table->string('location')->nullable();
-            $table->unsignedBigInteger('surface_area')->nullable();
-            $table->unsignedBigInteger('rent_amount')->nullable();
-            $table->unsignedBigInteger('number_of_floors_under_ground')->nullable();
-            $table->unsignedBigInteger('number_of_floors_above_ground')->nullable();
+            $table->integer('surface_area')->nullable();
+            $table->integer('rent_amount')->nullable();
+            $table->integer('number_of_floors_under_ground')->nullable();
+            $table->integer('number_of_floors_above_ground')->nullable();
             $table->unsignedBigInteger('property_type_id')->nullable();
             $table->unsignedBigInteger('structure_id')->nullable();
             $table->integer('deposit_amount')->nullable();
@@ -66,10 +66,6 @@ class CreatePropertiesTable extends Migration
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('postcode_id')->references('id')->on('postcodes')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('prefecture_id')->references('id')->on('prefectures')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('surface_area')->references('id')->on('surface_area_options')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('rent_amount')->references('id')->on('rent_price_options')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('number_of_floors_under_ground')->references('id')->on('number_of_floors_undergrounds')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('number_of_floors_above_ground')->references('id')->on('number_of_floors_abovegrounds')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('property_type_id')->references('id')->on('property_types')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('structure_id')->references('id')->on('structures')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('business_terms_id')->references('id')->on('business_terms')->onUpdate('cascade')->onDelete('set null');

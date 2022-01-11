@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
     protected $fillable = [
-        'users_id',
+        'user_id',
         'postcode_id',
         'prefecture_id',
         'location',
@@ -73,27 +73,12 @@ class Property extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class);
     }
 
     public function prefectures()
     {
         return $this->belongsTo(Prefecture::class);
-    }
-
-    public function rent_amount()
-    {
-        return $this->belongsTo(RentPriceOption::class, 'rent_amount');
-    }
-
-    public function floor_underground()
-    {
-        return $this->belongsTo(NumberOfFloorsUnderGround::class, 'number_of_floors_under_ground');
-    }
-
-    public function floor_aboveground()
-    {
-        return $this->belongsTo(NumberOfFloorsAboveGround::class, 'number_of_floors_above_ground');
     }
 
     public function property_type()
@@ -114,11 +99,6 @@ class Property extends Model
     public function cuisine()
     {
         return $this->belongsTo(Cuisine::class);
-    }
-
-    public function surface_area()
-    {
-        return $this->belongsTo(SurfaceAreaOption::class, 'surface_area');
     }
 
     public function stations()
