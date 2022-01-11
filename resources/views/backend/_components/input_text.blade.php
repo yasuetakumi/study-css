@@ -3,6 +3,7 @@
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
         <input type="text"
             id="input-{{ $name }}" name="{{ $name }}"
-            class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }} />
+            class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
+            {{isset($page_type) ? 'readonly' : '' }} />
     </div>
 </div>

@@ -14,8 +14,4 @@ class RentPriceOption extends Model
         'label_jp'
     ];
 
-    public function properties()
-    {
-        return $this->hasMany(Property::class);
-    }
 }

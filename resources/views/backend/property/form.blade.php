@@ -14,3 +14,10 @@
         <a href="{{route('admin.user.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
     @endif
 @endsection
+
+@section('content')
+    @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => null, 'value' => $item->display_name, 'page_type' => $page_type ]) @endcomponent
+    @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => null, 'value' => $item->display_name, 'page_type' => $page_type ]) @endcomponent
+    @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => null, 'value' => $item->display_name, 'page_type' => $page_type ]) @endcomponent
+    @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => null, 'value' => $item->display_name]) @endcomponent
+@endsection
