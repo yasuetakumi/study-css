@@ -109,7 +109,7 @@ return [
 
     'empty_value'           => ' ',
 
-    //D1 PROPERTY DETAIL
+    //D1 PROPERTY
     'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',
     'real_estate_agency' => 'Real Estate Agency',
     'postcode' => 'Postcode',
@@ -127,4 +127,15 @@ return [
     'structure' => 'Structure',
     'deposit' => 'Deposit',
     'monthly_maintaner' => 'Monthly Maintenance Fee',
+    'repayment_conditions' => 'Repayment Conditions',
+    'year_built' => 'Year Built',
+    'renewal_fee' => 'Renewal Fee',
+    'contract_length' => 'Contract Lenght in Months',
+    'moving_fee' => 'Moving Fee',
+    'business_terms' => 'Business Terms',
+    'comments' => 'Comments',
+    'skeleton' => 'Skeleton/Furnished',
+    'restaurant_cuisine' => 'Restaurant Cuisine',
+    'interior_transfer_price' => 'Interior Transfer Price',
+
 ];
