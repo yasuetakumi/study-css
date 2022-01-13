@@ -18,33 +18,21 @@ For more complete requirements, refer to laravel6-starter-kit/composer.json. It 
 
 
 ##### Environment setup using Docker
-* **Docker ToolBox (for Windows Home)** - any windows other than Professional version.
-_2020/02/05 on Windows-10/DockerToolbox._
+* **Docker Desktop**
 
 
-1. Virtual machine settings & Start container.
-    1-1. Settings -> Network -> Advanced -> Port fowarding.  
-    Add the following settings:
-
-    * http 80:80
-    * mysql 3036:3036
-    * phpmyadmin 8087:8087
-        
-    1-2. Settings -> Share Folders. 
-    Add project root path. (for naming convention please follow [here](https://docs.google.com/presentation/d/1pr75mvI1F40HeJAco7huWtuvTVkTXuYVX8_9hsqhorE/edit#slide=id.g5791ad7b9d_2_110))
-2. Building Docker containers.
-    2-1. Execute "Docker Quickstart Terminal" shortcut. (_Created by Docker Toolbox._)
-    2-2. Move to the directory where docker-compose.yml exists.
-    2-3. Create and start container from Docker Quickstart Terminal
+1. Building Docker containers.
+    1-1. Move to the directory where docker-compose.yml exists.
+    1-2. Create and start container from Docker Quickstart Terminal
     ```$ docker-compose up -d --build ```
-3. Log in to container
+2. Log in to container
  ```$ docker exec -it --user=dev_user real_estate_media_php-fpm bash```
 
-4. Setup laravel environment.
-    4-1. ```$ cp .env.example .env```
-    4-2. Modify .env file as follows.
+3. Setup laravel environment.
+    3-1. ```$ cp .env.example .env```
+    3-2. Modify .env file as follows.
 
-        APP_URL=http://nginx
+    APP_URL=http://nginx
     DB_HOST=mysql  
     DB_DATABASE=db_real_estate_media  
     DB_USERNAME=dev_user  
@@ -52,19 +40,16 @@ _2020/02/05 on Windows-10/DockerToolbox._
 
     4-3. ```$ composer install```
     4-4. ```$ php artisan key:generate```
-5. Run migration and seed.
+4. Run migration and seed.
 ```$ php artisan migrate:fresh --seed```
-6. Access to http://127.0.0.1:80 or [localhost](localhost).
+5. Access to http://127.0.0.1:80 or [localhost](localhost).
     Mail : admin@admin.com
     Pass : 12345678
-7. Access to phpMyAdmin is http://127.0.0.1:8087
-8. In case the seeded table has not appeared in phpMyAdmin, rebuild the docker image.
+6. Access to phpMyAdmin is http://127.0.0.1:8087
+7. In case the seeded table has not appeared in phpMyAdmin, rebuild the docker image.
 ```$ exit``` to exit from the container.
 ```$ docker-compose down```
 ```$ docker-compose up -d --build```
-
-* **Docker Desktop (_for macOS system_)**.
-Follow the step for Docker Toolbox from 2-2.
 
 ##### Routing
 In the current laravel starter kit, most routing are defined using laravel's resource controller. However, as most data are shown using yajrabox datatables tool (instead of showing single data on single page), the show controller is not used. Instead, the show controller is used to create AJAX request to retrieve json data for datatables.
