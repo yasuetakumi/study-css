@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,6 +121,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
 
             Route::get('user', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
+            Route::get('property_detail', 'Backend\PropertyController@detail')->name('property.detail');
+            Route::resource('draft/property', 'Backend\PropertyController')->except('detail');
 
         });
     });
