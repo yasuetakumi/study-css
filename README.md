@@ -38,8 +38,8 @@ For more complete requirements, refer to laravel6-starter-kit/composer.json. It 
     DB_USERNAME=dev_user  
     DB_PASSWORD=dev_pass
 
-    4-3. ```$ composer install```
-    4-4. ```$ php artisan key:generate```
+    3-3. ```$ composer install```
+    3-4. ```$ php artisan key:generate```
 4. Run migration and seed.
 ```$ php artisan migrate:fresh --seed```
 5. Access to http://127.0.0.1:80 or [localhost](localhost).
