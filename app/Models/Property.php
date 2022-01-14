@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
+    const FURNISHED = 0;
+    const SKELETON = 1;
     protected $fillable = [
         'user_id',
         'postcode_id',
