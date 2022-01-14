@@ -19,7 +19,7 @@ class CreateEstimationIndicesTable extends Migration
             $table->unsignedBigInteger('plan_id')->nullable();
             $table->string('design_name');
             $table->integer('tsubo_area')->nullable();
-            $table->decimal('grand_total')->nullable();
+            $table->double('grand_total')->nullable();
             $table->boolean('has_kitchen')->nullable();
             $table->integer('design_category_id')->nullable();
             $table->timestamps();
