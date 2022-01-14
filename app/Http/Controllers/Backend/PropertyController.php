@@ -46,9 +46,9 @@ class PropertyController extends Controller
         return view('backend.property.index', $data);
     }
 
-    public function detail()
+    public function detail($id)
     {
-        $data['item']       = Property::find(1);
+        $data['item']       = Property::find($id);
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         $data['users'] = User::pluck('display_name', 'id')->take(10)->all();
         $data['cities'] = City::pluck('label_en', 'label_jp', 'id')->all();
@@ -56,7 +56,7 @@ class PropertyController extends Controller
         $data['property_types'] = PropertyType::pluck('label_en', 'label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_en', 'label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_en', 'label_jp', 'id')->all();
-        $data['page_title'] = __('label.add') . __('label.user');
+        $data['page_title'] = 'Property Detail';
         $data['is_skeleton'] = [Property::FURNISHED => 'Furnished', Property::SKELETON => 'Updated by the Scraping Process'];
         $data['cuisines'] = Cuisine::pluck('label_en', 'label_jp', 'id')->all();
         //$data['form_action']= route('admin.user.store');

@@ -7,12 +7,7 @@
 @endsection
 
 @section('top_buttons')
-    @if ($page_type == "create")
-        <a href="{{route('admin.user.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
-    @else
-        <a href="{{route('admin.user.create')}}" class="btn btn-secondary float-sm-right">@lang('label.createNew')</a>
-        <a href="{{route('admin.user.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
-    @endif
+
 @endsection
 
 @section('content')
@@ -44,28 +39,28 @@
 
     @component('backend._components.input_select', ['name' => 'cuisine_id', 'options' => $cuisines, 'label' => __('label.restaurant_cuisine'), 'required' => null, 'value' => $item->cuisine_id, 'isDisabled' => true]) @endcomponent
 
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_main', 'label' => __('Thumbnail Image Main'), 'required' => null, 'value' => $item->thumbnail_image_main]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_1', 'label' => __('Thumbnail Image 1'), 'required' => null, 'value' => $item->thumbnail_image_1]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_2', 'label' => __('Thumbnail Image 2'), 'required' => null, 'value' => $item->thumbnail_image_2]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_3', 'label' => __('Thumbnail Image 3'), 'required' => null, 'value' => $item->thumbnail_image_3]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_4', 'label' => __('Thumbnail Image 4'), 'required' => null, 'value' => $item->thumbnail_image_4]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_5', 'label' => __('Thumbnail Image 5'), 'required' => null, 'value' => $item->thumbnail_image_5]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'thumbnail_image_6', 'label' => __('Thumbnail Image 6'), 'required' => null, 'value' => $item->thumbnail_image_6]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_main', 'label' => __('Thumbnail Image Main'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_main]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_1', 'label' => __('Thumbnail Image 1'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_1]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_2', 'label' => __('Thumbnail Image 2'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_2]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_3', 'label' => __('Thumbnail Image 3'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_3]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_4', 'label' => __('Thumbnail Image 4'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_4]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_5', 'label' => __('Thumbnail Image 5'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_5]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'thumbnail_image_6', 'label' => __('Thumbnail Image 6'), 'required' => null, 'isDisabled' => true, 'value' => $item->thumbnail_image_6]) @endcomponent
 
-    @component('backend._components.input_image', ['name' => 'image_1', 'label' => __('Image 1'), 'required' => null, 'value' => $item->image_1]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_2', 'label' => __('Image 2'), 'required' => null, 'value' => $item->image_2]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_3', 'label' => __('Image 3'), 'required' => null, 'value' => $item->image_3]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_4', 'label' => __('Image 4'), 'required' => null, 'value' => $item->image_4]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_5', 'label' => __('Image 5'), 'required' => null, 'value' => $item->image_5]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_6', 'label' => __('Image 6'), 'required' => null, 'value' => $item->image_6]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_7', 'label' => __('Image 7'), 'required' => null, 'value' => $item->image_7]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_8', 'label' => __('Image 8'), 'required' => null, 'value' => $item->image_8]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_9', 'label' => __('Image 9'), 'required' => null, 'value' => $item->image_9]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_1', 'label' => __('Image 1'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_1]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_2', 'label' => __('Image 2'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_2]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_3', 'label' => __('Image 3'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_3]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_4', 'label' => __('Image 4'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_4]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_5', 'label' => __('Image 5'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_5]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_6', 'label' => __('Image 6'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_6]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_7', 'label' => __('Image 7'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_7]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_8', 'label' => __('Image 8'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_8]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_9', 'label' => __('Image 9'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_9]) @endcomponent
 
-    @component('backend._components.input_image', ['name' => 'image_360_1', 'label' => __('Image 360 1'), 'required' => null, 'value' => $item->image_360_1]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_360_2', 'label' => __('Image 360 2'), 'required' => null, 'value' => $item->image_360_2]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_360_3', 'label' => __('Image 360 3'), 'required' => null, 'value' => $item->image_360_3]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'value' => $item->image_360_4]) @endcomponent
-    @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'value' => $item->image_360_5]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_360_1', 'label' => __('Image 360 1'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_1]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_360_2', 'label' => __('Image 360 2'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_2]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_360_3', 'label' => __('Image 360 3'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_3]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_4]) @endcomponent
+    @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_5]) @endcomponent
 
 @endsection
