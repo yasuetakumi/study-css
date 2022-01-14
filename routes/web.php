@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Property;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -84,6 +86,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
 
                 Route::resource('company', 'CompanyController');
+
+                Route::resource('draft/admin/property', 'PropertyController')->except('detail');
             });
             //------------------------------------------------------------------
             // Sharing for super admin and company admin
@@ -121,7 +125,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
 
             Route::get('user', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
-            Route::get('property_detail', 'Backend\PropertyController@show')->name('property.detail');
+            Route::get('property_detail', 'Backend\PropertyController@detail')->name('property.detail');
 
         });
     });
