@@ -223,13 +223,6 @@
                             <p>@lang('label.user')</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{route('property.detail')}}" class="nav-link">
-                            <i class="fas fa-landmark nav-icon"></i>
-                            {{-- Still Static --}}
-                            <p>@lang('Property')</p>
-                        </a>
-                    </li>
                 @endif
             </ul>
         </nav>

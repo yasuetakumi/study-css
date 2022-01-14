@@ -115,6 +115,7 @@ return [
     'prefecture' => '都道府県',
     'cities' => '市町村区',
     'location' => '住所',
+    'surface_area' => '面積',
     'surface_area_meter' => '面積（㎡）',
     'surface_area_tsubo' => '面積（坪）',
     'rent_amount' => '賃料',
