@@ -26,7 +26,7 @@ class AddColumnToEstimationIndexesTable extends Migration
     public function down()
     {
         Schema::table('estimation_indexes', function (Blueprint $table) {
-            //
+            $table->dropColumn('plan_name');
         });
     }
 }
