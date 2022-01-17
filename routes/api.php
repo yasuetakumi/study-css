@@ -36,4 +36,7 @@ Route::prefix('v1')->group(function () {
 
     /*POSTCODE*/
     Route::get('postcode/{postcode}', 'API\ApiPostcodeController@address');
+
+    // Get Grand total Estimation
+    Route::get('/plans/getGrandTotalEstimation/{plan}/{tsubo}/{design}/{kitchen}/{designCat?}','Api\ApiEstimateController@getGrandTotalEstimation');
 });
