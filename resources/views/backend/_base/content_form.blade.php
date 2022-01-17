@@ -23,6 +23,8 @@
                             <div class="row mb-2">
                                 <div class="col-sm-6 card-title">
                                     @if (empty($page_type))
+                                    @elseif ($page_type == "detail")
+                                        <h3 class="card-title"></h3>
                                     @elseif ($page_type == "create")
                                         <h3 class="card-title">@lang('label.add')</h3>
                                     @else
