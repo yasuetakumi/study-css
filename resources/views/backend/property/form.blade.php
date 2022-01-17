@@ -63,4 +63,103 @@
     @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_4]) @endcomponent
     @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'isDisabled' => true, 'value' => $item->image_360_5]) @endcomponent
 
+    <div class="row">
+        <div class="col-12">
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 border-bottom border-primary">
+                    <p class="text-center" style="font-size: 22px">STEP 1</p>
+                </div>
+                <div class="col-12">
+                    @component('backend._components.input_radio', ['name' => 'design_category_id', 'label' => 'Design Category', 'required' => true, 'options' => $design_categories, 'is_indexed_value' => null, 'value' => null])
+
+                    @endcomponent
+                </div>
+                <div class="col-12">
+                    @component('backend._components.input_radio', ['name' => 'design_style_id', 'label' => 'Design Style', 'required' => true, 'options' => $design_styles, 'is_indexed_value' => null, 'value' => null])
+
+                    @endcomponent
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 border-bottom border-primary">
+                    <p class="text-center" style="font-size: 22px">STEP 2</p>
+                </div>
+                <div class="col-12">
+                    @component('backend._components.input_radio', ['name' => 'plan_id', 'label' => 'Plan', 'required' => true, 'options' => $plans, 'is_indexed_value' => null, 'value' => null])
+
+                    @endcomponent
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 border-bottom border-primary">
+                    <p class="text-center" style="font-size: 22px">STEP 3</p>
+                </div>
+                <div class="col-12">
+                    @component('backend._components.input_text', ['name' => 'tsubo_area', 'label' => __('Tsubo Area'), 'required' => null, 'value' => round($item->surface_area / 3.30579 )]) @endcomponent
+                    <input id="slider" class="slider-red input slider w-100" step="{{$min_surface_area}}" type="range" min="{{$min_surface_area}}" max="{{$max_surface_area}}" value="{{$min_surface_area}}" >
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 border-bottom border-primary">
+                    <p class="text-center" style="font-size: 22px">Do You Want Kitchen</p>
+                </div>
+                <div class="col-12">
+                    @component('backend._components.input_radio', ['name' => 'has_kitchen', 'label' => 'Has Kitchen', 'required' => true, 'options' => $is_skeleton, 'is_indexed_value' => null, 'value' => null])
+
+                    @endcomponent
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 border-bottom border-primary">
+                    <p class="text-center" style="font-size: 22px">Estimation Index</p>
+                </div>
+                <div class="col-12 text-left mt-4">
+                    <button id="estimate" class="btn btn-primary"> Estimation Index</button>
+                    <br>
+                    <div class="d-flex mt-4">
+                        <p style="font-size: 20px">Estimation Index Value : </p>
+                        <p id="estimation_index" style="font-size: 20px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@push('scripts')
+    <script type="text/javascript"> var root_url = "{{ url('/') }}";</script>
+    <script>
+        $( document ).ready(function() {
+            $('#slider').on('change', function() {
+                var value = this.value;
+                $('#input-tsubo_area').val(value);
+            });
+            $('#estimate').on('click', function() {
+                var design_category_id = $("input[name='design_category_id']:checked").val();
+                var design_style_id = $("input[name='design_style_id']:checked").val();
+                var plan_id = $("input[name='plan_id']:checked").val();
+                var tsubo_area = $('#input-tsubo_area').val();
+                var has_kitchen = $("input[name='has_kitchen']:checked").val();
+                var uri = root_url + '/api/v1/getGrandTotalEstimation/' + plan_id + '/' + tsubo_area + '/' + design_style_id + '/' + has_kitchen + '/' + design_category_id
+                console.log(plan_id);
+                console.log(tsubo_area);
+                console.log(design_style_id);
+                console.log(has_kitchen);
+                console.log(design_category_id);
+                console.log(uri);
+                $.ajax({
+                    type: 'GET',
+                    dataType:"json",
+                    url: uri,
+                    //url: 'http://localhost:8000/api/v1/plans/getGrandTotalEstimation/13/15/2/0/1',
+                    success: function (response) {
+                        console.log(response);
+                        $('#estimation_index').text(response.min);
+                    }
+                });
+            });
+        });
+
+    </script>
+@endpush
