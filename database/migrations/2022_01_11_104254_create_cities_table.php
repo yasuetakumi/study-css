@@ -15,10 +15,13 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('label_en', 50);
-            $table->string('label_jp', 50);
+            $table->string('name', 50);
+            $table->string('display_name', 50);
+            $table->unsignedBigInteger('prefecture_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('prefecture_id')->references('id')->on('prefectures')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

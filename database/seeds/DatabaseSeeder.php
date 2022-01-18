@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $file = new Filesystem;
         if (!$file->exists($path)) {
             $file->makeDirectory($path);
-        }
+            $this->call(StationLinesTableSeeder::class);
+    }
         $file->cleanDirectory( public_path('uploads') );
 
         /** Clear Storage Files, works on s3 driver **/
@@ -32,5 +33,17 @@ class DatabaseSeeder extends Seeder
         $this->call(PostcodeSeeder::class);
         $this->call(LogActivitySeeder::class);
         $this->call(FeatureSeeder::class);
+        $this->call(AreaSeeder::class);
+        $this->call(PrefectureSeeder::class);
+        $this->call(SurfaceAreaOptionSeeder::class);
+        $this->call(RentPriceOptionSeeder::class);
+        $this->call(PropertyTypeSeeder::class);
+        $this->call(StructureSeeder::class);
+        $this->call(BusinessTermSeeder::class);
+        $this->call(CuisineSeeder::class);
+        $this->call(CitySeeder::class);
+        $this->call(StationsLineSeeder::class);
+        $this->call(StationSeeder::class);
+        $this->call(PropertySeeder::class);
     }
 }
