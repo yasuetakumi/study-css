@@ -58,7 +58,7 @@ class PropertyController extends Controller
         $data['item']       = Property::find($id);
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         $data['users'] = User::pluck('display_name', 'id')->take(10)->all();
-        $data['cities'] = City::pluck('label_en', 'label_jp', 'id')->all();
+        $data['cities'] = City::pluck('display_name', 'id')->all();
         // $data['prefectures'] = [1 => 'Prefecture 1', 2 => 'Prefecture 2', 3 => 'Prefecture 3'];
         $data['property_types'] = PropertyType::pluck('label_en', 'label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_en', 'label_jp', 'id')->all();
