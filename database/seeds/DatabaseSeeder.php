@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $file = new Filesystem;
         if (!$file->exists($path)) {
             $file->makeDirectory($path);
-            $this->call(StationLinesTableSeeder::class);
+
+        $this->call(DesignStylesTableSeeder::class);
     }
         $file->cleanDirectory( public_path('uploads') );
 
@@ -47,5 +48,16 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertySeeder::class);
         $this->call(ContactUsTypeSeeder::class);
         $this->call(CustomerInquirySeeder::class);
+
+        //estimation index
+        $this->call(DesignPlanStatusSeeder::class);
+        $this->call(TagArchitectureSeeder::class);
+        $this->call(TagColorSeeder::class);
+        $this->call(TagMoodSeeder::class);
+        $this->call(TagStyleSeeder::class);
+        $this->call(DesignStyleSeeder::class);
+        $this->call(PlanSeeder::class);
+        $this->call(EstimationIndexSeeder::class);
+
     }
 }

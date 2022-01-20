@@ -70,14 +70,38 @@
                     <p class="text-center" style="font-size: 22px">STEP 1</p>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'design_category_id', 'label' => 'Design Category', 'required' => true, 'options' => $design_categories, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($design_categories as $dc)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$dc->value}}" id="input-plan-{{ $dc->value }}" name="design_category_id" />
+                                        <label for="input-plan-{{ $dc->value }}" class="text-uppercase mr-5">{{ $plan->label_jp }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'design_style_id', 'label' => 'Design Style', 'required' => true, 'options' => $design_styles, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($design_styles as $ds)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$ds->id}}" id="input-plan-{{$ds->id}}" name="design_style_id" />
+                                        <label for="input-plan-{{ $ds->id }}" class="text-uppercase mr-5">{{ $ds->display_name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -85,9 +109,21 @@
                     <p class="text-center" style="font-size: 22px">STEP 2</p>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'plan_id', 'label' => 'Plan', 'required' => true, 'options' => $plans, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($plans as $plan)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$plan->id}}" id="input-plan-{{ $plan->id }}" name="plan_id" />
+                                        <label for="input-plan-{{ $plan->id }}" class="text-uppercase mr-5">{{ $plan->display_name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -104,9 +140,21 @@
                     <p class="text-center" style="font-size: 22px">Do You Want Kitchen</p>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'has_kitchen', 'label' => 'Has Kitchen', 'required' => true, 'options' => $is_skeleton, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($has_kitchens as $hs)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$hs->value}}" id="input-plan-{{ $hs->value }}" name="plans" />
+                                        <label for="input-plan-{{ $hs->value }}" class="text-uppercase mr-5">{{ $hs->label_jp }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
