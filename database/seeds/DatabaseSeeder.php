@@ -45,5 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StationsLineSeeder::class);
         $this->call(StationSeeder::class);
         $this->call(PropertySeeder::class);
+        $this->call(ContactUsTypeSeeder::class);
+        $this->call(CustomerInquirySeeder::class);
     }
 }
