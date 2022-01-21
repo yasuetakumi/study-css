@@ -177,7 +177,8 @@ return [
         // add manually
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Olssonm\VeryBasicAuth\VeryBasicAuthServiceProvider::class
+        Olssonm\VeryBasicAuth\VeryBasicAuthServiceProvider::class,
+        Orangehill\Iseed\IseedServiceProvider::class,
     ],
 
     /*

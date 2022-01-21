@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StationsLine extends Model
 {
+    protected $table = 'stations_lines';
     protected $fillable = [
         'code',
         'display_name',

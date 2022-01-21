@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
         require_once app_path() . '/Helpers/FileHelper.php';
         require_once app_path() . '/Helpers/Select2AjaxHelper.php';
         require_once app_path() . '/Helpers/AssetHelper.php';
+        require_once app_path() . '/Helpers/TsuboHelper.php';
     }
 
     /**

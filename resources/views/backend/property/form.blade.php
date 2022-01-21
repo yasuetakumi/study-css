@@ -70,14 +70,38 @@
                     <p class="text-center" style="font-size: 22px">STEP 1</p>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'design_category_id', 'label' => 'Design Category', 'required' => true, 'options' => $design_categories, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($design_categories as $dc)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" />
+                                        <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'design_style_id', 'label' => 'Design Style', 'required' => true, 'options' => $design_styles, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($design_styles as $ds)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$ds->id}}" id="input-ds-{{$ds->id}}" name="design_style_id" />
+                                        <label for="input-ds-{{ $ds->id }}" class="text-uppercase mr-5">{{ $ds->display_name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -85,9 +109,21 @@
                     <p class="text-center" style="font-size: 22px">STEP 2</p>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'plan_id', 'label' => 'Plan', 'required' => true, 'options' => $plans, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($plans as $plan)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$plan->id}}" id="input-plan-{{ $plan->id }}" name="plan_id" />
+                                        <label for="input-plan-{{ $plan->id }}" class="text-uppercase mr-5">{{ $plan->display_name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -96,7 +132,7 @@
                 </div>
                 <div class="col-12">
                     @component('backend._components.input_text', ['name' => 'tsubo_area', 'label' => __('Tsubo Area'), 'required' => null, 'value' => round($item->surface_area / 3.30579 )]) @endcomponent
-                    <input id="slider" class="slider-red input slider w-100" step="{{$min_surface_area}}" type="range" min="{{$min_surface_area}}" max="{{$max_surface_area}}" value="{{$min_surface_area}}" >
+                    <input id="slider" class="slider-red input slider w-100" step="1" type="range" min="{{$min_surface_area}}" max="{{$max_surface_area}}" value="{{$min_surface_area}}" >
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -104,9 +140,21 @@
                     <p class="text-center" style="font-size: 22px">Do You Want Kitchen</p>
                 </div>
                 <div class="col-12">
-                    @component('backend._components.input_radio', ['name' => 'has_kitchen', 'label' => 'Has Kitchen', 'required' => true, 'options' => $is_skeleton, 'is_indexed_value' => null, 'value' => null])
+                    <div id="form-group--plans" class="row form-group">
 
-                    @endcomponent
+                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($has_kitchens as $hs)
+                                    <div class="icheck-cyan d-inline">
+                                        <input type="radio" value="{{$hs['value']}}" id="input-hs-{{ $hs['value'] }}" name="has_kitchen" />
+                                        <label for="input-hs-{{ $hs['value'] }}" class="text-uppercase mr-5">{{ $hs['label_jp'] }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -118,7 +166,7 @@
                     <br>
                     <div class="d-flex mt-4">
                         <p style="font-size: 20px">Estimation Index Value : </p>
-                        <p id="estimation_index" style="font-size: 20px;"></p>
+                        <p id="estimation_index" style="font-size: 20px; margin-left:5px;"> </p>
                     </div>
                 </div>
             </div>
@@ -141,7 +189,7 @@
                 var plan_id = $("input[name='plan_id']:checked").val();
                 var tsubo_area = $('#input-tsubo_area').val();
                 var has_kitchen = $("input[name='has_kitchen']:checked").val();
-                var uri = root_url + '/api/v1/getGrandTotalEstimation/' + plan_id + '/' + tsubo_area + '/' + design_style_id + '/' + has_kitchen + '/' + design_category_id
+                var uri = root_url + '/api/v1/plans/getGrandTotalEstimation/' + plan_id + '/' + tsubo_area + '/' + design_style_id + '/' + has_kitchen + '/' + design_category_id
                 console.log(plan_id);
                 console.log(tsubo_area);
                 console.log(design_style_id);
@@ -156,6 +204,9 @@
                     success: function (response) {
                         console.log(response);
                         $('#estimation_index').text(response.min);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
                     }
                 });
             });

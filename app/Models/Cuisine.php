@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cuisine extends Model
 {
+
+    const IZAKAYA = 1;
+    const CAFE = 2;
+    const BAR = 3;
+    const RAMEN = 4;
+
     protected $fillable = [
         'label_en',
         'label_jp'
