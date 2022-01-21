@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DesignStyle;
 use App\Models\Plan;
 use App\Models\SurfaceAreaOption;
+use TsuboHelper;
 
 class PropertyController extends Controller
 {
@@ -72,23 +73,58 @@ class PropertyController extends Controller
         // $data['tag_styles']  = TagStyle::orderBy('id')->get();
         // $data['tag_architectures'] = TagArchitecture::orderBy('id')->get();
         // $data['tag_moods'] = TagMood::orderBy('id')->get();
-        $data['design_styles'] = DesignStyle::orderBy('id')->pluck('display_name', 'id');
-        $data['design_categories']  = Cuisine::orderBy('id')->pluck('label_jp','id');
-        $data['plans']  = Plan::orderBy('id')->pluck('display_name','id');
+        $data['design_styles'] = DesignStyle::orderBy('id')->get();
+        $categories =  [
+            [
+                'value' => Cuisine::IZAKAYA,
+                'label_en' => 'Izakaya / Dining Bar',
+                'label_jp' => '居酒屋・ダイニングバー',
+            ],
+            [
+                'value' => Cuisine::CAFE,
+                'label_en' => 'Cafe',
+                'label_jp' => 'カフェ',
+            ],
+            [
+                'value' => Cuisine::BAR,
+                'label_en' => 'Bar',
+                'label_jp' => 'バー',
+            ],
+            [
+                'value' => Cuisine::RAMEN,
+                'label_en' => 'Ramen',
+                'label_jp' => 'ラーメン',
+            ],
+
+        ];
+        $skeleton = [
+            [
+                'value' => Property::FURNISHED,
+                'label_jp' => '居抜き物件',
+            ],
+            [
+                'value' => Property::SKELETON,
+                'label_jp' => 'スケルトン物件',
+            ],
+
+        ];
+        $data['design_categories']  = collect($categories)->all();
+
+        $data['plans']  = Plan::orderBy('area')->get();
         $surface_area = SurfaceAreaOption::orderBy('id')->get();
         $surface_area_tsubo = [];
         foreach($surface_area as $sf){
-            $tsubo_value = round($sf->value / 3.30579);
+            $tsubo = new TsuboHelper();
+            $tsubo_value = $tsubo->toTsubo($sf->value);
             array_push($surface_area_tsubo, $tsubo_value );
         }
         $surface_area_tsubo_options = collect($surface_area_tsubo);
         $data['max_surface_area'] = $surface_area_tsubo_options->max();
         $data['min_surface_area'] = $surface_area_tsubo_options->min();
-        $data['is_skeleton'] = [
-            Property::FURNISHED => 'FURNISHED',
-            Property::SKELETON => 'SKELETON',
-        ];
+        $data['has_kitchens'] = collect($skeleton);
         $data['page_type']  = 'detail';
+
+        //dd($data['design_categories']);
         return view('backend.property.form', $data);
     }
 
