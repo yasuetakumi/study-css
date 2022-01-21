@@ -78,8 +78,8 @@
                             <div class="field-group clearfix">
                                 @foreach($design_categories as $dc)
                                     <div class="icheck-cyan d-inline">
-                                        <input type="radio" value="{{$dc->value}}" id="input-plan-{{ $dc->value }}" name="design_category_id" />
-                                        <label for="input-plan-{{ $dc->value }}" class="text-uppercase mr-5">{{ $plan->label_jp }}</label>
+                                        <input type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" />
+                                        <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -95,8 +95,8 @@
                             <div class="field-group clearfix">
                                 @foreach($design_styles as $ds)
                                     <div class="icheck-cyan d-inline">
-                                        <input type="radio" value="{{$ds->id}}" id="input-plan-{{$ds->id}}" name="design_style_id" />
-                                        <label for="input-plan-{{ $ds->id }}" class="text-uppercase mr-5">{{ $ds->display_name }}</label>
+                                        <input type="radio" value="{{$ds->id}}" id="input-ds-{{$ds->id}}" name="design_style_id" />
+                                        <label for="input-ds-{{ $ds->id }}" class="text-uppercase mr-5">{{ $ds->display_name }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="col-12">
                     @component('backend._components.input_text', ['name' => 'tsubo_area', 'label' => __('Tsubo Area'), 'required' => null, 'value' => round($item->surface_area / 3.30579 )]) @endcomponent
-                    <input id="slider" class="slider-red input slider w-100" step="{{$min_surface_area}}" type="range" min="{{$min_surface_area}}" max="{{$max_surface_area}}" value="{{$min_surface_area}}" >
+                    <input id="slider" class="slider-red input slider w-100" step="1" type="range" min="{{$min_surface_area}}" max="{{$max_surface_area}}" value="{{$min_surface_area}}" >
                 </div>
             </div>
             <div class="row justify-content-center mt-4">
@@ -148,8 +148,8 @@
                             <div class="field-group clearfix">
                                 @foreach($has_kitchens as $hs)
                                     <div class="icheck-cyan d-inline">
-                                        <input type="radio" value="{{$hs->value}}" id="input-plan-{{ $hs->value }}" name="plans" />
-                                        <label for="input-plan-{{ $hs->value }}" class="text-uppercase mr-5">{{ $hs->label_jp }}</label>
+                                        <input type="radio" value="{{$hs['value']}}" id="input-hs-{{ $hs['value'] }}" name="has_kitchen" />
+                                        <label for="input-hs-{{ $hs['value'] }}" class="text-uppercase mr-5">{{ $hs['label_jp'] }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -166,7 +166,7 @@
                     <br>
                     <div class="d-flex mt-4">
                         <p style="font-size: 20px">Estimation Index Value : </p>
-                        <p id="estimation_index" style="font-size: 20px;"></p>
+                        <p id="estimation_index" style="font-size: 20px; margin-left:5px;"> </p>
                     </div>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                 var plan_id = $("input[name='plan_id']:checked").val();
                 var tsubo_area = $('#input-tsubo_area').val();
                 var has_kitchen = $("input[name='has_kitchen']:checked").val();
-                var uri = root_url + '/api/v1/getGrandTotalEstimation/' + plan_id + '/' + tsubo_area + '/' + design_style_id + '/' + has_kitchen + '/' + design_category_id
+                var uri = root_url + '/api/v1/plans/getGrandTotalEstimation/' + plan_id + '/' + tsubo_area + '/' + design_style_id + '/' + has_kitchen + '/' + design_category_id
                 console.log(plan_id);
                 console.log(tsubo_area);
                 console.log(design_style_id);
@@ -204,6 +204,9 @@
                     success: function (response) {
                         console.log(response);
                         $('#estimation_index').text(response.min);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
                     }
                 });
             });

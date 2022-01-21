@@ -108,9 +108,9 @@ class PropertyController extends Controller
             ],
 
         ];
-        $data['design_categories']  = collect($categories);
+        $data['design_categories']  = collect($categories)->all();
 
-        $data['plans']  = Plan::orderBy('id')->get();
+        $data['plans']  = Plan::orderBy('area')->get();
         $surface_area = SurfaceAreaOption::orderBy('id')->get();
         $surface_area_tsubo = [];
         foreach($surface_area as $sf){
@@ -124,7 +124,7 @@ class PropertyController extends Controller
         $data['has_kitchens'] = collect($skeleton);
         $data['page_type']  = 'detail';
 
-        dd($data['plans']);
+        //dd($data['design_categories']);
         return view('backend.property.form', $data);
     }
 
