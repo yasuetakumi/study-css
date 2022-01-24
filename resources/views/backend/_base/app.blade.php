@@ -123,7 +123,8 @@
 <script src="{{asset('js/vendor.js')}}"></script>
 <script src="{{asset('js/app.js')}}"></script>
 <!-- jQuery -->
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+{{-- <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script> --}}
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- DataTables -->
