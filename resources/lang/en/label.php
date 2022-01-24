@@ -139,4 +139,15 @@ return [
     'restaurant_cuisine' => 'Restaurant Cuisine',
     'interior_transfer_price' => 'Interior Transfer Price',
 
+    // Customer Inquiry
+    'property_id' => 'Property ID',
+    'contact_us_type' => 'Contact Us Type',
+    'subject' => 'Subject',
+    'text' => 'Text',
+    'flag' => 'Flag',
+    'is_finish' => 'Is Finish',
+    'person_in_charge' => 'Person In Charge',
+    'note' => 'Note',
+    'company_name' => 'Company Name',
+
 ];
