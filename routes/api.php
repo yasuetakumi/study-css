@@ -39,4 +39,10 @@ Route::prefix('v1')->group(function () {
 
     // Get Grand total Estimation
     Route::get('/plans/getGrandTotalEstimation/{plan}/{tsubo}/{design}/{kitchen}/{designCat?}','Api\ApiEstimateController@getGrandTotalEstimation');
+
+    //Design Styles
+    Route::get('/design-styles/getDesignByCategory/{category_id}', 'Api\ApiDesignStyleController@getDesignByCategory');
+
+    //Plan
+    Route::get('/plans/getPlansByCategory/{category_id}', 'Api\ApiPlanController@getPlanByCategory');
 });
