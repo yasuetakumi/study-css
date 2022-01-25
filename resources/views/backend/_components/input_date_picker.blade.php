@@ -5,6 +5,6 @@
             id="input-{{ $name }}" name="{{ $name }}"
             class="form-control input-datepicker @error($name) is-invalid @enderror"
             value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
-            {{isset($isReadOnly) ? 'readonly' : '' }}/>
+            {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }}/>
     </div>
 </div>

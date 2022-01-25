@@ -8,7 +8,7 @@
 @endsection
 
 @section('top_buttons')
-    <a href="{{route('admin.user.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+    <a href="{{route('admin.property.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
 @endsection
 
 @section('content')

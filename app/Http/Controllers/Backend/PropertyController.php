@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use stdClass;
+use TsuboHelper;
 use App\Models\City;
+use App\Models\Plan;
 use App\Models\User;
 use App\Models\Cuisine;
 use App\Models\TagMood;
@@ -11,19 +14,22 @@ use App\Models\Property;
 use App\Models\TagStyle;
 use App\Models\Structure;
 use App\Models\Prefecture;
+use App\Helpers\FileHelper;
+use App\Models\DesignStyle;
+use App\Helpers\ImageHelper;
 use App\Models\BusinessTerm;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use App\Models\TagArchitecture;
 use App\Helpers\DatatablesHelper;
-use App\Http\Controllers\Controller;
-use App\Models\DesignStyle;
-use App\Models\Plan;
+
 use App\Models\SurfaceAreaOption;
-use TsuboHelper;
+use App\Traits\CommonToolsTraits;
+use App\Http\Controllers\Controller;
 
 class PropertyController extends Controller
 {
+    use CommonToolsTraits;
     public function show($param)
     {
 
@@ -57,8 +63,11 @@ class PropertyController extends Controller
     public function detail($id)
     {
         $data['item']       = Property::find($id);
+        $data['form_action'] = '';
+        $data['page_type'] = 'detail';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
-        $data['users'] = User::pluck('display_name', 'id')->take(10)->all();
+        $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
+        $data['users_options']     = $this->initSelect2Options($users);
         $data['cities'] = City::pluck('display_name', 'id')->all();
         // $data['prefectures'] = [1 => 'Prefecture 1', 2 => 'Prefecture 2', 3 => 'Prefecture 3'];
         $data['property_types'] = PropertyType::pluck('label_en', 'label_jp', 'id')->all();
@@ -128,23 +137,97 @@ class PropertyController extends Controller
         return view('backend.property.form', $data);
     }
 
-    public function update()
-    {
 
-    }
 
     public function create()
     {
+        $data['item'] = new StdClass();
+        $data['form_action'] = route('admin.property.store');
+        $data['page_type'] = 'create';
+        $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
+        //$data['users'] = User::pluck('display_name', 'id')->all();
+        $data['cities'] = City::pluck('display_name', 'id')->all();
+        $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
+        $data['structures'] = Structure::pluck('label_jp', 'id')->all();
+        $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
+        $data['page_title'] = 'Property Detail';
+        $data['is_skeleton'] = [Property::FURNISHED => 'Furnished', Property::SKELETON => 'Updated by the Scraping Process'];
+        $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
+        // options for vue select 2 options
+        $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
+        $data['users_options']     = $this->initSelect2Options($users);
+
+        $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
+        return view('backend.property.form', $data);
     }
-    public function store()
-    {
 
+    public function store( Request $request)
+    {
+        $data = $request->all();
+
+        $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main') );
+        for($i=1; $i<=6; $i++){
+            $data['thumbnail_image_' . $i]  = ImageHelper::upload( $request->file('thumbnail_image_' . $i) );
+        }
+        for($i=1; $i<=10; $i++){
+            $data['image_' . $i]     = ImageHelper::upload( $request->file('image_'. $i) );
+        }
+        for($i=1; $i<=5; $i++){
+            $data['image_360_' . $i]     = ImageHelper::upload( $request->file('image_360_'. $i) );
+        }
+
+        $feature = new Property();
+        $feature->fill($data)->save();
+
+        return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $data['item'] = Property::find($id);
+        $data['form_action'] = route('admin.property.update', $id);
+        $data['page_type'] = 'edit';
+        $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
+        //$data['users'] = User::pluck('display_name', 'id')->all();
+        $data['cities'] = City::pluck('display_name', 'id')->all();
+        $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
+        $data['structures'] = Structure::pluck('label_jp', 'id')->all();
+        $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
+        $data['page_title'] = 'Property Detail';
+        $data['is_skeleton'] = [Property::FURNISHED => 'Furnished', Property::SKELETON => 'Updated by the Scraping Process'];
+        $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
+        // options for vue select 2 options
+        $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
+        $data['users_options']     = $this->initSelect2Options($users);
+
+        $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
+
+        return view('backend.property.form', $data);
+    }
+
+    public function update( Request $request, $id)
+    {
+        $data = $request->all();
+
+        $edit = Property::find($id);
+
+        $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
+        for($i=1; $i<=5; $i++){
+            $data['thumbnail_image_' . $i]  = ImageHelper::update( $request->file('thumbnail_image_' . $i), $edit->thumbnail_image_ . $i);
+        }
+        $data['thumbnail_image_6']  = ImageHelper::update( $request->file('thumbnail_image_6'), $edit->thumbnail_image_6);
+        for($i=1; $i<=10; $i++){
+            $data['image_' . $i]     = ImageHelper::update( $request->file('image_'. $i), $edit->image_ . $i);
+        }
+        for($i=1; $i<=5; $i++){
+            $data['image_360_' . $i]     = ImageHelper::update( $request->file('image_360_'. $i), $edit->image_360_ . $i);
+        }
+
+        $edit->update($data);
+
+        return redirect()->route('admin.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
 
     public function destroy()
