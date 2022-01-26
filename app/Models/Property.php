@@ -122,4 +122,30 @@ class Property extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function scopeRangeArea($query, $min, $max, $column){
+         // ------------------------------------------------------------------
+        // Minimum property
+        // ------------------------------------------------------------------
+        if (!empty($min) && empty($max)) {
+            $query->where($column, '>=', $min);
+        }
+        // ------------------------------------------------------------------
+        // Maximum property
+        // ------------------------------------------------------------------
+        if (!empty($max) && empty($min)) {
+            $query->where($column, '<=', $max);
+        }
+        // ------------------------------------------------------------------
+        // Between property
+        // ------------------------------------------------------------------
+        if (!empty($min) && !empty($max)) {
+            if ($min > $max) {
+                $query->where('id', "-1");
+                return $query;
+            }
+            $query->whereBetween($column, [$min, $max]);
+        }
+        return $query;
+    }
 }
