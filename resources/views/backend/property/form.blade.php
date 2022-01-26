@@ -1,7 +1,6 @@
 @php
-    $route = Route::currentRouteName();
     $disableForm = false;
-    if ($route == 'admin.property.detail') {
+    if ($page_type == 'detail') {
         $disableForm = true;
     }
 @endphp
@@ -84,11 +83,11 @@
         @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
-        @if ($route != 'admin.property.detail')
+        @if ($page_type != 'detail')
             @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
         @endif
     @endcomponent
-    @if ($route == 'admin.property.detail')
+    @if ($page_type == 'detail')
         <div class="row">
             <div class="col-12">
                 <div class="row justify-content-center mt-4">
