@@ -12,15 +12,15 @@
 
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
         <div class="field-group clearfix">
-        <Select2 
+        <Select2
 
             @if(isset($id)) id="{{ $id }}" @endif
             @if(isset($id_vue)) :id="{{ $id_vue }}" @endif
             @if(isset($name)) name="{{ $name }}" @endif
-            label="{{ $label }}" 
+            label="{{ $label }}"
             data-parsley-trigger="change focusout"
 
-            :options="{{ $options }}" 
+            :options="{{ $options }}"
 
             :settings="{'language': { 'noResults': function(){ return '一致する検索結果がありません';}}}"
 
@@ -29,7 +29,7 @@
             @if(isset($model)) v-model="{{ $model }}" @endif
             @if(isset($placeholder)) placeholder="{{ $placeholder }}" @endif
             @if(isset($required)) :required="{{ $required }}" @endif
-            @if(isset($disabled)) :disabled="{{ $disabled }}" @endif
+            @if(isset($disabled) && $disabled == true) :disabled="{{ $disabled }}" @endif
 
             @if(isset($model)) :value="{{ $model }}" @endif
 
