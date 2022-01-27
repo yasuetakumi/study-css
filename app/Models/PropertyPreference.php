@@ -13,6 +13,6 @@ class PropertyPreference extends Model
 
     public function properties()
     {
-        return $this->belongsToMany(Property::class, 'properties_property_preferences');
+        return $this->belongsToMany(Property::class, 'properties_property_preferences', 'property_preferences_id');
     }
 }
