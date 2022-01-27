@@ -16,11 +16,16 @@ use App\Models\Structure;
 use App\Models\SurfaceAreaOption;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use TsuboHelper;
 
 class Property extends Model
 {
     const FURNISHED = 0;
     const SKELETON = 1;
+
+    protected $appends = [
+        'tsubo', 'man', 'man_per_tsubo'
+    ];
     protected $fillable = [
         'user_id',
         'postcode_id',
@@ -121,5 +126,26 @@ class Property extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function getTsuboAttribute()
+    {
+        $tsubo = new TsuboHelper();
+        $result = $tsubo->toTsubo($this->surface_area);
+        return $result;
+    }
+
+    public function getManAttribute()
+    {
+        $tsubo = new TsuboHelper();
+        $result = $tsubo->toMan($this->rent_amount);
+        return $result;
+    }
+
+    public function getManPerTsuboAttribute()
+    {
+        $tsubo = new TsuboHelper();
+        $result = round($tsubo->toMan($this->rent_amount) / $tsubo->toTsubo($this->surface_area));
+        return $result;
     }
 }
