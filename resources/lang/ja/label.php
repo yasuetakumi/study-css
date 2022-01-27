@@ -107,8 +107,10 @@ return [
     'video'                 => '動画',
 
     'empty_value'           => ' ',
+    'detail_page'           => '[Draft] Detail Page',
 
     //D1 Property
+    'property' => 'Property',
     'real_estate_agent_in_charge' => '取引会社の管理者',
     'real_estate_agency' => '取引会社',
     'postcode' => '郵便番号',
