@@ -42,4 +42,9 @@ Route::prefix('v1')->group(function () {
 
     //Get Property
     Route::post('property/getCountProperty', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
+    //Design Styles
+    Route::get('/design-styles/getDesignByCategory/{category_id}', 'Api\ApiDesignStyleController@getDesignByCategory');
+
+    //Plan
+    Route::get('/plans/getPlansByCategory/{category_id}', 'Api\ApiPlanController@getPlanByCategory');
 });

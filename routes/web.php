@@ -86,9 +86,9 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
 
                 Route::resource('company', 'CompanyController');
-                Route::get('draft/property_detail/{id}', 'PropertyController@detail')->name('property.detail');
+                Route::get('property_detail/{id}', 'PropertyController@detail')->name('property.detail');
 
-                Route::resource('draft/admin/property', 'PropertyController')->except('detail');
+                Route::resource('property', 'PropertyController')->except('detail');
             });
             //------------------------------------------------------------------
             // Sharing for super admin and company admin
@@ -111,6 +111,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('admins', 'AdminController');
                 Route::resource('news', 'NewsController');
                 Route::resource('features', 'FeaturesController');
+                 // Customer Inquiry
+                 Route::resource('draft/customer-inquiry', 'CustomerInquiryController')->except('detail');
             });
 
         });

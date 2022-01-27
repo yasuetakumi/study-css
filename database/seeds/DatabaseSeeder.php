@@ -59,5 +59,16 @@ class DatabaseSeeder extends Seeder
         $this->call(PlanSeeder::class);
         $this->call(EstimationIndexSeeder::class);
 
+        $this->call(NumberOfFloorAbovegroundSeeder::class);
+        $this->call(NumberOfFloorUndergroundSeeder::class);
+        $this->call(WalkingDistanceFromStationOptionSeeder::class);
+        $this->call(TransferPriceOptionSeeder::class);
+        $this->call(PermittedActivitySeeder::class);
+        $this->call(PropertyPreferenceSeeder::class);
+        $this->call(PropertiesPermittedActivitySeeder::class);
+        $this->call(PropertiesPropertyPreferenceSeeder::class);
+        $this->call(PropertyStationSeeder::class);
+
+
     }
 }

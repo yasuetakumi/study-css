@@ -107,6 +107,7 @@ return [
     'video'                 => '動画',
 
     'empty_value'           => ' ',
+    'detail_page'           => '[Draft] Detail Page',
 
     //C1
     'walking_distance_from_station' => '徒歩',
@@ -116,6 +117,7 @@ return [
     'transfer_price_option' => '譲渡額',
 
     //D1 Property
+    'property' => 'Property',
     'real_estate_agent_in_charge' => '取引会社の管理者',
     'real_estate_agency' => '取引会社',
     'postcode' => '郵便番号',
@@ -144,4 +146,15 @@ return [
     'skeleton' => 'スケルトン物件・居抜き物件',
     'restaurant_cuisine' => '業態',
     'interior_transfer_price' => '居抜き譲渡額',
+
+    // Customer Inquiry
+    'property_id' => '物件ID',
+    'contact_us_type' => '問い合わせの種別',
+    'subject' => '件名',
+    'text' => 'テキスト',
+    'flag' => 'フラッグ',
+    'is_finish' => '返答済',
+    'person_in_charge' => '管理者',
+    'note' => 'メモ',
+    'company_name' => '会社名',
 ];

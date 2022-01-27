@@ -1,7 +1,6 @@
 @php
-    $route = Route::currentRouteName();
     $disableForm = false;
-    if ($route == 'admin.property.detail') {
+    if ($page_type == 'detail') {
         $disableForm = true;
     }
 @endphp
@@ -84,11 +83,11 @@
         @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
-        @if ($route != 'admin.property.detail')
+        @if ($page_type != 'detail')
             @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
         @endif
     @endcomponent
-    @if ($route == 'admin.property.detail')
+    @if ($page_type == 'detail')
         <div class="row">
             <div class="col-12">
                 <div class="row justify-content-center mt-4">
@@ -104,7 +103,7 @@
                                 <div class="field-group clearfix">
                                     @foreach($design_categories as $dc)
                                         <div class="icheck-cyan d-inline">
-                                            <input type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" />
+                                            <input @change="showDesignPlanByCategory" data-id="{{$dc['value']}}" type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" {{ $loop->first ? 'checked' : '' }} />
                                             <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
                                         </div>
                                     @endforeach
@@ -119,12 +118,18 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                                 <div class="field-group clearfix">
-                                    @foreach($design_styles as $ds)
-                                        <div class="icheck-cyan d-inline">
-                                            <input type="radio" value="{{$ds->id}}" id="input-ds-{{$ds->id}}" name="design_style_id" />
-                                            <label for="input-ds-{{ $ds->id }}" class="text-uppercase mr-5">{{ $ds->display_name }}</label>
+                                    {{-- @foreach($design_styles as $ds)
+
+                                    @endforeach --}}
+                                    <div v-if="loadingData">
+                                        <p>Loading Data...</p>
+                                    </div>
+                                    <div v-else>
+                                        <div class="icheck-cyan d-inline" v-for="dc in designStyles" :key="dc.id">
+                                            <input type="radio" :value="dc.id" :id="dc.display_name" name="design_style_id" />
+                                            <label :for="dc.display_name" class="text-uppercase mr-5">@{{dc.display_name}}</label>
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -141,12 +146,32 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                                 <div class="field-group clearfix">
-                                    @foreach($plans as $plan)
+                                    {{-- @foreach($plans as $plan)
                                         <div class="icheck-cyan d-inline">
                                             <input type="radio" value="{{$plan->id}}" id="input-plan-{{ $plan->id }}" name="plan_id" />
                                             <label for="input-plan-{{ $plan->id }}" class="text-uppercase mr-5">{{ $plan->display_name }}</label>
                                         </div>
-                                    @endforeach
+                                    @endforeach --}}
+                                    {{-- <p class="text-center" style="font-size: 18px">Select Plan </p> --}}
+                                    <div style="margin-bottom: 2rem;">
+                                        <div class="icheck-cyan d-inline mb-5" v-for="area in area_groups" :key="area.id">
+                                            <input type="radio" :value="area.id" :id="area.display_name" name="area_id" @change="showPlanByArea" />
+                                            <label :for="area.display_name" class="text-uppercase mr-5">@{{area.display_name}}</label>
+                                        </div>
+                                        {{-- <div v-else>
+                                            <p>No available</p>
+                                        </div> --}}
+                                    </div>
+
+                                    <div v-if="loadingData">
+                                        <p>Loading Data...</p>
+                                    </div>
+                                    <div v-else>
+                                        <div class="icheck-cyan d-inline" v-for="plan in plans" :key="plan.id">
+                                            <input type="radio" :value="plan.id" :id="plan.display_name" name="plan_id" @change="showTsuboSlider(plan.area_group_id)" />
+                                            <label :for="plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,8 +182,14 @@
                         <p class="text-center" style="font-size: 22px">STEP 3</p>
                     </div>
                     <div class="col-12">
-                        @component('backend._components.input_text', ['name' => 'tsubo_area', 'label' => __('Tsubo Area'), 'required' => null, 'value' => round($item->surface_area / 3.30579 )]) @endcomponent
-                        <input id="slider" class="slider-red input slider w-100" step="1" type="range" min="{{$min_surface_area}}" max="{{$max_surface_area}}" value="{{$min_surface_area}}" >
+                        {{-- @component('backend._components.input_text', ['name' => 'tsubo_area', 'label' => __('Tsubo Area'), 'required' => null, 'value' => 'items.tsubo_value']) @endcomponent --}}
+                        <input v-if="tsuboSlider === 6" id="slider" class="slider-red input slider w-100" step="1" type="range" min="10" max="14" value="10" @change="showSliderValue">
+                        <input v-if="tsuboSlider === 1 "id="slider" class="slider-red input slider w-100" step="1" type="range" min="15" max="19" value="15" @change="showSliderValue">
+                        <input v-if="tsuboSlider === 2" id="slider" class="slider-red input slider w-100" step="1" type="range" min="20" max="29" value="20" @change="showSliderValue">
+                        <input v-if="tsuboSlider === 3" id="slider" class="slider-red input slider w-100" step="1" type="range" min="30" max="39" value="30" @change="showSliderValue">
+                        <input v-if="tsuboSlider === 4" id="slider" class="slider-red input slider w-100" step="1" type="range" min="40" max="49" value="40" @change="showSliderValue">
+                        <input type="hidden" id="input-tsubo_area" :value="items.tsubo_value">
+                        <p class="text-center" style="font-size: 20px; margin-top: 2rem;">@{{items.tsubo_value}}坪</p>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-4">
@@ -168,13 +199,13 @@
                     <div class="col-12">
                         <div id="form-group--plans" class="row form-group">
 
-                            @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
+                            @include('backend._components._input_header',['label'=>'Has Kitchen', 'required'=>true])
 
                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                                 <div class="field-group clearfix">
                                     @foreach($has_kitchens as $hs)
                                         <div class="icheck-cyan d-inline">
-                                            <input type="radio" value="{{$hs['value']}}" id="input-hs-{{ $hs['value'] }}" name="has_kitchen" />
+                                            <input type="radio" value="{{$hs['value']}}" id="input-hs-{{ $hs['value'] }}" name="has_kitchen" {{$loop->first ? 'checked' : ''}}/>
                                             <label for="input-hs-{{ $hs['value'] }}" class="text-uppercase mr-5">{{ $hs['label_jp'] }}</label>
                                         </div>
                                     @endforeach
@@ -206,10 +237,10 @@
     <script type="text/javascript"> var root_url = "{{ url('/') }}";</script>
     <script>
         $( document ).ready(function() {
-            $('#slider').on('change', function() {
-                var value = this.value;
-                $('#input-tsubo_area').val(value);
-            });
+            // $('#slider').on('change', function() {
+            //     var value = this.value;
+            //     $('#input-tsubo_area').val(value);
+            // });
             $('#estimate').on('click', function() {
                 var design_category_id = $("input[name='design_category_id']:checked").val();
                 var design_style_id = $("input[name='design_style_id']:checked").val();
@@ -265,7 +296,16 @@
                 // Preset data
                 // ----------------------------------------------------------
                 preset: {
-                    users_options: @json($users_options)
+                    users_options: @json($users_options),
+                    design_styles: @json($design_styles),
+                    design_categories: @json($design_categories),
+                    area_groups: [
+                        { 'id': 6, 'display_name': '10〜14坪' },
+                        { 'id': 1, 'display_name': '15〜19坪' },
+                        { 'id': 2, 'display_name': '20〜29坪' },
+                        { 'id': 3, 'display_name': '30〜39坪' },
+                        { 'id': 4, 'display_name': '40坪〜' },
+                    ],
                 },
                 // ----------------------------------------------------------
             };
@@ -299,6 +339,13 @@
                 // ----------------------------------------------------------
                 items: {
                     user_id: null,
+                    selected_dc: false,
+                    list_design_style: null,
+                    list_plans: null,
+                    loading: false,
+                    area_selected: null,
+                    tsubo_value: null,
+                    tsubo_slider: 6,
                 },
                 // ----------------------------------------------------------
             };
@@ -322,7 +369,15 @@
             }
         },
 
-        created: function(){},
+        created: async function(){
+            const response = await fetch(root_url + '/api/v1/design-styles/getDesignByCategory/1');
+            const data = await response.json();
+            this.items.list_design_style = data;
+
+            const response2 = await fetch(root_url + '/api/v1/plans/getPlansByCategory/1');
+            const data2 = await response2.json();
+            this.items.list_plans = data2;
+        },
 
         /*
         ## ------------------------------------------------------------------
@@ -330,7 +385,29 @@
         ## define a property with custom logic
         ## ------------------------------------------------------------------
         */
-        computed: {},
+        computed: {
+            designCategories: function(){
+                return this.$store.state.preset.design_categories;
+            },
+            designStyles: function(){
+                return this.items.list_design_style;
+            },
+            plans: function(){
+                return this.items.list_plans;
+            },
+            area_groups: function(){
+                return this.$store.state.preset.area_groups;
+            },
+            loadingData: function(){
+                return this.items.loading;
+            },
+            areaSelected: function(){
+                return this.items.area_selected;
+            },
+            tsuboSlider: function(){
+                return this.items.tsubo_slider;
+            }
+        },
 
         /*
         ## ------------------------------------------------------------------
@@ -357,6 +434,44 @@
                     }
                 }, 400);
             },
+            showDesignPlanByCategory: async function(event) {
+                this.items.loading = true;
+                console.log(event.target.value);
+                let designCat = event.target.value;
+
+                let response = await fetch(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
+                let data = await response.json();
+                this.items.list_design_style = data;
+
+                let response2 = await fetch(root_url + '/api/v1/plans/getPlansByCategory/' + designCat);
+                let data2 = await response2.json();
+                this.items.list_plans = data2;
+
+
+                this.items.loading = false;
+            },
+            showPlanByArea: function(event) {
+                let area_id = event.target.value;
+                this.items.area_selected = area_id;
+            },
+            showTsuboSlider: function(areaId) {
+                console.log(areaId);
+                this.items.tsubo_slider = areaId;
+                if(areaId == 6){
+                    this.items.tsubo_value = 10;
+                } else if(areaId == 1){
+                    this.items.tsubo_value = 15;
+                } else if(areaId == 2){
+                    this.items.tsubo_value = 20;
+                } else if(areaId == 3){
+                    this.items.tsubo_value = 30;
+                } else if(areaId == 4){
+                    this.items.tsubo_value = 40;
+                }
+            },
+            showSliderValue: function(event){
+                this.items.tsubo_value = event.target.value;
+            }
             // --------------------------------------------------------------
         }
     }

@@ -108,6 +108,7 @@ return [
 
 
     'empty_value'           => ' ',
+    'detail_page'           => '[Draft] Detail Page',
 
     //C1
     'walking_distance_from_station' => 'Walking Distance From Station',
@@ -117,6 +118,7 @@ return [
     'transfer_price_option' => 'Transfer Price Option',
 
     //D1 PROPERTY
+    'property' => 'Property',
     'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',
     'real_estate_agency' => 'Real Estate Agency',
     'postcode' => 'Postcode',
@@ -145,5 +147,16 @@ return [
     'skeleton' => 'Skeleton/Furnished',
     'restaurant_cuisine' => 'Restaurant Cuisine',
     'interior_transfer_price' => 'Interior Transfer Price',
+
+    // Customer Inquiry
+    'property_id' => 'Property ID',
+    'contact_us_type' => 'Contact Us Type',
+    'subject' => 'Subject',
+    'text' => 'Text',
+    'flag' => 'Flag',
+    'is_finish' => 'Is Finish',
+    'person_in_charge' => 'Person In Charge',
+    'note' => 'Note',
+    'company_name' => 'Company Name',
 
 ];
