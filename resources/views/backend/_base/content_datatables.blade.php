@@ -63,7 +63,26 @@
     <script src="{{asset('plugins/moment/locale/ja.js')}}"></script>
     <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
     <script>
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var min = parseInt( $('#input-min').val(), 10 );
+                var max = parseInt( $('#input-max').val(), 10 );
+                var rent = parseFloat( data[4] ) || 0;
+                console.log("rent", rent);
 
+                if ( ( isNaN( min ) && isNaN( max ) ) ||
+                    ( isNaN( min ) && rent <= max ) ||
+                    ( min <= rent   && isNaN( max ) ) ||
+                    ( min <= rent   && rent <= max )  ||
+                    ( isNaN( min ) && surface <= max ) ||
+                    ( min <= surface   && isNaN( max ) ) ||
+                    ( min <= surface   && surface <= max ) )
+                {
+                    return true;
+                }
+                return false;
+            }
+        );
         $(function() {
             // enable or disabled filtering server side
             var serverSide = true;
@@ -137,7 +156,23 @@
                             table.column(i).order('desc').search(this.value).draw();
                         }
                     });
-                }else{
+                }else if(id == 'rent_amount' || id == 'surface_area'){
+                    $(this).html('<div class="d-flex"><input id="input-min" class="form-control input-min-'+i+'" type="number" placeholder="min" /> <input id="input-max" class="form-control input-max-'+i+'" type="number" placeholder="max" /> </div>');
+
+                    $('#input-min', this).on('keyup change', function () {
+                        //console.log("max", this.value);
+                        if (table.column(i).search() !== this.value) {
+                            table.column(i).search(this.value).draw();
+                        }
+                    });
+                    $('#input-max', this).on('keyup change', function () {
+                        //console.log("max", this.value);
+                        if (table.column(i).search() !== this.value) {
+                            table.column(i).search(this.value).draw();
+                        }
+                    });
+                }
+                else{
                     $(this).html('<input class="form-control input-'+i+'" type="text" placeholder="' + placeholder + '" />');
 
                     $('input', this).on('keyup change', function () {
@@ -189,6 +224,8 @@
                 table.columns().eq(0).each(function(i){
                     let colSearch = state.columns[i].search;
                     if(colSearch.search){
+                        // $('.input-min-'+i).val(colSearch.search);
+                        // $('.input-max-'+i).val(colSearch.search);
                         $('.input-'+i).val(colSearch.search);
                         $('.select-'+i).val(colSearch.search);
                     }
