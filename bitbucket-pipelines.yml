@@ -1,5 +1,5 @@
 image: atlassian/default-image:latest
-
+ 
 pipelines:
   branches:
     release/test_deploy:
