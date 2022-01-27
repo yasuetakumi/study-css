@@ -109,6 +109,13 @@ return [
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
 
+    //C1
+    'walking_distance_from_station' => '徒歩',
+    'property_preference' => 'こだわり条件',
+    'property_types' => '飲食店の種類',
+    'cuisines' => '業態',
+    'transfer_price_option' => '譲渡額',
+
     //D1 Property
     'property' => 'Property',
     'real_estate_agent_in_charge' => '取引会社の管理者',

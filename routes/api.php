@@ -40,6 +40,8 @@ Route::prefix('v1')->group(function () {
     // Get Grand total Estimation
     Route::get('/plans/getGrandTotalEstimation/{plan}/{tsubo}/{design}/{kitchen}/{designCat?}','Api\ApiEstimateController@getGrandTotalEstimation');
 
+    //Get Property
+    Route::post('property/getCountProperty', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'Api\ApiDesignStyleController@getDesignByCategory');
 

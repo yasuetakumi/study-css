@@ -128,6 +128,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
 
             Route::get('user', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
+            Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
+            Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
 
 
         });
