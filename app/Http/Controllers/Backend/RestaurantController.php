@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 use App\Http\Controllers\Controller;
+use App\Models\Cuisine;
+use App\Models\NumberOfFloorsAboveGround;
+use App\Models\NumberOfFloorsUnderGround;
 use App\Models\PropertyPreference;
 use App\Models\PropertyType;
+use App\Models\TransferPriceOption;
 use App\Models\WalkingDistanceFromStationOption;
 
 class RestaurantController extends Controller
@@ -31,6 +35,10 @@ class RestaurantController extends Controller
         $data['property_types'] = PropertyType::select('id', 'label_jp')->orderBy('id')->get();
         $data['walking_distances'] = WalkingDistanceFromStationOption::select('id', 'value', 'label_jp')->get();
         $data['property_preferences'] = PropertyPreference::select('id', 'label_jp')->orderBy('id')->get();
+        $data['floor_undergrounds'] = NumberOfFloorsUnderGround::select('id', 'value', 'label_jp')->get();
+        $data['floor_abovegrounds'] = NumberOfFloorsAboveGround::select('id', 'value', 'label_jp')->get();
+        $data['cuisines'] = Cuisine::select('id', 'label_jp')->orderBy('id')->get();
+        $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['page_title'] = __('Restaurant List');
         return view('frontend.restaurant.index', $data);
     }

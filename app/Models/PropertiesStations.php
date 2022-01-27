@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PropertiesStations extends Model
 {
+    protected $with = ['walking_distance'];
     protected $fillable = [
         'station_id',
         'property_id',

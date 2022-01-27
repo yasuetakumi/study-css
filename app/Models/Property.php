@@ -110,12 +110,22 @@ class Property extends Model
 
     public function property_preferences()
     {
-        return $this->belongsToMany(PropertyPreference::class, 'properties_property_preferences');
+        return $this->belongsToMany(PropertyPreference::class, 'properties_property_preferences', 'properties_id', 'property_preferences_id');
     }
 
     public function permitted_activities()
     {
-        return $this->belongsToMany(PermittedActivity::class, 'properties_permitted_activities');
+        return $this->belongsToMany(PermittedActivity::class, 'properties_permitted_activities', 'properties_id');
+    }
+
+    public function property_stations()
+    {
+        return $this->hasMany(PropertiesStations::class, 'property_id');
+    }
+
+    public function properties_property_preferences()
+    {
+        return $this->hasMany(PropertiesPropertyPreference::class, 'properties_id');
     }
 
     public function city()

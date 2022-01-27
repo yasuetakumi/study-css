@@ -109,6 +109,13 @@ return [
 
     'empty_value'           => ' ',
 
+    //C1
+    'walking_distance_from_station' => 'Walking Distance From Station',
+    'property_preference' => 'Property Preference',
+    'property_types' => 'Property Types',
+    'cuisines' => 'Cuisines',
+    'transfer_price_option' => 'Transfer Price Option',
+
     //D1 PROPERTY
     'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',
     'real_estate_agency' => 'Real Estate Agency',
