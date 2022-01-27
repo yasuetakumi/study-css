@@ -54,6 +54,35 @@
                             </li>
                         </ul>
                     </li>
+                    {{-- Property --}}
+                    <li class="nav-item has-treeview" id="tree_propertys">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-landmark nav-icon"></i>
+                            <p> @lang('Property')<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="create_property" class="nav-item">
+                                <a href="{{route('admin.property.detail', 1)}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.detail_page')</p>
+                                </a>
+                            </li>
+                            <li id="list_property" class="nav-item">
+                                <a href="{{route('admin.property.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_property" class="nav-item">
+                                <a href="{{route('admin.property.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- END PROPERTY --}}
                 @endif
 
                 @if($role == 'admin' || $role == 'super_admin')
@@ -114,6 +143,28 @@
                         </li>
                         <li id="list_admin" class="nav-item">
                             <a href="{{route('admin.user.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('label.list')</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {{-- Customer Inquiry --}}
+                <li class="nav-item has-treeview" id="tree_customer_inquiries">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-question"></i>
+                        <p> Customer Inquiry <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li id="create_customer_inquiry" class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('label.createNew')</p>
+                            </a>
+                        </li>
+                        <li id="list_customer_inquiry" class="nav-item">
+                            <a href="{{route('admin.customer-inquiry.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>@lang('label.list')</p>
                             </a>

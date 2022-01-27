@@ -106,6 +106,57 @@ return [
     'thumbnail'             => '(Thumbnail of list)',
     'video'                 => 'Video',
 
-    
+
     'empty_value'           => ' ',
+    'detail_page'           => '[Draft] Detail Page',
+
+    //C1
+    'walking_distance_from_station' => 'Walking Distance From Station',
+    'property_preference' => 'Property Preference',
+    'property_types' => 'Property Types',
+    'cuisines' => 'Cuisines',
+    'transfer_price_option' => 'Transfer Price Option',
+
+    //D1 PROPERTY
+    'property' => 'Property',
+    'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',
+    'real_estate_agency' => 'Real Estate Agency',
+    'postcode' => 'Postcode',
+    'prefecture' => 'Prefecture',
+    'cities' => 'Cities',
+    'location' => 'Location',
+    'surface_area' => 'Surface Area',
+    'surface_area_meter' => 'Surface Area(Meters)',
+    'surface_area_tsubo' => 'Surface Area(Tsubo)',
+    'rent_amount' => 'Rent Amount',
+    'cost_of_rent' => 'Cost of Rent (Man) per Tsubo',
+    'rent_amount_man' => 'Rent amount(Man)',
+    'number_of_floor_underground' => 'Number of Floors underground',
+    'number_of_floor_aboveground' => 'Number of Floors aboveground',
+    'restaurant_type' => 'Restaurant Type',
+    'structure' => 'Structure',
+    'deposit' => 'Deposit',
+    'monthly_maintaner' => 'Monthly Maintenance Fee',
+    'repayment_conditions' => 'Repayment Conditions',
+    'year_built' => 'Year Built',
+    'renewal_fee' => 'Renewal Fee',
+    'contract_length' => 'Contract Lenght in Months',
+    'moving_fee' => 'Moving Fee',
+    'business_terms' => 'Business Terms',
+    'comments' => 'Comments',
+    'skeleton' => 'Skeleton/Furnished',
+    'restaurant_cuisine' => 'Restaurant Cuisine',
+    'interior_transfer_price' => 'Interior Transfer Price',
+
+    // Customer Inquiry
+    'property_id' => 'Property ID',
+    'contact_us_type' => 'Contact Us Type',
+    'subject' => 'Subject',
+    'text' => 'Text',
+    'flag' => 'Flag',
+    'is_finish' => 'Is Finish',
+    'person_in_charge' => 'Person In Charge',
+    'note' => 'Note',
+    'company_name' => 'Company Name',
+
 ];
