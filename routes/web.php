@@ -111,6 +111,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('admins', 'AdminController');
                 Route::resource('news', 'NewsController');
                 Route::resource('features', 'FeaturesController');
+                 // Customer Inquiry
+                 Route::resource('draft/customer-inquiry', 'CustomerInquiryController')->except('detail');
             });
 
         });
