@@ -137,4 +137,15 @@ return [
     'skeleton' => 'スケルトン物件・居抜き物件',
     'restaurant_cuisine' => '業態',
     'interior_transfer_price' => '居抜き譲渡額',
+
+    // Customer Inquiry
+    'property_id' => '物件ID',
+    'contact_us_type' => '問い合わせの種別',
+    'subject' => '件名',
+    'text' => 'テキスト',
+    'flag' => 'フラッグ',
+    'is_finish' => '返答済',
+    'person_in_charge' => '管理者',
+    'note' => 'メモ',
+    'company_name' => '会社名',
 ];
