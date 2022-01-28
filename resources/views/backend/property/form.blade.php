@@ -297,8 +297,6 @@
                 // ----------------------------------------------------------
                 preset: {
                     users_options: @json($users_options),
-                    design_styles: @json($design_styles),
-                    design_categories: @json($design_categories),
                     area_groups: [
                         { 'id': 6, 'display_name': '10〜14坪' },
                         { 'id': 1, 'display_name': '15〜19坪' },
