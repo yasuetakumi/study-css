@@ -166,9 +166,12 @@
                                     <div v-if="loadingData">
                                         <p>Loading Data...</p>
                                     </div>
+                                    <div v-else-if="!plans">
+                                        <p>No Data</p>
+                                    </div>
                                     <div v-else>
                                         <div class="icheck-cyan d-inline" v-for="plan in plans" :key="plan.id">
-                                            <input type="radio" :value="plan.id" :id="plan.display_name" name="plan_id" @change="showTsuboSlider(plan.area_group_id)" />
+                                            <input type="radio" :value="plan.id" :id="plan.display_name" name="plan_id" @change="showTsuboByPlan(plan.area_group_id)"/>
                                             <label :for="plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
                                         </div>
                                     </div>
@@ -182,12 +185,7 @@
                         <p class="text-center" style="font-size: 22px">STEP 3</p>
                     </div>
                     <div class="col-12">
-                        {{-- @component('backend._components.input_text', ['name' => 'tsubo_area', 'label' => __('Tsubo Area'), 'required' => null, 'value' => 'items.tsubo_value']) @endcomponent --}}
-                        <input v-if="tsuboSlider === 6" id="slider" class="slider-red input slider w-100" step="1" type="range" min="10" max="14" value="10" @change="showSliderValue">
-                        <input v-if="tsuboSlider === 1 "id="slider" class="slider-red input slider w-100" step="1" type="range" min="15" max="19" value="15" @change="showSliderValue">
-                        <input v-if="tsuboSlider === 2" id="slider" class="slider-red input slider w-100" step="1" type="range" min="20" max="29" value="20" @change="showSliderValue">
-                        <input v-if="tsuboSlider === 3" id="slider" class="slider-red input slider w-100" step="1" type="range" min="30" max="39" value="30" @change="showSliderValue">
-                        <input v-if="tsuboSlider === 4" id="slider" class="slider-red input slider w-100" step="1" type="range" min="40" max="49" value="40" @change="showSliderValue">
+                        <input id="slider" class="slider-red input slider w-100" step="1" type="range" :min="tsubo_minimum" :max="tsubo_maximum" :value="items.tsubo_value" @change="showSliderValue">
                         <input type="hidden" id="input-tsubo_area" :value="items.tsubo_value">
                         <p class="text-center" style="font-size: 20px; margin-top: 2rem;">@{{items.tsubo_value}}坪</p>
                     </div>
@@ -298,11 +296,10 @@
                 preset: {
                     users_options: @json($users_options),
                     area_groups: [
-                        { 'id': 6, 'display_name': '10〜14坪' },
-                        { 'id': 1, 'display_name': '15〜19坪' },
-                        { 'id': 2, 'display_name': '20〜29坪' },
-                        { 'id': 3, 'display_name': '30〜39坪' },
-                        { 'id': 4, 'display_name': '40坪〜' },
+                        { 'id': 1, 'display_name': '15〜19坪'},
+                        { 'id': 2, 'display_name': '20〜29坪'},
+                        { 'id': 3, 'display_name': '30〜39坪'},
+                        { 'id': 4, 'display_name': '40坪〜'},
                     ],
                 },
                 // ----------------------------------------------------------
@@ -337,13 +334,15 @@
                 // ----------------------------------------------------------
                 items: {
                     user_id: null,
-                    selected_dc: false,
+                    area_id: null,
+                    selected_dc: 1,
                     list_design_style: null,
                     list_plans: null,
                     loading: false,
                     area_selected: null,
+                    tsubo_max: null,
+                    tsubo_min: null,
                     tsubo_value: null,
-                    tsubo_slider: 6,
                 },
                 // ----------------------------------------------------------
             };
@@ -367,14 +366,9 @@
             }
         },
 
-        created: async function(){
-            const response = await fetch(root_url + '/api/v1/design-styles/getDesignByCategory/1');
-            const data = await response.json();
-            this.items.list_design_style = data;
-
-            const response2 = await fetch(root_url + '/api/v1/plans/getPlansByCategory/1');
-            const data2 = await response2.json();
-            this.items.list_plans = data2;
+        created: function(){
+            this.getDesignByCategory(1);
+            this.getPlanByCateogry(1);
         },
 
         /*
@@ -391,7 +385,11 @@
                 return this.items.list_design_style;
             },
             plans: function(){
-                return this.items.list_plans;
+                if(this.items.list_plans != null && this.items.list_plans.length > 0){
+                    return this.items.list_plans;
+                } else {
+                    return false;
+                }
             },
             area_groups: function(){
                 return this.$store.state.preset.area_groups;
@@ -402,8 +400,11 @@
             areaSelected: function(){
                 return this.items.area_selected;
             },
-            tsuboSlider: function(){
-                return this.items.tsubo_slider;
+            tsubo_minimum: function(){
+                return this.items.tsubo_min;
+            },
+            tsubo_maximum: function(){
+                return this.items.tsubo_max;
             }
         },
 
@@ -432,44 +433,62 @@
                     }
                 }, 400);
             },
-            showDesignPlanByCategory: async function(event) {
+            showDesignPlanByCategory: function(event) {
                 this.items.loading = true;
                 console.log(event.target.value);
                 let designCat = event.target.value;
+                this.items.selected_dc = event.target.value
+                this.getDesignByCategory(designCat);
 
+                if(this.items.area_id){
+                    this.showPlanByArea();
+                } else {
+                    this.getPlanByCateogry(designCat)
+                }
+                this.items.loading = false;
+            },
+            showPlanByArea: async function(event) {
+                this.items.area_id = event.target.value;
+                let response = await fetch(root_url + '/api/v1/plans/getPlanByAreaGroup/' + this.items.selected_dc + '/' + this.items.area_id);
+                let data = await response.json();
+                this.items.list_plans = data;
+
+            },
+            getDesignByCategory: async function(designCat){
                 let response = await fetch(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
                 let data = await response.json();
                 this.items.list_design_style = data;
-
+            },
+            getPlanByCateogry: async function(designCat){
                 let response2 = await fetch(root_url + '/api/v1/plans/getPlansByCategory/' + designCat);
                 let data2 = await response2.json();
                 this.items.list_plans = data2;
-
-
-                this.items.loading = false;
             },
-            showPlanByArea: function(event) {
-                let area_id = event.target.value;
-                this.items.area_selected = area_id;
-            },
-            showTsuboSlider: function(areaId) {
-                console.log(areaId);
-                this.items.tsubo_slider = areaId;
-                if(areaId == 6){
-                    this.items.tsubo_value = 10;
-                } else if(areaId == 1){
-                    this.items.tsubo_value = 15;
-                } else if(areaId == 2){
-                    this.items.tsubo_value = 20;
-                } else if(areaId == 3){
-                    this.items.tsubo_value = 30;
-                } else if(areaId == 4){
-                    this.items.tsubo_value = 40;
+            showTsuboByPlan: function(areaId){
+                console.log("areaid", areaId);
+                let id = areaId;
+                if(id == 1){
+                    this.items.tsubo_min = 15;
+                    this.items.tsubo_max = 19;
+                    this.items.tsubo_value = 17;
+                } else if(id==2){
+                    this.items.tsubo_min = 20;
+                    this.items.tsubo_max = 29;
+                    this.items.tsubo_value = 25;
+                } else if(id==3){
+                    this.items.tsubo_min = 30;
+                    this.items.tsubo_max = 39;
+                    this.items.tsubo_value = 35;
+                } else if(id==4){
+                    this.items.tsubo_min = 40;
+                    this.items.tsubo_max = 50;
+                    this.items.tsubo_value = 45;
                 }
             },
             showSliderValue: function(event){
                 this.items.tsubo_value = event.target.value;
-            }
+            },
+            estimationIndex: function(event){}
             // --------------------------------------------------------------
         }
     }
