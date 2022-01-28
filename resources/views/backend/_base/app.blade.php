@@ -35,78 +35,83 @@
 <div class="wrapper" id="app">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-light navbar-info">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto rightNavbar">
-            <!-- Select language -->
-            @if(config('app.debug'))
-            <li class="nav-item dropdown dropdown-lang">
-                <a class="nav-link" data-toggle="dropdown" href="#" style="display: flex;">
+    @auth
+        <nav class="main-header navbar navbar-expand navbar-light navbar-info">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto rightNavbar">
+                <!-- Select language -->
+                @if(config('app.debug'))
+                <li class="nav-item dropdown dropdown-lang">
+                    <a class="nav-link" data-toggle="dropdown" href="#" style="display: flex;">
+                        <?php
+                            $lang = 'img/backend/jp.png';
+                            if(App::isLocale('en')){
+                                $lang = 'img/backend/en.png';
+                            }
+                        ?>
+                        <i class="fa fa-language" style="font-size: 24px; margin-top: -0.1rem; margin-right: 3px"></i>
+                        <span class="span-locale">@lang('label.language')</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                        <a href="{{ route('setlanguage', ['language' => 'en']) }}" class="dropdown-item">
+                            <img src="{{ asset("img/backend/en.png") }}" class="img-lang mr-2" id="set-english" /> English
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('setlanguage', ['language' => 'ja']) }}" class="dropdown-item">
+                            <img src="{{ asset("img/backend/jp.png") }}" class="img-lang mr-2" id="set-japanese" /> 日本語
+                        </a>
+                        <div style="position: fixed; background-color: #ffff88; color:#ee4400; margin-top:10px;">
+                            [DEV NOTE]Because language switching is prepared for only development, It display when APP_DEBUG=TRUE. <br>
+                            If you need to change spec, check "Middleware/MultiLanguage.php"
+                        </div>
+                    </div>
+                </li>
+                @endif
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/') }}" target="_blank"><i class="fa fa-home" aria-hidden="true"></i>
+                    @lang('label.top_page')</a>
+                </li>
+                <li>
                     <?php
-                        $lang = 'img/backend/jp.png';
-                        if(App::isLocale('en')){
-                            $lang = 'img/backend/en.png';
+                        if(Auth::guard('user')->check()){
+                            $logout = 'logout';
+                        } else {
+                            $logout = 'admin.logout';
                         }
                     ?>
-                    <i class="fa fa-language" style="font-size: 24px; margin-top: -0.1rem; margin-right: 3px"></i>
-                    <span class="span-locale">@lang('label.language')</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                    <a href="{{ route('setlanguage', ['language' => 'en']) }}" class="dropdown-item">
-                        <img src="{{ asset("img/backend/en.png") }}" class="img-lang mr-2" id="set-english" /> English
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ route('setlanguage', ['language' => 'ja']) }}" class="dropdown-item">
-                        <img src="{{ asset("img/backend/jp.png") }}" class="img-lang mr-2" id="set-japanese" /> 日本語
-                    </a>
-                    <div style="position: fixed; background-color: #ffff88; color:#ee4400; margin-top:10px;">
-                        [DEV NOTE]Because language switching is prepared for only development, It display when APP_DEBUG=TRUE. <br>
-                        If you need to change spec, check "Middleware/MultiLanguage.php"
-                    </div>
-                </div>
-            </li>
-            @endif
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('/') }}" target="_blank"><i class="fa fa-home" aria-hidden="true"></i>
-                @lang('label.top_page')</a>
-            </li>
-            <li>
-                <?php
-                    if(Auth::guard('user')->check()){
-                        $logout = 'logout';
-                    } else {
-                        $logout = 'admin.logout';
-                    }
-                ?>
-                <a class="nav-link" id="admin-logout" href="{{ route($logout) }}"><span><i class="fas fa-sign-out-alt"></i> @lang('label.logout')</span></a>
-            </li>
-        </ul>
+                    <a class="nav-link" id="admin-logout" href="{{ route($logout) }}"><span><i class="fas fa-sign-out-alt"></i> @lang('label.logout')</span></a>
+                </li>
+            </ul>
 
-    </nav>
+        </nav>
+    @endauth
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-@include('backend._base.nav_left')
+@auth
+    @include('backend._base.nav_left')
+@endauth
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper @if(!Auth::check()) ml-0 @endif">
         @yield('content-wrapper')
     </div>
     <!-- /.content-wrapper -->
 
     <!-- Control Right Sidebar -->
-@yield('control-right-sidebar')
+@auth
+    @yield('control-right-sidebar')
+@endauth
 <!-- /.control-Right sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer text-sm">
+    <footer class="main-footer text-sm @if(!Auth::check()) ml-0 @endif">
         <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
             Version 1
