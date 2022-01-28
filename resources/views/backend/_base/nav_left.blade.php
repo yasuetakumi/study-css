@@ -61,6 +61,12 @@
                             <p> @lang('Property')<i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <li id="create_property" class="nav-item">
+                            <a href="{{route('property.detail', 1)}}" class="nav-link">
+                                <i class="fas fa-landmark nav-icon"></i>
+                                <p>@lang('label.detail_page')</p>
+                            </a>
+                        </li>
                         <ul class="nav nav-treeview">
                             <li id="list_property" class="nav-item">
                                 <a href="{{route('admin.property.create')}}" class="nav-link">
@@ -266,12 +272,6 @@
                         <a href="{{route('userowner-edit')}}" class="nav-link">
                             <i class="fas fa-user nav-icon"></i>
                             <p>@lang('label.user')</p>
-                        </a>
-                    </li>
-                    <li id="create_property" class="nav-item">
-                        <a href="{{route('property.detail', 1)}}" class="nav-link">
-                            <i class="fas fa-landmark nav-icon"></i>
-                            <p>@lang('label.detail_page')</p>
                         </a>
                     </li>
                 @endif
