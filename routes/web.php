@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\PropertyController;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -129,6 +130,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
             Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+            Route::resource('company', 'Backend\PropertyController');
         });
     });
     // End User (No Require Auth)

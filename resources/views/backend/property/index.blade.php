@@ -8,7 +8,11 @@
 @endsection
 
 @section('top_buttons')
-    <a href="{{route('admin.property.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+    @if (Auth::guard('user')->check())
+        <a href="{{route('company.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+    @else
+        <a href="{{route('admin.property.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+    @endif
 @endsection
 
 @section('content')
