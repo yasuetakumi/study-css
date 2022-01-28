@@ -86,7 +86,6 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
 
                 Route::resource('company', 'CompanyController');
-                Route::get('property_detail/{id}', 'PropertyController@detail')->name('property.detail');
 
                 Route::resource('property', 'PropertyController')->except('detail');
             });
@@ -130,6 +129,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
             Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+            Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
 
 
         });
