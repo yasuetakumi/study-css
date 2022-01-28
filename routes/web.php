@@ -129,10 +129,9 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
             Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
-            Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
-
-
         });
     });
+    // End User (No Require Auth)
+    Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
 
 });
