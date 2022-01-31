@@ -129,6 +129,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             // B3 - B5
             Route::resource('company', 'Backend\PropertyController');
+            // B6
+            Route::resource('company-information', 'Backend\CompanyController')->only(['show', 'update']);
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
         });
@@ -137,9 +139,29 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // End User (C Module)
     // C4
     Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
-    // C2 - C3
+    // C2
     Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
     Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+    // C3
+    Route::get('map', function () {
+        return 'map';
+    });
+    // C5
+    Route::get('favorite', function () {
+        return 'favorite';
+    });
+    // C6
+    Route::get('history', function () {
+        return 'history';
+    });
+    // C7
+    Route::get('company', function(){
+        return 'Company List';
+    });
+    // C8
+    Route::get('company/id', function(){
+        return 'Company Show';
+    });
 
 
 });

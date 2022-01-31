@@ -16,10 +16,12 @@ use App\Models\Structure;
 use App\Models\SurfaceAreaOption;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use TsuboHelper;
 
 class Property extends Model
 {
+    use SoftDeletes;
     const FURNISHED = 0;
     const SKELETON = 1;
 
