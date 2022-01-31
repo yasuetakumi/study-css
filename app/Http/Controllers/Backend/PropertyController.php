@@ -27,10 +27,24 @@ use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
 {
     use CommonToolsTraits;
+
+    protected function validator( array $data, $type ){
+        return Validator::make($data, [
+            'user_id'       => 'required',
+            'postcode_id'   => 'required',
+            'prefecture_id' => 'required',
+            'cities_id'     => 'required',
+            'location'      => 'required',
+            'surface_area'  => 'required',
+            'rent_amount'   => 'required',
+        ]);
+    }
+
     public function show($param)
     {
 
@@ -117,8 +131,7 @@ class PropertyController extends Controller
         $surface_area = SurfaceAreaOption::orderBy('id')->get();
         $surface_area_tsubo = [];
         foreach($surface_area as $sf){
-            $tsubo = new TsuboHelper();
-            $tsubo_value = $tsubo->toTsubo($sf->value);
+            $tsubo_value = toTsubo($sf->value);
             array_push($surface_area_tsubo, $tsubo_value );
         }
         $surface_area_tsubo_options = collect($surface_area_tsubo);
@@ -205,8 +218,7 @@ class PropertyController extends Controller
         $surface_area = SurfaceAreaOption::orderBy('id')->get();
         $surface_area_tsubo = [];
         foreach($surface_area as $sf){
-            $tsubo = new TsuboHelper();
-            $tsubo_value = $tsubo->toTsubo($sf->value);
+            $tsubo_value = toTsubo($sf->value);
             array_push($surface_area_tsubo, $tsubo_value );
         }
         $surface_area_tsubo_options = collect($surface_area_tsubo);
@@ -250,9 +262,11 @@ class PropertyController extends Controller
     public function store( Request $request)
     {
         $data = $request->all();
+        //return $data;
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
+        $this->validator($data, 'create')->validate();
         //return $data;
         $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main') );
         for($i=1; $i<=6; $i++){
@@ -264,6 +278,9 @@ class PropertyController extends Controller
         for($i=1; $i<=5; $i++){
             $data['image_360_' . $i]     = ImageHelper::upload( $request->file('image_360_'. $i) );
         }
+        // change to meter and yen before save
+        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $feature = new Property();
         $feature->fill($data)->save();
@@ -314,6 +331,7 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
+        $this->validator($data, 'update')->validate();
         $edit = Property::find($id);
 
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
@@ -327,6 +345,9 @@ class PropertyController extends Controller
         for($i=1; $i<=5; $i++){
             $data['image_360_' . $i]     = ImageHelper::update( $request->file('image_360_'. $i), $edit->image_360_ . $i);
         }
+        // change to meter and yen before update
+        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $edit->update($data);
         if(Auth::guard('user')->check()){

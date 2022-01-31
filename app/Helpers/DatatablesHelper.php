@@ -2,9 +2,10 @@
 
 namespace App\Helpers;
 
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
 
 class DatatablesHelper
 {
@@ -59,13 +60,13 @@ class DatatablesHelper
                 if (!empty($btn_view)) {
                     $buttons[] = '<a title="View Data" href="' . $url_view . '" class="btn btn-success"><i class="fas fa-eye"></i></a>';
                 }
-                if (!empty($btn_edit)) {
+                if (!empty($btn_edit) && Auth::check()) {
                     $buttons[] = '<a title="Edit Data" href="' . $url_edit . '" class="btn btn-secondary"><i class="fas fa-edit"></i></a>';
                 }
                 if (!empty($btn_nested)) {
                     $buttons[] = '<a href="' . URL::route($routeShow, $query->id) . '/' . $btn_nested['current_nest'] . '" class="btn btn-' . $btn_nested['style'] . '"><i class="fas fa-' . $btn_nested['icon'] . '"></i></a>';
                 }
-                if (!empty($btn_delete)) {
+                if (!empty($btn_delete) && Auth::check()) {
                     $buttons[] = '<a title="Delete Data" href="" data-remote="' . $url_delete . '" class="btn btn-danger deleteData"><i class="fas fa-trash"></i></a>';
                 }
 

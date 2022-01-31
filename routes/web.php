@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Backend\PropertyController;
-use App\Models\Property;
 use App\Models\User;
+use App\Models\Property;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -111,29 +111,35 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('admins', 'AdminController');
                 Route::resource('news', 'NewsController');
                 Route::resource('features', 'FeaturesController');
-                 // Customer Inquiry
-                 Route::resource('draft/customer-inquiry', 'CustomerInquiryController')->except('detail');
+
             });
 
         });
     });
 
     /**
-     * User login
+     * Company User (B Module)
      */
     Route::group(['middleware' => 'auth:user'], function() {
 
         Route::get('logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
-        Route::group(['middleware' => ['user_role:supervisor,operator']], function () {
-
-            Route::get('user', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
-            Route::post('user', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
-            Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
-            Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+        Route::group(['middleware' => ['user_role:supervisor,operator'], 'prefix' => 'manage'], function () {
+            // B2
+            Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
+            Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
+            // B3 - B5
             Route::resource('company', 'Backend\PropertyController');
+            // B7
+            Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
         });
     });
-    // End User (No Require Auth)
+
+    // End User (C Module)
+    // C4
     Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
+    // C2 - C3
+    Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
+    Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+
 
 });

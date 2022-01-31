@@ -149,28 +149,6 @@
                         </li>
                     </ul>
                 </li>
-                {{-- Customer Inquiry --}}
-                <li class="nav-item has-treeview" id="tree_customer_inquiries">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-question"></i>
-                        <p> Customer Inquiry <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="create_customer_inquiry" class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_customer_inquiry" class="nav-item">
-                            <a href="{{route('admin.customer-inquiry.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-item has-treeview" id="tree_news">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-newspaper"></i>
@@ -297,6 +275,28 @@
                         </ul>
                     </li>
                     {{-- END PROPERTY --}}
+                    {{-- Customer Inquiry --}}
+                    <li class="nav-item has-treeview" id="tree_customer_inquiries">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-question"></i>
+                            <p> Customer Inquiry <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="create_customer_inquiry" class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_customer_inquiry" class="nav-item">
+                                <a href="{{route('inquiry.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
             </ul>
         </nav>

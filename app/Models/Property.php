@@ -30,6 +30,7 @@ class Property extends Model
         'user_id',
         'postcode_id',
         'prefecture_id',
+        'city_id',
         'location',
         'surface_area',
         'rent_amount',
@@ -165,22 +166,32 @@ class Property extends Model
     }
     public function getTsuboAttribute()
     {
-        $tsubo = new TsuboHelper();
-        $result = $tsubo->toTsubo($this->surface_area);
-        return $result;
+        if($this->surface_area !=null){
+            $result = toTsubo($this->surface_area);
+            return $result;
+        } else {
+            return 0;
+        }
     }
 
     public function getManAttribute()
     {
-        $tsubo = new TsuboHelper();
-        $result = $tsubo->toMan($this->rent_amount);
-        return $result;
+        if($this->rent_amount != null){
+            $result = toMan($this->rent_amount);
+            return $result;
+        } else {
+            return 0;
+        }
     }
 
     public function getManPerTsuboAttribute()
     {
-        $tsubo = new TsuboHelper();
-        $result = round($tsubo->toMan($this->rent_amount) / $tsubo->toTsubo($this->surface_area));
-        return $result;
+        if($this->rent_amount != null && $this->surface_area != null){
+            $result = round(toMan($this->rent_amount) / toTsubo($this->surface_area));
+            return $result;
+        } else {
+            return 0;
+        }
+
     }
 }

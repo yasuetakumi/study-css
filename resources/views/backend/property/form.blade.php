@@ -27,7 +27,7 @@
         @component('backend._components.vue.form.select2', [
             'name'          => 'user_id',
             'label'         => __('label.company'),
-            'required'      => 'false',
+            'required'      => 'true',
             'options'       => '$store.state.preset.users_options',
             'model'         => 'items.user_id',
             'disabled'      => $isUserCompany ? $isUserCompany : $disableForm
@@ -35,14 +35,18 @@
         @endcomponent
 
         @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => null, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_select', ['name' => 'cities_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => null, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => null, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        @component('backend._components.input_text', ['name' => 'surface_area', 'label' => __('label.surface_area_meter'), 'required' => null, 'value' => $item->surface_area ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        @component('backend._components.input_text', ['name' => 'surface_area_tsubo', 'label' => __('label.surface_area_tsubo'), 'required' => null, 'value' => $item->tsubo ?? '', 'isReadOnly' => true ]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount'), 'required' => null, 'value' => $item->rent_amount ?? '', 'isReadOnly' => $disableForm]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'rent_amount_man_tsubo', 'label' => __('label.cost_of_rent'), 'required' => null, 'value' => $item->man_per_tsubo ?? '', 'isReadOnly' => true]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'rent_amount_man', 'label' => __('label.rent_amount_man'), 'required' => null, 'value' => $item->man ?? '', 'isReadOnly' => true]) @endcomponent
+        @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $item->tsubo ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        @if ($page_type == 'detail')
+            @component('backend._components.input_number', ['name' => 'surface_area_meter', 'label' => __('label.surface_area_meter'), 'required' => null, 'value' => $item->surface_area ?? '', 'isReadOnly' => true ]) @endcomponent
+        @endif
+        @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $item->man ?? '', 'isReadOnly' => $disableForm]) @endcomponent
+        @if ($page_type == 'detail')
+            @component('backend._components.input_number', ['name' => 'rent_amount_man_tsubo', 'label' => __('label.cost_of_rent'), 'required' => null, 'value' => $item->man_per_tsubo ?? '', 'isReadOnly' => true]) @endcomponent
+            @component('backend._components.input_number', ['name' => 'rent_amount_man', 'label' => __('label.rent_amount'), 'required' => null, 'value' => $item->rent_amount ?? '', 'isReadOnly' => true]) @endcomponent
+        @endif
         @component('backend._components.input_number', ['name' => 'number_of_floors_under_ground', 'label' => __('label.number_of_floor_underground'), 'required' => null, 'value' => $item->number_of_floors_under_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_number', ['name' => 'number_of_floors_above_ground', 'label' => __('label.number_of_floor_aboveground'), 'required' => null, 'value' => $item->number_of_floors_above_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_select', ['name' => 'property_type_id', 'options' => $property_types, 'label' => __('label.restaurant_type'), 'required' => null, 'value' => $item->property_type_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
