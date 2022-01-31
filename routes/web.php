@@ -130,7 +130,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B3 - B5
             Route::resource('company', 'Backend\PropertyController');
             // B6
-            Route::resource('company-information', 'Backend\CompanyController')->only(['show', 'update']);
+            Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
+            Route::put('company-information', 'Backend\CompanyController@updateAsCompanyOwner')->name('companyowner-update');
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
         });

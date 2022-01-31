@@ -297,6 +297,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('companyowner-edit')}}" class="nav-link">
+                            <i class="fas fa-building nav-icon"></i>
+                            <p>@lang('label.company')</p>
+                        </a>
+                    </li>
                 @endif
             </ul>
         </nav>

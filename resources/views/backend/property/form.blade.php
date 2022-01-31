@@ -1,11 +1,13 @@
 @php
     $disableForm = false;
     $isUserCompany = false;
+    $companyUserId = '';
     if ($page_type == 'detail') {
         $disableForm = true;
     }
     if(Auth::guard('user')->check()){
         $isUserCompany = true;
+        $companyUserId = Auth::id();
     }
 @endphp
 @extends('backend._base.content_form')
@@ -371,6 +373,9 @@
             if(@json($page_type) == 'edit' || @json($page_type) == 'detail'){
                 var item = @json($item);
                 this.items.user_id = item.user_id;
+            } else if (@json($page_type) == 'create' && @json($companyUserId) != null) {
+                var id = @json($companyUserId);
+                this.items.user_id = id;
             }
         },
 
