@@ -140,7 +140,7 @@ class CompanyController extends Controller
     {
         $id              = Auth::guard('user')->user()->id;
 
-        $query           = Company::with(['admin', 'users']);
+        $query           = Company::with(['users']);
         $query = $query->whereHas('users', function($q) use ($id){
             $q->where('belong_company_id', $id);
         });
