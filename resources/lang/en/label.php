@@ -158,5 +158,6 @@ return [
     'person_in_charge' => 'Person In Charge',
     'note' => 'Note',
     'company_name' => 'Company Name',
+    'content_inquiry' => 'Content of Inquiry',
 
 ];
