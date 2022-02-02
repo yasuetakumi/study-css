@@ -23,7 +23,7 @@ class Company extends Model
     }
 
     public function users() {
-        return $this->hasMany('App\Models\Users');
+        return $this->hasMany(User::class, 'belong_company_id');
     }
 
 }

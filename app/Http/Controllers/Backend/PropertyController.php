@@ -26,16 +26,34 @@ use App\Helpers\DatatablesHelper;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
 {
     use CommonToolsTraits;
+
+    protected function validator( array $data, $type ){
+        return Validator::make($data, [
+            'user_id'       => 'required',
+            'postcode_id'   => 'required',
+            'prefecture_id' => 'required',
+            'cities_id'     => 'required',
+            'location'      => 'required',
+            'surface_area'  => 'required',
+            'rent_amount'   => 'required',
+        ]);
+    }
+
     public function show($param)
     {
 
         if( $param == 'json' ){
 
             $model = Property::with(['user', 'postcode']);
+            if(Auth::guard('user')->check()){
+                $model = Property::where('user_id', Auth::id())->with(['user', 'postcode']);
+            }
             return (new DatatablesHelper)->instance($model, true, true, true)
                                             ->filterColumn('user.display_name', function($query, $keyword){
                                                 $query->whereHas('user', function($q) use ($keyword){
@@ -113,8 +131,7 @@ class PropertyController extends Controller
         $surface_area = SurfaceAreaOption::orderBy('id')->get();
         $surface_area_tsubo = [];
         foreach($surface_area as $sf){
-            $tsubo = new TsuboHelper();
-            $tsubo_value = $tsubo->toTsubo($sf->value);
+            $tsubo_value = toTsubo($sf->value);
             array_push($surface_area_tsubo, $tsubo_value );
         }
         $surface_area_tsubo_options = collect($surface_area_tsubo);
@@ -131,6 +148,10 @@ class PropertyController extends Controller
     public function index()
     {
         $data['page_title'] = 'Property List';
+        if(Auth::guard('user')->check()){
+            $data['page_title'] = 'Property Company List';
+        }
+
         return view('backend.property.index', $data);
     }
 
@@ -197,8 +218,7 @@ class PropertyController extends Controller
         $surface_area = SurfaceAreaOption::orderBy('id')->get();
         $surface_area_tsubo = [];
         foreach($surface_area as $sf){
-            $tsubo = new TsuboHelper();
-            $tsubo_value = $tsubo->toTsubo($sf->value);
+            $tsubo_value = toTsubo($sf->value);
             array_push($surface_area_tsubo, $tsubo_value );
         }
         $surface_area_tsubo_options = collect($surface_area_tsubo);
@@ -217,6 +237,9 @@ class PropertyController extends Controller
     {
         $data['item'] = new StdClass();
         $data['form_action'] = route('admin.property.store');
+        if(Auth::guard('user')->check()){
+            $data['form_action'] = route('company.store');
+        }
         $data['page_type'] = 'create';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         //$data['users'] = User::pluck('display_name', 'id')->all();
@@ -239,7 +262,12 @@ class PropertyController extends Controller
     public function store( Request $request)
     {
         $data = $request->all();
-
+        //return $data;
+        if(Auth::guard('user')->check()){
+            $data['user_id'] = Auth::id();
+        }
+        $this->validator($data, 'create')->validate();
+        //return $data;
         $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main') );
         for($i=1; $i<=6; $i++){
             $data['thumbnail_image_' . $i]  = ImageHelper::upload( $request->file('thumbnail_image_' . $i) );
@@ -250,17 +278,33 @@ class PropertyController extends Controller
         for($i=1; $i<=5; $i++){
             $data['image_360_' . $i]     = ImageHelper::upload( $request->file('image_360_'. $i) );
         }
+        // change to meter and yen before save
+        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $feature = new Property();
         $feature->fill($data)->save();
 
-        return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+        if(Auth::guard('user')->check()){
+            return redirect()->route('company.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+        } else {
+            return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+        }
     }
 
     public function edit($id)
     {
         $data['item'] = Property::find($id);
+        if(Auth::guard('user')->check()){
+            if($data['item']->user_id != Auth::id()){
+                return redirect()->route('company.index')->withErrors(['msg' => 'You dont have access to this property']);
+            }
+        }
+
         $data['form_action'] = route('admin.property.update', $id);
+        if(Auth::guard('user')->check()){
+            $data['form_action'] = route('company.update', $id);
+        }
         $data['page_type'] = 'edit';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         //$data['users'] = User::pluck('display_name', 'id')->all();
@@ -284,7 +328,10 @@ class PropertyController extends Controller
     public function update( Request $request, $id)
     {
         $data = $request->all();
-
+        if(Auth::guard('user')->check()){
+            $data['user_id'] = Auth::id();
+        }
+        $this->validator($data, 'update')->validate();
         $edit = Property::find($id);
 
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
@@ -298,10 +345,17 @@ class PropertyController extends Controller
         for($i=1; $i<=5; $i++){
             $data['image_360_' . $i]     = ImageHelper::update( $request->file('image_360_'. $i), $edit->image_360_ . $i);
         }
+        // change to meter and yen before update
+        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $edit->update($data);
+        if(Auth::guard('user')->check()){
+            return redirect()->route('company.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+        } else {
+            return redirect()->route('admin.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+        }
 
-        return redirect()->route('admin.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
 
     public function destroy()

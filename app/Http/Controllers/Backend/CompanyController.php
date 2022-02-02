@@ -135,4 +135,35 @@ class CompanyController extends Controller
 
         return 1;
     }
+
+    public function editAsCompanyOwner()
+    {
+        $id              = Auth::guard('user')->user()->id;
+
+        $query           = Company::with(['admin', 'users']);
+        $query = $query->whereHas('users', function($q) use ($id){
+            $q->where('belong_company_id', $id);
+        });
+        $data['item'] = $query->first();
+
+        $data['page_title']     = __('label.edit') . ' ' . __('label.company');
+        $data['form_action']    = route('companyowner-update');
+        $data['page_type']      = 'edit';
+        //return $data;
+
+        return view('backend.company.form', $data);
+    }
+
+    public function updateAsCompanyOwner(Request $request)
+    {
+        $id    = Auth::guard('user')->user()->id;
+        $query = Company::with(['users']);
+        $query = $query->whereHas('users', function($q) use ($id){
+            $q->where('belong_company_id', $id);
+        });
+        $data = $query->first();
+        $company = Company::find($data->id);
+        $company->update($request->all());
+        return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+    }
 }
