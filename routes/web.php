@@ -89,6 +89,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('company', 'CompanyController');
 
                 Route::resource('property', 'PropertyController')->except('detail');
+
+                Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
             });
             //------------------------------------------------------------------
             // Sharing for super admin and company admin
@@ -128,43 +130,48 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             // B3 - B5
-            Route::resource('company', 'Backend\PropertyController');
+            Route::resource('property', 'Backend\PropertyController');
             // B6
             Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
             Route::put('company-information', 'Backend\CompanyController@updateAsCompanyOwner')->name('companyowner-update');
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
+            // B8
+            Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.detail');
         });
     });
 
     // End User (C Module)
-    // C4
-    Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
-    // C4
-    Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
-    // C2
-    Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
-    Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
-    // C3
-    Route::get('map', function () {
-        return 'map';
+    Route::name('enduser.')->group(function () {
+         // C4
+        Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
+        // C4
+        Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('inquiry.store');
+        // C2
+        Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
+        Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+        // C3
+        Route::get('map', function () {
+            return 'map';
+        });
+        // C5
+        Route::get('favorite', function () {
+            return 'favorite';
+        });
+        // C6
+        Route::get('history', function () {
+            return 'history';
+        });
+        // C7
+        Route::get('company', function(){
+            return 'Company List';
+        });
+        // C8
+        Route::get('company/id', function(){
+            return 'Company Show';
+        });
     });
-    // C5
-    Route::get('favorite', function () {
-        return 'favorite';
-    });
-    // C6
-    Route::get('history', function () {
-        return 'history';
-    });
-    // C7
-    Route::get('company', function(){
-        return 'Company List';
-    });
-    // C8
-    Route::get('company/id', function(){
-        return 'Company Show';
-    });
+
 
 
 });
