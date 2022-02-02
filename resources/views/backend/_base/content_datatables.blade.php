@@ -69,7 +69,7 @@
                 var min = parseInt( $('#input-min-rent_amount').val(), 10 );
                 var max = parseInt( $('#input-max-rent_amount').val(), 10 );
                 var rent = parseFloat( data[4] ) || 0;
-                console.log("rent", rent);
+                //console.log("rent", rent);
 
                 if ( ( isNaN( min ) && isNaN( max ) ) ||
                     ( isNaN( min ) && rent <= max ) ||
@@ -87,7 +87,7 @@
                 var min = parseInt( $('#input-min-surface_area').val(), 10 );
                 var max = parseInt( $('#input-max-surface_area').val(), 10 );
                 var surface = parseFloat( data[5] ) || 0;
-                console.log("surface", surface);
+                //console.log("surface", surface);
 
                 if ( ( isNaN( min ) && isNaN( max ) ) ||
                     ( isNaN( min ) && surface <= max ) ||

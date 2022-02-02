@@ -149,28 +149,6 @@
                         </li>
                     </ul>
                 </li>
-                {{-- Customer Inquiry --}}
-                <li class="nav-item has-treeview" id="tree_customer_inquiries">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-question"></i>
-                        <p> Customer Inquiry <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="create_customer_inquiry" class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_customer_inquiry" class="nav-item">
-                            <a href="{{route('admin.customer-inquiry.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-item has-treeview" id="tree_news">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-newspaper"></i>
@@ -272,6 +250,57 @@
                         <a href="{{route('userowner-edit')}}" class="nav-link">
                             <i class="fas fa-user nav-icon"></i>
                             <p>@lang('label.user')</p>
+                        </a>
+                    </li>
+                    {{-- Property --}}
+                    <li class="nav-item has-treeview" id="tree_propertys">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-landmark nav-icon"></i>
+                            <p> @lang('Property')<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="list_property" class="nav-item">
+                                <a href="{{route('company.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_property" class="nav-item">
+                                <a href="{{route('company.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- END PROPERTY --}}
+                    {{-- Customer Inquiry --}}
+                    <li class="nav-item has-treeview" id="tree_customer_inquiries">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-question"></i>
+                            <p> Customer Inquiry <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="create_customer_inquiry" class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_customer_inquiry" class="nav-item">
+                                <a href="{{route('inquiry.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('companyowner-edit')}}" class="nav-link">
+                            <i class="fas fa-building nav-icon"></i>
+                            <p>@lang('label.company')</p>
                         </a>
                     </li>
                 @endif
