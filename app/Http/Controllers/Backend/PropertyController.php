@@ -26,6 +26,8 @@ use App\Helpers\DatatablesHelper;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Http\Controllers\Controller;
+use App\Models\ContactUsType;
+use App\Models\CustomerInquiry;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -226,6 +228,10 @@ class PropertyController extends Controller
         $data['min_surface_area'] = $surface_area_tsubo_options->min();
         $data['has_kitchens'] = collect($skeleton);
         $data['page_type']  = 'detail';
+        if(!Auth::check()){
+            $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
+            $data['form_action_inquiry'] = route('enduser.inquiry.store');
+        }
 
         //dd($data['design_categories']);
         return view('backend.property.form', $data);

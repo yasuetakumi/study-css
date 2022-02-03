@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CustomerInquiry;
 use App\Helpers\DatatablesHelper;
 use App\Http\Controllers\Controller;
+use App\Models\ContactUsType;
 
 class CustomerInquiryController extends Controller
 {
@@ -38,7 +39,11 @@ class CustomerInquiryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $inquiry = new CustomerInquiry();
+        $inquiry->fill($data)->save();
+
+        return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
 
     /**
