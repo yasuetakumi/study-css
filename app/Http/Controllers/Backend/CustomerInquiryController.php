@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\CustomerInquiry;
 use App\Helpers\DatatablesHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\CustomerInquiryMail;
 use App\Models\ContactUsType;
+use App\Models\Property;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerInquiryController extends Controller
 {
@@ -39,9 +42,20 @@ class CustomerInquiryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'=> 'required|max:45',
+            'email'=> 'required|email',
+            'text' => 'required',
+        ]);
         $data = $request->all();
+        $subject = ContactUsType::find($request->contact_us_type_id);
+        $company = Property::with('user')->find($request->property_id);
+        $company_user_email = $company->user->email;
+        $data['company_name'] = $company->user->company->company_name;
+        $data['subject'] = $subject->label_jp;
         $inquiry = new CustomerInquiry();
         $inquiry->fill($data)->save();
+        Mail::to($company_user_email)->send(new CustomerInquiryMail($data));
 
         return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
