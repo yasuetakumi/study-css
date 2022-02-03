@@ -48,4 +48,7 @@ Route::prefix('v1')->group(function () {
     //Plan
     Route::get('/plans/getPlansByCategory/{category_id}', 'API\ApiPlanController@getPlanByCategory');
     Route::get('/plans/getPlanByAreaGroup/{category_id}/{area_id}', 'API\ApiPlanController@getPlanByAreaGroup');
+
+    //Station
+    Route::get('/station/getStationByStationLine/{station_line}', 'API\ApiStationController@getStationByStationLine');
 });
