@@ -14,15 +14,15 @@ class CustomerInquiry extends Model
 
 	protected $casts = [
 		'id' => 'int',
-		'properties_id' => 'int',
-		'contact_us_types_id' => 'int',
+		'property_id' => 'int',
+		'contact_us_type_id' => 'int',
 		'flag' => 'bool',
 		'is_finish' => 'bool'
 	];
 
 	protected $fillable = [
-		'properties_id',
-		'contact_us_types_id',
+		'property_id',
+		'contact_us_type_id',
 		'subject',
 		'text',
 		'flag',
