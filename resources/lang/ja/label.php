@@ -157,4 +157,6 @@ return [
     'person_in_charge' => '管理者',
     'note' => 'メモ',
     'company_name' => '会社名',
+    'content_inquiry' => 'お問い合わせ内容',
+    'inquiry_button' => 'お問い合わせボタン'
 ];
