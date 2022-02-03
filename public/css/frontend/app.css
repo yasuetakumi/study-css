@@ -1,0 +1,6 @@
+ul.list-multi-columns > li{
+    float: left;
+    width: 25%;
+    display: block;
+    margin-bottom: 1rem;
+}
