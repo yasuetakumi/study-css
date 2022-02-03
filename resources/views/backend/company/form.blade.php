@@ -21,13 +21,15 @@
 
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, "page_type" => $page_type, "files" => false])
-        @component('backend._components.input_text', ['name' => 'display_name', 'label' => __('label.name'), 'required' => 1, 'value' => $item->admin->display_name]) @endcomponent
-        @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.email'), 'required' => 1, 'value' => $item->admin->email]) @endcomponent
+        @if(!Auth::guard('user')->check())
+            @component('backend._components.input_text', ['name' => 'display_name', 'label' => __('label.name'), 'required' => 1, 'value' => $item->admin->display_name]) @endcomponent
+            @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.email'), 'required' => 1, 'value' => $item->admin->email]) @endcomponent
 
-        @if ($page_type == "create")
-            @component('backend._components.input_password') @endcomponent
-        @else
-            @component('backend._components.input_password_edit') @endcomponent
+            @if ($page_type == "create")
+                @component('backend._components.input_password') @endcomponent
+            @else
+                @component('backend._components.input_password_edit') @endcomponent
+            @endif
         @endif
 
         @component('backend._components.input_text', ['name' => 'company_name', 'label' => __('label.company_name'), 'required' => 1, 'value' => $item->company_name]) @endcomponent
