@@ -7,6 +7,7 @@ use App\Models\Prefecture;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Property;
 use App\Models\Station;
 use App\Models\StationsLine;
 
@@ -20,7 +21,7 @@ class HomeController extends Controller
     }
 
     public function prefecture($prefecture){
-        $data['page_title'] = 'Prefecture' . Str::ucfirst($prefecture);
+        $data['page_title'] = 'Prefecture ' . Str::ucfirst($prefecture);
         $data['prefecture'] = Prefecture::where('name', $prefecture)->first();
         $data['cities'] = City::where('prefecture_id', $data['prefecture']->id)->get();
         $stations = Station::where('prefecture_id', $data['prefecture']->id)->get();
@@ -30,6 +31,7 @@ class HomeController extends Controller
         }
         $data['station_lines'] = StationsLine::whereIn('id', $station_lines)->get();
         $data['initial_station_line'] = $data['station_lines']->first();
+        $data['properties'] = Property::where('prefecture_id', $data['prefecture']->id)->get();
         //return $data;
         return view('frontend.prefecture.index', $data);
     }

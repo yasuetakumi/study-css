@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\Station;
 use Illuminate\Http\Request;
 
 class ApiPropertyController extends Controller
@@ -19,6 +20,17 @@ class ApiPropertyController extends Controller
         $selectedPropertyType = array();
         $selectedPropertyPreference = array();
         $selectedCuisines = array();
+
+        if(isset($request->city)){
+            $cities = $request->city;
+            $query->whereIn('city_id', $cities);
+        }
+        if(isset($request->station)){
+            $stations = array($request->station);
+            $query->whereHas('property_stations', function($q) use ($stations){
+                $q->whereIn('station_id', $stations);
+            });
+        }
 
         $maxSurface = !empty($filter->surface_max) ? $filter->surface_max : '';
         $minSurface = !empty($filter->surface_min) ? $filter->surface_min : '';
@@ -101,5 +113,30 @@ class ApiPropertyController extends Controller
             ]
         ], 200, [], JSON_NUMERIC_CHECK);
 
+    }
+
+    public function getPropertyCountByCity(Request $request)
+    {
+        if($request->city){
+            $properties = Property::whereIn('city_id', $request->city)->get();
+        } else{
+            $properties = Property::get();
+        }
+
+        $result = $properties->count();
+        return response()->json($result);
+    }
+    public function getPropertyByStation(Request $request)
+    {
+        $stations = Station::with(['prefecture', 'prefecture.properties'])->where('station_line_id', $request->station_line);
+        // print_r($request);
+        if(isset($request->station)){
+            $stations->whereHas('prefecture', function($q){
+                $q->whereHas('properties');
+            });
+        }
+        $stations->get();
+        $count = $stations->count();
+        return response()->json($count);
     }
 }
