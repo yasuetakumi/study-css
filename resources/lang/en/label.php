@@ -154,6 +154,8 @@ return [
     'subject' => 'Subject',
     'text' => 'Text',
     'flag' => 'Flag',
+    'name_inquiry' => 'Name',
+    'email_inquiry' => 'Email',
     'is_finish' => 'Is Finish',
     'person_in_charge' => 'Person In Charge',
     'note' => 'Note',

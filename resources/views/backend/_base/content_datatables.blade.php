@@ -277,14 +277,15 @@
                 if (confirm('@lang('label.jsConfirmDeleteData')')) {
                     $.ajax({
                         url: url,
-                        type: 'DELETE',
+                        type: "POST",
                         dataType: 'json',
-                        data: {method: 'DELETE', submit: true}
+                        data: {_method: "DELETE", submit: true}
                     }).always(function (data) {
-                        console.log(data);
+                        console.log(data.status);
                         $('#datatable').DataTable().draw(false);
-                        if (data === 1){
+                        if (data.status == 200){
                           toastr.success('@lang('label.jsInfoDeletedData')');
+                          table.ajax.reload();
                         }
                         else {
                           toastr.error('@lang('label.FAILED_DELETE_SELF_MESSAGE')');

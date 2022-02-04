@@ -21,8 +21,8 @@
     <th data-col="is_finish">@lang('label.is_finish')</th>
     <th data-col="person_in_charge">@lang('label.person_in_charge')</th>
     <th data-col="note">@lang('label.note')</th>
-    <th data-col="name">@lang('label.name')</th>
-    <th data-col="email">@lang('label.email')</th>
+    <th data-col="name">@lang('label.name_inquiry')</th>
+    <th data-col="email">@lang('label.email_inquiry')</th>
     <th data-col="company_name">@lang('label.company_name')</th>
     <th data-col="updated_at">@lang('label.last_update')</th>
     <th data-col="action">@lang('label.action')</th>
