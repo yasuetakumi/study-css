@@ -145,8 +145,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // C1
     Route::get('/', 'Frontend\HomeController@index')->name('home');
     // C2
-    Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
-    Route::post('restaurant', 'Backend\RestaurantController@index')->name('restaurant.filter');
+    Route::get('property', 'Frontend\PropertyController@index')->name('property.index');
+    Route::post('property', 'Frontend\PropertyController@index')->name('property.filter');
     // C3
     Route::get('map', function () {
         return 'map';
