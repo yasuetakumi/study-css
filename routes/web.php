@@ -146,7 +146,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('/', 'Frontend\HomeController@index')->name('home');
     // C2
     Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
-    Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+    Route::post('restaurant', 'Backend\RestaurantController@index')->name('restaurant.filter');
     // C3
     Route::get('map', function () {
         return 'map';
