@@ -29,9 +29,9 @@ You can registered routing by this command.
 
 Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { // start basic auth protection
 
-    Route::get('/', function(){
-        return view('welcome');
-    })->middleware('guest');
+    // Route::get('/', function(){
+    //     return view('welcome');
+    // })->middleware('guest');
 
     Route::get('/auth-check', function(){
         dd(Auth::guard("web")->check());
@@ -142,34 +142,38 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     });
 
     // End User (C Module)
-    Route::name('enduser.')->group(function () {
-         // C4
-        Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
-        // C4
-        Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('inquiry.store');
-        // C2
-        Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
-        Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
-        // C3
-        Route::get('map', function () {
-            return 'map';
-        });
-        // C5
-        Route::get('favorite', function () {
-            return 'favorite';
-        });
-        // C6
-        Route::get('history', function () {
-            return 'history';
-        });
-        // C7
-        Route::get('company', function(){
-            return 'Company List';
-        });
-        // C8
-        Route::get('company/id', function(){
-            return 'Company Show';
-        });
+    // C4
+    Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
+    // C4
+    Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
+    // C1
+    Route::get('/', 'Frontend\HomeController@index')->name('home');
+    // C2
+    Route::get('restaurant', 'Backend\RestaurantController@index')->name('restaurant.index');
+    Route::post('restaurant', 'Backend\RestaurantController@filter')->name('restaurant.filter');
+    // C3
+    Route::get('map', function () {
+        return 'map';
+    });
+    // C4
+    Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
+    // C5
+    Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
+    // C6
+    Route::get('favorite', function () {
+        return 'favorite';
+    });
+    // C7
+    Route::get('history', function () {
+        return 'history';
+    });
+    // C8
+    Route::get('company', function(){
+        return 'Company List';
+    });
+    // C9
+    Route::get('company/id', function(){
+        return 'Company Show';
     });
 
 
