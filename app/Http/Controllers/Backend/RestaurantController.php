@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Cuisine;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
@@ -17,8 +18,14 @@ use App\Models\WalkingDistanceFromStationOption;
 
 class RestaurantController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if(isset($request->city)){
+            $data['city_id'] = $request->city;
+        }
+        if(isset($request->station)){
+            $data['station_id'] = $request->station;
+        }
         $data['rent_amounts'] = RentPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['surface_areas'] = SurfaceAreaOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $skeleton = [
