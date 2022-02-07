@@ -73,7 +73,7 @@
                 <div class="col-12">
                     <div id="form-group--plans" class="row form-group">
 
-                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
+                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>false])
 
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <div class="field-group clearfix">
@@ -90,7 +90,7 @@
                 <div class="col-12">
                     <div id="form-group--plans" class="row form-group">
 
-                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
+                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>false])
 
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <div class="field-group clearfix">
@@ -447,12 +447,11 @@
             this.getDesignByCategory(1);
             this.getPlanByCateogry(1);
             if(@json($page_type) == 'edit'){
-                console.log(@json($item->plan_id));
-                var id_plan = @json($item->plan_id);
+                var item = @json($item);
 
                 let design_category_id = document.querySelector("input[name=design_category_id]:checked").value;
                 let surface_area = document.querySelector("input[name=surface_area]").value;
-                this.items.plan_id = id_plan;
+                this.items.plan_id = item.plan_id;
                 this.items.design_category_id = design_category_id;
                 console.log(design_category_id);
                 if(this.items.plan_id && this.items.plan_id != null){
@@ -470,8 +469,8 @@
                         });
                     this.items.loading = false;
                 }
-            } else{
-
+            } else if(@json($page_type) == 'create'){
+                console.log("create property");
             }
 
         },

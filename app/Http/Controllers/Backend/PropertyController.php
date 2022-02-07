@@ -44,7 +44,6 @@ class PropertyController extends Controller
             'location'      => 'required',
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
-            'plan_id'       => 'required',
         ]);
     }
 
@@ -55,7 +54,10 @@ class PropertyController extends Controller
 
             $model = Property::with(['user', 'postcode']);
             if(Auth::guard('user')->check()){
-                $model = Property::where('user_id', Auth::id())->with(['user', 'postcode']);
+                $model = Property::with(['user', 'postcode']);
+                $model->whereHas('user', function($q){
+                    $q->where('belong_company_id', Auth::guard('user')->user()->belong_company_id);
+                });
             }
             return (new DatatablesHelper)->instance($model, true, true, true)
                                             ->filterColumn('user.display_name', function($query, $keyword){
@@ -414,9 +416,12 @@ class PropertyController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        $property = Property::find($id);
+        $property->delete();
 
+        return redirect()->back()->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
 
 
