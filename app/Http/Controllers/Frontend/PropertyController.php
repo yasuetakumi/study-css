@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend;
 
+use App\Models\Cuisine;
 use App\Models\Property;
+use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
+use App\Models\PropertyPreference;
+use App\Models\TransferPriceOption;
 use App\Http\Controllers\Controller;
-use App\Models\City;
-use App\Models\Cuisine;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
-use App\Models\PropertyPreference;
-use App\Models\PropertyType;
-use App\Models\TransferPriceOption;
 use App\Models\WalkingDistanceFromStationOption;
 
-class RestaurantController extends Controller
+class PropertyController extends Controller
 {
     public function index(Request $request)
     {
@@ -46,8 +45,8 @@ class RestaurantController extends Controller
         $data['floor_abovegrounds'] = NumberOfFloorsAboveGround::select('id', 'value', 'label_jp')->get();
         $data['cuisines'] = Cuisine::select('id', 'label_jp')->orderBy('id')->get();
         $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
-        $data['page_title'] = __('Restaurant List');
-        return view('frontend.restaurant.index', $data);
+        $data['page_title'] = __('Property List');
+        return view('frontend.property.index', $data);
     }
 
     public function filter(Request $request)
