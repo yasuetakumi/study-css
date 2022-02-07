@@ -264,7 +264,7 @@
                 </dl>
                 <div class="flex justify-content-end">
                     <a id="favorite" type="button" style="color: red" @click="setLikeProperty(pd.id)">
-                        <i :class="isLiked" class="fas fa-heart fa-2x"></i>
+                        <i :class="items.like_property.includes(pd.id) ? 'fas' : 'far' " class="fa-heart fa-2x"></i>
                         {{-- <i class="far fa-heart fa-2x"></i> --}}
                     </a>
                 </div>
