@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomerInquirySeeder::class);
 
         //estimation index
+        $this->call(AreaGroupSeeder::class);
         $this->call(DesignPlanStatusSeeder::class);
         $this->call(TagArchitectureSeeder::class);
         $this->call(TagColorSeeder::class);
