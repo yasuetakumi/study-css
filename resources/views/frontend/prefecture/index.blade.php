@@ -10,7 +10,7 @@
                 <hr class="my-0 mx-2">
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="{{route('restaurant.filter')}}" method="POST" id="formElement">
+                    <form action="{{route('property.filter')}}" method="POST" id="formElement">
                         <div class="row">
                             @foreach ($cities as $city)
                                 <div class="col-lg-2 col-6">
@@ -44,7 +44,7 @@
                 </div>
                 <hr class="my-0 mx-2">
                 <!-- /.card-header -->
-                <form action="{{route('restaurant.filter')}}" method="POST" id="propertyByCity">
+                <form action="{{route('property.filter')}}" method="POST" id="propertyByCity">
                     @csrf
                     <div class="card-body">
                         <div class="row mb-4">
