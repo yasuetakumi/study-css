@@ -16,4 +16,8 @@ class Prefecture extends Model
     {
         return $this->belongsTo(Area::class);
     }
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'prefecture_id');
+    }
 }
