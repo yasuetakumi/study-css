@@ -16,7 +16,6 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('display_name', 100);
-            $table->unsignedBigInteger('area_group_id')->nullable();
             $table->unsignedBigInteger('design_plan_status_id')->nullable();
             $table->unsignedBigInteger('design_category_id')->nullable();
             $table->float('area')->nullable();
@@ -46,7 +45,6 @@ class CreatePlansTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('area_group_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('design_plan_status_id')->references('id')->on('design_plan_statuses')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('design_category_id')->references('id')->on('cuisines')->onUpdate('cascade')->onDelete('set null');
         });
