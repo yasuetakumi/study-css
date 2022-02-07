@@ -33,6 +33,7 @@ class Property extends Model
         'postcode_id',
         'prefecture_id',
         'city_id',
+        'plan_id',
         'location',
         'surface_area',
         'rent_amount',
@@ -139,6 +140,11 @@ class Property extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
     }
 
     public function scopeRangeArea($query, $min, $max, $column){
