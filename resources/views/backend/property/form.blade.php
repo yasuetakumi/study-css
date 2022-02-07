@@ -535,7 +535,7 @@
                 return this.items.tsubo_max;
             },
             isLiked: function () {
-                if(this.items.like_property.includes(this.items.property_id)){
+                if(this.items.like_property && this.items.like_property.length > 0 && this.items.like_property.includes(this.items.property_id)){
                     return true;
                 } else {
                     return false;
@@ -650,22 +650,22 @@
             },
             estimationIndex: function(event){},
             getLikeProperty: function() {
-                let local = localStorage.getItem('favorites');
+                let local = localStorage.getItem('favoritePropertyId');
                 this.items.like_property = JSON.parse(local);
             },
             setLikeProperty: function () {
                 //this.items.like_property.push(this.items.property_id)
                 var properties_like = [];
-                let local = localStorage.getItem('favorites');
-                properties_like = JSON.parse(local);
-                if(properties_like.includes(this.items.property_id)){
+                let local = localStorage.getItem('favoritePropertyId');
+                properties_like = JSON.parse(local) || [];
+                if(properties_like.length > 0 && properties_like.includes(this.items.property_id)){
                     let index = properties_like.indexOf(this.items.property_id);
                     console.log("index", index);
                     properties_like.splice(index, 1);
-                    localStorage.setItem('favorites', JSON.stringify(properties_like));
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                 } else {
                     properties_like.push(this.items.property_id);
-                    localStorage.setItem('favorites', JSON.stringify(properties_like));
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                 }
 
                 this.getLikeProperty();
