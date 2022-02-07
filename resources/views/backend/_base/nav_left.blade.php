@@ -63,7 +63,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li id="create_property" class="nav-item">
-                                <a href="{{route('property.detail', 1)}}" class="nav-link">
+                                <a href="{{route('admin.property.detail', 1)}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.detail_page')</p>
                                 </a>
@@ -260,14 +260,20 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            <li id="create_property" class="nav-item">
+                                <a href="{{route('manage.property.detail', 1)}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.detail_page')</p>
+                                </a>
+                            </li>
                             <li id="list_property" class="nav-item">
-                                <a href="{{route('company.create')}}" class="nav-link">
+                                <a href="{{route('property.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.createNew')</p>
                                 </a>
                             </li>
                             <li id="list_property" class="nav-item">
-                                <a href="{{route('company.index')}}" class="nav-link">
+                                <a href="{{route('property.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.list')</p>
                                 </a>

@@ -89,6 +89,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                 Route::resource('company', 'CompanyController');
 
                 Route::resource('property', 'PropertyController')->except('detail');
+
+                Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
             });
             //------------------------------------------------------------------
             // Sharing for super admin and company admin
@@ -128,12 +130,14 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             // B3 - B5
-            Route::resource('company', 'Backend\PropertyController');
+            Route::resource('property', 'Backend\PropertyController');
             // B6
             Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
             Route::put('company-information', 'Backend\CompanyController@updateAsCompanyOwner')->name('companyowner-update');
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
+            // B8
+            Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.detail');
         });
     });
 
@@ -171,6 +175,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('company/id', function(){
         return 'Company Show';
     });
+
 
 
 });

@@ -40,10 +40,11 @@ class PropertyController extends Controller
             'user_id'       => 'required',
             'postcode_id'   => 'required',
             'prefecture_id' => 'required',
-            'cities_id'     => 'required',
+            'city_id'       => 'required',
             'location'      => 'required',
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
+            'plan_id'       => 'required',
         ]);
     }
 
@@ -244,7 +245,7 @@ class PropertyController extends Controller
         $data['item'] = new StdClass();
         $data['form_action'] = route('admin.property.store');
         if(Auth::guard('user')->check()){
-            $data['form_action'] = route('company.store');
+            $data['form_action'] = route('property.store');
         }
         $data['page_type'] = 'create';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
@@ -260,6 +261,30 @@ class PropertyController extends Controller
         // options for vue select 2 options
         $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
         $data['users_options']     = $this->initSelect2Options($users);
+        $categories =  [
+            [
+                'value' => Cuisine::IZAKAYA,
+                'label_en' => 'Izakaya / Dining Bar',
+                'label_jp' => '居酒屋・ダイニングバー',
+            ],
+            [
+                'value' => Cuisine::CAFE,
+                'label_en' => 'Cafe',
+                'label_jp' => 'カフェ',
+            ],
+            [
+                'value' => Cuisine::BAR,
+                'label_en' => 'Bar',
+                'label_jp' => 'バー',
+            ],
+            [
+                'value' => Cuisine::RAMEN,
+                'label_en' => 'Ramen',
+                'label_jp' => 'ラーメン',
+            ],
+
+        ];
+        $data['design_categories'] = collect($categories)->all();
 
         $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
         return view('backend.property.form', $data);
@@ -292,7 +317,7 @@ class PropertyController extends Controller
         $feature->fill($data)->save();
 
         if(Auth::guard('user')->check()){
-            return redirect()->route('company.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            return redirect()->route('property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
         } else {
             return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
         }
@@ -303,13 +328,13 @@ class PropertyController extends Controller
         $data['item'] = Property::find($id);
         if(Auth::guard('user')->check()){
             if($data['item']->user_id != Auth::id()){
-                return redirect()->route('company.index')->withErrors(['msg' => 'You dont have access to this property']);
+                return redirect()->route('property.index')->withErrors(['msg' => 'You dont have access to this property']);
             }
         }
 
         $data['form_action'] = route('admin.property.update', $id);
         if(Auth::guard('user')->check()){
-            $data['form_action'] = route('company.update', $id);
+            $data['form_action'] = route('property.update', $id);
         }
         $data['page_type'] = 'edit';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
@@ -328,6 +353,31 @@ class PropertyController extends Controller
 
         $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
 
+        $categories =  [
+            [
+                'value' => Cuisine::IZAKAYA,
+                'label_en' => 'Izakaya / Dining Bar',
+                'label_jp' => '居酒屋・ダイニングバー',
+            ],
+            [
+                'value' => Cuisine::CAFE,
+                'label_en' => 'Cafe',
+                'label_jp' => 'カフェ',
+            ],
+            [
+                'value' => Cuisine::BAR,
+                'label_en' => 'Bar',
+                'label_jp' => 'バー',
+            ],
+            [
+                'value' => Cuisine::RAMEN,
+                'label_en' => 'Ramen',
+                'label_jp' => 'ラーメン',
+            ],
+
+        ];
+        $data['design_categories'] = collect($categories)->all();
+        $data['dc_id'] = Plan::select('design_category_id')->find($data['item']->plan_id);
         return view('backend.property.form', $data);
     }
 
@@ -357,7 +407,7 @@ class PropertyController extends Controller
 
         $edit->update($data);
         if(Auth::guard('user')->check()){
-            return redirect()->route('company.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+            return redirect()->route('property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {
             return redirect()->route('admin.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         }
