@@ -42,6 +42,8 @@ Route::prefix('v1')->group(function () {
 
     //Get Property
     Route::post('property/getCountProperty', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
+    Route::post('property/getPropertyCountByCity', 'API\ApiPropertyController@getPropertyCountByCity');
+    Route::post('property/getPropertyByStation', 'API\ApiPropertyController@getPropertyByStation');
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'API\ApiDesignStyleController@getDesignByCategory');
 
@@ -49,4 +51,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/plans/getPlansByCategory/{category_id}', 'API\ApiPlanController@getPlanByCategory');
     Route::get('/plans/getPlanByAreaGroup/{category_id}/{area_id}', 'API\ApiPlanController@getPlanByAreaGroup');
     Route::get('/plans/getPlanBySurfaceAndCategory/{surface}/{area_id}', 'API\ApiPlanController@getPlanBySurfaceAndCategory');
+
+    //Station
+    Route::get('/station/getStationByStationLine/{station_line}', 'API\ApiStationController@getStationByStationLine');
 });

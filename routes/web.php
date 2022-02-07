@@ -29,9 +29,9 @@ You can registered routing by this command.
 
 Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { // start basic auth protection
 
-    Route::get('/', function(){
-        return view('welcome');
-    })->middleware('guest');
+    // Route::get('/', function(){
+    //     return view('welcome');
+    // })->middleware('guest');
 
     Route::get('/auth-check', function(){
         dd(Auth::guard("web")->check());
