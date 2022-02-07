@@ -138,10 +138,9 @@ class CompanyController extends Controller
 
     public function editAsCompanyOwner()
     {
-        $id              = Auth::guard('user')->user()->id;
-
-        $query           = Company::with(['users']);
-        $query = $query->whereHas('users', function($q) use ($id){
+        $id             = Auth::guard('user')->user()->belong_company_id;
+        $query          = Company::with(['users']);
+        $query          = $query->whereHas('users', function($q) use ($id){
             $q->where('belong_company_id', $id);
         });
         $data['item'] = $query->first();
