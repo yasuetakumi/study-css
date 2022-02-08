@@ -15,7 +15,9 @@
         @if(Auth::user()->has_permit_edit_company )
             <a href="{{route('admin.company.create')}}" class="btn btn-secondary float-sm-right">@lang('label.createNew')</a>
         @endif
-        <a href="{{route('admin.company.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
+        @if (Auth::user()->adminRole)
+            <a href="{{route('admin.company.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
+        @endif
     @endif
 @endsection
 
