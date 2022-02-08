@@ -119,6 +119,9 @@ class CustomerInquiryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inquiry = CustomerInquiry::find($id);
+        $inquiry->delete();
+
+        // return redirect()->route('inquiry.index')->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
 }
