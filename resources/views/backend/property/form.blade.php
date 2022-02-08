@@ -66,6 +66,31 @@
         @component('backend._components.input_select', ['name' => 'is_skeleton', 'options' => $is_skeleton, 'label' => __('label.skeleton'), 'required' => null, 'value' => $item->is_skeleton ?? '', 'isDisabled' => $disableForm]) @endcomponent
 
         @component('backend._components.input_select', ['name' => 'cuisine_id', 'options' => $cuisines, 'label' => __('label.restaurant_cuisine'), 'required' => null, 'value' => $item->cuisine_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        @component('backend._components.input_number', ['name' => 'interior_transfer_price', 'label' => __('label.interior_transfer_price'), 'required' => null, 'value' => $item->interior_transfer_price ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        {{-- Plan --}}
+        @if ($page_type == 'create' || $page_type == 'edit')
+            <div class="row">
+                <div class="col-12">
+                    <div id="form-group--plans" class="row form-group">
+
+                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>false])
+
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            <div class="field-group clearfix">
+                                @foreach($design_categories as $dc)
+                                    <div class="icheck-cyan d-inline">
+                                        <input {{isset($dc_id->design_category_id) && $dc_id->design_category_id == $dc['value'] ? 'checked' : '' }} type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" @change="getPlanBySurfaceCategory"/>
+                                        <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div id="form-group--plans" class="row form-group">
+
+                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>false])
 
         @component('backend._components.input_image', ['name' => 'thumbnail_image_main', 'label' => __('Thumbnail Image Main'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
 
@@ -408,6 +433,33 @@
         created: function(){
             this.getDesignByCategory(1);
             this.getPlanByCateogry(1);
+            if(@json($page_type) == 'edit'){
+                var item = @json($item);
+
+                let design_category_id = document.querySelector("input[name=design_category_id]:checked").value;
+                let surface_area = document.querySelector("input[name=surface_area]").value;
+                this.items.plan_id = item.plan_id;
+                this.items.design_category_id = design_category_id;
+                console.log(design_category_id);
+                if(this.items.plan_id && this.items.plan_id != null){
+                    this.items.loading = true;
+                    axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + this.items.design_category_id)
+                    .then((result) => {
+                        console.log(result.status);
+                        if(result.status == 200){
+                            this.items.list_plans_properties = result.data.data;
+                        } else {
+                            this.items.message_plan_properties = result.data.message;
+                        }
+                        }).catch((err) => {
+                            this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
+                        });
+                    this.items.loading = false;
+                }
+            } else if(@json($page_type) == 'create'){
+                console.log("create property");
+            }
+
         },
 
         /*
@@ -533,4 +585,3 @@
     }
 </script>
 @endpush
-
