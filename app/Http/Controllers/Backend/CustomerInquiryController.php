@@ -122,6 +122,6 @@ class CustomerInquiryController extends Controller
         $inquiry = CustomerInquiry::find($id);
         $inquiry->delete();
 
-        return redirect()->route('inquiry.index')->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
+        // return redirect()->route('inquiry.index')->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
 }
