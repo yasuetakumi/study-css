@@ -160,5 +160,7 @@ return [
     'company_name' => 'Company Name',
     'content_inquiry' => 'Content of Inquiry',
     'inquiry_button' => 'Inquiry Button',
+    'inquiry_type' => 'Inquiry Type',
+    'inquiry_name' => 'Inquiry Name',
 
 ];

@@ -66,51 +66,9 @@
         @component('backend._components.input_select', ['name' => 'is_skeleton', 'options' => $is_skeleton, 'label' => __('label.skeleton'), 'required' => null, 'value' => $item->is_skeleton ?? '', 'isDisabled' => $disableForm]) @endcomponent
 
         @component('backend._components.input_select', ['name' => 'cuisine_id', 'options' => $cuisines, 'label' => __('label.restaurant_cuisine'), 'required' => null, 'value' => $item->cuisine_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'interior_transfer_price', 'label' => __('label.interior_transfer_price'), 'required' => null, 'value' => $item->interior_transfer_price ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        {{-- Plan --}}
-        @if ($page_type == 'create' || $page_type == 'edit')
-            <div class="row">
-                <div class="col-12">
-                    <div id="form-group--plans" class="row form-group">
 
-                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
-
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <div class="field-group clearfix">
-                                @foreach($design_categories as $dc)
-                                    <div class="icheck-cyan d-inline">
-                                        <input {{isset($dc_id->design_category_id) && $dc_id->design_category_id == $dc['value'] ? 'checked' : '' }} type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" @change="getPlanBySurfaceCategory"/>
-                                        <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div id="form-group--plans" class="row form-group">
-
-                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
-
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <div class="field-group clearfix">
-                                <div v-if="loadingData">
-                                    Search Plans...
-                                </div>
-                                <div v-if="!plan_properties">
-                                    @{{message_plan_properties}}
-                                </div>
-                                <div v-else class="icheck-cyan d-inline" v-for="plan in plan_properties" :key="plan.id">
-                                    <input :checked="items.plan_id != null && items.plan_id == plan.id" type="radio" :value="plan.id" :id="plan.display_name" name="plan_id"/>
-                                    <label :for="plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
         @component('backend._components.input_image', ['name' => 'thumbnail_image_main', 'label' => __('Thumbnail Image Main'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
+
         @component('backend._components.input_image', ['name' => 'thumbnail_image_1', 'label' => __('Thumbnail Image 1'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_1 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'thumbnail_image_2', 'label' => __('Thumbnail Image 2'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_2 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'thumbnail_image_3', 'label' => __('Thumbnail Image 3'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_3 ?? '']) @endcomponent
@@ -198,11 +156,21 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                                 <div class="field-group clearfix">
+                                    {{-- @foreach($plans as $plan)
+                                        <div class="icheck-cyan d-inline">
+                                            <input type="radio" value="{{$plan->id}}" id="input-plan-{{ $plan->id }}" name="plan_id" />
+                                            <label for="input-plan-{{ $plan->id }}" class="text-uppercase mr-5">{{ $plan->display_name }}</label>
+                                        </div>
+                                    @endforeach --}}
+                                    {{-- <p class="text-center" style="font-size: 18px">Select Plan </p> --}}
                                     <div style="margin-bottom: 2rem;">
                                         <div class="icheck-cyan d-inline mb-5" v-for="area in area_groups" :key="area.id">
                                             <input type="radio" :value="area.id" :id="area.display_name" name="area_id" @change="showPlanByArea" />
                                             <label :for="area.display_name" class="text-uppercase mr-5">@{{area.display_name}}</label>
                                         </div>
+                                        {{-- <div v-else>
+                                            <p>No available</p>
+                                        </div> --}}
                                     </div>
 
                                     <div v-if="loadingData">
@@ -269,34 +237,32 @@
                 </div>
             </div>
         </div>
-        @if(!Auth::check())
-            @component('backend._components.form_container', ["action" => $form_action_inquiry, 'id' => 'customer-inquiry',  "page_type" => 'create', "files" => false])
-                <input type="hidden" name="property_id" value="{{ request()->id }}">
-                <div class="col-12 border-bottom border-primary">
-                    <p class="text-center" style="font-size: 22px">Customer Inquiry</p>
-                </div>
-                <div id="form-group--contact_us_type" class="row form-group">
+        @component('backend._components.form_container', ["action" => $form_action_inquiry, 'id' => 'customer-inquiry',  "page_type" => 'create', "files" => false])
+            <input type="hidden" name="property_id" value="{{ request()->id }}">
+            <div class="col-12 border-bottom border-primary">
+                <p class="text-center" style="font-size: 22px">Customer Inquiry</p>
+            </div>
+            <div id="form-group--contact_us_type" class="row form-group">
 
-                    @include('backend._components._input_header',['label'=>__('Customer Inquiry'), 'required'=> true])
+                @include('backend._components._input_header',['label'=>__('label.inquiry_type'), 'required'=> true])
 
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                        <select type="text" id="input-contact_us_type" name="contact_us_type_id" class="form-control @error('contact_us_type_id') is-invalid @enderror" value="{{ old('contact_us_type_id') }}" required>
-                            @foreach($contact_us_type as $contact)
-                                <option value="{{ $contact->id }}" id="input-contact_us_type">{{ $contact->label_jp }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                    <select type="text" id="input-contact_us_type" name="contact_us_type_id" class="form-control @error('contact_us_type_id') is-invalid @enderror" value="{{ old('contact_us_type_id') }}" required>
+                        @foreach($contact_us_type as $contact)
+                            <option value="{{ $contact->id }}" id="input-contact_us_type">{{ $contact->label_jp }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                @component('backend._components.input_text', ['name' => 'name', 'label' => __('label.name'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-                @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.enterEmailAddress'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-                @component('backend._components.input_textarea', ['name' => 'text', 'label' => __('label.comments'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 text-left mt-4">
-                        <button id="inquiry" class="btn btn-primary"> Send Inquiry </button>
-                    </div>
+            </div>
+            @component('backend._components.input_text', ['name' => 'name', 'label' => __('label.inquiry_name'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
+            @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.enterEmailAddress'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
+            @component('backend._components.input_textarea', ['name' => 'text', 'label' => __('label.content_inquiry'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 text-left mt-4">
+                    <button id="inquiry" class="btn btn-primary">@lang('label.inquiry_button')</button>
                 </div>
-            @endcomponent
-        @endif
+            </div>
+        @endcomponent
     @endif
 
 @endsection
@@ -408,10 +374,6 @@
                     selected_dc: 1,
                     list_design_style: null,
                     list_plans: null,
-                    list_plans_properties: null,
-                    design_category_id: null,
-                    plan_id: null,
-                    message_plan_properties: '*Please Input Surface Area (Tsubo) and Select Design Category*',
                     loading: false,
                     area_selected: null,
                     tsubo_max: null,
@@ -446,34 +408,6 @@
         created: function(){
             this.getDesignByCategory(1);
             this.getPlanByCateogry(1);
-            if(@json($page_type) == 'edit'){
-                console.log(@json($item->plan_id));
-                var id_plan = @json($item->plan_id);
-
-                let design_category_id = document.querySelector("input[name=design_category_id]:checked").value;
-                let surface_area = document.querySelector("input[name=surface_area]").value;
-                this.items.plan_id = id_plan;
-                this.items.design_category_id = design_category_id;
-                console.log(design_category_id);
-                if(this.items.plan_id && this.items.plan_id != null){
-                    this.items.loading = true;
-                    axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + this.items.design_category_id)
-                    .then((result) => {
-                        console.log(result.status);
-                        if(result.status == 200){
-                            this.items.list_plans_properties = result.data.data;
-                        } else {
-                            this.items.message_plan_properties = result.data.message;
-                        }
-                        }).catch((err) => {
-                            this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
-                        });
-                    this.items.loading = false;
-                }
-            } else{
-
-            }
-
         },
 
         /*
@@ -495,16 +429,6 @@
                 } else {
                     return false;
                 }
-            },
-            plan_properties: function () {
-                if(this.items.list_plans_properties != null && this.items.list_plans_properties.length > 0){
-                    return this.items.list_plans_properties;
-                } else {
-                    return false;
-                }
-            },
-            message_plan_properties: function () {
-                return this.items.message_plan_properties;
             },
             area_groups: function(){
                 return this.$store.state.preset.area_groups;
@@ -579,31 +503,6 @@
                 let data2 = await response2.json();
                 this.items.list_plans = data2;
             },
-            getPlanBySurfaceCategory: function (event) {
-                this.items.loading = true;
-                this.items.plan_id = '';
-                let surface_area = document.querySelector("input[name=surface_area]").value;
-                let catId = event.target.value;
-                if(surface_area != null && catId != null){
-                    console.log(surface_area);
-                    console.log(catId);
-                    axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + catId)
-                    .then((result) => {
-                        console.log(result.status);
-                        if(result.status == 200){
-                            this.items.list_plans_properties = result.data.data;
-                        } else {
-                            this.items.message_plan_properties = result.data.message;
-                        }
-                    }).catch((err) => {
-                        this.items.message_plan_properties = 'Plan Not Found';
-                    });
-                    this.items.loading = false;
-                } else if (surface_area == null){
-                    this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
-                }
-            },
-
             showTsuboByPlan: function(areaId){
                 console.log("areaid", areaId);
                 let id = areaId;
