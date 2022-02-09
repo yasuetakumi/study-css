@@ -11,6 +11,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <form action="{{route('property.filter')}}" method="POST" id="formElement">
+                        <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
                         <div class="row">
                             @foreach ($cities as $city)
                                 <div class="col-lg-2 col-6">
@@ -46,6 +47,7 @@
                 <!-- /.card-header -->
                 <form action="{{route('property.filter')}}" method="POST" id="propertyByCity">
                     @csrf
+                    <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
                     <div class="card-body">
                         <div class="row mb-4">
                             @foreach ($station_lines as $station)
