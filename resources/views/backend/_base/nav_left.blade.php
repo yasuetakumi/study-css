@@ -267,13 +267,13 @@
                                 </a>
                             </li>
                             <li id="list_property" class="nav-item">
-                                <a href="{{route('property.create')}}" class="nav-link">
+                                <a href="{{route('manage.property.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.createNew')</p>
                                 </a>
                             </li>
                             <li id="list_property" class="nav-item">
-                                <a href="{{route('property.index')}}" class="nav-link">
+                                <a href="{{route('manage.property.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.list')</p>
                                 </a>
