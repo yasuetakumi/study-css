@@ -44,6 +44,7 @@ class PropertyController extends Controller
             'location'      => 'required',
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
+            'is_skeleton'   => 'required',
         ]);
     }
 
@@ -421,7 +422,7 @@ class PropertyController extends Controller
         $property = Property::find($id);
         $property->delete();
 
-        return redirect()->back()->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
+        // return redirect()->back()->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
 
 
