@@ -120,7 +120,7 @@ class ApiPropertyController extends Controller
         if($request->city){
             $properties = Property::whereIn('city_id', $request->city)->get();
         } else{
-            $properties = Property::get();
+            $properties = Property::where('prefecture_id', $request->prefecture_id)->get();
         }
 
         $result = $properties->count();
@@ -128,15 +128,10 @@ class ApiPropertyController extends Controller
     }
     public function getPropertyByStation(Request $request)
     {
-        $stations = Station::with(['prefecture', 'prefecture.properties'])->where('station_line_id', $request->station_line);
-        // print_r($request);
-        if(isset($request->station)){
-            $stations->whereHas('prefecture', function($q){
-                $q->whereHas('properties');
-            });
-        }
-        $stations->get();
-        $count = $stations->count();
+        // Station contain prefecture_id
+        // Getting the property that has the same prefecture_id as station
+        $properties = Property::where('prefecture_id', $request->prefecture_id)->get();
+        $count = $properties->count();
         return response()->json($count);
     }
 }
