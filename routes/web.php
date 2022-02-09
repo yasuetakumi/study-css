@@ -42,8 +42,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('/admin/login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('/admin/login', 'Auth\LoginController@login');
 
-    Route::get('/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
-    Route::post('/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
+    Route::get('/manage/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
+    Route::post('/manage/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
 
     // Password Reset Routes...
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -124,13 +124,17 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
      */
     Route::group(['middleware' => 'auth:user'], function() {
 
-        Route::get('logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
+        Route::get('manage/logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
         Route::group(['middleware' => ['user_role:supervisor,operator'], 'prefix' => 'manage'], function () {
             // B2
             Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             // B3 - B5
-            Route::resource('property', 'Backend\PropertyController');
+            Route::name('manage.')->group(function() {
+                Route::get('property/add', 'Backend\PropertyController@create')->name('property.create');
+                Route::resource('property', 'Backend\PropertyController');
+                Route::get('property/edit/{id}', 'Backend\PropertyController@edit')->name('property.edit');
+            });
             // B6
             Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
             Route::put('company-information', 'Backend\CompanyController@updateAsCompanyOwner')->name('companyowner-update');
