@@ -37,7 +37,7 @@ class CompanyUserLoginController extends Controller
     }
 
     protected function loggedOut(Request $request) {
-        return redirect('/login');
+        return redirect()->route('company-user-login');
     }
 
     protected function authenticated(Request $request, $user)
