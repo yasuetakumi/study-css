@@ -132,8 +132,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B3 - B5
             Route::name('manage.')->group(function() {
                 Route::get('property/add', 'Backend\PropertyController@create')->name('property.create');
-                Route::resource('property', 'Backend\PropertyController');
                 Route::get('property/edit/{id}', 'Backend\PropertyController@edit')->name('property.edit');
+                Route::resource('property', 'Backend\PropertyController')->except(['create', 'edit']);
             });
             // B6
             Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
@@ -141,7 +141,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
             // B8
-            Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.detail');
+            Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.show');
         });
     });
 

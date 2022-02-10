@@ -77,6 +77,15 @@ class PropertyController extends Controller
         //abort(404);
         $id = $param;
         $data['item']       = Property::find($id);
+
+        // Company user can edit properties on their own company
+        // User A and User B on the same company, User A can edit the property of User B
+        if(Auth::guard('user')->check()){
+            if($data['item']->user->company->id != Auth::user()->company->id){
+                return redirect()->route('manage.property.index')->withErrors(['msg' => 'You dont have access to this property']);
+            }
+        }
+
         $data['form_action'] = '';
         $data['page_type'] = 'detail';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
@@ -329,8 +338,11 @@ class PropertyController extends Controller
     public function edit($id)
     {
         $data['item'] = Property::find($id);
+
+        // Company user can edit properties on their own company
+        // User A and User B on the same company, User A can edit the property of User B
         if(Auth::guard('user')->check()){
-            if($data['item']->user_id != Auth::id()){
+            if($data['item']->user->company->id != Auth::user()->company->id){
                 return redirect()->route('manage.property.index')->withErrors(['msg' => 'You dont have access to this property']);
             }
         }
