@@ -43,4 +43,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('App\Models\LogActivity');
     }
 
+    public function properties() {
+        return $this->hasMany('App\Models\Property');
+    }
+
 }
