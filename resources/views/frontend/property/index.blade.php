@@ -261,7 +261,13 @@
                         <dd>@{{pd.rent_amount}}</dd>
                     <dt>Surface Area</dt>
                         <dd>@{{pd.surface_area}}</dd>
-                  </dl>
+                </dl>
+                <div class="flex justify-content-end">
+                    <a id="favorite" type="button" style="color: red" @click="setLikeProperty(pd.id)">
+                        <i :class="items.like_property.includes(pd.id) ? 'fas' : 'far' " class="fa-heart fa-2x"></i>
+                        {{-- <i class="far fa-heart fa-2x"></i> --}}
+                    </a>
+                </div>
             </div>
             <!-- /.card-body -->
         </div>
@@ -333,6 +339,7 @@
                     property_data: null,
                     disable: true,
                     loading: false,
+                    like_property: [],
                 },
                 // ----------------------------------------------------------
             };
@@ -352,9 +359,12 @@
         mounted: function() {
             this.getCountProperty();
             this.getListProperty();
+
         },
 
-        created: function() {},
+        created: function() {
+            this.getLikeProperty();
+        },
 
         /*
         ## ------------------------------------------------------------------
@@ -374,6 +384,13 @@
             },
             loading: function() {
                 return this.items.loading;
+            },
+            isLiked: function () {
+                if(this.items.property_data.length > 0 && this.items.property_data.includes(this.items.like_property)){
+                    return 'fas';
+                } else {
+                    return 'far';
+                }
             }
         },
 
@@ -427,6 +444,27 @@
                     }).catch((err) => {
                         console.log(err);
                 });
+            },
+            getLikeProperty: function() {
+                let local = localStorage.getItem('favoritePropertyId');
+                this.items.like_property = JSON.parse(local);
+            },
+            setLikeProperty: function (id) {
+                let propertyID = id;
+                var properties_like = [];
+                let local = localStorage.getItem('favoritePropertyId');
+                properties_like = JSON.parse(local) || [];
+                if(properties_like.length > 0 && properties_like.includes(propertyID)){
+                    let index = properties_like.indexOf(propertyID);
+                    console.log("index", index);
+                    properties_like.splice(index, 1);
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                } else {
+                    properties_like.push(propertyID);
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                }
+
+                this.getLikeProperty();
             },
             // --------------------------------------------------------------
         }

@@ -19,7 +19,14 @@
 @endsection
 
 @section('top_buttons')
-
+    @if (!Auth::check())
+        <div class="text-right">
+            <a id="favorite" type="button" style="color: red" @click="setLikeProperty">
+                <i v-if="isLiked" class="fas fa-heart fa-2x"></i>
+                <i v-else class="far fa-heart fa-2x"></i>
+            </a>
+        </div>
+    @endif
 @endsection
 
 @section('content')
@@ -417,6 +424,9 @@
                     tsubo_max: null,
                     tsubo_min: null,
                     tsubo_value: null,
+                    like_property: [],
+                    property_id: null,
+                    visited_property: [],
                 },
                 // ----------------------------------------------------------
             };
@@ -437,6 +447,8 @@
             if(@json($page_type) == 'edit' || @json($page_type) == 'detail'){
                 var item = @json($item);
                 this.items.user_id = item.user_id;
+                this.items.property_id = item.id;
+                this.setVisitedProperty();
             } else if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
                 this.items.user_id = id;
@@ -446,6 +458,7 @@
         created: function(){
             this.getDesignByCategory(1);
             this.getPlanByCateogry(1);
+            this.getLikeProperty();
             if(@json($page_type) == 'edit'){
                 var item = @json($item);
 
@@ -519,6 +532,13 @@
             },
             tsubo_maximum: function(){
                 return this.items.tsubo_max;
+            },
+            isLiked: function () {
+                if(this.items.like_property && this.items.like_property.length > 0 && this.items.like_property.includes(this.items.property_id)){
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
 
@@ -627,7 +647,39 @@
             showSliderValue: function(event){
                 this.items.tsubo_value = event.target.value;
             },
-            estimationIndex: function(event){}
+            estimationIndex: function(event){},
+            getLikeProperty: function() {
+                let local = localStorage.getItem('favoritePropertyId');
+                this.items.like_property = JSON.parse(local);
+            },
+            setLikeProperty: function () {
+                //this.items.like_property.push(this.items.property_id)
+                var properties_like = [];
+                let local = localStorage.getItem('favoritePropertyId');
+                properties_like = JSON.parse(local) || [];
+                if(properties_like.length > 0 && properties_like.includes(this.items.property_id)){
+                    let index = properties_like.indexOf(this.items.property_id);
+                    console.log("index", index);
+                    properties_like.splice(index, 1);
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                } else {
+                    properties_like.push(this.items.property_id);
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                }
+
+                this.getLikeProperty();
+            },
+            setVisitedProperty: function () {
+                var properties_visited = [];
+                let localVisisted = localStorage.getItem('visitedPropertyId');
+                properties_visited = JSON.parse(localVisisted) || [];
+                if(properties_visited.includes(this.items.property_id)){
+                    console.log("already visited");
+                } else {
+                    properties_visited.push(this.items.property_id);
+                    localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
+                }
+            }
             // --------------------------------------------------------------
         }
     }
