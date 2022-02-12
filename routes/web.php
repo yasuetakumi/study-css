@@ -153,8 +153,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // C1
     Route::get('/', 'Frontend\HomeController@index')->name('home');
     // C2
-    Route::get('property', 'Frontend\PropertyController@index')->name('property.index');
-    Route::post('property', 'Frontend\PropertyController@index')->name('property.filter');
+    Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
+    Route::post('result', 'Frontend\PropertyController@index')->name('property.filter');
     // C3
     Route::get('map', function () {
         return 'map';

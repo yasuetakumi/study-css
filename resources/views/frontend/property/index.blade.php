@@ -413,7 +413,7 @@
             getListProperty: function(event) {
                 this.items.loading = true;
                 let data = new FormData(formElement);
-                axios.post(root_url + '/api/v1/property/getCountProperty', data)
+                axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
                         this.items.property_data = result.data.data.result;
                     }).catch((err) => {
@@ -428,7 +428,8 @@
                     this.items.disable = true;
                 }
                 let data = new FormData(formElement);
-                axios.post(root_url + '/api/v1/property/getCountProperty', data)
+                data.append("count", 1);
+                axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
                     .then((result) => {
                         this.items.property_count = result.data.data.count;
                         console.log(data);
