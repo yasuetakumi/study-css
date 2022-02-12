@@ -383,13 +383,6 @@
             loading: function() {
                 return this.items.loading;
             },
-            isLiked: function () {
-                if(this.items.property_data.length > 0 && this.items.property_data.includes(this.items.like_property)){
-                    return 'fas';
-                } else {
-                    return 'far';
-                }
-            }
         },
 
         /*
@@ -445,7 +438,7 @@
             },
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
-                this.items.like_property = JSON.parse(local);
+                this.items.like_property = JSON.parse(local) || [];
             },
             setLikeProperty: function (id) {
                 let propertyID = id;

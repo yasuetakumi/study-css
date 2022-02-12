@@ -8,7 +8,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4" v-for="pd in list_properties" :key=pd.id>
+        <div v-if="!list_properties">
+            <p class="text-center">No data yet...</p>
+        </div>
+        <div v-else class="col-md-4" v-for="pd in list_properties" :key=pd.id>
             <div class="card card-danger" >
                 <div class="card-header">
                     <h3 class="card-title mb-0">Property ID @{{pd.id}}</h3>
@@ -128,7 +131,11 @@
         */
         computed: {
             list_properties: function(){
-                return this.items.list_properties;
+                if(this.items.list_properties && this.items.list_properties.length > 0){
+                    return this.items.list_properties;
+                } else {
+                    return false;
+                }
             }
         },
 
