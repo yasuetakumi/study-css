@@ -10,7 +10,7 @@
                 </h3>
             </div>
             <!-- /.card-header -->
-            <form action="{{route('api.property.count')}}" method="POST" id="formElement" @submit.prevent="getListProperty">
+            <form action="{{route('property.filter')}}" method="POST" id="formElement">
                 @csrf
                 <div class="card-body clearfix">
                     {{-- Surface Area Filter--}}
@@ -362,6 +362,7 @@
 
         created: function() {
             this.getLikeProperty();
+            this.getQueryString();
         },
 
         /*
@@ -410,8 +411,22 @@
                     }
                 }, 400);
             },
+            getQueryString: function(){
+                let values = [];
+                const queries = new URLSearchParams(window.location.href);
+                let keys = queries.keys();
+                for (key of keys){
+                    console.log(key)
+                }
+                let entries = queries.entries();
+                for(pair of entries) {
+                    console.log(pair[0], pair[1]);
+                }
+            },
             getListProperty: function(event) {
                 this.items.loading = true;
+                let url = window.location.href;
+                console.log("url", url);
                 let data = new FormData(formElement);
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
