@@ -54,4 +54,7 @@ Route::prefix('v1')->group(function () {
 
     //Station
     Route::get('/station/getStationByStationLine/{station_line}', 'API\ApiStationController@getStationByStationLine');
+
+    //History
+    Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');
 });

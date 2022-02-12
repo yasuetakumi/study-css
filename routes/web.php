@@ -164,9 +164,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // C5
     Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
     // C6
-    Route::get('favorite', function () {
-        return 'favorite';
-    });
+    Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
     // C7
     Route::get('history', function () {
         return 'history';
