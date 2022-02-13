@@ -227,7 +227,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">@{{property_count}} <span style="font-size: 16px; color: black"> 件の該当物件</span> </h3>
-                                <button type="submit" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
+                                <button type="submit" class="btn btn-primary px-4 py-2 d-block w-100 mt-3" @click="getListProperty">
                                     <span>
                                         <i class="fas fa-search"></i>
                                         この条件で検索
@@ -243,13 +243,16 @@
         <!-- /.card -->
     </div>
     <div class="col-md-8">
-        <div v-if=loading>
+        <div v-if="loading">
             <p>Loading data...</p>
         </div>
-        <div v-else-if="property_count == 0">
+        <div v-else-if="!property_data">
             <p>No data</p>
         </div>
-        <div v-else class="card card-danger" v-for="pd in property_data" :key=pd.id>
+        <div v-else v-for="pd in property_data" :key=pd.id>
+            @include('frontend._components.property_list')
+        </div>
+        {{-- <div v-else class="card card-danger" v-for="pd in property_data" :key=pd.id>
             <div class="card-header">
                 <h3 class="card-title mb-0">Property ID @{{pd.id}}</h3>
             </div>
@@ -268,7 +271,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection
@@ -373,12 +376,13 @@
         */
         mounted: function() {
             this.getListProperty();
+            this.getLikeProperty();
             this.getCountProperty();
+            this.items.loading = false;
 
         },
 
         created: function() {
-            this.getLikeProperty();
             this.getQueryString();
         },
 
@@ -393,7 +397,11 @@
                 return this.items.property_count;
             },
             property_data: function(){
-                return this.items.property_data;
+                if(this.items.property_data && this.items.property_data.length > 0){
+                    return this.items.property_data;
+                } else {
+                    return false;
+                }
             },
             disabled: function(){
                 return this.items.disable;
@@ -531,7 +539,6 @@
                     }).catch((err) => {
                         console.log(err);
                 });
-                this.items.loading = false;
             },
             getCountProperty: function(event) {
                 if(this.$refs.skeleton.checked == true && this.$refs.furnished.checked == true){
