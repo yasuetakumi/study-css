@@ -52,6 +52,7 @@ class PropertyController extends Controller
     public function filter(Request $request)
     {
         $queryString = $request->all();
+        //return $queryString;
         $withQuery = array();
         if(!empty($queryString['surface_min'])){
             $withQuery['surface_min'] = $queryString['surface_min'];
@@ -78,32 +79,20 @@ class PropertyController extends Controller
             $withQuery['walking_distance'] = $queryString['walking_distance'];
         }
         if(isset($queryString['floor_under'])){
-            $undergroundByFilter = NumberOfFloorsUnderGround::whereIn('id', $queryString['floor_under'])->get();
-            foreach($undergroundByFilter as $ud){
-                $getFirstWord = strtolower(explode(' ', trim($ud->label_en))[0]);
-                $withQuery[$getFirstWord] = 1;
-            }
+            $stringFloorUnder = implode(",", $queryString['floor_under']);
+            $withQuery['underground'] = $stringFloorUnder;
         }
         if(isset($queryString['floor_above'])){
-            $abovegroundByFilter = NumberOfFloorsAboveGround::whereIn('id', $queryString['floor_above'])->get();
-            foreach($abovegroundByFilter as $ab){
-                $getFirstWord = strtolower(explode(' ', trim($ab->label_en))[0]);
-                $withQuery[$getFirstWord] = 1;
-            }
+            $stringFloorAbove = implode(",", $queryString['floor_above']);
+            $withQuery['aboveground'] = $stringFloorAbove;
         }
         if(isset($queryString['property_preference'])){
-            $propertyPreferenceByFilter = PropertyPreference::whereIn('id', $queryString['property_preference'])->get();
-            foreach($propertyPreferenceByFilter as $pp){
-                $getFirstWord = strtolower(explode(' ', trim($pp->label_en))[0]);
-                $withQuery[$getFirstWord] = 1;
-            }
+            $stringPropertyPref = implode(",", $queryString['property_preference']);
+            $withQuery['preference'] = $stringPropertyPref;
         }
         if(isset($queryString['property_type'])){
-            $propertyTypeByFilter = PropertyType::whereIn('id', $queryString['property_type'])->get();
-            foreach($propertyTypeByFilter as $pt){
-                $getFirstWord = strtolower(explode(' ', trim($pt->label_en))[0]);
-                $withQuery[$getFirstWord] = 1;
-            }
+            $stringPropertyType = implode(",", $queryString['property_type']);
+            $withQuery['type'] = $stringPropertyType;
         }
         if(isset($queryString['skeleton'])){
             $withQuery['skeleton'] = true;
@@ -112,14 +101,11 @@ class PropertyController extends Controller
             $withQuery['furnished'] = true;
         }
         if(isset($queryString['cuisine'])){
-            $cuisineByFilter = Cuisine::whereIn('id', $queryString['cuisine'])->get();
-            foreach($cuisineByFilter as $cu){
-                $getFirstWord = strtolower(explode(' ', trim($cu->label_en))[0]);
-                $withQuery[$getFirstWord] = 1;
-            }
+            $stringCuisine = implode(",", $queryString['cuisine']);
+            $withQuery['cuisine'] = $stringCuisine;
         }
 
-        //return $withQuery;
+        // return $withQuery;
 
         return redirect()->route('property.index', $withQuery);
     }

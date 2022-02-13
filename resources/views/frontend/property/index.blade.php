@@ -18,16 +18,16 @@
                         <p class="border-left border-primary pl-2">@lang('label.surface_area')</p>
                         <div class="row">
                             <div class="col-6">
-                                <select class="form-control" name="surface_min" @change="getCountProperty">
-                                    <option value="" selected>下限なし</option>
+                                <select v-model="items.filter.surface_min" class="form-control" name="surface_min" @change="getCountProperty">
+                                    <option :value="null" >下限なし</option>
                                     @foreach ($surface_areas as $surface)
                                     <option value="{{$surface->value}}">{{$surface->label_jp}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-6">
-                                <select class="form-control" name="surface_max" @change="getCountProperty">
-                                    <option value="" selected>上限なし</option>
+                                <select v-model="items.filter.surface_max" class="form-control" name="surface_max" @change="getCountProperty">
+                                    <option :value="null">上限なし</option>
                                     @foreach ($surface_areas as $surface)
                                     <option value="{{$surface->value}}">{{$surface->label_jp}}</option>
                                     @endforeach
@@ -40,16 +40,16 @@
                         <p class="border-left border-primary pl-2">@lang('label.rent_amount')</p>
                         <div class="row">
                             <div class="col-6">
-                                <select class="form-control" name="rent_amount_min" id="rent" @change="getCountProperty">
-                                    <option value="" selected>下限なし</option>
+                                <select v-model="items.filter.rent_amount_min" class="form-control" name="rent_amount_min" id="rent" @change="getCountProperty">
+                                    <option :value="null">下限なし</option>
                                     @foreach ($rent_amounts as $rent)
                                     <option value="{{$rent->value}}">{{$rent->label_jp}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-6">
-                                <select class="form-control" name="rent_amount_max" id="rent" @change="getCountProperty">
-                                    <option value="" selected>上限なし</option>
+                                <select v-model="items.filter.rent_amount_max" class="form-control" name="rent_amount_max" id="rent" @change="getCountProperty">
+                                    <option :value="null">上限なし</option>
                                     @foreach ($rent_amounts as $rent)
                                     <option value="{{$rent->value}}">{{$rent->label_jp}}</option>
                                     @endforeach
@@ -62,7 +62,7 @@
                         <p class="border-left border-primary pl-2">フリーワード</p>
                         <div class="row">
                             <div class="col-12">
-                                <input type="text" name="name" class="form-control" placeholder="恵比寿、山手線、渋谷区など" value="" @change="getCountProperty">
+                                <input v-model="items.filter.name" type="text" name="name" class="form-control" placeholder="恵比寿、山手線、渋谷区など" value="" @change="getCountProperty">
                             </div>
                         </div>
                     </div>
@@ -71,8 +71,8 @@
                         <p class="border-left border-primary pl-2">@lang('label.walking_distance_from_station')</p>
                         <div class="row">
                             <div class="col-6">
-                                <select class="form-control" name="walking_distance" @change="getCountProperty">
-                                    <option value="" selected>選択なし</option>
+                                <select v-model="items.filter.walking_distance" class="form-control" name="walking_distance" @change="getCountProperty">
+                                    <option :value="null">選択なし</option>
                                     @foreach ($walking_distances as $walking)
                                     <option value="{{$walking->value}}">{{$walking->label_jp}}</option>
                                     @endforeach
@@ -89,7 +89,7 @@
                                     @foreach ($floor_undergrounds as $underground)
                                     <div class="col-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" name="floor_under[]" type="checkbox" value="{{$underground->value}}" id="floor-under-{{$underground->id}}" @change="getCountProperty">
+                                            <input v-model="items.filter.undergrounds" class="form-check-input" name="floor_under[]" type="checkbox" value="{{$underground->value}}" id="floor-under-{{$underground->id}}" @change="getCountProperty">
                                             <label for="floor-under-{{$underground->id}}" class="form-check-label">{{$underground->label_jp}}</label>
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@
                                     @foreach ($floor_abovegrounds as $above)
                                     <div class="col-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" name="floor_above[]" type="checkbox" value="{{$above->value}}" id="floor-above-{{$above->id}}" @change="getCountProperty">
+                                            <input v-model="items.filter.abovegrounds" class="form-check-input" name="floor_above[]" type="checkbox" value="{{$above->value}}" id="floor-above-{{$above->id}}" @change="getCountProperty">
                                             <label for="floor-above-{{$above->id}}" class="form-check-label">{{$above->label_jp}}</label>
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                             <div class="col-12">
                                 @foreach ($property_preferences as $pp)
                                 <div class="form-check">
-                                    <input class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}" @change="getCountProperty">
+                                    <input v-model="items.filter.preferences" class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}" @change="getCountProperty">
                                     <label class="form-check-label">{{$pp->label_jp}}</label>
                                 </div>
                                 @endforeach
@@ -137,7 +137,7 @@
                             <div class="col-12">
                                 @foreach ($property_types as $pt)
                                 <div class="form-check">
-                                    <input class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}" @change="getCountProperty">
+                                    <input v-model="items.filter.types" class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}" @change="getCountProperty">
                                     <label class="form-check-label">{{$pt->label_jp}}</label>
                                 </div>
                                 @endforeach
@@ -150,11 +150,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" ref="skeleton" name="skeleton" type="checkbox" value="0" @change="getCountProperty">
+                                    <input v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox" @change="getCountProperty">
                                     <label class="form-check-label">スケルトン物件</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" ref="furnished" name="furnished" type="checkbox" value="1" @change="getCountProperty">
+                                    <input v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox" @change="getCountProperty">
                                     <label class="form-check-label">居抜き物件</label>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
                                             @foreach ($cuisines as $cu)
                                                 <div class="col-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" name="cuisine[]" type="checkbox" value="{{$cu->id}}" id="cuisine-{{$cu->id}}" @change="getCountProperty">
+                                                        <input v-model="items.filter.cuisines" class="form-check-input" name="cuisine[]" type="checkbox" value="{{$cu->id}}" id="cuisine-{{$cu->id}}" @change="getCountProperty">
                                                         <label for="cuisine-{{$cu->id}}" class="form-check-label">{{$cu->label_jp}}</label>
                                                     </div>
                                                 </div>
@@ -198,16 +198,16 @@
                                         <p class="border-left border-primary pl-2">@lang('label.transfer_price_option')</p>
                                         <div class="row">
                                             <div class="col-4">
-                                                <select class="form-control" name="transfer_price_min" @change="getCountProperty">
-                                                    <option value="" selected>選択なし</option>
+                                                <select v-model="items.filter.transfer_price_min" class="form-control" name="transfer_price_min" @change="getCountProperty">
+                                                    <option :value="null">選択なし</option>
                                                     @foreach ($transfer_price_options as $opt)
                                                     <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-4">
-                                                <select class="form-control" name="transfer_price_max" @change="getCountProperty">
-                                                    <option value="" selected>選択なし</option>
+                                                <select v-model="items.filter.transfer_price_max" class="form-control" name="transfer_price_max" @change="getCountProperty">
+                                                    <option :value="null">選択なし</option>
                                                     @foreach ($transfer_price_options as $opt)
                                                     <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
                                                     @endforeach
@@ -338,6 +338,23 @@
                     disable: true,
                     loading: false,
                     like_property: [],
+                    filter: {
+                        surface_min: null,
+                        surface_max: null,
+                        rent_amount_min: null,
+                        rent_amount_max: null,
+                        transfer_price_min: null,
+                        transfer_price_max: null,
+                        name: null,
+                        walking_distance: null,
+                        undergrounds: [],
+                        abovegrounds: [],
+                        preferences: [],
+                        types: [],
+                        skeleton: null,
+                        furnished: null,
+                        cuisines: [],
+                    }
                 },
                 // ----------------------------------------------------------
             };
@@ -355,8 +372,8 @@
         ## ------------------------------------------------------------------
         */
         mounted: function() {
-            this.getCountProperty();
             this.getListProperty();
+            this.getCountProperty();
 
         },
 
@@ -412,15 +429,95 @@
                 }, 400);
             },
             getQueryString: function(){
-                let values = [];
-                const queries = new URLSearchParams(window.location.href);
-                let keys = queries.keys();
-                for (key of keys){
-                    console.log(key)
+                const url = new URL(window.location.href);
+                const queries = new URLSearchParams(url.search);
+                const getUndergroundQs = queries.getAll('underground'); //filter for floor underground
+                const getUAbovegroundQs = queries.getAll('aboveground'); //filter for floor aboveground
+                const getPreferenceQs = queries.getAll('preference'); //filter for property preference
+                const getTypesQs = queries.getAll('type'); //filter for property types
+                const getCuisineQs = queries.getAll('cuisine');
+                const getSurfaceMinQs = queries.get('surface_min');
+                const getSurfaceMaxQs = queries.get('surface_max');
+                const getRentAmountMinQs = queries.get('rent_amount_min');
+                const getRentAmountMaxQs = queries.get('rent_amount_max');
+                const getTransferPriceMinQs = queries.get('transfer_price_min');
+                const getTransferPriceMaxQs = queries.get('transfer_price_max');
+                const getNameQs = queries.get('name');
+                const getWalkingDistanceQs = queries.get('walking_distance');
+                const getFurnishedQs = queries.get('furnished');
+                const getSkeletonQs = queries.get('skeleton');
+                console.log("furnished", getFurnishedQs);
+                console.log("skeleton", getSkeletonQs);
+
+                if(getSurfaceMinQs != null){
+                    this.items.filter.surface_min = getSurfaceMinQs;
                 }
-                let entries = queries.entries();
-                for(pair of entries) {
-                    console.log(pair[0], pair[1]);
+                if(getSurfaceMaxQs != null){
+                    this.items.filter.surface_max = getSurfaceMaxQs;
+                }
+                if(getRentAmountMinQs != null){
+                    this.items.filter.rent_amount_min = getRentAmountMinQs;
+                }
+                if(getRentAmountMaxQs != null){
+                    this.items.filter.rent_amount_max = getRentAmountMaxQs;
+                }
+                if(getTransferPriceMinQs != null){
+                    this.items.filter.transfer_price_min = getTransferPriceMinQs;
+                }
+                if(getTransferPriceMaxQs != null){
+                    this.items.filter.transfer_price_max = getTransferPriceMaxQs;
+                }
+                if(getNameQs != null){
+                    this.items.filter.name = getNameQs;
+                }
+                if(getWalkingDistanceQs != null){
+                    this.items.filter.walking_distance = getWalkingDistanceQs;
+                }
+                if(getFurnishedQs != null){
+                    this.items.filter.furnished = getFurnishedQs;
+                }
+                if(getSkeletonQs != null){
+                    this.items.filter.skeleton = getSkeletonQs;
+                }
+                // extract value query string of underground
+                if(getUndergroundQs.length > 0){
+                    let undergroundSplit = getUndergroundQs[0].split(",") || [];
+                        for(under of undergroundSplit){
+                            console.log(under);
+                            this.items.filter.undergrounds.push(under);
+                        }
+                }
+                // extract value query string of aboveground
+                if(getUAbovegroundQs.length > 0){
+                    let abovegroundSplit = getUAbovegroundQs[0].split(",") || [];
+                        for(above of abovegroundSplit){
+                            console.log(above);
+                            this.items.filter.abovegrounds.push(above);
+                        }
+                }
+                // extract value query string of property preference
+                if(getPreferenceQs.length > 0){
+                    let preferencedSplit = getPreferenceQs[0].split(",") || [];
+                        for(pref of preferencedSplit){
+                            console.log(pref);
+                            this.items.filter.preferences.push(pref);
+                        }
+                }
+                // extract value query string of property types
+                if(getTypesQs.length > 0){
+                    let typesSplit = getTypesQs[0].split(",") || [];
+                        for(type of typesSplit){
+                            console.log(type);
+                            this.items.filter.types.push(type);
+                        }
+                }
+                // extract value query string of cuisine
+                if(getCuisineQs.length > 0){
+                    let cuisineSplit = getCuisineQs[0].split(",") || [];
+                        for(cuisine of cuisineSplit){
+                            console.log(cuisine);
+                            this.items.filter.cuisines.push(cuisine);
+                        }
                 }
             },
             getListProperty: function(event) {
@@ -447,7 +544,6 @@
                 axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
                     .then((result) => {
                         this.items.property_count = result.data.data.count;
-                        console.log(data);
                     }).catch((err) => {
                         console.log(err);
                 });
