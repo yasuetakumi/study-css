@@ -17,7 +17,7 @@
 
 @section('content')
     <th data-col="id">ID</th>
-    <th data-col="user.display_name">@lang('label.name')</th>
+    <th data-col="user.display_name">@if(Request::is('manage/*'))@lang('label.administrator') @else @lang('label.name') @endif </th>
     <th data-col="postcode.postcode">@lang('label.postcode')</th>
     <th data-col="location">@lang('label.location')</th>
     <th data-col="man">@lang('label.rent_amount')</th>
