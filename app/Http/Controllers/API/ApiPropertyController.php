@@ -13,7 +13,6 @@ class ApiPropertyController extends Controller
     public function getPropertyByFilter(Request $request)
     {
         $filter = (object) $request->all();
-        //return response()->json($filter);
         $query = Property::with(['properties_property_preferences', 'property_stations'])->select('id', 'location', 'rent_amount', 'surface_area');
         $selectedUnderground = array();
         $selectedAboveground = array();
@@ -32,14 +31,14 @@ class ApiPropertyController extends Controller
             });
         }
 
-        $maxSurface = !empty($filter->surface_max) ? $filter->surface_max : '';
-        $minSurface = !empty($filter->surface_min) ? $filter->surface_min : '';
+        $maxSurface = !empty($filter->surface_max) ? fromTsubo($filter->surface_max) : '';
+        $minSurface = !empty($filter->surface_min) ? fromTsubo($filter->surface_min) : '';
         $columnSurface = 'surface_area';
         $query->RangeArea((int)$minSurface, (int)$maxSurface, $columnSurface);
 
 
-        $maxRentAmount = !empty($filter->rent_amount_max) ? $filter->rent_amount_max : '';
-        $minRentAmount = !empty($filter->rent_amount_min) ? $filter->rent_amount_min : '';
+        $maxRentAmount = !empty($filter->rent_amount_max) ? fromMan($filter->rent_amount_max) : '';
+        $minRentAmount = !empty($filter->rent_amount_min) ? fromMan($filter->rent_amount_min) : '';
         $columnRentAmount = 'rent_amount';
 
         $query->RangeArea((int)$minRentAmount, (int)$maxRentAmount, $columnRentAmount);
@@ -62,9 +61,9 @@ class ApiPropertyController extends Controller
             }
             $query->whereIn('number_of_floors_under_ground', $selectedUnderground);
         }
-        if(isset($filter->above)){
-            foreach($filter->above as $key => $value){
-                array_push($selectedAboveground, $filter->above[$key]);
+        if(isset($filter->floor_above)){
+            foreach($filter->floor_above as $key => $value){
+                array_push($selectedAboveground, $filter->floor_above[$key]);
             }
             $query->whereIn('number_of_floors_above_ground', $selectedAboveground);
         }
@@ -105,13 +104,22 @@ class ApiPropertyController extends Controller
 
         $count = $query->count();
         $response = $query->get();
-        return response()->json([
-            'data' => [
-                'status' => 'success',
-                'count' => $count,
-                'result' => $response,
-            ]
-        ], 200, [], JSON_NUMERIC_CHECK);
+        if(isset($filter->count)){
+            return response()->json([
+                'data' => [
+                    'status' => 'success',
+                    'count' => $count,
+                ]
+            ], 200, [], JSON_NUMERIC_CHECK);
+        }
+        else{
+            return response()->json([
+                'data' => [
+                    'status' => 'success',
+                    'result' => $response,
+                ]
+            ], 200, [], JSON_NUMERIC_CHECK);
+        }
 
     }
 

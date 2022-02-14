@@ -153,8 +153,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // C1
     Route::get('/', 'Frontend\HomeController@index')->name('home');
     // C2
-    Route::get('property', 'Frontend\PropertyController@index')->name('property.index');
-    Route::post('property', 'Frontend\PropertyController@index')->name('property.filter');
+    Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
+    Route::post('result', 'Frontend\PropertyController@filter')->name('property.filter');
     // C3
     Route::get('map', function () {
         return 'map';
@@ -164,9 +164,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // C5
     Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
     // C6
-    Route::get('favorite', function () {
-        return 'favorite';
-    });
+    Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
     // C7
     Route::get('history', function () {
         return 'history';
