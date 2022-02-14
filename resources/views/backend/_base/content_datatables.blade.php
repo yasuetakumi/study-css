@@ -66,8 +66,8 @@
         // add custom function to make filter min and max rent amount
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex ) {
-                var min = parseInt( $('#input-min-rent_amount').val(), 10 );
-                var max = parseInt( $('#input-max-rent_amount').val(), 10 );
+                var min = parseInt( $('#input-min-man').val(), 10 );
+                var max = parseInt( $('#input-max-man').val(), 10 );
                 var rent = parseFloat( data[4] ) || 0;
                 //console.log("rent", rent);
 
@@ -84,8 +84,8 @@
         // add custom function to make filter min and max surface area
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex ) {
-                var min = parseInt( $('#input-min-surface_area').val(), 10 );
-                var max = parseInt( $('#input-max-surface_area').val(), 10 );
+                var min = parseInt( $('#input-min-tsubo').val(), 10 );
+                var max = parseInt( $('#input-max-tsubo').val(), 10 );
                 var surface = parseFloat( data[5] ) || 0;
                 //console.log("surface", surface);
 
@@ -173,7 +173,7 @@
                             table.column(i).order('desc').search(this.value).draw();
                         }
                     });
-                }else if(id == 'rent_amount' || id == 'surface_area'){ //create 2 input min and max to rent amount and surface area column
+                }else if(id == 'man' || id == 'tsubo'){ //create 2 input min and max to rent amount (man) and surface area(tsubo) column
                     $(this).html('<div class="d-flex"><input id="input-min-'+id+'" class="form-control input-min-'+i+'" type="number" placeholder="min" /> <input id="input-max-'+id+'" class="form-control input-max-'+i+'" type="number" placeholder="max" /> </div>');
                     // old filter string
                     // $('#input-min', this).on('keyup change', function () {
@@ -253,11 +253,11 @@
             }
             // activate filter min and max after document ready
             $(document).ready(function() {
-                $('#input-max-rent_amount, #input-min-rent_amount').keyup( function() {
+                $('#input-max-man, #input-min-man').keyup( function() {
                     //console.log("finde")
                     table.draw();
                 });
-                $('#input-max-surface_area, #input-min-surface_area').keyup( function() {
+                $('#input-max-tsubo, #input-min-tsubo').keyup( function() {
                     //console.log("finde")
                     table.draw();
                 });
