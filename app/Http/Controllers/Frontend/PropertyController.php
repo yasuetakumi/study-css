@@ -19,12 +19,6 @@ class PropertyController extends Controller
 {
     public function index(Request $request)
     {
-        // if(isset($request->city)){
-        //     $data['city_id'] = $request->city;
-        // }
-        // if(isset($request->station)){
-        //     $data['station_id'] = $request->station;
-        // }
         $data['rent_amounts'] = RentPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['surface_areas'] = SurfaceAreaOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $skeleton = [
@@ -103,6 +97,14 @@ class PropertyController extends Controller
         if(isset($queryString['cuisine'])){
             $stringCuisine = implode(",", $queryString['cuisine']);
             $withQuery['cuisine'] = $stringCuisine;
+        }
+        if(!empty($queryString['city'])){
+            $stringCity= implode(",", $queryString['city']);
+            $withQuery['city'] = $stringCity;
+        }
+        if(!empty($queryString['station'])){
+            $stringStation= implode(",", $queryString['station']);
+            $withQuery['station'] = $stringStation;
         }
 
         // return $withQuery;

@@ -12,6 +12,8 @@
             <!-- /.card-header -->
             <form action="{{route('property.filter')}}" method="POST" id="formElement">
                 @csrf
+                <input type="hidden" name="city[]" :value="filterCity">
+                <input type="hidden" name="station[]" :value="filterStations">
                 <div class="card-body clearfix">
                     {{-- Surface Area Filter--}}
                     <div class="search-area mb-3">
@@ -227,7 +229,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">@{{property_count}} <span style="font-size: 16px; color: black"> 件の該当物件</span> </h3>
-                                <button type="submit" class="btn btn-primary px-4 py-2 d-block w-100 mt-3" @click="getListProperty">
+                                <button type="submit" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
                                     <span>
                                         <i class="fas fa-search"></i>
                                         この条件で検索
@@ -357,6 +359,8 @@
                         skeleton: null,
                         furnished: null,
                         cuisines: [],
+                        cities: [],
+                        stations: [],
                     }
                 },
                 // ----------------------------------------------------------
@@ -409,6 +413,12 @@
             loading: function() {
                 return this.items.loading;
             },
+            filterCity: function(){
+                return this.items.filter.cities;
+            },
+            filterStation: function(){
+                return this.items.filter.stations;
+            }
         },
 
         /*
@@ -454,6 +464,8 @@
                 const getWalkingDistanceQs = queries.get('walking_distance');
                 const getFurnishedQs = queries.get('furnished');
                 const getSkeletonQs = queries.get('skeleton');
+                const getCityQs = queries.getAll('city');
+                const getStationQs = queries.getAll('station');
                 console.log("furnished", getFurnishedQs);
                 console.log("skeleton", getSkeletonQs);
 
@@ -527,12 +539,33 @@
                             this.items.filter.cuisines.push(cuisine);
                         }
                 }
+                // extract value query string of city
+                if(getCityQs.length > 0){
+                    let citySplit = getCityQs[0].split(",") || [];
+                        for(city of citySplit){
+                            console.log(city);
+                            this.items.filter.cities.push(city);
+                        }
+                }
+                if(getStationQs.length > 0){
+                    let stationSplit = getStationQs[0].split(",") || [];
+                        for(station of stationSplit){
+                            console.log(station);
+                            this.items.filter.stations.push(station);
+                        }
+                }
             },
             getListProperty: function(event) {
                 this.items.loading = true;
                 let url = window.location.href;
                 console.log("url", url);
                 let data = new FormData(formElement);
+                // if(this.items.filter.cities && this.items.filter.cities.length > 0){
+                //     data.append('city', JSON.stringify(this.items.filter.cities));
+                // }
+                // if(this.items.filter.stations && this.items.filter.stations.length > 0){
+                //     data.append('station', JSON.stringify(this.items.filter.stations));
+                // }
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
                         this.items.property_data = result.data.data.result;
@@ -548,6 +581,12 @@
                 }
                 let data = new FormData(formElement);
                 data.append("count", 1);
+                // if(this.items.filter.cities && this.items.filter.cities.length > 0){
+                //     data.append('city', JSON.stringify(this.items.filter.cities));
+                // }
+                // if(this.items.filter.stations && this.items.filter.stations.length > 0){
+                //     data.append('station', JSON.stringify(this.items.filter.stations));
+                // }
                 axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
                     .then((result) => {
                         this.items.property_count = result.data.data.count;

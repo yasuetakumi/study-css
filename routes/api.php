@@ -44,7 +44,7 @@ Route::prefix('v1')->group(function () {
     Route::post('property/getProperties', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
     Route::post('property/getPropertiesCount', 'API\ApiPropertyController@getPropertyByFilter');
     Route::post('property/getPropertyCountByCity', 'API\ApiPropertyController@getPropertyCountByCity');
-    Route::post('property/getPropertyByStation', 'API\ApiPropertyController@getPropertyByStation');
+    Route::post('property/getPropertyCountByStation', 'API\ApiPropertyController@getPropertyCountByStation');
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'API\ApiDesignStyleController@getDesignByCategory');
 
