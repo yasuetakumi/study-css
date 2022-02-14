@@ -70,6 +70,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertiesPropertyPreferenceSeeder::class);
         $this->call(PropertyStationSeeder::class);
 
+        $this->call(PropertyPlanSeeder::class);
+
 
     }
 }
