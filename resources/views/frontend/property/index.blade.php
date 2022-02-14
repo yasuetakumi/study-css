@@ -12,8 +12,12 @@
             <!-- /.card-header -->
             <form action="{{route('property.filter')}}" method="POST" id="formElement">
                 @csrf
-                <input type="hidden" name="city[]" :value="filterCity">
-                <input type="hidden" name="station[]" :value="filterStations">
+                <div style="display: none" v-for="(city, index) in filterCity" :key="index">
+                    <input type="hidden" name="city[]" :value="city">
+                </div>
+                <div style="display: none" v-for="(station, index) in filterStations" :key="index">
+                    <input type="hidden" name="station[]" :value="station">
+                </div>
                 <div class="card-body clearfix">
                     {{-- Surface Area Filter--}}
                     <div class="search-area mb-3">
@@ -547,6 +551,7 @@
                             this.items.filter.cities.push(city);
                         }
                 }
+                // extract value query string of station
                 if(getStationQs.length > 0){
                     let stationSplit = getStationQs[0].split(",") || [];
                         for(station of stationSplit){
@@ -560,12 +565,6 @@
                 let url = window.location.href;
                 console.log("url", url);
                 let data = new FormData(formElement);
-                // if(this.items.filter.cities && this.items.filter.cities.length > 0){
-                //     data.append('city', JSON.stringify(this.items.filter.cities));
-                // }
-                // if(this.items.filter.stations && this.items.filter.stations.length > 0){
-                //     data.append('station', JSON.stringify(this.items.filter.stations));
-                // }
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
                         this.items.property_data = result.data.data.result;
@@ -581,12 +580,6 @@
                 }
                 let data = new FormData(formElement);
                 data.append("count", 1);
-                // if(this.items.filter.cities && this.items.filter.cities.length > 0){
-                //     data.append('city', JSON.stringify(this.items.filter.cities));
-                // }
-                // if(this.items.filter.stations && this.items.filter.stations.length > 0){
-                //     data.append('station', JSON.stringify(this.items.filter.stations));
-                // }
                 axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
                     .then((result) => {
                         this.items.property_count = result.data.data.count;

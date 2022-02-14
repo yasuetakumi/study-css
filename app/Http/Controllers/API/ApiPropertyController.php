@@ -23,16 +23,14 @@ class ApiPropertyController extends Controller
         $selectedCities = array();
         $selectedStations = array();
 
-        if(!empty($filter->city[0])){
-            $arr = explode(",", $filter->city[0]);
-            foreach($arr as $value){
+        if(!empty($filter->city)){
+            foreach($filter->city as $value){
                 array_push($selectedCities, (int) $value);
             }
             $query->whereIn('city_id', $selectedCities);
         }
-        if(!empty($filter->station[0])){
-            $arr = explode(",", $filter->city[0]);
-            foreach($arr as $value){
+        if(!empty($filter->station)){
+            foreach($filter->station as $value){
                 array_push($selectedStations, (int)$value);
             }
             $query->whereHas('property_stations', function($q) use ($selectedStations){
