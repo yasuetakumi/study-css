@@ -14,21 +14,27 @@ class ApiPropertyController extends Controller
     {
         $filter = (object) $request->all();
         //return response()->json($filter);
-        $query = Property::with(['properties_property_preferences', 'property_stations'])->select('id', 'location', 'rent_amount', 'surface_area');
+        $query = Property::with(['properties_property_preferences', 'property_stations']);
         $selectedUnderground = array();
         $selectedAboveground = array();
         $selectedPropertyType = array();
         $selectedPropertyPreference = array();
         $selectedCuisines = array();
+        $selectedCities = array();
+        $selectedStations = array();
 
-        if(isset($request->city)){
-            $cities = $request->city;
-            $query->whereIn('city_id', $cities);
+        if(!empty($filter->city)){
+            foreach($filter->city as $value){
+                array_push($selectedCities, (int) $value);
+            }
+            $query->whereIn('city_id', $selectedCities);
         }
-        if(isset($request->station)){
-            $stations = array($request->station);
-            $query->whereHas('property_stations', function($q) use ($stations){
-                $q->whereIn('station_id', $stations);
+        if(!empty($filter->station)){
+            foreach($filter->station as $value){
+                array_push($selectedStations, (int)$value);
+            }
+            $query->whereHas('property_stations', function($q) use ($selectedStations){
+                $q->whereIn('station_id', $selectedStations);
             });
         }
 
@@ -62,9 +68,9 @@ class ApiPropertyController extends Controller
             }
             $query->whereIn('number_of_floors_under_ground', $selectedUnderground);
         }
-        if(isset($filter->above)){
-            foreach($filter->above as $key => $value){
-                array_push($selectedAboveground, $filter->above[$key]);
+        if(isset($filter->floor_above)){
+            foreach($filter->floor_above as $key => $value){
+                array_push($selectedAboveground, $filter->floor_above[$key]);
             }
             $query->whereIn('number_of_floors_above_ground', $selectedAboveground);
         }
@@ -135,11 +141,18 @@ class ApiPropertyController extends Controller
         $result = $properties->count();
         return response()->json($result);
     }
-    public function getPropertyByStation(Request $request)
+    public function getPropertyCountByStation(Request $request)
     {
         // Station contain prefecture_id
         // Getting the property that has the same prefecture_id as station
-        $properties = Property::where('prefecture_id', $request->prefecture_id)->get();
+        $selectedStations = array();
+        foreach($request->station as $value){
+            array_push($selectedStations, (int) $value);
+        }
+        $properties = Property::with(['property_stations']);
+        $properties->whereHas('property_stations', function ($query) use ($selectedStations){
+            $query->whereIn('station_id', $selectedStations);
+        });
         $count = $properties->count();
         return response()->json($count);
     }

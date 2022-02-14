@@ -11,6 +11,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <form action="{{route('property.filter')}}" method="POST" id="formElement">
+                        @csrf
                         <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
                         <div class="row">
                             @foreach ($cities as $city)
@@ -45,7 +46,7 @@
                 </div>
                 <hr class="my-0 mx-2">
                 <!-- /.card-header -->
-                <form action="{{route('property.filter')}}" method="POST" id="propertyByCity">
+                <form action="{{route('property.filter')}}" method="POST" id="propertyByStation">
                     @csrf
                     <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
                     <div class="card-body">
@@ -84,7 +85,7 @@
                             </div>
                             <div v-else class="col-lg-2 col-6" v-for="station in stations" :key="station.id">
                                 <div class="form-check">
-                                    <input class="form-check-input" :value="station.id" name="station" type="checkbox" v-model="items.stations" @change="getPropertyCountByStation">
+                                    <input class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations" @change="getPropertyCountByStation">
                                     <label class="form-check-label">@{{station.display_name}}</label>
                                 </div>
                             </div>
@@ -103,7 +104,7 @@
         <div class="col-12 mt-5">
             <div class="card rounded-0">
                 <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0"></h3>
+                    <h3 class="card-title mb-0">List Property In {{$prefecture->display_name}}</h3>
                 </div>
                 <hr class="my-0 mx-2">
                 <!-- /.card-header -->
@@ -216,14 +217,13 @@
         ## ------------------------------------------------------------------
         */
         mounted: function(){
-            if(@json($initial_station_line)){
-                this.items.station_line_id = @json($initial_station_line->id);
-            }
-
+            this.getPropertyCountByCity();
         },
 
         created: function(){
-            this.getPropertyCountByCity();
+            if(@json($initial_station_line)){
+                this.items.station_line_id = @json($initial_station_line->id);
+            }
         },
 
         /*
@@ -275,14 +275,13 @@
                 this.getStationByStationLine();
                 document.getElementById('checkall').checked = false;
                 document.getElementById('uncheckall').checked = false;
-                this.checkAll();
+
             },
             getStationByStationLine: async function () {
                 this.items.loading = true;
                 let response = await axios.get(root_url + '/api/v1/station/getStationByStationLine/' +  this.items.station_line_id);
                 console.log(response.data);
                 this.items.list_stations = response.data;
-                this.getPropertyCountByStation();
                 this.items.loading = false;
             },
             checkAll: function (event) {
@@ -304,8 +303,8 @@
                 });
             },
             getPropertyCountByStation: async function () {
-                let data2 = new FormData(propertyByCity);
-                axios.post(root_url + '/api/v1/property/getPropertyByStation', data2)
+                let data2 = new FormData(propertyByStation);
+                axios.post(root_url + '/api/v1/property/getPropertyCountByStation', data2)
                     .then((result) => {
                         this.items.property_count_station = result.data;
                         console.log("responded", result.data);
