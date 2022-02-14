@@ -165,4 +165,7 @@ return [
     'inquiry_type' => 'Inquiry Type',
     'inquiry_name' => 'Inquiry Name',
 
+    //B3
+    'administrator' => 'Administrator',
+
 ];
