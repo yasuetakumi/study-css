@@ -90,7 +90,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
 
                 Route::resource('property', 'PropertyController')->except('detail');
 
-                Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
+                // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
             });
             //------------------------------------------------------------------
             // Sharing for super admin and company admin
@@ -141,7 +141,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
             // B8
-            Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.show');
+            // Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.show');
         });
     });
 
@@ -159,8 +159,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('map', function () {
         return 'map';
     });
-    // C4
-    Route::get('property/properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
+
     // C5
     Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
     // C6
