@@ -62,12 +62,12 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li id="create_property" class="nav-item">
+                            {{-- <li id="create_property" class="nav-item">
                                 <a href="{{route('admin.property.detail', 1)}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.detail_page')</p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li id="list_property" class="nav-item">
                                 <a href="{{route('admin.property.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
@@ -260,14 +260,14 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @if (Auth::user()->properties->isNotEmpty())
+                            {{-- @if (Auth::user()->properties->isNotEmpty())
                                 <li id="create_property" class="nav-item">
                                     <a href="{{route('manage.property.show', Auth::user()->properties[0]->id)}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>@lang('label.detail_page')</p>
                                     </a>
                                 </li>
-                            @endif
+                            @endif --}}
                             <li id="list_property" class="nav-item">
                                 <a href="{{route('manage.property.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>

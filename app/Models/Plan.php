@@ -60,6 +60,11 @@ class Plan extends Model
 
     public function properties()
     {
-        return $this->hasMany(Property::class, 'plan_id');
+        return $this->belongsToMany(Property::class, 'properties_plans');
+    }
+
+    public function property_plans()
+    {
+        return $this->hasMany(PropertyPlan::class, 'plan_id');
     }
 }
