@@ -1,14 +1,20 @@
 @php
     $disableForm = false;
-    $isUserCompany = false;
+    $disableSelect2 = false;
     $companyUserId = '';
     if ($page_type == 'detail') {
         $disableForm = true;
     }
+    if(!Auth::check()){
+        $disableSelect2 = true;
+    } else {
+        $disableSelect2 = false;
+    }
     if(Auth::guard('user')->check()){
-        $isUserCompany = true;
+        $disableSelect2 = true;
         $companyUserId = Auth::id();
     }
+
 @endphp
 @extends('backend._base.content_form')
 @section('breadcrumbs')
@@ -39,7 +45,7 @@
             'required'      => 'true',
             'options'       => '$store.state.preset.users_options',
             'model'         => 'items.user_id',
-            'disabled'      => $isUserCompany ? $isUserCompany : $disableForm
+            'disabled'      => 'items.disabled'
         ])
         @endcomponent
 
@@ -427,6 +433,7 @@
                     like_property: [],
                     property_id: null,
                     visited_property: [],
+                    disabled: @json($disableSelect2),
                 },
                 // ----------------------------------------------------------
             };
