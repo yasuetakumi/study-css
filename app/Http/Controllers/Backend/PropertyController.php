@@ -60,7 +60,7 @@ class PropertyController extends Controller
                     $q->where('belong_company_id', Auth::guard('user')->user()->belong_company_id);
                 });
             }
-            return (new DatatablesHelper)->instance($model, true, true, true)
+            return (new DatatablesHelper)->instance($model)
                                             ->filterColumn('user.display_name', function($query, $keyword){
                                                 $query->whereHas('user', function($q) use ($keyword){
                                                     $q->where('display_name', 'like', '%'.$keyword.'%');
