@@ -8,10 +8,16 @@
         </div>
     </div>
     <div class="row">
-        <div v-if="!list_properties">
+        <div v-if="!list_history && items.isActiveHistory">
             <p class="text-center">No data yet...</p>
         </div>
-        <div v-else class="col-md-4" v-for="pd in list_properties" :key=pd.id>
+        <div v-else-if="!list_favorite && items.isActiveFavorite">
+            <p class="text-center">No data yet...</p>
+        </div>
+        <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4" v-for="pd in list_favorite" :key="pd.id">
+            @include('frontend._components.property_list')
+        </div>
+        <div v-else class="col-md-4" v-for="pd in list_history" :key="pd.id">
             @include('frontend._components.property_list')
         </div>
     </div>
@@ -75,7 +81,8 @@
                 // Form result set here
                 // ----------------------------------------------------------
                 items: {
-                    list_properties: [],
+                    list_properties_history: [],
+                    list_properties_favorite: [],
                     like_property: [],
                     isActiveHistory: false,
                     isActiveFavorite: false,
@@ -111,9 +118,16 @@
         ## ------------------------------------------------------------------
         */
         computed: {
-            list_properties: function(){
-                if(this.items.list_properties && this.items.list_properties.length > 0){
-                    return this.items.list_properties;
+            list_history: function(){
+                if(this.items.list_properties_history && this.items.list_properties_history.length > 0){
+                    return this.items.list_properties_history;
+                } else {
+                    return false;
+                }
+            },
+            list_favorite: function(){
+                if(this.items.list_properties_favorite && this.items.list_properties_favorite.length > 0){
+                    return this.items.list_properties_favorite;
                 } else {
                     return false;
                 }
@@ -149,7 +163,11 @@
                 let local = localStorage.getItem(localKey);
                 let propertyID = JSON.parse(local) || [];
                 let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyID);
-                this.items.list_properties = data.data;
+                if(localKey == 'visitedPropertyId'){
+                    this.items.list_properties_history = data.data;
+                } else {
+                    this.items.list_properties_favorite = data.data
+                }
             },
             getLikeProperty: function(){
                 let localLikeProperty = localStorage.getItem('favoritePropertyId');
@@ -183,6 +201,7 @@
                     properties_like.push(propertyID);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                 }
+                this.getListHistoryOrFavoriteProperty('favoritePropertyId');
                 this.getLikeProperty();
             },
             // --------------------------------------------------------------
