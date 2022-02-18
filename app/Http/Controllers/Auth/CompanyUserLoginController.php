@@ -51,6 +51,9 @@ class CompanyUserLoginController extends Controller
     }
 
     protected function showLoginForm(){
+        if (auth()->guard('user')->check()) {
+            return redirect()->route('manage.property.index');
+        }
         return view('auth.login-company-user');
     }
 
@@ -58,7 +61,7 @@ class CompanyUserLoginController extends Controller
     {
         if (auth()->guard('user')->attempt(['email' => $request->email, 'password' => $request->password ])) {
             $this->saveLog('User login succeed', 'Email = ' . $request->email . ', User Name = ' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
-            return redirect()->route('userowner-edit');
+            return redirect()->route('manage.property.index');
         }
         $this->saveLog('User login fail', 'Email = ' . $request->email . ', Password = ' . $request->password);
         return back()->withErrors(['email' => 'Email or password are wrong.']);

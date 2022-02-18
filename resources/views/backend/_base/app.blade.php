@@ -36,6 +36,7 @@
 
     <!-- Navbar -->
     @auth
+        @if (\Request::is('admin/*') || \Request::is('manage/*'))
         <nav class="main-header navbar navbar-expand navbar-light navbar-info">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
@@ -90,16 +91,18 @@
             </ul>
 
         </nav>
+        @endif
     @endauth
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
 @auth
-    @include('backend._base.nav_left')
+    @if (\Request::is('admin/*') || \Request::is('manage/*'))
+        @include('backend._base.nav_left')
+    @endif
 @endauth
-
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper @if(!Auth::check()) ml-0 @endif">
+    <div class="content-wrapper {{ Request::is('admin/*') || Request::is('manage/*') ? '' : 'ml-0' }}">
         @yield('content-wrapper')
     </div>
     <!-- /.content-wrapper -->
@@ -111,7 +114,7 @@
 <!-- /.control-Right sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer text-sm @if(!Auth::check()) ml-0 @endif">
+    <footer class="main-footer text-sm {{ Request::is('admin/*') || Request::is('manage/*') ? '' : 'ml-0' }}">
         <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
             Version 1

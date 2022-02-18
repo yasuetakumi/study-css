@@ -17,7 +17,7 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             if(Auth::guard('user')->check()){
-                return abort(401);
+                return route('login');
             }
             return route('company-user-login');
         }
