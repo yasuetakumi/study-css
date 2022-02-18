@@ -31,7 +31,7 @@ class RolePermission
              */
             if( Auth::user()->adminRole->id == AdminRole::ROLE_COMPANY_ADMIN
                 && $request->route()->parameter('company') != Auth::user()->company->id ){
-                abort(404, "User cannot access to this company. ");
+                return redirect('/login');
             }
 
             return $next($request);
