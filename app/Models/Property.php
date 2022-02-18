@@ -142,9 +142,14 @@ class Property extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function plan()
+    public function plans()
     {
-        return $this->belongsTo(Plan::class);
+        return $this->belongsToMany(Plan::class, 'properties_plans');
+    }
+
+    public function property_plans()
+    {
+        return $this->hasMany(PropertyPlan::class, 'property_id');
     }
 
     public function scopeRangeArea($query, $min, $max, $column){
