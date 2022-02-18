@@ -21,9 +21,9 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             if(Auth::guard("web")->check()){
                 if(Auth::user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN){
-                    // Check when superadmin access manage page
-                    if( $request->is('manage.*') ){
-                        // Redirect to manage/login
+                    // Check when superadmin access company page
+                    if( $request->is('company.*') ){
+                        // Redirect to company/login
                         return redirect()->route('company-user-login');
                     } else{
                         \Log::debug('RedirectIfAuthenticated: Redirect to super admin edit');
@@ -31,9 +31,9 @@ class RedirectIfAuthenticated
                         return redirect()->route('admin.property.index');
                     }
                 } else{
-                    // Check when admin access manage page
-                    if( $request->is('manage.*') ){
-                        // Redirect to manage/login
+                    // Check when admin access company page
+                    if( $request->is('company.*') ){
+                        // Redirect to company/login
                         return redirect()->route('company-user-login');
                     } else{
                         \Log::debug('RedirectIfAuthenticated: Redirect to admins edit');

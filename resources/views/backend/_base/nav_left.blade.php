@@ -262,20 +262,20 @@
                         <ul class="nav nav-treeview">
                             {{-- @if (Auth::user()->properties->isNotEmpty())
                                 <li id="create_property" class="nav-item">
-                                    <a href="{{route('manage.property.show', Auth::user()->properties[0]->id)}}" class="nav-link">
+                                    <a href="{{route('company.property.show', Auth::user()->properties[0]->id)}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>@lang('label.detail_page')</p>
                                     </a>
                                 </li>
                             @endif --}}
                             <li id="list_property" class="nav-item">
-                                <a href="{{route('manage.property.create')}}" class="nav-link">
+                                <a href="{{route('company.property.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.createNew')</p>
                                 </a>
                             </li>
                             <li id="list_property" class="nav-item">
-                                <a href="{{route('manage.property.index')}}" class="nav-link">
+                                <a href="{{route('company.property.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>@lang('label.list')</p>
                                 </a>

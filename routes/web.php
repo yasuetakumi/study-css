@@ -42,8 +42,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
     Route::post('/admin/login', 'Auth\LoginController@login');
 
-    Route::get('/manage/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
-    Route::post('/manage/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
+    Route::get('/company/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
+    Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
 
     // Password Reset Routes...
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -124,13 +124,13 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
      */
     Route::group(['middleware' => 'auth:user'], function() {
 
-        Route::get('manage/logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
-        Route::group(['middleware' => ['user_role:supervisor,operator'], 'prefix' => 'manage'], function () {
+        Route::get('company/logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
+        Route::group(['middleware' => ['user_role:supervisor,operator'], 'prefix' => 'company'], function () {
             // B2
             Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
             Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
             // B3 - B5
-            Route::name('manage.')->group(function() {
+            Route::name('company.')->group(function() {
                 Route::get('property/add', 'Backend\PropertyController@create')->name('property.create');
                 Route::get('property/edit/{id}', 'Backend\PropertyController@edit')->name('property.edit');
                 Route::resource('property', 'Backend\PropertyController')->except(['create', 'edit']);
@@ -141,7 +141,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
             // B8
-            // Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('manage.property.show');
+            // Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('company.property.show');
         });
     });
 

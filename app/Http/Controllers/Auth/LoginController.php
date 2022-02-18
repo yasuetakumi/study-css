@@ -68,9 +68,9 @@ class LoginController extends Controller
                 return redirect('/dashboard');
         }
         if(Auth::user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN){
-            // Check when superadmin access manage page
-            if( $request->is('manage.*') ){
-                // Redirect to manage/login
+            // Check when superadmin access company page
+            if( $request->is('company.*') ){
+                // Redirect to company/login
                 return redirect()->route('admin.property.index');
             }
         }
