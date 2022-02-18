@@ -27,7 +27,8 @@ class RedirectIfAuthenticated
                         return redirect()->route('company-user-login');
                     } else{
                         \Log::debug('RedirectIfAuthenticated: Redirect to super admin edit');
-                        return redirect()->route('admin.superadmin.edit', ['superadmin' => Auth::user()->id]);
+                        // return redirect()->route('admin.superadmin.edit', ['superadmin' => Auth::user()->id]);
+                        return redirect()->route('admin.property.index');
                     }
                 } else{
                     // Check when admin access manage page
@@ -36,7 +37,8 @@ class RedirectIfAuthenticated
                         return redirect()->route('company-user-login');
                     } else{
                         \Log::debug('RedirectIfAuthenticated: Redirect to admins edit');
-                        return redirect()->route('admin.admins.edit', ['admin' => Auth::user()->id]);
+                        //return redirect()->route('admin.admins.edit', ['admin' => Auth::user()->id]);
+                        return redirect()->route('admin.property.index');
                     }
                 }
             }
@@ -45,7 +47,7 @@ class RedirectIfAuthenticated
                 // check when user access admin page
                 if( $request->is('admin.*') ){
                     // Redirect to admin/login
-                    return redirect()->route('login');
+                    return redirect()->route('admin.logout');
                 } else{
                     \Log::debug('RedirectIfAuthenticated: Redirect to userowner edit');
                     return redirect()->route('userowner-edit');

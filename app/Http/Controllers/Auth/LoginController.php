@@ -41,6 +41,17 @@ class LoginController extends Controller
         return redirect('/admin/login');
     }
 
+    protected function showAdminLoginForm(){
+        if (auth()->guard('user')->check()) {
+            if( $request->is('admin.*') ){
+                return redirect()->route('login');      
+            } else{
+                return redirect()->route('admin.property.index');
+            }
+        }
+        return view('auth.login');
+    }
+
     protected function authenticated(Request $request, $user)
     {
         $this->saveLog('User login succeed', 'Email = ' . $user->email . ', User Name = ' . $user->display_name, $user->id);
@@ -48,13 +59,20 @@ class LoginController extends Controller
         // Customize default page each role.
         switch ($user->admin_role_id){
             case AdminRole::ROLE_SUPER_ADMIN:
-                return redirect()->route('admin.superadmin.index');
+                return redirect()->route('admin.property.index');
             case AdminRole::ROLE_GENERAL_ADMIN:
                 return redirect()->route('admin.news.index');
             case AdminRole::ROLE_COMPANY_ADMIN:
                 return redirect()->route('admin.company.user.index', $user->company->id);
             default:
                 return redirect('/dashboard');
+        }
+        if(Auth::user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN){
+            // Check when superadmin access manage page
+            if( $request->is('manage.*') ){
+                // Redirect to manage/login
+                return redirect()->route('admin.property.index');
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     });
 
     // Authentication Routes...
-    Route::get('/admin/login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
     Route::post('/admin/login', 'Auth\LoginController@login');
 
     Route::get('/manage/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');

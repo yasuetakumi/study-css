@@ -52,7 +52,11 @@ class CompanyUserLoginController extends Controller
 
     protected function showLoginForm(){
         if (auth()->guard('user')->check()) {
-            return redirect()->route('manage.property.index');
+            if( $request->is('admin.*') ){
+                return redirect()->route('login');      
+            } else{
+                return redirect()->route('manage.property.index');
+            }
         }
         return view('auth.login-company-user');
     }
