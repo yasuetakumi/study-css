@@ -156,9 +156,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">STEP 1</p>
-                    </div>
                     <div class="col-12">
                         <div id="form-group--plans" class="row form-group">
 
@@ -189,79 +186,19 @@
                                     <div v-if="loadingData">
                                         <p>Loading Data...</p>
                                     </div>
-                                    <div v-else>
-                                        <div class="icheck-cyan d-inline" v-for="dc in designStyles" :key="dc.id">
-                                            <input type="radio" :value="dc.id" :id="dc.display_name" name="design_style_id" />
-                                            <label :for="dc.display_name" class="text-uppercase mr-5">@{{dc.display_name}}</label>
+                                    <div v-else class="row">
+                                        <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
+                                            <div style="position: relative;">
+                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
+                                            </div>
+                                            <div class="my-2">
+                                                <div class="icheck-cyan d-inline" >
+                                                    <input type="radio" :value="dc.id" :id="dc.display_name" name="design_style_id" @change="showPlanByArea" />
+                                                    <label :for="dc.display_name" class="text-uppercase">Design @{{dc.display_name}}</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">STEP 2</p>
-                    </div>
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    <div style="margin-bottom: 2rem;">
-                                        <div class="icheck-cyan d-inline mb-5" v-for="area in area_groups" :key="area.id">
-                                            <input type="radio" :value="area.id" :id="area.display_name" name="area_id" @change="showPlanByArea" />
-                                            <label :for="area.display_name" class="text-uppercase mr-5">@{{area.display_name}}</label>
-                                        </div>
-                                    </div>
-
-                                    <div v-if="loadingData">
-                                        <p>Loading Data...</p>
-                                    </div>
-                                    <div v-else-if="!plans">
-                                        <p>No Data</p>
-                                    </div>
-                                    <div v-else>
-                                        <div class="icheck-cyan d-inline" v-for="plan in plans" :key="plan.id">
-                                            <input type="radio" :value="plan.id" :id="plan.display_name" name="plan_id" @change="showTsuboByPlan(plan.area_group_id)"/>
-                                            <label :for="plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">STEP 3</p>
-                    </div>
-                    <div class="col-12">
-                        <input id="slider" class="slider-red input slider w-100" step="1" type="range" :min="tsubo_minimum" :max="tsubo_maximum" :value="items.tsubo_value" @change="showSliderValue">
-                        <input type="hidden" id="input-tsubo_area" :value="items.tsubo_value">
-                        <p class="text-center" style="font-size: 20px; margin-top: 2rem;">@{{items.tsubo_value}}坪</p>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">Do You Want Kitchen</p>
-                    </div>
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Has Kitchen', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    @foreach($has_kitchens as $hs)
-                                        <div class="icheck-cyan d-inline">
-                                            <input type="radio" value="{{$hs['value']}}" id="input-hs-{{ $hs['value'] }}" name="has_kitchen" {{$loop->first ? 'checked' : ''}}/>
-                                            <label for="input-hs-{{ $hs['value'] }}" class="text-uppercase mr-5">{{ $hs['label_jp'] }}</label>
-                                        </div>
-                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -686,6 +623,9 @@
                     properties_visited.push(this.items.property_id);
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
+            },
+            designStyleImage: function(image){
+                return '/public/img/backend/' + image;
             }
             // --------------------------------------------------------------
         }
