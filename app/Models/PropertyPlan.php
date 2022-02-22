@@ -12,4 +12,9 @@ class PropertyPlan extends Model
     public $timestamps = true;
     protected $fillable = ['plan_id', 'property_id'];
 
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
+    }
+
 }

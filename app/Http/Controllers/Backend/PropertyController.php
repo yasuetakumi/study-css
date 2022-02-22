@@ -172,7 +172,9 @@ class PropertyController extends Controller
 
     public function detail($id)
     {
-        $data['item']       = Property::find($id);
+        $data['item']       = Property::with(['property_plans.plan' => function($query){
+            $query->select('id', 'display_name', 'design_category_id');
+        }])->find($id);
         $data['form_action'] = '';
         $data['page_type'] = 'detail';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
