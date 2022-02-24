@@ -7,6 +7,7 @@ use App\Traits\LogActivityTrait;
 use App\Models\AdminRole;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -34,7 +35,7 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct(){
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except('logout');
     }
 
     protected function loggedOut(Request $request) {
@@ -42,37 +43,42 @@ class LoginController extends Controller
     }
 
     protected function showAdminLoginForm(Request $request){
-        if (auth()->guard('user')->check()) {
-            if( $request->is('admin.*') ){
-                return redirect()->route('login');
-            } else{
+        // Get the url that user want to access before login
+        session(['targetURL' => url()->previous()]);
+
+        // Admin user try to access login form
+        if (auth()->guard('web')->check()) {
+            // Redirection based on admin role
+            if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN)
                 return redirect()->route('admin.property.index');
-            }
+            elseif (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_COMPANY_ADMIN)
+                return redirect()->route('admin.company.user.index', Auth::guard('web')->user()->company->id);
         }
+
+        // Company user try to access admin route
+        if (auth()->guard('user')->check()) {
+            return view('auth.login');
+        }
+
         return view('auth.login');
     }
 
     protected function authenticated(Request $request, $user)
     {
         $this->saveLog('User login succeed', 'Email = ' . $user->email . ', User Name = ' . $user->display_name, $user->id);
-        // \Log::debug('authenticated admin_role_id:'.$user->admin_role_id);
-        // Customize default page each role.
-        switch ($user->admin_role_id){
-            case AdminRole::ROLE_SUPER_ADMIN:
-                return redirect()->route('admin.property.index');
-            case AdminRole::ROLE_GENERAL_ADMIN:
-                return redirect()->route('admin.news.index');
-            case AdminRole::ROLE_COMPANY_ADMIN:
-                return redirect()->route('admin.company.user.index', $user->company->id);
-            default:
-                return redirect('/dashboard');
+
+        // Set target url and remove from session
+        if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN) {
+            $targetURL = session('targetURL');
+            session()->forget('targetURL');
         }
-        if(Auth::user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN){
-            // Check when superadmin access company page
-            if( $request->is('company.*') ){
-                // Redirect to company/login
-                return redirect()->route('admin.property.index');
-            }
-        }
+        elseif (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_COMPANY_ADMIN)
+            $targetURL = route('admin.company.user.index', Auth::guard('web')->user()->company->id);
+
+
+        // Logging out company user, now user will login as admin
+        Auth::guard('user')->logout();
+
+        return redirect($targetURL);
     }
 }
