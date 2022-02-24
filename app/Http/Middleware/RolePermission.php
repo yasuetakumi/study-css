@@ -31,13 +31,13 @@ class RolePermission
              */
             if( Auth::user()->adminRole->id == AdminRole::ROLE_COMPANY_ADMIN
                 && $request->route()->parameter('company') != Auth::user()->company->id ){
-                return redirect('/login');
+                    return redirect()->route('company-user-login');
             }
 
             return $next($request);
         }
         else{
-            return redirect('/login');
+            return redirect()->route('login');
         }
     }
 }
