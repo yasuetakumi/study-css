@@ -164,6 +164,10 @@ return [
     'inquiry_type' => 'お問い合わせ種別',
     'inquiry_name' => '氏名',
 
+    //B2
+    'my_account' => 'マイアカウント',
+    
+
     //B3
     'administrator' => '管理者',
 ];

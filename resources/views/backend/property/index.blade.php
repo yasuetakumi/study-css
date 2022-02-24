@@ -9,7 +9,7 @@
 
 @section('top_buttons')
     @if (Auth::guard('user')->check())
-        <a href="{{route('manage.property.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+        <a href="{{route('company.property.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
     @else
         <a href="{{route('admin.property.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
     @endif
@@ -17,7 +17,7 @@
 
 @section('content')
     <th data-col="id">ID</th>
-    <th data-col="user.display_name">@if(Request::is('manage/*'))@lang('label.administrator') @else @lang('label.name') @endif </th>
+    <th data-col="user.display_name">@if(Request::is('company/*'))@lang('label.administrator') @else @lang('label.name') @endif </th>
     <th data-col="postcode.postcode">@lang('label.postcode')</th>
     <th data-col="location">@lang('label.location')</th>
     <th data-col="man">@lang('label.rent_amount')</th>
