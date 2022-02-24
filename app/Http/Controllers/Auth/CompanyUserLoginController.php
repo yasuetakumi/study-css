@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\LogActivityTrait;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyUserLoginController extends Controller
 {
@@ -33,7 +34,7 @@ class CompanyUserLoginController extends Controller
      * @return void
      */
     public function __construct(){
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except('logout');
     }
 
     protected function loggedOut(Request $request) {
@@ -50,14 +51,17 @@ class CompanyUserLoginController extends Controller
         return auth()->guard('user');
     }
 
-    protected function showLoginForm(){
+    protected function showLoginForm(Request $request){
+        // Company user try to access login page
         if (auth()->guard('user')->check()) {
-            if( $request->is('admin.*') ){
-                return redirect()->route('login');      
-            } else{
-                return redirect()->route('company.property.index');
-            }
+            return redirect()->route('company.property.index');
         }
+
+        // Admin user try to access company route
+        if (auth()->guard('web')->check()) {
+            return view('auth.login-company-user');
+        }
+
         return view('auth.login-company-user');
     }
 
@@ -65,6 +69,10 @@ class CompanyUserLoginController extends Controller
     {
         if (auth()->guard('user')->attempt(['email' => $request->email, 'password' => $request->password ])) {
             $this->saveLog('User login succeed', 'Email = ' . $request->email . ', User Name = ' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
+
+            // Logging gout admin user, now user will be login as company user
+            Auth::guard('web')->logout();
+
             return redirect()->route('company.property.index');
         }
         $this->saveLog('User login fail', 'Email = ' . $request->email . ', Password = ' . $request->password);

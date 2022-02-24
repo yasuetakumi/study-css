@@ -39,9 +39,11 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     });
 
     // Authentication Routes...
+    Route::get('/admin', function() { return redirect()->route('login'); });
     Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
     Route::post('/admin/login', 'Auth\LoginController@login');
 
+    Route::get('/company', function() { return redirect()->route('company-user-login'); });
     Route::get('/company/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
     Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
 
