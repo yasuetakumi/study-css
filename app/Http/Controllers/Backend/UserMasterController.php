@@ -59,7 +59,7 @@ class UserMasterController extends Controller
     }
 
     public function index(){
-        $data['page_title'] = __('label.user'). __('label.list');
+        $data['page_title'] = __('label.my_account'). __('label.list');
         $data['filter_select_columns'] = [
             'user_roles' => UserRole::pluck('label', 'label')
         ];
@@ -91,7 +91,7 @@ class UserMasterController extends Controller
     public function edit($id){
         $data['item']           = User::find($id);
 
-        $data['page_title']     = __('label.edit') . __('label.user');
+        $data['page_title']     = __('label.edit') . __('label.my_account');
         $data['form_action']    = route('admin.user.update', $id);
 
         $data['user_roles'] = UserRole::pluck('label', 'id')->all();

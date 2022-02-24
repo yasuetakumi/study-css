@@ -165,6 +165,9 @@ return [
     'inquiry_type' => 'Inquiry Type',
     'inquiry_name' => 'Inquiry Name',
 
+    //B2
+    'my_account' => 'My Account',
+
     //B3
     'administrator' => 'Administrator',
 
