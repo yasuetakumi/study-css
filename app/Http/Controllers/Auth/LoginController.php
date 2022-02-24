@@ -41,10 +41,10 @@ class LoginController extends Controller
         return redirect('/admin/login');
     }
 
-    protected function showAdminLoginForm(){
+    protected function showAdminLoginForm(Request $request){
         if (auth()->guard('user')->check()) {
             if( $request->is('admin.*') ){
-                return redirect()->route('login');      
+                return redirect()->route('login');
             } else{
                 return redirect()->route('admin.property.index');
             }
