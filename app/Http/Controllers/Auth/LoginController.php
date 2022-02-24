@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Traits\LogActivityTrait;
 use App\Models\AdminRole;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,14 +68,14 @@ class LoginController extends Controller
     {
         $this->saveLog('User login succeed', 'Email = ' . $user->email . ', User Name = ' . $user->display_name, $user->id);
 
-        // Set target url and remove from session
-        if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN) {
-            $targetURL = session('targetURL');
-            session()->forget('targetURL');
-        }
+        // Set target url
+        if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN)
+            $targetURL = session('targetURL') == route('login') ? route('admin.property.index') : session('targetURL');
         elseif (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_COMPANY_ADMIN)
             $targetURL = route('admin.company.user.index', Auth::guard('web')->user()->company->id);
 
+        // Remove session
+        session()->forget('targetURL');
 
         // Logging out company user, now user will login as admin
         Auth::guard('user')->logout();
