@@ -18,11 +18,9 @@ class UserRolePermission
      */
     public function handle($request, Closure $next, ...$role){
         if(in_array(Auth::guard('user')->user()->userRole->name, $role))
-        {
             return $next($request);
-        }
-        else{
-            return redirect('/login');
-        }
+        // redirect to company user login
+        else
+            return redirect()->route('company-user-login');
     }
 }
