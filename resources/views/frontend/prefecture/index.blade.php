@@ -291,6 +291,9 @@
                         this.items.stations.push(this.items.list_stations[station].id)
                     }
                 }
+                setTimeout(() => {
+                    this.getPropertyCountByStation();
+                }, 200);
             },
             getPropertyCountByCity: function () {
                 let data = new FormData(formElement);

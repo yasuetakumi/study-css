@@ -146,8 +146,10 @@ class ApiPropertyController extends Controller
         // Station contain prefecture_id
         // Getting the property that has the same prefecture_id as station
         $selectedStations = array();
-        foreach($request->station as $value){
-            array_push($selectedStations, (int) $value);
+        if(isset($request->station)){
+            foreach($request->station as $value){
+                array_push($selectedStations, (int) $value);
+            }
         }
         $properties = Property::with(['property_stations']);
         $properties->whereHas('property_stations', function ($query) use ($selectedStations){
