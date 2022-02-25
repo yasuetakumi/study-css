@@ -21,9 +21,17 @@ class HomeController extends Controller
     }
 
     public function prefecture($prefecture){
+        // Page data
         $data['page_title'] = 'Prefecture ' . Str::ucfirst($prefecture);
+
+        // Prefecture and property
         $data['prefecture'] = Prefecture::where('name', $prefecture)->first();
+        $data['properties'] = Property::where('prefecture_id', $data['prefecture']->id)->get();
+
+        // City belongs to prefecture, and count property belongs to city
         $data['cities'] = City::withCount('properties')->where('prefecture_id', $data['prefecture']->id)->get();
+
+        // Station and station lines
         $stations = Station::where('prefecture_id', $data['prefecture']->id)->get();
         $station_lines = array();
         foreach($stations as $station){
@@ -31,8 +39,7 @@ class HomeController extends Controller
         }
         $data['station_lines'] = StationsLine::whereIn('id', $station_lines)->get();
         $data['initial_station_line'] = $data['station_lines']->first();
-        $data['properties'] = Property::where('prefecture_id', $data['prefecture']->id)->get();
-        //return $data;
+
         return view('frontend.prefecture.index', $data);
     }
 }

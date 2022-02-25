@@ -86,7 +86,7 @@
                             <div v-else class="col-lg-2 col-6" v-for="station in stations" :key="station.id">
                                 <div class="form-check">
                                     <input class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations" @change="getPropertyCountByStation">
-                                    <label class="form-check-label">@{{station.display_name}}</label>
+                                    <label class="form-check-label">@{{station.display_name}} (@{{ station.properties_count }})</label>
                                 </div>
                             </div>
                         </div>
