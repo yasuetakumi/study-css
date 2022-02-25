@@ -193,8 +193,8 @@
                                             </div>
                                             <div class="my-2">
                                                 <p>Design @{{dc.display_name}}</p>
-                                                <p>居抜き @{{estimationIndex(dc.id, 1)}}</p>
-                                                <p>スケルトン @{{estimationIndex(dc.id, 0)}}</p>
+                                                <p>居抜き @{{estimationIndex(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                                <p>スケルトン @{{estimationIndex(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -516,24 +516,22 @@
                 }
             },
 
-            estimationIndex: async function(designStyleId, kitchen){
+            estimationIndex: function(designStyleId, kitchen){
                 let plans = this.$store.state.preset.property.property_plans;
                 let plan_id = '';
                 for (let i = 0; i < plans.length; i++) {
                     if(plans[i].plan.design_category_id == this.items.selected_dc){
-                        plan_id = plans[i].plan.design_category_id;
+                        plan_id = plans[i].plan.id;
                     }
                 }
                 let surface_area = document.querySelector("input[name=surface_area]").value;
-                await axios.get(root_url + '/api/v1/getGrandTotalEstimation/' + plan_id + '/' + surface_area + '/' + designStyleId + '/' + kitchen + '/' + this.items.selected_dc)
+                axios.get(root_url + '/api/v1/plans/getGrandTotalEstimation/' + plan_id + '/' + surface_area + '/' + designStyleId + '/' + kitchen + '/' + this.items.selected_dc)
                     .then((result) => {
-                        console.log(result);
-                        return result.min;
+                        document.getElementById("furnished-"+designStyleId).innerHTML = result.data.min + '坪';
+                        document.getElementById("skeleton-"+designStyleId).innerHTML = result.data.min + '坪';
                     }).catch((err) => {
-                        console.log('Not Found');
-                        return 'Not Found';
+                       console.log(err);
                     });;
-
             },
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
