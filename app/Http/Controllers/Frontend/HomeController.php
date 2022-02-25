@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function prefecture($prefecture){
         $data['page_title'] = 'Prefecture ' . Str::ucfirst($prefecture);
         $data['prefecture'] = Prefecture::where('name', $prefecture)->first();
-        $data['cities'] = City::where('prefecture_id', $data['prefecture']->id)->get();
+        $data['cities'] = City::withCount('properties')->where('prefecture_id', $data['prefecture']->id)->get();
         $stations = Station::where('prefecture_id', $data['prefecture']->id)->get();
         $station_lines = array();
         foreach($stations as $station){
