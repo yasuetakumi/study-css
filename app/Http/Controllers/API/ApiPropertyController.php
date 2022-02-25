@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Station;
+use App\Models\StationsLine;
 use Illuminate\Http\Request;
 
 class ApiPropertyController extends Controller
@@ -145,19 +146,29 @@ class ApiPropertyController extends Controller
     }
     public function getPropertyCountByStation(Request $request)
     {
-        // Station contain prefecture_id
-        // Getting the property that has the same prefecture_id as station
+        // Default value
         $selectedStations = array();
+
+        // Get selected station
         if(isset($request->station)){
             foreach($request->station as $value){
                 array_push($selectedStations, (int) $value);
             }
         }
+
+        // If station is not provided, get all station belongs to station line
+        if(!isset($request->station) && isset($request->station_line)) {
+            $stationLine = StationsLine::findOrFail($request->station_line);
+            $selectedStations = $stationLine->stations->pluck('id')->toArray();
+        }
+
+        // Count the property belongs to station
         $properties = Property::with(['property_stations']);
         $properties->whereHas('property_stations', function ($query) use ($selectedStations){
             $query->whereIn('station_id', $selectedStations);
         });
         $count = $properties->count();
+
         return response()->json($count);
     }
 }

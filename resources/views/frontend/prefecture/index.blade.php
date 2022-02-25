@@ -282,6 +282,10 @@
             changeStationByStationLine: function (event) {
                 console.log(event.target.value);
                 this.items.station_line_id = event.target.value;
+
+                // Uncheck selected station from previous station line
+                // This request alse include property count
+                this.checkAllStations('uncheckall');
                 this.getStationByStationLine();
 
             },
