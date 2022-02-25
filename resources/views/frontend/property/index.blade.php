@@ -15,7 +15,7 @@
                 <div style="display: none" v-for="(city, index) in filterCity" :key="index">
                     <input type="hidden" name="city[]" :value="city">
                 </div>
-                <div style="display: none" v-for="(station, index) in filterStations" :key="index">
+                <div style="display: none" v-for="(station, index) in filterStation" :key="index">
                     <input type="hidden" name="station[]" :value="station">
                 </div>
                 <div class="card-body clearfix">

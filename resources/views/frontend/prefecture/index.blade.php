@@ -14,14 +14,24 @@
                         @csrf
                         <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
                         <div class="row">
-                            @foreach ($cities as $city)
-                                <div class="col-lg-2 col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" value="{{$city->id}}" name="city[]" type="checkbox" @change="getPropertyCountByCity">
-                                        <label class="form-check-label">{{$city->display_name}}</label>
+                            <div class="col-12">
+                                <div class="d-flex py-3">
+                                    <div class="mr-4">
+                                        <button @click="checkAllCity('checkall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択</button>
+                                    </div>
+                                    <div>
+                                        <button @click="checkAllCity('uncheckall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択解除</button>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div v-for="(city, cityIndex) in items.cities" class="col-lg-2 col-6">
+                                <div class="form-check">
+                                    <input v-model="items.selectedCities" class="form-check-input city-input" :value="city.id" name="city[]" type="checkbox" @change="getPropertyCountByCity">
+                                    <label class="form-check-label">@{{ city.display_name }} (@{{ city.properties_count }})</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col-12">
@@ -65,13 +75,11 @@
                         <div class="row mb-4">
                             <div class="col-12">
                                 <div class="d-flex py-3">
-                                    <div class="form-check mr-4">
-                                        <input id="checkall" class="form-check-input" value="checkall" name="checkall" type="radio" @change="checkAll">
-                                        <label class="form-check-label">すべて選択</label>
+                                    <div class="mr-4">
+                                        <button @click="checkAllStations('checkall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択</button>
                                     </div>
-                                    <div class="form-check">
-                                        <input id="uncheckall" class="form-check-input" value="uncheckall" name="checkall" type="radio" @change="checkAll">
-                                        <label class="form-check-label">すべて選択解除</label>
+                                    <div>
+                                        <button @click="checkAllStations('uncheckall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択解除</button>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +94,7 @@
                             <div v-else class="col-lg-2 col-6" v-for="station in stations" :key="station.id">
                                 <div class="form-check">
                                     <input class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations" @change="getPropertyCountByStation">
-                                    <label class="form-check-label">@{{station.display_name}}</label>
+                                    <label class="form-check-label">@{{station.display_name}} (@{{ station.properties_count }})</label>
                                 </div>
                             </div>
                         </div>
@@ -192,9 +200,11 @@
                 // ----------------------------------------------------------
                 items: {
                     station_line_id: null,
+                    cities: @json($cities),
                     list_stations: null,
                     loading: false,
                     select_all: [],
+                    selectedCities: [],
                     stations: [],
                     checkall: false,
                     uncheckall: false,
@@ -217,7 +227,7 @@
         ## ------------------------------------------------------------------
         */
         mounted: function(){
-            this.getPropertyCountByCity();
+            this.checkAllCity('checkall');
         },
 
         created: function(){
@@ -272,9 +282,11 @@
             changeStationByStationLine: function (event) {
                 console.log(event.target.value);
                 this.items.station_line_id = event.target.value;
+
+                // Uncheck selected station from previous station line
+                // This request alse include property count
+                this.checkAllStations('uncheckall');
                 this.getStationByStationLine();
-                document.getElementById('checkall').checked = false;
-                document.getElementById('uncheckall').checked = false;
 
             },
             getStationByStationLine: async function () {
@@ -284,13 +296,33 @@
                 this.items.list_stations = response.data;
                 this.items.loading = false;
             },
-            checkAll: function (event) {
+            checkAllCity: function(value) {
+                // Default value (no city selected)
+                this.items.selectedCities = [];
+
+                // Check all city
+                if (value == 'checkall') {
+                    this.items.cities.forEach(city => {
+                        this.items.selectedCities.push(city.id);
+                    });
+                }
+
+                // Get number of property belongs to selected city
+                setTimeout(() => {
+                    this.getPropertyCountByCity();
+                }, 200);
+            },
+            checkAllStations: function (value) {
+                console.log(value);
                 this.items.stations = [];
-                if(event.target.value == 'checkall'){
+                if(value == 'checkall'){
                     for (station in this.items.list_stations){
                         this.items.stations.push(this.items.list_stations[station].id)
                     }
                 }
+                setTimeout(() => {
+                    this.getPropertyCountByStation();
+                }, 200);
             },
             getPropertyCountByCity: function () {
                 let data = new FormData(formElement);
