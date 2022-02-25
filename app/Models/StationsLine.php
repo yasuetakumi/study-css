@@ -14,6 +14,6 @@ class StationsLine extends Model
 
     public function stations()
     {
-        return $this->hasMany(Station::class);
+        return $this->hasMany(Station::class, 'station_line_id');
     }
 }
