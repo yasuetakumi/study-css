@@ -17,7 +17,7 @@
                             @foreach ($cities as $city)
                                 <div class="col-lg-2 col-6">
                                     <div class="form-check">
-                                        <input class="form-check-input" value="{{$city->id}}" name="city[]" type="checkbox" @change="getPropertyCountByCity">
+                                        <input class="form-check-input city-input" value="{{$city->id}}" name="city[]" type="checkbox" checked @change="getPropertyCountByCity">
                                         <label class="form-check-label">{{$city->display_name}} ({{ $city->properties_count }})</label>
                                     </div>
                                 </div>
