@@ -135,7 +135,9 @@ class ApiPropertyController extends Controller
         if($request->city){
             $properties = Property::whereIn('city_id', $request->city)->get();
         } else{
-            $properties = Property::where('prefecture_id', $request->prefecture_id)->get();
+            $properties = Property::whereHas('city', function($query) use($request) {
+                $query->where('prefecture_id', $request->prefecture_id);
+            })->get();
         }
 
         $result = $properties->count();
