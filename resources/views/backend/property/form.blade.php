@@ -156,9 +156,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">STEP 1</p>
-                    </div>
                     <div class="col-12">
                         <div id="form-group--plans" class="row form-group">
 
@@ -189,10 +186,16 @@
                                     <div v-if="loadingData">
                                         <p>Loading Data...</p>
                                     </div>
-                                    <div v-else>
-                                        <div class="icheck-cyan d-inline" v-for="dc in designStyles" :key="dc.id">
-                                            <input type="radio" :value="dc.id" :id="dc.display_name" name="design_style_id" />
-                                            <label :for="dc.display_name" class="text-uppercase mr-5">@{{dc.display_name}}</label>
+                                    <div v-else class="row">
+                                        <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
+                                            <div style="position: relative;">
+                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
+                                            </div>
+                                            <div class="my-2">
+                                                <p>Design @{{dc.display_name}}</p>
+                                                <p>居抜き @{{estimationIndex(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                                <p>スケルトン @{{estimationIndex(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -200,74 +203,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">STEP 2</p>
-                    </div>
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    <div style="margin-bottom: 2rem;">
-                                        <div class="icheck-cyan d-inline mb-5" v-for="area in area_groups" :key="area.id">
-                                            <input type="radio" :value="area.id" :id="area.display_name" name="area_id" @change="showPlanByArea" />
-                                            <label :for="area.display_name" class="text-uppercase mr-5">@{{area.display_name}}</label>
-                                        </div>
-                                    </div>
-
-                                    <div v-if="loadingData">
-                                        <p>Loading Data...</p>
-                                    </div>
-                                    <div v-else-if="!plans">
-                                        <p>No Data</p>
-                                    </div>
-                                    <div v-else>
-                                        <div class="icheck-cyan d-inline" v-for="plan in plans" :key="plan.id">
-                                            <input type="radio" :value="plan.id" :id="plan.display_name" name="plan_id" @change="showTsuboByPlan(plan.area_group_id)"/>
-                                            <label :for="plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">STEP 3</p>
-                    </div>
-                    <div class="col-12">
-                        <input id="slider" class="slider-red input slider w-100" step="1" type="range" :min="tsubo_minimum" :max="tsubo_maximum" :value="items.tsubo_value" @change="showSliderValue">
-                        <input type="hidden" id="input-tsubo_area" :value="items.tsubo_value">
-                        <p class="text-center" style="font-size: 20px; margin-top: 2rem;">@{{items.tsubo_value}}坪</p>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">Do You Want Kitchen</p>
-                    </div>
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Has Kitchen', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    @foreach($has_kitchens as $hs)
-                                        <div class="icheck-cyan d-inline">
-                                            <input type="radio" value="{{$hs['value']}}" id="input-hs-{{ $hs['value'] }}" name="has_kitchen" {{$loop->first ? 'checked' : ''}}/>
-                                            <label for="input-hs-{{ $hs['value'] }}" class="text-uppercase mr-5">{{ $hs['label_jp'] }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
+                {{-- <div class="row justify-content-center mt-4">
                     <div class="col-12 border-bottom border-primary">
                         <p class="text-center" style="font-size: 22px">Estimation Index</p>
                     </div>
@@ -279,7 +215,7 @@
                             <p id="estimation_index" style="font-size: 20px; margin-left:5px;"> </p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
         @if(!Auth::check())
@@ -316,42 +252,6 @@
 
 @push('scripts')
     <script type="text/javascript"> var root_url = "{{ url('/') }}";</script>
-    <script>
-        $( document ).ready(function() {
-            // $('#slider').on('change', function() {
-            //     var value = this.value;
-            //     $('#input-tsubo_area').val(value);
-            // });
-            $('#estimate').on('click', function() {
-                var design_category_id = $("input[name='design_category_id']:checked").val();
-                var design_style_id = $("input[name='design_style_id']:checked").val();
-                var plan_id = $("input[name='plan_id']:checked").val();
-                var tsubo_area = $('#input-tsubo_area').val();
-                var has_kitchen = $("input[name='has_kitchen']:checked").val();
-                var uri = root_url + '/api/v1/plans/getGrandTotalEstimation/' + plan_id + '/' + tsubo_area + '/' + design_style_id + '/' + has_kitchen + '/' + design_category_id
-                console.log(plan_id);
-                console.log(tsubo_area);
-                console.log(design_style_id);
-                console.log(has_kitchen);
-                console.log(design_category_id);
-                console.log(uri);
-                $.ajax({
-                    type: 'GET',
-                    dataType:"json",
-                    url: uri,
-                    //url: 'http://localhost:8000/api/v1/plans/getGrandTotalEstimation/13/15/2/0/1',
-                    success: function (response) {
-                        console.log(response);
-                        $('#estimation_index').text(response.min);
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
-                    }
-                });
-            });
-        });
-
-    </script>
 @endpush
 
 @push('vue-scripts')
@@ -378,12 +278,7 @@
                 // ----------------------------------------------------------
                 preset: {
                     users_options: @json($users_options),
-                    area_groups: [
-                        { 'id': 1, 'display_name': '15〜19坪'},
-                        { 'id': 2, 'display_name': '20〜29坪'},
-                        { 'id': 3, 'display_name': '30〜39坪'},
-                        { 'id': 4, 'display_name': '40坪〜'},
-                    ],
+                    property: @json($item),
                 },
                 // ----------------------------------------------------------
             };
@@ -427,9 +322,6 @@
                     message_plan_properties: '*Please Input Surface Area (Tsubo) and Select Design Category*',
                     loading: false,
                     area_selected: null,
-                    tsubo_max: null,
-                    tsubo_min: null,
-                    tsubo_value: null,
                     like_property: [],
                     property_id: null,
                     visited_property: [],
@@ -464,7 +356,7 @@
 
         created: function(){
             this.getDesignByCategory(1);
-            this.getPlanByCateogry(1);
+            this.getPlanByCategory(1);
             this.getLikeProperty();
             if(@json($page_type) == 'edit'){
                 var item = @json($item);
@@ -534,12 +426,6 @@
             areaSelected: function(){
                 return this.items.area_selected;
             },
-            tsubo_minimum: function(){
-                return this.items.tsubo_min;
-            },
-            tsubo_maximum: function(){
-                return this.items.tsubo_max;
-            },
             isLiked: function () {
                 if(this.items.like_property && this.items.like_property.length > 0 && this.items.like_property.includes(this.items.property_id)){
                     return true;
@@ -584,7 +470,7 @@
                 if(this.items.area_id){
                     this.showPlanByArea();
                 } else {
-                    this.getPlanByCateogry(designCat)
+                    this.getPlanByCategory(designCat)
                 }
                 this.items.loading = false;
             },
@@ -600,7 +486,7 @@
                 let data = await response.json();
                 this.items.list_design_style = data;
             },
-            getPlanByCateogry: async function(designCat){
+            getPlanByCategory: async function(designCat){
                 let response2 = await fetch(root_url + '/api/v1/plans/getPlansByCategory/' + designCat);
                 let data2 = await response2.json();
                 this.items.list_plans = data2;
@@ -630,31 +516,23 @@
                 }
             },
 
-            showTsuboByPlan: function(areaId){
-                console.log("areaid", areaId);
-                let id = areaId;
-                if(id == 1){
-                    this.items.tsubo_min = 15;
-                    this.items.tsubo_max = 19;
-                    this.items.tsubo_value = 17;
-                } else if(id==2){
-                    this.items.tsubo_min = 20;
-                    this.items.tsubo_max = 29;
-                    this.items.tsubo_value = 25;
-                } else if(id==3){
-                    this.items.tsubo_min = 30;
-                    this.items.tsubo_max = 39;
-                    this.items.tsubo_value = 35;
-                } else if(id==4){
-                    this.items.tsubo_min = 40;
-                    this.items.tsubo_max = 50;
-                    this.items.tsubo_value = 45;
+            estimationIndex: function(designStyleId, kitchen){
+                let plans = this.$store.state.preset.property.property_plans;
+                let plan_id = '';
+                for (let i = 0; i < plans.length; i++) {
+                    if(plans[i].plan.design_category_id == this.items.selected_dc){
+                        plan_id = plans[i].plan.id;
+                    }
                 }
+                let surface_area = document.querySelector("input[name=surface_area]").value;
+                axios.get(root_url + '/api/v1/plans/getGrandTotalEstimation/' + plan_id + '/' + surface_area + '/' + designStyleId + '/' + kitchen + '/' + this.items.selected_dc)
+                    .then((result) => {
+                        document.getElementById("furnished-"+designStyleId).innerHTML = result.data.min + '坪';
+                        document.getElementById("skeleton-"+designStyleId).innerHTML = result.data.min + '坪';
+                    }).catch((err) => {
+                       console.log(err);
+                    });;
             },
-            showSliderValue: function(event){
-                this.items.tsubo_value = event.target.value;
-            },
-            estimationIndex: function(event){},
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
                 this.items.like_property = JSON.parse(local);
@@ -686,7 +564,7 @@
                     properties_visited.push(this.items.property_id);
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
-            }
+            },
             // --------------------------------------------------------------
         }
     }
