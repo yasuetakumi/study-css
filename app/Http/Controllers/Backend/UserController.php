@@ -61,7 +61,7 @@ class UserController extends Controller
     public function index($parent_company_id){
         $data['parent_company_id']      = $parent_company_id;
         $data['company_name']   = Company::find($parent_company_id)->company_name;
-        $data['page_title']     = $data['company_name'] . ' ' . __('label.my_account'). __('label.list') ;
+        $data['page_title']     = $data['company_name'] . ' ' . __('label.user'). __('label.list') ;
         $data['filter_select_columns'] = [
             'user_roles' => UserRole::pluck('label', 'label')
         ];
@@ -94,7 +94,7 @@ class UserController extends Controller
 
         $data['item']           = User::find($company_user_id);
 
-        $data['page_title']     = __('label.my_account');
+        $data['page_title']     = __('label.user');
         $data['form_action']    = route('admin.company.user.update', [$parent_company_id, $company_user_id]);
         $data['user_roles']     = UserRole::pluck('label', 'id')->all();
         $data['page_type']      = 'edit';

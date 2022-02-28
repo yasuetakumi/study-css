@@ -131,7 +131,7 @@
                 <li class="nav-item has-treeview" id="tree_admins">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user-alt"></i>
-                        <p> @lang('label.my_account') <i class="right fas fa-angle-left"></i>
+                        <p> @lang('label.user') <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -204,7 +204,7 @@
                     <li class="nav-item">
                         <a href="{{route('admin.company.user.index', Auth::user()->company->id)}}" class="nav-link">
                             <i class="fas fa-users nav-icon"></i>
-                            <p>@lang('label.my_account')</p>
+                            <p>@lang('label.user')</p>
                         </a>
                     </li>
                 @endif
@@ -232,7 +232,7 @@
                         <li id="create_project" class="nav-item">
                             <a href="{{route('admin.log-user-activities.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.my_account')</p>
+                                <p>@lang('label.user')</p>
                             </a>
                         </li>
                         <li id="list_project" class="nav-item">
