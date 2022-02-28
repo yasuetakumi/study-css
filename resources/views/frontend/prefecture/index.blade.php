@@ -2,140 +2,35 @@
 @section('content-wrapper')
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-12 mt-5">
-            <div class="card rounded-0">
-                <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">市区町村で絞り込む</h3>
-                </div>
-                <hr class="my-0 mx-2">
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <form action="{{route('property.filter')}}" method="POST" id="formElement">
-                        @csrf
-                        <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex py-3">
-                                    <div class="mr-4">
-                                        <button @click="checkAllCity('checkall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択</button>
-                                    </div>
-                                    <div>
-                                        <button @click="checkAllCity('uncheckall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択解除</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div v-for="(city, cityIndex) in items.cities" class="col-lg-2 col-6">
-                                <div class="form-check">
-                                    <input v-model="items.selectedCities" class="form-check-input city-input" :value="city.id" name="city[]" type="checkbox" @change="getPropertyCountByCity">
-                                    <label class="form-check-label">@{{ city.display_name }} (@{{ city.properties_count }})</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <span v-if="property_count" style="font-size: 18px; margin-right: 10px;">@{{property_count}}</span>
-                                    <span v-else style="font-size: 18px; margin-right: 10px;">0</span>
-                                    <span>件の該当物件</span>
-                                </div>
-                                <button type="submit" class="btn btn-danger px-2 py-2 rounded-0">チェックした市区町村で絞り込む</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- /.card -->
-        </div>
-        <div class="col-12 mt-5">
-            <div class="card rounded-0">
-                <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">路線で絞り込む</h3>
-                    <!-- /.card-tools -->
-                </div>
-                <hr class="my-0 mx-2">
-                <!-- /.card-header -->
-                <form action="{{route('property.filter')}}" method="POST" id="propertyByStation">
-                    @csrf
-                    <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            @foreach ($station_lines as $station)
-                                <div class="col-lg-2 col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" value="{{$station->id}}" name="station_line" type="radio" @change="changeStationByStationLine">
-                                        <label class="form-check-label">{{$station->display_name}}</label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <p style="font-size: 18px;">駅を選ぶ(複数選択)</p>
-                        <hr class="mx-2 my-0">
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="d-flex py-3">
-                                    <div class="mr-4">
-                                        <button @click="checkAllStations('checkall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択</button>
-                                    </div>
-                                    <div>
-                                        <button @click="checkAllStations('uncheckall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択解除</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-12" v-if="items.loading">
-                                Loading Data...
-                            </div>
-                            <div class="col-12" v-else-if="!stations">
-                                No Data
-                            </div>
-                            <div v-else class="col-lg-2 col-6" v-for="station in stations" :key="station.id">
-                                <div class="form-check">
-                                    <input class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations" @change="getPropertyCountByStation">
-                                    <label class="form-check-label">@{{station.display_name}} (@{{ station.properties_count }})</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <span  style="font-size: 18px; margin-right: 10px;">@{{property_count_station}}</span>
-                            {{-- <span v-else style="font-size: 18px; margin-right: 10px;">0</span> --}}
-                            <span>件の該当物件</span>
-                        </div>
-                        <button type="submit" class="btn btn-danger px-2 py-2 rounded-0">チェックした駅で絞り込む</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.card -->
-        </div>
-        <div class="col-12 mt-5">
-            <div class="card rounded-0">
-                <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">List Property In {{$prefecture->display_name}}</h3>
-                </div>
-                <hr class="my-0 mx-2">
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="row">
-                        @foreach ($properties as $property)
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    {{-- <img class="card-img-top" src="{{$property->thumbnail_image_main}}" alt="{{$property->thumbnail_image_main}}"> --}}
-                                    <div class="card-body d-flex flex-column">
-                                        <p class="card-title">{{$property->location}}</p>
 
-                                        <span>@lang('label.surface_area_tsubo') : {{toTsubo($property->surface_area)}}</span>
-                                        <span>@lang('label.rent_amount_man') : {{toMan($property->rent_amount)}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+        <div class="col-12 mt-5">
+            <div class="card rounded-0">
+
+                <div class="card-header bg-white border-bottom-0">
+                    <div class="btn-group border rounded mb-3">
+                        <button type="button" :class="items.activeTab == 'city' ? 'btn-primary' : 'btn-default'"
+                            class="btn px-4 py-2" @click="items.activeTab = 'city'">地域から探す
+                        </button>
+                        <button type="button" :class="items.activeTab == 'station' ? 'btn-primary' : 'btn-default'"
+                            class="btn px-4 py-2" @click="items.activeTab = 'station'">駅から探す
+                        </button>
                     </div>
                 </div>
+
+                <div v-if="items.activeTab == 'city'">
+                    @include('frontend.prefecture.filter.city')
+                </div>
+                <div v-else-if="items.activeTab == 'station'">
+                    @include('frontend.prefecture.filter.station')
+                </div>
+
             </div>
-            <!-- /.card -->
         </div>
+
+        <div class="col-12 mt-5">
+            @include('frontend.prefecture.list.property')
+        </div>
+
     </div>
 </div>
 @endsection
@@ -199,6 +94,7 @@
                 // Form result set here
                 // ----------------------------------------------------------
                 items: {
+                    activeTab: 'city',
                     station_line_id: null,
                     cities: @json($cities),
                     list_stations: null,
