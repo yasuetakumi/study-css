@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class ApiDesignStyleController extends Controller
 {
     public function getDesignByCategory($category_id){
-        $designstyle = DesignStyle::select('display_name','id', 'internal_id')->where('design_category_id',$category_id)->orderBy('display_name','ASC')->get();
+        $designstyle = DesignStyle::with('design_category')->where('design_category_id',$category_id)->orderBy('display_name','ASC')->get();
         return response()->json($designstyle);
     }
 }

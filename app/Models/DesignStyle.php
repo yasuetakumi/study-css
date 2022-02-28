@@ -56,5 +56,9 @@ class DesignStyle extends Model
     {
         return $this->belongsTo(DesignPlanStatus::class);
     }
+    public function design_category()
+    {
+        return $this->belongsTo(Cuisine::class, 'design_category_id');
+    }
 
 }
