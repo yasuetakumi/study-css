@@ -51,7 +51,7 @@
         <div class="col-12 mt-5">
             <div class="card rounded-0">
                 <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">経路で絞り込む</h3>
+                    <h3 class="card-title mb-0">路線で絞り込む</h3>
                     <!-- /.card-tools -->
                 </div>
                 <hr class="my-0 mx-2">
