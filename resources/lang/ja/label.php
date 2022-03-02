@@ -117,7 +117,8 @@ return [
     'transfer_price_option' => '譲渡額',
 
     //D1 Property
-    'property' => 'Property',
+    'property' => '物件の一覧',
+    'property_list' => '物件の一覧',
     'real_estate_agent_in_charge' => '取引会社の管理者',
     'real_estate_agency' => '取引会社',
     'postcode' => '郵便番号',
