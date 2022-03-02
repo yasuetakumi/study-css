@@ -12,12 +12,13 @@ use App\Models\SurfaceAreaOption;
 
 $factory->define(\App\Models\Property::class, function (Faker $faker) {
     $deposit_amount = [100,200,300,400,500,600,700,800,900,1000];
+    $prefecture_id = rand(1,20);
 
     return [
         'user_id' => rand(1,10),
         'postcode_id' => rand(1, 100),
-        'prefecture_id' => rand(1, 10),
-        'city_id' => City::all()->pluck('id')->random(),
+        'prefecture_id' => $prefecture_id,
+        'city_id' => City::where('prefecture_id', $prefecture_id)->pluck('id')->random(),
         'location' => $faker->city,
         'surface_area'=> fromTsubo(SurfaceAreaOption::all()->pluck('value')->random()),
         'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
