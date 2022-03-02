@@ -110,50 +110,53 @@
                                 <div v-if="loadingData">
                                     Search Plans..
                                 </div>
+                                {{-- <div v-else-if="message_plan_properties">
+                                    @{{message_plan_properties}}
+                                </div> --}}
                                 <div v-else>
-                                    <div v-if="items.plans_design_category_1">
+                                    <div class="mb-2" v-if="items.plans_design_category_1">
                                         <p>居酒屋</p>
                                         <div class="row">
-                                            <div v-for="plan in items.plans_design_category_1" :key="plan.id" class="col-md-4">
+                                            <div v-for="plan in items.plans_design_category_1" :key="plan.id" class="col-md-3">
                                                 <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
                                                 <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.plan_id != null && items.plan_id == plan.id" type="radio" :value="plan.id" :id="'plan-dc-1-'+ plan.display_name" name="plan_id_dc_1"/>
+                                                    <input :checked="items.selected_plan_dc_1 != null && items.selected_plan_dc_1 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-1-'+ plan.display_name" v-model="items.selected_plan_dc_1" name="plan_id_dc_1"/>
                                                     <label :for="'plan-dc-1-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="items.plans_design_category_2">
+                                    <div class="mb-2" v-if="items.plans_design_category_2">
                                         <p>カフェ</p>
                                         <div class="row" >
-                                            <div v-for="plan in items.plans_design_category_2" :key="plan.id" class="col-md-4">
+                                            <div v-for="plan in items.plans_design_category_2" :key="plan.id" class="col-md-3">
                                                 <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
                                                 <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.plan_id != null && items.plan_id == plan.id" type="radio" :value="plan.id" :id="'plan-dc-2-'+ plan.display_name" name="plan_id_dc_2"/>
+                                                    <input :checked="items.selected_plan_dc_2 != null && items.selected_plan_dc_2 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-2-'+ plan.display_name" v-model="items.selected_plan_dc_2" name="plan_id_dc_2"/>
                                                     <label :for="'plan-dc-2-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="items.plans_design_category_3">
+                                    <div class="mb-2" v-if="items.plans_design_category_3">
                                         <p>バー</p>
                                         <div class="row" >
-                                            <div v-for="plan in items.plans_design_category_3" :key="plan.id" class="col-md-4">
+                                            <div v-for="plan in items.plans_design_category_3" :key="plan.id" class="col-md-3">
                                                 <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
                                                 <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.plan_id != null && items.plan_id == plan.id" type="radio" :value="plan.id" :id="'plan-dc-3-'+ plan.display_name" name="plan_id_dc_3"/>
+                                                    <input :checked="items.selected_plan_dc_3 != null && items.selected_plan_dc_3 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-3-'+ plan.display_name" v-model="items.selected_plan_dc_3" name="plan_id_dc_3"/>
                                                     <label :for="'plan-dc-3-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="items.plans_design_category_4">
+                                    <div class="mb-2" v-if="items.plans_design_category_4">
                                         <p>ラーメン</p>
                                         <div class="row">
-                                            <div v-for="plan in items.plans_design_category_4" :key="plan.id" class="col-md-4">
+                                            <div v-for="plan in items.plans_design_category_4" :key="plan.id" class="col-md-3">
                                                 <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
                                                 <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.plan_id != null && items.plan_id == plan.id" type="radio" :value="plan.id" :id="'plan-dc-4-'+ plan.display_name" name="plan_id_dc_4"/>
+                                                    <input :checked="items.selected_plan_dc_4 != null && items.selected_plan_dc_4 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-4-'+ plan.display_name" v-model="items.selected_plan_dc_4" name="plan_id_dc_4"/>
                                                     <label :for="'plan-dc-4-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
                                                 </div>
                                             </div>
@@ -369,6 +372,10 @@
                     property_id: null,
                     visited_property: [],
                     disabled: @json($disableSelect2),
+                    selected_plan_dc_1: null,
+                    selected_plan_dc_2: null,
+                    selected_plan_dc_3: null,
+                    selected_plan_dc_4: null,
                     plans_design_category_1: null,
                     plans_design_category_2: null,
                     plans_design_category_3: null,
@@ -403,38 +410,21 @@
                 var id = @json($companyUserId);
                 this.items.user_id = id;
             }
-        },
-
-        created: function(){
-            this.getDesignByCategory(1);
-            this.getPlanByCategory(1);
-            this.getLikeProperty();
             if(@json($page_type) == 'edit'){
-                var item = @json($item);
-
-                let design_category_id = document.querySelector("input[name=design_category_id]:checked").value;
-                let surface_area = document.querySelector("input[name=surface_area]").value;
-                this.items.plan_id = item.plan_id;
-                this.items.design_category_id = design_category_id;
-                console.log(design_category_id);
-                if(this.items.plan_id && this.items.plan_id != null){
-                    this.items.loading = true;
-                    axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + this.items.design_category_id)
-                    .then((result) => {
-                        console.log(result.status);
-                        if(result.status == 200){
-                            this.items.list_plans_properties = result.data.data;
-                        } else {
-                            this.items.message_plan_properties = result.data.message;
-                        }
-                        }).catch((err) => {
-                            this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
-                        });
-                    this.items.loading = false;
-                }
+                this.getPlanBySurfaceCategory(1);
+                this.getPlanBySurfaceCategory(2);
+                this.getPlanBySurfaceCategory(3);
+                this.getPlanBySurfaceCategory(4);
             } else if(@json($page_type) == 'create'){
                 console.log("create property");
             }
+
+        },
+
+        created: function(){
+            // this.getDesignByCategory(1);
+            this.getPlanByCategory(1);
+            this.getLikeProperty();
 
         },
 
@@ -445,8 +435,8 @@
         ## ------------------------------------------------------------------
         */
         computed: {
-            designCategories: function(){
-                return this.$store.state.preset.design_categories;
+            itemPropertyPlans: function(){
+                return this.$store.state.preset.property.property_plans;
             },
             designStyles: function(){
                 return this.items.list_design_style;
@@ -466,10 +456,11 @@
                 }
             },
             message_plan_properties: function () {
-                return this.items.message_plan_properties;
-            },
-            area_groups: function(){
-                return this.$store.state.preset.area_groups;
+                if (this.items.message_plan_properties == null){
+                    return false
+                } else {
+                    return this.items.message_plan_properties;
+                }
             },
             loadingData: function(){
                 return this.items.loading;
@@ -560,15 +551,38 @@
                         if(result.status == 200){
                             if(catId == this.items.design_category_1){
                                 this.items.plans_design_category_1 = result.data.data;
+                                for(let i = 0; i <= this.items.plans_design_category_1.length; i++){
+                                    if(this.items.plans_design_category_1[i].id == this.itemPropertyPlans[0].plan_id){
+                                        this.items.selected_plan_dc_1 = this.items.plans_design_category_1[i].id;
+                                    }
+                                }
+
                             } else if(catId == this.items.design_category_2){
                                 this.items.plans_design_category_2 = result.data.data;
+                                for(let i = 0; i <= this.items.plans_design_category_2.length; i++){
+                                    if(this.items.plans_design_category_2[i].id == this.itemPropertyPlans[1].plan_id){
+                                        this.items.selected_plan_dc_2 = this.items.plans_design_category_2[i].id;
+                                    }
+                                }
+
                             } else if(catId == this.items.design_category_3){
                                 this.items.plans_design_category_3 = result.data.data;
+                                for(let i = 0; i <= this.items.plans_design_category_3.length; i++){
+                                    if(this.items.plans_design_category_3[i].id == this.itemPropertyPlans[2].plan_id){
+                                        this.items.selected_plan_dc_3 = this.items.plans_design_category_3[i].id;
+                                    }
+                                }
+
                             } else if(catId == this.items.design_category_4){
                                 this.items.plans_design_category_4 = result.data.data;
+                                for(let i = 0; i <= this.items.plans_design_category_4.length; i++){
+                                    if(this.items.plans_design_category_4[i].id == this.itemPropertyPlans[3].plan_id){
+                                        this.items.selected_plan_dc_4 = this.items.plans_design_category_4[i].id;
+                                    }
+                                }
                             }
                             console.log(result.data.data);
-                            //this.items.list_plans_properties = result.data.data;
+                            this.items.message_plan_properties = '';
                         } else {
                             this.items.message_plan_properties = result.data.message;
                         }
