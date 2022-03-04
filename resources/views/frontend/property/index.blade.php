@@ -257,7 +257,7 @@
             <div v-else>
                 <p>No Property Visited yet</p>
             </div>
-            <a href="{{route('property.history')}}" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
+            <a href="{{route('property.history', ['favorite' => true ])}}" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
                 <span>
                     お気に入り一覧を見る
                     <i class="fas fa-arrow-right"></i>
