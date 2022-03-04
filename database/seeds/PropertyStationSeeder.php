@@ -14,6 +14,6 @@ class PropertyStationSeeder extends Seeder
     public function run()
     {
         PropertiesStations::query()->delete();
-        factory(PropertiesStations::class, 20)->create();
+        factory(PropertiesStations::class, 2000)->create();
     }
 }
