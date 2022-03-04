@@ -247,6 +247,23 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
+        <div class="px-1">
+            <h5 class="mb-3">
+                条件で絞る
+            </h5>
+            <div v-if="historyProperty" v-for="pd in historyProperty" :key="pd.id">
+                @include('frontend._components.property_list')
+            </div>
+            <div v-else>
+                <p>No Property Visited yet</p>
+            </div>
+            <a href="{{route('property.history')}}" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
+                <span>
+                    お気に入り一覧を見る
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+            </a>
+        </div>
     </div>
     <div class="col-md-8">
         <div v-if="loading">
@@ -258,26 +275,6 @@
         <div v-else v-for="pd in property_data" :key=pd.id>
             @include('frontend._components.property_list')
         </div>
-        {{-- <div v-else class="card card-danger" v-for="pd in property_data" :key=pd.id>
-            <div class="card-header">
-                <h3 class="card-title mb-0">Property ID @{{pd.id}}</h3>
-            </div>
-            <div class="card-body">
-                <dl>
-                    <dt>Location</dt>
-                        <dd>@{{pd.location}}</dd>
-                    <dt>Rent Amount </dt>
-                        <dd>@{{pd.rent_amount}}</dd>
-                    <dt>Surface Area</dt>
-                        <dd>@{{pd.surface_area}}</dd>
-                </dl>
-                <div class="flex justify-content-end">
-                    <a id="favorite" type="button" style="color: red" @click="setLikeProperty(pd.id)">
-                        <i :class="items.like_property.includes(pd.id) ? 'fas' : 'far' " class="fa-heart fa-2x"></i>
-                    </a>
-                </div>
-            </div>
-        </div> --}}
     </div>
 </div>
 @endsection
@@ -347,6 +344,7 @@
                     disable: true,
                     loading: false,
                     like_property: [],
+                    list_history_property: [],
                     filter: {
                         surface_min: null,
                         surface_max: null,
@@ -386,6 +384,7 @@
             this.getListProperty();
             this.getLikeProperty();
             this.getCountProperty();
+            this.getHistoryProperty();
             this.items.loading = false;
 
         },
@@ -422,6 +421,13 @@
             },
             filterStation: function(){
                 return this.items.filter.stations;
+            },
+            historyProperty: function(){
+                if(this.items.list_history_property && this.items.list_history_property.length > 0){
+                    return this.items.list_history_property;
+                } else {
+                    return false;
+                }
             }
         },
 
@@ -607,6 +613,22 @@
                 }
 
                 this.getLikeProperty();
+            },
+            getHistoryProperty: function() {
+                let local = localStorage.getItem("visitedPropertyId");
+                let propertyID = JSON.parse(local) || [];
+                axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyID)
+                    .then((result) => {
+                            //get only last 3 data
+                            for(let i= 0; i < 3; i++){
+                                if(result.data[i] != null){
+                                    this.items.list_history_property.push(result.data[i]);
+                                }
+                            }
+                            // this.items.list_history_property = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                    });
             },
             // --------------------------------------------------------------
         }

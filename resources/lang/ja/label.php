@@ -116,6 +116,10 @@ return [
     'cuisines' => '業態',
     'transfer_price_option' => '譲渡額',
 
+    //C2
+    'recently_view_property' => '最新の閲覧履歴',
+    'view_favorite_property' => 'お気に入り一覧を見る',
+
     //D1 Property
     'property' => 'Property',
     'real_estate_agent_in_charge' => '取引会社の管理者',
@@ -166,7 +170,7 @@ return [
 
     //B2
     'my_account' => 'マイアカウント',
-    
+
 
     //B3
     'administrator' => '管理者',
