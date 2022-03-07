@@ -119,6 +119,7 @@ return [
 
     //D1 PROPERTY
     'property' => 'Property',
+    'property_list' => 'Property List',
     'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',
     'real_estate_agency' => 'Real Estate Agency',
     'postcode' => 'Postcode',
