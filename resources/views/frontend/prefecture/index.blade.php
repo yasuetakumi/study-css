@@ -17,12 +17,18 @@
                     </div>
                 </div>
 
-                <div v-if="items.activeTab == 'city'">
-                    @include('frontend.prefecture.filter.city')
-                </div>
-                <div v-else-if="items.activeTab == 'station'">
-                    @include('frontend.prefecture.filter.station')
-                </div>
+                <form action="{{route('property.filter')}}" method="POST">
+                    @csrf
+
+                    <div v-if="items.activeTab == 'city'">
+                        @include('frontend.prefecture.filter.city')
+                    </div>
+                    <div v-else-if="items.activeTab == 'station'">
+                        @include('frontend.prefecture.filter.station')
+                    </div>
+
+                    @include('frontend.prefecture.filter.other')
+                </form>
 
             </div>
         </div>
@@ -42,59 +48,83 @@
 @endpush
 @push('vue-scripts')
 <script>
-
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Vuex store - Centralized data
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     store = {
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Reactive central data
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         state: function(){
             var state = {
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Status flags
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 status: { },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
 
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Preset data
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 preset: {
                 },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             return state;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Updating state data will need to go through these mutations
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         mutations: {}
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
     };
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     mixin = {
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE DATA
-        ## vue data binding, difine a properties
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE DATA
+        // vue data binding, difine a properties
+        // ---------------------------------------------------------------------
         data: function(){
             var data = {
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
+                // Initial data
+                // -------------------------------------------------------------
+                initial: {
+                    filter: {
+                        surface_min: null,
+                        surface_max: null,
+                        rent_amount_min: null,
+                        rent_amount_max: null,
+                        transfer_price_min: null,
+                        transfer_price_max: null,
+                        name: null,
+                        walking_distance: null,
+                        undergrounds: [],
+                        abovegrounds: [],
+                        preferences: [],
+                        types: [],
+                        skeleton: null,
+                        furnished: null,
+                        cuisines: [],
+                        city: [],
+                        station: [],
+                    },
+                },
+                // -------------------------------------------------------------
+
+                // -------------------------------------------------------------
                 // Form result set here
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 items: {
                     activeTab: 'city',
+                    floorType: 0, // aboveground
                     station_line_id: null,
                     cities: @json($cities),
                     list_stations: null,
@@ -104,40 +134,43 @@
                     stations: [],
                     checkall: false,
                     uncheckall: false,
-                    property_count: null,
-                    property_count_station: null,
+                    number_of_property: 0,
                 },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
+            data.items.filter = _.cloneDeep(data.initial.filter);
+            // -----------------------------------------------------------------
+
+            // -----------------------------------------------------------------
             return data;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE MOUNTED
-        ## vue on mounted state
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE MOUNTED
+        // vue on mounted state
+        // ---------------------------------------------------------------------
         mounted: function(){
             this.checkAllCity('checkall');
         },
+        // ---------------------------------------------------------------------
 
+        // ---------------------------------------------------------------------
         created: function(){
             if(@json($initial_station_line)){
                 this.items.station_line_id = @json($initial_station_line->id);
             }
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE COMPUTED
-        ## define a property with custom logic
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE COMPUTED
+        // define a property with custom logic
+        // ---------------------------------------------------------------------
         computed: {
             stations: function () {
                 if(this.items.list_stations && this.items.list_stations.length > 0){
@@ -145,53 +178,73 @@
                 }else {
                     return false;
                 }
-
             },
-            property_count: function () {
-                if(this.items.property_count && this.items.property_count > 0){
-                    return this.items.property_count;
-                } else{
-                    return false;
-                }
-            },
-            property_count_station: function () {
-                return this.items.property_count_station;
-            }
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE WATCH
-        ## vue reactive data watch
-        ## ------------------------------------------------------------------
-        */
-        watch: {},
+        // ---------------------------------------------------------------------
+        // VUE WATCH
+        // vue reactive data watch
+        // ---------------------------------------------------------------------
+        watch: {
+            // -----------------------------------------------------------------
+            'items': {
+                deep: true,
+                handler: function (items) {
+                    // Assign filter to new variable
+                    let filter = _.cloneDeep(items.filter)
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE METHOD
-        ## function associated with the vue instance
-        ## ------------------------------------------------------------------
-        */
+                    // Delete unnecessary filter property
+                    Vue.delete(filter, 'undergrounds');
+                    Vue.delete(filter, 'abovegrounds');
+                    Vue.delete(filter, 'preferences');
+                    Vue.delete(filter, 'types');
+
+                    // Assign selected city and station to filter
+                    filter.city = items.activeTab == 'city' ? _.cloneDeep(this.items.selectedCities) : [];
+                    filter.station = items.activeTab == 'station' ? _.cloneDeep(this.items.stations) : [];
+                    filter.count = true;
+
+                    // Set skeleton filter
+                    filter.skeleton = items.filter.skeleton ? 0 : null;
+                    filter.furnished = items.filter.furnished ? 1 : null;
+
+                    // Assign data to filter
+                    if (items.filter.undergrounds.length) filter.floor_under = items.filter.undergrounds;
+                    if (items.filter.abovegrounds.length) filter.floor_above = items.filter.abovegrounds;
+                    if (items.filter.preferences.length) filter.property_preference = items.filter.preferences;
+                    if (items.filter.types.length) filter.property_type = items.filter.types;
+
+                    // Get number of property
+                    this.getNumberOfProperty(filter);
+                },
+            },
+            // -----------------------------------------------------------------
+        },
+        // ---------------------------------------------------------------------
+
+        // ---------------------------------------------------------------------
+        // VUE METHOD
+        // function associated with the vue instance
+        // ---------------------------------------------------------------------
         methods: {
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             changeStationByStationLine: function (event) {
-                console.log(event.target.value);
                 this.items.station_line_id = event.target.value;
 
                 // Uncheck selected station from previous station line
                 // This request alse include property count
                 this.checkAllStations('uncheckall');
                 this.getStationByStationLine();
-
             },
+            // -----------------------------------------------------------------
             getStationByStationLine: async function () {
                 this.items.loading = true;
                 let response = await axios.get(root_url + '/api/v1/station/getStationByStationLine/' +  this.items.station_line_id);
-                console.log(response.data);
                 this.items.list_stations = response.data;
                 this.items.loading = false;
             },
+            // -----------------------------------------------------------------
             checkAllCity: function(value) {
                 // Default value (no city selected)
                 this.items.selectedCities = [];
@@ -202,46 +255,42 @@
                         this.items.selectedCities.push(city.id);
                     });
                 }
-
-                // Get number of property belongs to selected city
-                setTimeout(() => {
-                    this.getPropertyCountByCity();
-                }, 200);
             },
+            // -----------------------------------------------------------------
             checkAllStations: function (value) {
-                console.log(value);
                 this.items.stations = [];
                 if(value == 'checkall'){
                     for (station in this.items.list_stations){
                         this.items.stations.push(this.items.list_stations[station].id)
                     }
                 }
-                setTimeout(() => {
-                    this.getPropertyCountByStation();
-                }, 200);
             },
-            getPropertyCountByCity: function () {
-                let data = new FormData(formElement);
-                axios.post(root_url + '/api/v1/property/getPropertyCountByCity', data)
-                    .then((result) => {
-                        this.items.property_count = result.data;
-                        console.log(result.data);
-                    }).catch((err) => {
-                        console.log(err);
+            // -----------------------------------------------------------------
+            changeFloorType: function(value) {
+                this.items.filter.floorType = !value;
+                this.items.filter.abovegrounds = [];
+                this.items.filter.undergrounds = [];
+            },
+            // -----------------------------------------------------------------
+            getNumberOfProperty: function(filter) {
+                let request = axios.post(root_url + '/api/v1/property/getPropertiesCount', filter);
+                request.then((result) => {
+                    this.items.number_of_property = result.data.data.count ?? 0;
+                });
+                request.catch((err) => {
+                    console.log(err);
                 });
             },
-            getPropertyCountByStation: async function () {
-                let data2 = new FormData(propertyByStation);
-                axios.post(root_url + '/api/v1/property/getPropertyCountByStation', data2)
-                    .then((result) => {
-                        this.items.property_count_station = result.data;
-                        console.log("responded", result.data);
-                    }).catch((err) => {
-                        console.log(err);
-                });
-            }
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
+            clearFilter: function() {
+                this.items.floorType = 0;
+                this.items.selectedCities = [];
+                this.items.stations = [];
+                this.items.filter = _.cloneDeep(this.initial.filter);
+            },
+            // -----------------------------------------------------------------
         }
+        // ---------------------------------------------------------------------
     }
 </script>
 @endpush
