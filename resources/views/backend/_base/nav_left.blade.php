@@ -58,7 +58,7 @@
                     <li class="nav-item has-treeview" id="tree_propertys">
                         <a href="#" class="nav-link">
                             <i class="fas fa-landmark nav-icon"></i>
-                            <p> @lang('Property')<i class="right fas fa-angle-left"></i>
+                            <p> @lang('label.property')<i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -256,7 +256,7 @@
                     <li class="nav-item has-treeview" id="tree_propertys">
                         <a href="#" class="nav-link">
                             <i class="fas fa-landmark nav-icon"></i>
-                            <p> @lang('Property')<i class="right fas fa-angle-left"></i>
+                            <p> @lang('label.property')<i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
