@@ -283,6 +283,7 @@
             },
             // -----------------------------------------------------------------
             clearFilter: function() {
+                this.items.floorType = 0;
                 this.items.selectedCities = [];
                 this.items.stations = [];
                 this.items.filter = _.cloneDeep(this.initial.filter);
