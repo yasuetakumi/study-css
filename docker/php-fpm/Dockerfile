@@ -23,7 +23,7 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
 #install nodeJS
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
 RUN apt-get install -y nodejs
 
 #install yarn
