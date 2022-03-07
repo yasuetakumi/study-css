@@ -162,7 +162,7 @@ class PropertyController extends Controller
 
     public function index()
     {
-        $data['page_title'] = 'Property List';
+        $data['page_title'] = __('label.property_list');
         if(Auth::guard('user')->check()){
             $data['page_title'] = 'Property Company List';
         }
