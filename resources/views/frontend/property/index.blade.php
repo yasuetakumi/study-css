@@ -601,9 +601,17 @@
                     console.log("index", index);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                    let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 } else {
                     properties_like.push(propertyID);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 }
 
                 this.getLikeProperty();
