@@ -1,24 +1,28 @@
 <?php
-
+// -----------------------------------------------------------------------------
 namespace App\Http\Controllers\Frontend;
+// -----------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+// -----------------------------------------------------------------------------
 use App\Models\Cuisine;
 use App\Models\Property;
 use App\Models\PropertyType;
-use Illuminate\Http\Request;
 use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 use App\Models\PropertyPreference;
 use App\Models\TransferPriceOption;
-use App\Http\Controllers\Controller;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
 use App\Models\WalkingDistanceFromStationOption;
+// -----------------------------------------------------------------------------
 
-class PropertyController extends Controller
-{
-    public function index(Request $request)
-    {
+// -----------------------------------------------------------------------------
+class PropertyController extends Controller {
+    // -------------------------------------------------------------------------
+    public function index(Request $request) {
         $data['rent_amounts'] = RentPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['surface_areas'] = SurfaceAreaOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $skeleton = [
@@ -42,12 +46,20 @@ class PropertyController extends Controller
         $data['page_title'] = __('Property List');
         return view('frontend.property.index', $data);
     }
+    // -------------------------------------------------------------------------
 
-    public function filter(Request $request)
-    {
+    // -------------------------------------------------------------------------
+    public function filter(Request $request) {
+        // Filter data
         $queryString = $request->all();
-        //return $queryString;
+
+        // Default data
         $withQuery = array();
+
+        // Set route parameter
+        if (array_key_exists('filterType', $queryString)) {
+            $withQuery['filterType'] = $queryString['filterType'];
+        }
         if(!empty($queryString['surface_min'])){
             $withQuery['surface_min'] = $queryString['surface_min'];
         }
@@ -107,8 +119,9 @@ class PropertyController extends Controller
             $withQuery['station'] = $stringStation;
         }
 
-        // return $withQuery;
-
+        // Redirect with param
         return redirect()->route('property.index', $withQuery);
     }
+    // -------------------------------------------------------------------------
 }
+// -----------------------------------------------------------------------------

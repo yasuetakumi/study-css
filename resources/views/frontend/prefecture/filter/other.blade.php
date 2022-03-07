@@ -199,30 +199,5 @@
         </div>
         <!-- End - Search All  Filter -->
 
-        <!-- Start - Number of properties and button -->
-        <div class="result-total mt-3">
-            <div class="row">
-                <div class="col-3">
-                    <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">
-                        @{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span>
-                    </h3>
-                </div>
-
-                <div class="col-9 text-right">
-                    <button @click="clearFilter" type="button" class="btn btn-dark px-4 py-2">
-                        <span>条件クリア</span>
-                    </button>
-
-                    <button type="submit" class="btn btn-primary px-4 py-2">
-                        <span>
-                            <i class="fas fa-search"></i>
-                            この条件で検索する
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- End - Number of properties and button -->
-
     </div>
 </template>

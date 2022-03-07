@@ -26,8 +26,37 @@
                     <div v-else-if="items.activeTab == 'station'">
                         @include('frontend.prefecture.filter.station')
                     </div>
+                    <input v-model="items.activeTab" name="filterType" type="hidden">
 
                     @include('frontend.prefecture.filter.other')
+
+                    <!-- Start - Number of properties and button -->
+                    <div class="card-body">
+                        <div class="result-total">
+                            <div class="row">
+                                <div class="col-3">
+                                    <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">
+                                        @{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span>
+                                    </h3>
+                                </div>
+
+                                <div class="col-9 text-right">
+                                    <button @click="clearFilter" type="button" class="btn btn-dark px-4 py-2">
+                                        <span>条件クリア</span>
+                                    </button>
+
+                                    <button type="submit" class="btn btn-primary px-4 py-2">
+                                        <span>
+                                            <i class="fas fa-search"></i>
+                                            この条件で検索する
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End - Number of properties and button -->
+
                 </form>
 
             </div>
@@ -98,6 +127,7 @@
                 // -------------------------------------------------------------
                 initial: {
                     filter: {
+                        filterType: 'city',
                         surface_min: null,
                         surface_max: null,
                         rent_amount_min: null,
@@ -200,6 +230,9 @@
                     Vue.delete(filter, 'preferences');
                     Vue.delete(filter, 'types');
 
+                    // Filter type (by city or station)
+                    filter.filterType = this.items.activeTab;
+
                     // Assign selected city and station to filter
                     filter.city = items.activeTab == 'city' ? _.cloneDeep(this.items.selectedCities) : [];
                     filter.station = items.activeTab == 'station' ? _.cloneDeep(this.items.stations) : [];
@@ -294,4 +327,3 @@
     }
 </script>
 @endpush
-
