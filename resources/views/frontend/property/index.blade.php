@@ -12,6 +12,7 @@
             <!-- /.card-header -->
             <form action="{{route('property.filter')}}" method="POST" id="formElement">
                 @csrf
+                <input v-model="items.filter.filterType" name="filterType" type="hidden">
                 <div style="display: none" v-for="(city, index) in filterCity" :key="index">
                     <input type="hidden" name="city[]" :value="city">
                 </div>
@@ -348,6 +349,7 @@
                     loading: false,
                     like_property: [],
                     filter: {
+                        filterType: 'city',
                         surface_min: null,
                         surface_max: null,
                         rent_amount_min: null,
@@ -453,6 +455,7 @@
             getQueryString: function(){
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
+                const filterType = queries.get('filterType');
                 const getUndergroundQs = queries.getAll('underground'); //filter for floor underground
                 const getUAbovegroundQs = queries.getAll('aboveground'); //filter for floor aboveground
                 const getPreferenceQs = queries.getAll('preference'); //filter for property preference
@@ -470,9 +473,10 @@
                 const getSkeletonQs = queries.get('skeleton');
                 const getCityQs = queries.getAll('city');
                 const getStationQs = queries.getAll('station');
-                console.log("furnished", getFurnishedQs);
-                console.log("skeleton", getSkeletonQs);
 
+                if(filterType != null){
+                    this.items.filter.filterType = filterType;
+                }
                 if(getSurfaceMinQs != null){
                     this.items.filter.surface_min = getSurfaceMinQs;
                 }
@@ -507,7 +511,6 @@
                 if(getUndergroundQs.length > 0){
                     let undergroundSplit = getUndergroundQs[0].split(",") || [];
                         for(under of undergroundSplit){
-                            console.log(under);
                             this.items.filter.undergrounds.push(under);
                         }
                 }
@@ -515,7 +518,6 @@
                 if(getUAbovegroundQs.length > 0){
                     let abovegroundSplit = getUAbovegroundQs[0].split(",") || [];
                         for(above of abovegroundSplit){
-                            console.log(above);
                             this.items.filter.abovegrounds.push(above);
                         }
                 }
@@ -523,7 +525,6 @@
                 if(getPreferenceQs.length > 0){
                     let preferencedSplit = getPreferenceQs[0].split(",") || [];
                         for(pref of preferencedSplit){
-                            console.log(pref);
                             this.items.filter.preferences.push(pref);
                         }
                 }
@@ -531,7 +532,6 @@
                 if(getTypesQs.length > 0){
                     let typesSplit = getTypesQs[0].split(",") || [];
                         for(type of typesSplit){
-                            console.log(type);
                             this.items.filter.types.push(type);
                         }
                 }
@@ -539,7 +539,6 @@
                 if(getCuisineQs.length > 0){
                     let cuisineSplit = getCuisineQs[0].split(",") || [];
                         for(cuisine of cuisineSplit){
-                            console.log(cuisine);
                             this.items.filter.cuisines.push(cuisine);
                         }
                 }
@@ -547,7 +546,6 @@
                 if(getCityQs.length > 0){
                     let citySplit = getCityQs[0].split(",") || [];
                         for(city of citySplit){
-                            console.log(city);
                             this.items.filter.cities.push(city);
                         }
                 }
@@ -555,7 +553,6 @@
                 if(getStationQs.length > 0){
                     let stationSplit = getStationQs[0].split(",") || [];
                         for(station of stationSplit){
-                            console.log(station);
                             this.items.filter.stations.push(station);
                         }
                 }
@@ -563,7 +560,6 @@
             getListProperty: function(event) {
                 this.items.loading = true;
                 let url = window.location.href;
-                console.log("url", url);
                 let data = new FormData(formElement);
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
@@ -598,7 +594,6 @@
                 properties_like = JSON.parse(local) || [];
                 if(properties_like.length > 0 && properties_like.includes(propertyID)){
                     let index = properties_like.indexOf(propertyID);
-                    console.log("index", index);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                 } else {

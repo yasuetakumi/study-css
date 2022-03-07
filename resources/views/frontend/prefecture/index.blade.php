@@ -2,140 +2,70 @@
 @section('content-wrapper')
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-12 mt-5">
-            <div class="card rounded-0">
-                <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">市区町村で絞り込む</h3>
-                </div>
-                <hr class="my-0 mx-2">
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <form action="{{route('property.filter')}}" method="POST" id="formElement">
-                        @csrf
-                        <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex py-3">
-                                    <div class="mr-4">
-                                        <button @click="checkAllCity('checkall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択</button>
-                                    </div>
-                                    <div>
-                                        <button @click="checkAllCity('uncheckall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択解除</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div v-for="(city, cityIndex) in items.cities" class="col-lg-2 col-6">
-                                <div class="form-check">
-                                    <input v-model="items.selectedCities" class="form-check-input city-input" :value="city.id" name="city[]" type="checkbox" @change="getPropertyCountByCity">
-                                    <label class="form-check-label">@{{ city.display_name }} (@{{ city.properties_count }})</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <span v-if="property_count" style="font-size: 18px; margin-right: 10px;">@{{property_count}}</span>
-                                    <span v-else style="font-size: 18px; margin-right: 10px;">0</span>
-                                    <span>件の該当物件</span>
-                                </div>
-                                <button type="submit" class="btn btn-danger px-2 py-2 rounded-0">チェックした市区町村で絞り込む</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- /.card -->
-        </div>
-        <div class="col-12 mt-5">
-            <div class="card rounded-0">
-                <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">路線で絞り込む</h3>
-                    <!-- /.card-tools -->
-                </div>
-                <hr class="my-0 mx-2">
-                <!-- /.card-header -->
-                <form action="{{route('property.filter')}}" method="POST" id="propertyByStation">
-                    @csrf
-                    <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            @foreach ($station_lines as $station)
-                                <div class="col-lg-2 col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" value="{{$station->id}}" name="station_line" type="radio" @change="changeStationByStationLine">
-                                        <label class="form-check-label">{{$station->display_name}}</label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <p style="font-size: 18px;">駅を選ぶ(複数選択)</p>
-                        <hr class="mx-2 my-0">
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="d-flex py-3">
-                                    <div class="mr-4">
-                                        <button @click="checkAllStations('checkall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択</button>
-                                    </div>
-                                    <div>
-                                        <button @click="checkAllStations('uncheckall')" type="button" class="btn btn-danger px-2 py-2 rounded-0">すべて選択解除</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-12" v-if="items.loading">
-                                Loading Data...
-                            </div>
-                            <div class="col-12" v-else-if="!stations">
-                                No Data
-                            </div>
-                            <div v-else class="col-lg-2 col-6" v-for="station in stations" :key="station.id">
-                                <div class="form-check">
-                                    <input class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations" @change="getPropertyCountByStation">
-                                    <label class="form-check-label">@{{station.display_name}} (@{{ station.properties_count }})</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <span  style="font-size: 18px; margin-right: 10px;">@{{property_count_station}}</span>
-                            {{-- <span v-else style="font-size: 18px; margin-right: 10px;">0</span> --}}
-                            <span>件の該当物件</span>
-                        </div>
-                        <button type="submit" class="btn btn-danger px-2 py-2 rounded-0">チェックした駅で絞り込む</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.card -->
-        </div>
-        <div class="col-12 mt-5">
-            <div class="card rounded-0">
-                <div class="card-header bg-white border-bottom-0">
-                    <h3 class="card-title mb-0">List Property In {{$prefecture->display_name}}</h3>
-                </div>
-                <hr class="my-0 mx-2">
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="row">
-                        @foreach ($properties as $property)
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    {{-- <img class="card-img-top" src="{{$property->thumbnail_image_main}}" alt="{{$property->thumbnail_image_main}}"> --}}
-                                    <div class="card-body d-flex flex-column">
-                                        <p class="card-title">{{$property->location}}</p>
 
-                                        <span>@lang('label.surface_area_tsubo') : {{toTsubo($property->surface_area)}}</span>
-                                        <span>@lang('label.rent_amount_man') : {{toMan($property->rent_amount)}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+        <div class="col-12 mt-5">
+            <div class="card rounded-0">
+
+                <div class="card-header bg-white border-bottom-0">
+                    <div class="btn-group border rounded mb-3">
+                        <button type="button" :class="items.activeTab == 'city' ? 'btn-primary' : 'btn-default'"
+                            class="btn px-4 py-2" @click="items.activeTab = 'city'">地域から探す
+                        </button>
+                        <button type="button" :class="items.activeTab == 'station' ? 'btn-primary' : 'btn-default'"
+                            class="btn px-4 py-2" @click="items.activeTab = 'station'">駅から探す
+                        </button>
                     </div>
                 </div>
+
+                <form action="{{route('property.filter')}}" method="POST">
+                    @csrf
+
+                    <div v-if="items.activeTab == 'city'">
+                        @include('frontend.prefecture.filter.city')
+                    </div>
+                    <div v-else-if="items.activeTab == 'station'">
+                        @include('frontend.prefecture.filter.station')
+                    </div>
+                    <input v-model="items.activeTab" name="filterType" type="hidden">
+
+                    @include('frontend.prefecture.filter.other')
+
+                    <!-- Start - Number of properties and button -->
+                    <div class="card-body">
+                        <div class="result-total">
+                            <div class="row">
+                                <div class="col-3">
+                                    <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">
+                                        @{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span>
+                                    </h3>
+                                </div>
+
+                                <div class="col-9 text-right">
+                                    <button @click="clearFilter" type="button" class="btn btn-dark px-4 py-2">
+                                        <span>条件クリア</span>
+                                    </button>
+
+                                    <button type="submit" class="btn btn-primary px-4 py-2">
+                                        <span>
+                                            <i class="fas fa-search"></i>
+                                            この条件で検索する
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End - Number of properties and button -->
+
+                </form>
+
             </div>
-            <!-- /.card -->
         </div>
+
+        <div class="col-12 mt-5">
+            @include('frontend.prefecture.list.property')
+        </div>
+
     </div>
 </div>
 @endsection
@@ -147,58 +77,84 @@
 @endpush
 @push('vue-scripts')
 <script>
-
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Vuex store - Centralized data
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     store = {
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Reactive central data
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         state: function(){
             var state = {
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Status flags
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 status: { },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
 
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Preset data
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 preset: {
                 },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             return state;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Updating state data will need to go through these mutations
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         mutations: {}
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
     };
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     mixin = {
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE DATA
-        ## vue data binding, difine a properties
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE DATA
+        // vue data binding, difine a properties
+        // ---------------------------------------------------------------------
         data: function(){
             var data = {
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
+                // Initial data
+                // -------------------------------------------------------------
+                initial: {
+                    filter: {
+                        filterType: 'city',
+                        surface_min: null,
+                        surface_max: null,
+                        rent_amount_min: null,
+                        rent_amount_max: null,
+                        transfer_price_min: null,
+                        transfer_price_max: null,
+                        name: null,
+                        walking_distance: null,
+                        undergrounds: [],
+                        abovegrounds: [],
+                        preferences: [],
+                        types: [],
+                        skeleton: null,
+                        furnished: null,
+                        cuisines: [],
+                        city: [],
+                        station: [],
+                    },
+                },
+                // -------------------------------------------------------------
+
+                // -------------------------------------------------------------
                 // Form result set here
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 items: {
+                    activeTab: 'city',
+                    floorType: 0, // aboveground
                     station_line_id: null,
                     cities: @json($cities),
                     list_stations: null,
@@ -208,40 +164,43 @@
                     stations: [],
                     checkall: false,
                     uncheckall: false,
-                    property_count: null,
-                    property_count_station: null,
+                    number_of_property: 0,
                 },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
+            data.items.filter = _.cloneDeep(data.initial.filter);
+            // -----------------------------------------------------------------
+
+            // -----------------------------------------------------------------
             return data;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE MOUNTED
-        ## vue on mounted state
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE MOUNTED
+        // vue on mounted state
+        // ---------------------------------------------------------------------
         mounted: function(){
             this.checkAllCity('checkall');
         },
+        // ---------------------------------------------------------------------
 
+        // ---------------------------------------------------------------------
         created: function(){
             if(@json($initial_station_line)){
                 this.items.station_line_id = @json($initial_station_line->id);
             }
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE COMPUTED
-        ## define a property with custom logic
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE COMPUTED
+        // define a property with custom logic
+        // ---------------------------------------------------------------------
         computed: {
             stations: function () {
                 if(this.items.list_stations && this.items.list_stations.length > 0){
@@ -249,53 +208,76 @@
                 }else {
                     return false;
                 }
-
             },
-            property_count: function () {
-                if(this.items.property_count && this.items.property_count > 0){
-                    return this.items.property_count;
-                } else{
-                    return false;
-                }
-            },
-            property_count_station: function () {
-                return this.items.property_count_station;
-            }
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE WATCH
-        ## vue reactive data watch
-        ## ------------------------------------------------------------------
-        */
-        watch: {},
+        // ---------------------------------------------------------------------
+        // VUE WATCH
+        // vue reactive data watch
+        // ---------------------------------------------------------------------
+        watch: {
+            // -----------------------------------------------------------------
+            'items': {
+                deep: true,
+                handler: function (items) {
+                    // Assign filter to new variable
+                    let filter = _.cloneDeep(items.filter)
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE METHOD
-        ## function associated with the vue instance
-        ## ------------------------------------------------------------------
-        */
+                    // Delete unnecessary filter property
+                    Vue.delete(filter, 'undergrounds');
+                    Vue.delete(filter, 'abovegrounds');
+                    Vue.delete(filter, 'preferences');
+                    Vue.delete(filter, 'types');
+
+                    // Filter type (by city or station)
+                    filter.filterType = this.items.activeTab;
+
+                    // Assign selected city and station to filter
+                    filter.city = items.activeTab == 'city' ? _.cloneDeep(this.items.selectedCities) : [];
+                    filter.station = items.activeTab == 'station' ? _.cloneDeep(this.items.stations) : [];
+                    filter.count = true;
+
+                    // Set skeleton filter
+                    filter.skeleton = items.filter.skeleton ? 0 : null;
+                    filter.furnished = items.filter.furnished ? 1 : null;
+
+                    // Assign data to filter
+                    if (items.filter.undergrounds.length) filter.floor_under = items.filter.undergrounds;
+                    if (items.filter.abovegrounds.length) filter.floor_above = items.filter.abovegrounds;
+                    if (items.filter.preferences.length) filter.property_preference = items.filter.preferences;
+                    if (items.filter.types.length) filter.property_type = items.filter.types;
+
+                    // Get number of property
+                    this.getNumberOfProperty(filter);
+                },
+            },
+            // -----------------------------------------------------------------
+        },
+        // ---------------------------------------------------------------------
+
+        // ---------------------------------------------------------------------
+        // VUE METHOD
+        // function associated with the vue instance
+        // ---------------------------------------------------------------------
         methods: {
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             changeStationByStationLine: function (event) {
-                console.log(event.target.value);
                 this.items.station_line_id = event.target.value;
 
                 // Uncheck selected station from previous station line
                 // This request alse include property count
                 this.checkAllStations('uncheckall');
                 this.getStationByStationLine();
-
             },
+            // -----------------------------------------------------------------
             getStationByStationLine: async function () {
                 this.items.loading = true;
                 let response = await axios.get(root_url + '/api/v1/station/getStationByStationLine/' +  this.items.station_line_id);
-                console.log(response.data);
                 this.items.list_stations = response.data;
                 this.items.loading = false;
             },
+            // -----------------------------------------------------------------
             checkAllCity: function(value) {
                 // Default value (no city selected)
                 this.items.selectedCities = [];
@@ -306,47 +288,42 @@
                         this.items.selectedCities.push(city.id);
                     });
                 }
-
-                // Get number of property belongs to selected city
-                setTimeout(() => {
-                    this.getPropertyCountByCity();
-                }, 200);
             },
+            // -----------------------------------------------------------------
             checkAllStations: function (value) {
-                console.log(value);
                 this.items.stations = [];
                 if(value == 'checkall'){
                     for (station in this.items.list_stations){
                         this.items.stations.push(this.items.list_stations[station].id)
                     }
                 }
-                setTimeout(() => {
-                    this.getPropertyCountByStation();
-                }, 200);
             },
-            getPropertyCountByCity: function () {
-                let data = new FormData(formElement);
-                axios.post(root_url + '/api/v1/property/getPropertyCountByCity', data)
-                    .then((result) => {
-                        this.items.property_count = result.data;
-                        console.log(result.data);
-                    }).catch((err) => {
-                        console.log(err);
+            // -----------------------------------------------------------------
+            changeFloorType: function(value) {
+                this.items.filter.floorType = !value;
+                this.items.filter.abovegrounds = [];
+                this.items.filter.undergrounds = [];
+            },
+            // -----------------------------------------------------------------
+            getNumberOfProperty: function(filter) {
+                let request = axios.post(root_url + '/api/v1/property/getPropertiesCount', filter);
+                request.then((result) => {
+                    this.items.number_of_property = result.data.data.count ?? 0;
+                });
+                request.catch((err) => {
+                    console.log(err);
                 });
             },
-            getPropertyCountByStation: async function () {
-                let data2 = new FormData(propertyByStation);
-                axios.post(root_url + '/api/v1/property/getPropertyCountByStation', data2)
-                    .then((result) => {
-                        this.items.property_count_station = result.data;
-                        console.log("responded", result.data);
-                    }).catch((err) => {
-                        console.log(err);
-                });
-            }
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
+            clearFilter: function() {
+                this.items.floorType = 0;
+                this.items.selectedCities = [];
+                this.items.stations = [];
+                this.items.filter = _.cloneDeep(this.initial.filter);
+            },
+            // -----------------------------------------------------------------
         }
+        // ---------------------------------------------------------------------
     }
 </script>
 @endpush
-
