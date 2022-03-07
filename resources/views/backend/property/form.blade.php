@@ -193,8 +193,8 @@
                                             </div>
                                             <div class="my-2">
                                                 <p>Design @{{dc.display_name}}</p>
-                                                <p>居抜き @{{estimationIndex(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
-                                                <p>スケルトン @{{estimationIndex(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
+                                                {{-- <p>居抜き @{{estimationIndex(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                                <p>スケルトン @{{estimationIndex(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -245,6 +245,20 @@
                     </div>
                 </div>
             @endcomponent
+        @endif
+        @if ($page_type == 'detail')
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{$item->city->display_name}} で似た坪数の物件</h5>
+                </div>
+                <div class="row py-2">
+                    @foreach ($property_related as $pr)
+                        <div class="col-lg-4">
+                            @component('frontend._components.property_related_list', ['pr' => $pr])@endcomponent
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         @endif
     @endif
 
