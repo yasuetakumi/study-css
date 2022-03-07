@@ -1,14 +1,15 @@
 <template>
-    <div class="card-header d-flex justify-content-center">
+    <div class="card-header d-flex bg-white">
         <h3 class="card-title mb-0">
-            条件で絞る
+            検索条件を絞り込む
         </h3>
     </div>
 
     <div class="card-body clearfix">
         <div class="row">
+
+            <!-- Start - Surface Area Filter -->
             <div class="col-6">
-                {{-- Surface Area Filter--}}
                 <div class="search-area mb-3">
                     <p class="border-left border-primary pl-2">@lang('label.surface_area')</p>
                     <div class="row">
@@ -31,9 +32,10 @@
                     </div>
                 </div>
             </div>
+            <!-- End - Surface Area Filter -->
 
+            <!-- Start - Rent Price Filter -->
             <div class="col-6">
-                {{-- Rent Price Filter --}}
                 <div class="search-rent mb-3">
                     <p class="border-left border-primary pl-2">@lang('label.rent_amount')</p>
                     <div class="row">
@@ -56,10 +58,26 @@
                     </div>
                 </div>
             </div>
+            <!-- End - Rent Price Filter -->
+
         </div>
 
-        {{-- Floor Underground Filter --}}
+        <!-- Start - Floor type (default: unchecked) -->
         <div class="search-underground-floor mb-3">
+            <p class="border-left border-primary pl-2">@lang('label.underground')</p>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-check">
+                        <input @click="changeFloorType(items.floorType)" v-model="items.floorType" class="form-check-input" type="checkbox" id="floor-type">
+                        <label for="floor-type" class="form-check-label">地下</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End - Floor type -->
+
+        <!-- Start - Floor Underground Filter -->
+        <div v-if="items.floorType" class="search-underground-floor mb-3">
             <p class="border-left border-primary pl-2">@lang('label.number_of_floor_underground')</p>
             <div class="row">
                 <div class="col-12">
@@ -76,8 +94,10 @@
                 </div>
             </div>
         </div>
-        {{-- Floor Aboveground Filter --}}
-        <div class="search-aboveground-floor mb-3">
+        <!-- End - Floor Underground Filter -->
+
+        <!-- Start - Floor Aboveground Filter -->
+        <div v-else-if="!items.floorType" class="search-aboveground-floor mb-3">
             <p class="border-left border-primary pl-2">@lang('label.number_of_floor_aboveground')</p>
             <div class="row">
                 <div class="col-12">
@@ -94,8 +114,9 @@
                 </div>
             </div>
         </div>
+        <!-- End - Floor Aboveground Filter -->
 
-        {{-- Property Type Filter --}}
+        <!-- Start - Property Type Filter -->
         <div class="search-property-type mb-3">
             <p class="border-left border-primary pl-2">@lang('label.property_types')</p>
             <div class="row">
@@ -113,32 +134,29 @@
                 </div>
             </div>
         </div>
+        <!-- End - Property Type Filter -->
 
-        {{-- Search All  Filter--}}
-        <div class="search-all mb-3">
-            <p class="border-left border-primary pl-2">フリーワード</p>
+        <!-- Start - Is Skeleton Filter -->
+        <div class="search-is-skeleton mb-3">
+            <p class="border-left border-primary pl-2">@lang('label.skeleton')</p>
             <div class="row">
-                <div class="col-12">
-                    <input v-model="items.filter.name" type="text" name="name" class="form-control" placeholder="恵比寿、山手線、渋谷区など" value="">
+                <div class="col-2">
+                    <div class="form-check">
+                        <input v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox">
+                        <label class="form-check-label">スケルトン物件</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        <input v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox">
+                        <label class="form-check-label">居抜き物件</label>
+                    </div>
                 </div>
             </div>
         </div>
-        {{-- Walking Distance Filter --}}
-        <div class="search-walking-distance mb-3">
-            <p class="border-left border-primary pl-2">@lang('label.walking_distance_from_station')</p>
-            <div class="row">
-                <div class="col-6">
-                    <select v-model="items.filter.walking_distance" class="form-control" name="walking_distance">
-                        <option :value="null">選択なし</option>
-                        @foreach ($walking_distances as $walking)
-                        <option value="{{$walking->value}}">{{$walking->label_jp}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
+        <!-- End - Is Skeleton Filter -->
 
-        {{-- Property Preference Filter --}}
+        <!-- Start - Property Preference Filter -->
         <div class="search-property-preference mb-3">
             <p class="border-left border-primary pl-2">@lang('label.property_preference')</p>
             <div class="row">
@@ -152,108 +170,59 @@
                 </div>
             </div>
         </div>
+        <!-- End - Property Preference Filter -->
 
-        {{-- Is Skeleton Filter --}}
-        <div class="search-is-skeleton mb-3">
-            <p class="border-left border-primary pl-2">@lang('label.skeleton')</p>
+        <!-- Start - Walking Distance Filter -->
+        <div class="search-walking-distance mb-3">
+            <p class="border-left border-primary pl-2">@lang('label.walking_distance_from_station')</p>
+            <div class="row">
+                <div class="col-6">
+                    <select v-model="items.filter.walking_distance" class="form-control" name="walking_distance">
+                        <option :value="null">選択なし</option>
+                        @foreach ($walking_distances as $walking)
+                        <option value="{{$walking->value}}">{{$walking->label_jp}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- End - Walking Distance Filter -->
+
+        <!-- Start - Search All  Filter -->
+        <div class="search-all mb-3">
+            <p class="border-left border-primary pl-2">フリーワード</p>
             <div class="row">
                 <div class="col-12">
-                    <div class="form-check">
-                        <input v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox">
-                        <label class="form-check-label">スケルトン物件</label>
-                    </div>
-                    <div class="form-check">
-                        <input v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox">
-                        <label class="form-check-label">居抜き物件</label>
-                    </div>
+                    <input v-model="items.filter.name" type="text" name="name" class="form-control" placeholder="恵比寿、山手線、渋谷区など" value="">
                 </div>
             </div>
         </div>
-        {{-- Cuisine Filter --}}
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#exampleModalCenter"
-            {{-- :disabled="disabled" --}}
-        >
-            居抜き物件をさらに絞る
-        </button>
+        <!-- End - Search All  Filter -->
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">居抜き物件をさらに絞る</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {{-- Cuisines Filter --}}
-                        <div class="search-cuisines mb-3">
-                            <p class="border-left border-primary pl-2">@lang('label.cuisines')</p>
-                            <hr>
-                            <div class="row">
-                                @foreach ($cuisines as $cu)
-                                    <div class="col-4">
-                                        <div class="form-check">
-                                            <input v-model="items.filter.cuisines" class="form-check-input" name="cuisine[]" type="checkbox" value="{{$cu->id}}" id="cuisine-{{$cu->id}}">
-                                            <label for="cuisine-{{$cu->id}}" class="form-check-label">{{$cu->label_jp}}</label>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <hr>
-                        {{-- Transfer Price Option --}}
-                        <div class="search-walking-distance mb-3">
-                            <p class="border-left border-primary pl-2">@lang('label.transfer_price_option')</p>
-                            <div class="row">
-                                <div class="col-4">
-                                    <select v-model="items.filter.transfer_price_min" class="form-control" name="transfer_price_min">
-                                        <option :value="null">選択なし</option>
-                                        @foreach ($transfer_price_options as $opt)
-                                        <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <select v-model="items.filter.transfer_price_max" class="form-control" name="transfer_price_max">
-                                        <option :value="null">選択なし</option>
-                                        @foreach ($transfer_price_options as $opt)
-                                        <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- Show Count Property After Filter --}}
+        <!-- Start - Number of properties and button -->
         <div class="result-total mt-3">
             <div class="row">
-                <div class="col-12">
-                    <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">@{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span> </h3>
+                <div class="col-3">
+                    <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">
+                        @{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span>
+                    </h3>
+                </div>
 
-                    <button @click="clearFilter" type="button" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
-                        <span>
-                            <i class="fas fa-search"></i>
-                            Clear
-                        </span>
+                <div class="col-9 text-right">
+                    <button @click="clearFilter" type="button" class="btn btn-dark px-4 py-2">
+                        <span>条件クリア</span>
                     </button>
 
-                    <button type="submit" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
+                    <button type="submit" class="btn btn-primary px-4 py-2">
                         <span>
                             <i class="fas fa-search"></i>
-                            この条件で検索
+                            この条件で検索する
                         </span>
                     </button>
                 </div>
             </div>
         </div>
+        <!-- End - Number of properties and button -->
+
     </div>
 </template>

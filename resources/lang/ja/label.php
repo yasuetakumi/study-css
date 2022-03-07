@@ -166,8 +166,10 @@ return [
 
     //B2
     'my_account' => 'マイアカウント',
-    
 
     //B3
     'administrator' => '管理者',
+
+    // C5
+    'underground' => '地下',
 ];
