@@ -7,12 +7,18 @@
             <button type="button" :class="items.isActiveFavorite ? 'btn-primary' : 'btn-default' " class="btn px-4 py-2" @click="switchTab('favorite')">Favorite</button>
         </div>
     </div>
+    <div class="text-right" v-if="items.isActiveHistory">
+        <button type="button" class="btn btn-danger" @click="clearHistory">
+            履歴の消去
+        </button>
+    </div>
+    <hr>
     <div class="row">
-        <div v-if="!list_history && items.isActiveHistory">
-            <p class="text-center">No data yet...</p>
+        <div class="w-100" v-if="!list_history && items.isActiveHistory">
+            <p class="text-center">No data</p>
         </div>
-        <div v-else-if="!list_favorite && items.isActiveFavorite">
-            <p class="text-center">No data yet...</p>
+        <div class="w-100" v-else-if="!list_favorite && items.isActiveFavorite">
+            <p class="text-center">No data</p>
         </div>
         <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4" v-for="pd in list_favorite" :key="pd.id">
             @include('frontend._components.property_list')
@@ -204,6 +210,12 @@
                 this.getListHistoryOrFavoriteProperty('favoritePropertyId');
                 this.getLikeProperty();
             },
+            clearHistory: function(){
+                if(confirm('物件閲覧履歴を消去してよろしいですか？')){
+                    localStorage.removeItem('visitedPropertyId');
+                    this.items.list_properties_history = '';
+                }
+            }
             // --------------------------------------------------------------
         }
     }
