@@ -1,21 +1,27 @@
 <?php
-
+// -----------------------------------------------------------------------------
 namespace App\Http\Controllers\API;
+// -----------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------
 use App\Http\Controllers\Controller;
-use App\Models\Property;
-use App\Models\Station;
-use App\Models\StationsLine;
 use Illuminate\Http\Request;
+// -----------------------------------------------------------------------------
+use App\Models\Property;
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 class ApiPropertyController extends Controller
 {
-
-    public function getPropertyByFilter(Request $request)
-    {
+    // -------------------------------------------------------------------------
+    // Filter property
+    // -------------------------------------------------------------------------
+    public function getPropertyByFilter(Request $request) {
+        // Filter data
         $filter = (object) $request->all();
-        //return response()->json($filter);
-        $query = Property::with(['properties_property_preferences', 'property_stations']);
+
+        // Default value
         $selectedUnderground = array();
         $selectedAboveground = array();
         $selectedPropertyType = array();
@@ -24,12 +30,18 @@ class ApiPropertyController extends Controller
         $selectedCities = array();
         $selectedStations = array();
 
+        // Base query
+        $query = Property::with(['properties_property_preferences', 'property_stations']);
+
+        // Filter city
         if(!empty($filter->city)){
             foreach($filter->city as $value){
                 array_push($selectedCities, (int) $value);
             }
             $query->whereIn('city_id', $selectedCities);
         }
+
+        // Filter station
         if(!empty($filter->station)){
             foreach($filter->station as $value){
                 array_push($selectedStations, (int)$value);
@@ -39,36 +51,41 @@ class ApiPropertyController extends Controller
             });
         }
 
+        // Filter surface
         $maxSurface = !empty($filter->surface_max) ? fromTsubo($filter->surface_max) : '';
         $minSurface = !empty($filter->surface_min) ? fromTsubo($filter->surface_min) : '';
         $columnSurface = 'surface_area';
         $query->RangeArea((int)$minSurface, (int)$maxSurface, $columnSurface);
 
-
+        // Filter rent amount
         $maxRentAmount = !empty($filter->rent_amount_max) ? fromMan($filter->rent_amount_max) : '';
         $minRentAmount = !empty($filter->rent_amount_min) ? fromMan($filter->rent_amount_min) : '';
         $columnRentAmount = 'rent_amount';
-
         $query->RangeArea((int)$minRentAmount, (int)$maxRentAmount, $columnRentAmount);
 
+        // Filter transfer price
         $maxTransferPrice = !empty($filter->transfer_price_max) ? $filter->transfer_price_max : '';
         $minTransferPrice = !empty($filter->transfer_price_min) ? $filter->transfer_price_min : '';
         $columnTransferPrice = 'interior_transfer_price';
-
         $query->RangeArea((int)$minTransferPrice, (int)$maxTransferPrice, $columnTransferPrice);
 
+        // Filter is skeleton or is furnished
         if(isset($filter->skeleton) && !isset($filter->furnished)){
             $query->where('is_skeleton', (int)$filter->skeleton);
         }
         if(isset($filter->furnished)&& !isset($filter->skeleton)){
             $query->where('is_skeleton', (int)$filter->furnished);
         }
+
+        // Filter floor under
         if(isset($filter->floor_under)){
             foreach($filter->floor_under as $key => $value){
                 array_push($selectedUnderground, $filter->floor_under[$key]);
             }
             $query->whereIn('number_of_floors_under_ground', $selectedUnderground);
         }
+
+        // Filter floor above
         if(isset($filter->floor_above)){
             foreach($filter->floor_above as $key => $value){
                 array_push($selectedAboveground, $filter->floor_above[$key]);
@@ -76,6 +93,7 @@ class ApiPropertyController extends Controller
             $query->whereIn('number_of_floors_above_ground', $selectedAboveground);
         }
 
+        // Filter cuisine
         if(isset($filter->cuisine)){
             foreach($filter->cuisine as $key => $value){
                 array_push($selectedCuisines, $filter->cuisine[$key]);
@@ -83,6 +101,7 @@ class ApiPropertyController extends Controller
             $query->whereIn('cuisine_id', $selectedCuisines);
         }
 
+        // Filter walking distance
         if(isset($filter->walking_distance)){
             $id = $filter->walking_distance;
             $query->whereHas('property_stations', function($q) use($id) {
@@ -90,6 +109,7 @@ class ApiPropertyController extends Controller
             });
         }
 
+        // Filter property type
         if(isset($filter->property_type)){
             foreach($filter->property_type as $key => $value){
                 array_push($selectedPropertyType, $filter->property_type[$key]);
@@ -97,6 +117,7 @@ class ApiPropertyController extends Controller
             $query->whereIn('property_type_id', $selectedPropertyType);
         }
 
+        // Filter property preference
         if(isset($filter->property_preference)){
             foreach($filter->property_preference as $key => $value){
                 array_push($selectedPropertyPreference, $filter->property_preference[$key]);
@@ -106,12 +127,24 @@ class ApiPropertyController extends Controller
             });
         }
 
+        // Filter name
         if(isset($filter->name)){
             $query->where('location', 'like', '%' . $filter->name . '%')->orWhere('repayment', 'like', '%' . $filter->name . '%')->orWhere('renewal_fee', 'like', '%' . $filter->name . '%');
         }
 
+        // Get property
         $count = $query->count();
         $response = $query->get();
+
+        // If there is no city or station provided
+        // Set property to empty collection
+        if ($filter->filterType == 'city' && empty($filter->city)
+            || $filter->filterType == 'station' && empty($filter->station)) {
+            $count = 0;
+            $response = collect();
+        }
+
+        // Response data
         if(isset($filter->count)){
             return response()->json([
                 'data' => [
@@ -130,45 +163,6 @@ class ApiPropertyController extends Controller
         }
 
     }
-
-    public function getPropertyCountByCity(Request $request)
-    {
-        if($request->city){
-            $properties = Property::whereIn('city_id', $request->city)->get();
-        } else{
-            $properties = Property::whereHas('city', function($query) use($request) {
-                $query->where('prefecture_id', $request->prefecture_id);
-            })->get();
-        }
-
-        $result = $properties->count();
-        return response()->json($result);
-    }
-    public function getPropertyCountByStation(Request $request)
-    {
-        // Default value
-        $selectedStations = array();
-
-        // Get selected station
-        if(isset($request->station)){
-            foreach($request->station as $value){
-                array_push($selectedStations, (int) $value);
-            }
-        }
-
-        // If station is not provided, get all station belongs to station line
-        if(!isset($request->station) && isset($request->station_line)) {
-            $stationLine = StationsLine::findOrFail($request->station_line);
-            $selectedStations = $stationLine->stations->pluck('id')->toArray();
-        }
-
-        // Count the property belongs to station
-        $properties = Property::with(['property_stations']);
-        $properties->whereHas('property_stations', function ($query) use ($selectedStations){
-            $query->whereIn('station_id', $selectedStations);
-        });
-        $count = $properties->count();
-
-        return response()->json($count);
-    }
+    // -------------------------------------------------------------------------
 }
+// -----------------------------------------------------------------------------
