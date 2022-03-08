@@ -137,17 +137,17 @@
                 this.getLikeProperty();
             },
 
-        created: function() {
-            const url = new URL(window.location.href);
-            const queries = new URLSearchParams(url.search);
-            const favorite = queries.get("favorite");
-            console.log(favorite);
-            let state = 'history'
-            if(favorite != null){
-                state = 'favorite';
-            }
-            this.switchTab(state);
-        },
+            created: function() {
+                const url = new URL(window.location.href);
+                const queries = new URLSearchParams(url.search);
+                const favorite = queries.get("favorite");
+                console.log(favorite);
+                let state = 'history'
+                if(favorite != null){
+                    state = 'favorite';
+                }
+                this.switchTab(state);
+            },
 
             /*
             ## ------------------------------------------------------------------
@@ -267,17 +267,15 @@
                     this.items.selectedIdFavorite = '';
                     this.getListHistoryOrFavoriteProperty('favoritePropertyId');
                     this.getLikeProperty();
+                },
+                clearHistory: function(){
+                    if(confirm('物件閲覧履歴を消去してよろしいですか？')){
+                        localStorage.removeItem('visitedPropertyId');
+                        this.items.list_properties_history = '';
+                    }
                 }
-                this.getListHistoryOrFavoriteProperty('favoritePropertyId');
-                this.getLikeProperty();
-            },
-            clearHistory: function(){
-                if(confirm('物件閲覧履歴を消去してよろしいですか？')){
-                    localStorage.removeItem('visitedPropertyId');
-                    this.items.list_properties_history = '';
-                }
+                // --------------------------------------------------------------
             }
-            // --------------------------------------------------------------
         }
     </script>
 @endpush
