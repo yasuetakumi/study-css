@@ -116,6 +116,10 @@ return [
     'cuisines' => '業態',
     'transfer_price_option' => '譲渡額',
 
+    //C2
+    'recently_view_property' => '最新の閲覧履歴',
+    'view_favorite_property' => 'お気に入り一覧を見る',
+
     //D1 Property
     'property' => '物件の一覧',
     'property_list' => '物件の一覧',
