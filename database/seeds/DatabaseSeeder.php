@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         if (!$file->exists($path)) {
             $file->makeDirectory($path);
 
-        $this->call(DesignStylesTableSeeder::class);
+        // $this->call(DesignStylesTableSeeder::class);
     }
         $file->cleanDirectory( public_path('uploads') );
 
