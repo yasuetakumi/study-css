@@ -140,11 +140,11 @@ class ApiPropertyController extends Controller
 
         // If there is no city or station provided
         // Set property to empty collection
-        // if (isset($filter->filterType) == 'city' && empty($filter->city)
-        //     || isset($filter->filterType) == 'station' && empty($filter->station)) {
-        //     $count = 0;
-        //     $response = collect();
-        // }
+        if ($filter->filterType == 'city' && empty($filter->city)
+            || $filter->filterType == 'station' && empty($filter->station)) {
+            $count = 0;
+            $response = collect();
+        }
 
         // Response data
         if(isset($filter->count)){

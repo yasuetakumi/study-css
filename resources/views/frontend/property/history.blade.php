@@ -21,10 +21,14 @@
             <p class="text-center">No data</p>
         </div>
         <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4" v-for="pd in list_favorite" :key="pd.id">
-            @include('frontend._components.property_list')
+            <property-list :property="pd">
+                <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+            </property-list>
         </div>
         <div v-else class="col-md-4" v-for="pd in list_history" :key="pd.id">
-            @include('frontend._components.property_list')
+            <property-list :property="pd">
+                <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+            </property-list>
         </div>
     </div>
 @endsection
@@ -36,6 +40,8 @@
 </script>
 @endpush
 @push('vue-scripts')
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
 <script>
     // ----------------------------------------------------------------------
     // Vuex store - Centralized data

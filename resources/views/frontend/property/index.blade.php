@@ -257,7 +257,9 @@
             <p>No data</p>
         </div>
         <div v-else v-for="pd in property_data" :key=pd.id>
-            @include('frontend._components.property_list')
+            <property-list :property="pd">
+                <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+            </property-list>
         </div>
         {{-- <div v-else class="card card-danger" v-for="pd in property_data" :key=pd.id>
             <div class="card-header">
@@ -291,6 +293,8 @@
 @endpush
 
 @push('vue-scripts')
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
 <script>
     // ----------------------------------------------------------------------
     // Vuex store - Centralized data
