@@ -117,6 +117,10 @@ return [
     'cuisines' => 'Cuisines',
     'transfer_price_option' => 'Transfer Price Option',
 
+    //C2
+    'recently_view_property' => 'Recently Viewed Property',
+    'view_favorite_property' => 'View Favorite Property',
+
     //D1 PROPERTY
     'property' => 'Property',
     'property_list' => 'Property List',
