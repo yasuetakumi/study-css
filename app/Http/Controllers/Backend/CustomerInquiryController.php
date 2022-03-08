@@ -1,73 +1,74 @@
 <?php
-
+// -----------------------------------------------------------------------------
 namespace App\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
-use App\Models\CustomerInquiry;
-use App\Helpers\DatatablesHelper;
+// -----------------------------------------------------------------------------
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Helpers\DatatablesHelper;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerInquiryMail;
+// -----------------------------------------------------------------------------
+use App\Models\Admin;
+use App\Models\CustomerInquiry;
 use App\Models\ContactUsType;
 use App\Models\Property;
-use Illuminate\Support\Facades\Mail;
+// -----------------------------------------------------------------------------
 
-class CustomerInquiryController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+// -----------------------------------------------------------------------------
+class CustomerInquiryController extends Controller {
+    // -------------------------------------------------------------------------
+    public function index() {
         $data['page_title'] = 'Customer Inquiry List';
         return view('backend.customer_inquiry.index', $data);
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    // -------------------------------------------------------------------------
+    public function create() {
         //
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    // -------------------------------------------------------------------------
+    public function store(Request $request) {
+        // Validate the request
         $request->validate([
             'name'=> 'required|max:45',
             'email'=> 'required|email',
             'text' => 'required',
         ]);
+
+        // Get necessary data
+        $subject  = ContactUsType::find($request->contact_us_type_id);
+        $property = Property::with('user')->find($request->property_id);
+        $company_user_email = $property->user->email;
+        $developerEmail = env('BCC_PROPERTY_INQUIRY');
+        $adminsEmail = $developerEmail ?
+            Admin::pluck('email')->push($developerEmail) : Admin::pluck('email');
+
+        // Compile request data
         $data = $request->all();
-        $subject = ContactUsType::find($request->contact_us_type_id);
-        $company = Property::with('user')->find($request->property_id);
-        $company_user_email = $company->user->email;
-        $data['company_name'] = $company->user->company->company_name;
+        $data['company_name'] = $property->user->company->company_name;
         $data['subject'] = $subject->label_jp;
+
+        // Save inquiry
         $inquiry = new CustomerInquiry();
         $inquiry->fill($data)->save();
-        Mail::to($company_user_email)->send(new CustomerInquiryMail($data));
+
+        // Send email to company user
+        Mail::to($company_user_email)->bcc($adminsEmail->toArray())->send(new CustomerInquiryMail($data));
+        // Send email to customer
+        $developerEmail ?
+            Mail::to($data['email'])->bcc($developerEmail)->send(new CustomerInquiryMail($data))
+            : Mail::to($data['email'])->send(new CustomerInquiryMail($data));
 
         return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($param)
-    {
+    // -------------------------------------------------------------------------
+    public function show($param) {
         if( $param == 'json' ){
 
             $model = CustomerInquiry::with(['property', 'contact_us_type']);
@@ -87,41 +88,27 @@ class CustomerInquiryController extends Controller
         }
         abort(404);
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    // -------------------------------------------------------------------------
+    public function edit($id) {
         //
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+    // -------------------------------------------------------------------------
+    public function update(Request $request, $id) {
         //
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    // -------------------------------------------------------------------------
+    public function destroy($id) {
         $inquiry = CustomerInquiry::find($id);
         $inquiry->delete();
 
         // return redirect()->route('inquiry.index')->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
+    // -------------------------------------------------------------------------
 }
+// -----------------------------------------------------------------------------
