@@ -161,24 +161,29 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('map', function () {
         return 'map';
     });
-
     // C5
     Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
     // C6
     Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
     // C7
-    Route::get('history', function () {
-        return 'history';
+    Route::get('faqs', function() {
+        return 'よくある質問';
     });
     // C8
-    Route::get('company', function(){
-        return 'Company List';
+    Route::get('contact', function() {
+        return 'お問い合わせ';
     });
     // C9
-    Route::get('company/id', function(){
-        return 'Company Show';
+    Route::get('sitemap', function() {
+        return 'サイトマップ';
     });
-
-
+    // C10
+    Route::get('privacy-policy', function() {
+        return 'プライバシーポリシー';
+    });
+    // C12
+    Route::get('terms-of-service', function() {
+        return '利用規約';
+    });
 
 });
