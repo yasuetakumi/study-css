@@ -11,7 +11,11 @@ class ApiPropertyHistoryController extends Controller
     public function getPropertyHistoryOrFavorite(Request $request)
     {
         $property_id = $request->all();
-        $data = Property::whereIn('id', $property_id)->get();
+        $data = Property::with(['city','cuisine','property_stations.station.station_line', 'property_stations' => function($q){
+                    $q->orderBy('distance_from_station', 'ASC');
+                }])
+                ->whereIn('id', $property_id)
+                ->get();
         return response()->json($data);
     }
 }
