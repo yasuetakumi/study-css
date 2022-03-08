@@ -76,7 +76,7 @@ class PropertyController extends Controller
         }
         //abort(404);
         $id = $param;
-        $data['item']       = Property::find($id);
+        $data['item']       = Property::with(['city'])->find($id);
 
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -247,7 +247,14 @@ class PropertyController extends Controller
             $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
             $data['form_action_inquiry'] = route('enduser.inquiry.store');
         }
-
+        $data['property_related'] = Property::with(['city', 'property_stations.station'])
+                ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
+                ->where('city_id', $data['item']->city_id)
+                ->where('id', '!=', $data['item']->id)
+                ->orderByRaw('RAND()')
+                ->limit(3)
+                ->get();
+        // return $data['property_related'];
         //dd($data['design_categories']);
         return view('backend.property.form', $data);
     }
