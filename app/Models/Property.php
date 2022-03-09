@@ -181,7 +181,7 @@ class Property extends Model
     {
         if($this->surface_area !=null){
             $result = toTsubo($this->surface_area);
-            return $result;
+            return $result . '坪';
         } else {
             return 0;
         }
@@ -191,7 +191,7 @@ class Property extends Model
     {
         if($this->rent_amount != null){
             $result = toMan($this->rent_amount);
-            return $result;
+            return $result . '万円';
         } else {
             return 0;
         }
