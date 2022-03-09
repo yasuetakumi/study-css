@@ -2,6 +2,7 @@
 
 use App\Models\Property;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class PropertySeeder extends Seeder
 {
@@ -12,8 +13,10 @@ class PropertySeeder extends Seeder
      */
     public function run()
     {
-        Property::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        Property::truncate();
+        Schema::enableForeignKeyConstraints();
 
-        factory(Property::class, 100)->create();
+        factory(Property::class, 500)->create();
     }
 }
