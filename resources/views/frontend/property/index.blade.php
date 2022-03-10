@@ -240,6 +240,8 @@
                                         この条件で検索
                                     </span>
                                 </button>
+
+                                <search-condition-list></search-condition-list>
                             </div>
                         </div>
                     </div>
@@ -253,7 +255,7 @@
                 条件で絞る
             </h5>
             <div v-if="historyProperty" v-for="pd in historyProperty" :key="pd.id">
-                @include('frontend._components.property_list')
+                <property-related-list :property="pd"></property-related-list>
             </div>
             <div v-else>
                 <p>No Property Visited yet</p>
@@ -292,6 +294,8 @@
 @push('vue-scripts')
 @include('frontend._components.property_list')
 @include('frontend._components.button_favorite')
+@include('frontend._components.property_related_list')
+@include('frontend._components.search_condition_list')
 <script>
     // ----------------------------------------------------------------------
     // Vuex store - Centralized data
@@ -369,7 +373,8 @@
                         cuisines: [],
                         cities: [],
                         stations: [],
-                    }
+                    },
+                    search_condition: false,
                 },
                 // ----------------------------------------------------------
             };

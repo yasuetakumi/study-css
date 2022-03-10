@@ -97,7 +97,7 @@
                 return this.property.man_per_tsubo + '円';
             },
             man: function(){
-                return this.property.man + '万円';
+                return this.property.man;
             },
             rent_amount: function(){
                 return this.property.rent_amount + '㎡';
