@@ -49,7 +49,7 @@ class PropertyController extends Controller {
         $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['page_title'] = __('Property List');
 
-        $searchCondition = '';
+        $searchCondition = [];
         if ($request->session()->has('searchCondition')) {
             $searchCondition = session()->get('searchCondition');
         }
@@ -66,7 +66,7 @@ class PropertyController extends Controller {
 
         // Default data
         $withQuery = array();
-        $filter = "";
+        $filter = collect([]);
 
         // Set route parameter
         if(!empty($queryString['surface_min'])){
@@ -122,19 +122,16 @@ class PropertyController extends Controller {
         if(!empty($queryString['city'])){
             $stringCity= implode(",", $queryString['city']);
             $withQuery['city'] = $stringCity;
-
-            // $filter .= City::find($queryString['city'])->pluck('display_name')->join(',');
-            $filter .= "test <br> test";
         }
         if(!empty($queryString['station'])){
             $stringStation= implode(",", $queryString['station']);
             $withQuery['station'] = $stringStation;
-
-            $filter .= Station::find($queryString['station'])->pluck('display_name')->join(',');
         }
 
-        // // Redirect with param
-        if (array_key_exists('search_condition', $queryString)) {
+        $filter = $this->compileFilter($request);
+
+        // Redirect with param
+        if (array_key_exists('search_button', $queryString)) {
             $data = collect([
                 'searchCondition' => $filter,
                 'searchButtonClicked' => true,
@@ -147,5 +144,82 @@ class PropertyController extends Controller {
 
     }
     // -------------------------------------------------------------------------
+
+    public function compileFilter(Request $request) {
+        $filter = $request->all();
+        $result = [];
+
+        // Set route parameter
+        if(!empty($filter['surface_min'])){
+            $surfaceMin = fromTsubo($filter['surface_min']);
+            $result['面積下限'] = $surfaceMin;
+        }
+        if(!empty($filter['surface_max'])){
+            $surfaceMax = fromTsubo($filter['surface_max']);
+            $result['面積下限'] = $surfaceMax;
+        }
+        if(!empty($filter['rent_amount_min'])){
+            $rentAmountMin = fromMan($filter['rent_amount_min']);
+            $result['賃料下限'] = $rentAmountMin;
+        }
+        if(!empty($filter['rent_amount_max'])){
+            $rentAmountMax = fromMan($filter['rent_amount_max']);
+            $result['賃料上限'] = $rentAmountMax;
+        }
+        if(!empty($filter['transfer_price_min'])){
+            $transferPriceMin = $filter['transfer_price_min'];
+            $result['譲渡額下限'] = $transferPriceMin;
+        }
+        if(!empty($filter['transfer_price_max'])){
+            $transferPriceMax = $filter['transfer_price_min'];
+            $result['譲渡額上限'] = $transferPriceMax;
+        }
+        if(isset($filter['name'])){
+            $result['フリーワード'] = $filter['name'];
+        }
+        if(!empty($filter['walking_distance'])){
+            $walkingDistance = WalkingDistanceFromStationOption::find($filter['walking_distance']);
+            $result['徒歩'] = $walkingDistance->label_jp;
+        }
+        if(isset($filter['floor_under'])){
+            $underGrounds = NumberOfFloorsUnderGround::find($filter['floor_under'])->pluck('label_jp')->join(', ');
+            $result['階数(地下)'] = $underGrounds;
+        }
+        if(isset($filter['floor_above'])){
+            $aboveGrounds = NumberOfFloorsAboveGround::find($filter['floor_above'])->pluck('label_jp')->join(', ');
+            $result['階数(地下)'] = $aboveGrounds;
+        }
+        if(isset($filter['property_preference'])){
+            $preferences = PropertyPreference::find($filter['property_preference'])->pluck('label_jp')->join(', ');
+            $result['こだわり条件'] = $preferences;
+        }
+        if(isset($filter['property_type'])){
+            $types = PropertyType::find($filter['property_type'])->pluck('label_jp')->join(', ');
+            $result['飲食店の種類'] = $types;
+        }
+        if(isset($filter['skeleton'])){
+
+        }
+        if(isset($filter['furnished'])){
+
+        }
+        if(isset($filter['cuisine'])){
+
+        }
+        if(!empty($filter['city'])){
+            $citiesName = City::find($filter['city'])->pluck('display_name')->join(', ');
+            $result['市'] = $citiesName;
+        }
+        if(!empty($filter['station'])){
+            $stationsName = Station::find($filter['station'])->pluck('display_name')->join(', ');
+            $result['駅'] = $stationsName;
+        }
+
+        if (!isset($request['toJson'])) {
+            return $result;
+        } else {
+            return response()->json($result);
+        }
+    }
 }
 // -----------------------------------------------------------------------------
