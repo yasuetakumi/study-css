@@ -53,11 +53,11 @@
         @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $item->tsubo ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => toTsubo($item->surface_area) ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @if ($page_type == 'detail')
             @component('backend._components.input_number', ['name' => 'surface_area_meter', 'label' => __('label.surface_area_meter'), 'required' => null, 'value' => $item->surface_area ?? '', 'isReadOnly' => true ]) @endcomponent
         @endif
-        @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $item->man ?? '', 'isReadOnly' => $disableForm]) @endcomponent
+        @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => toMan($item->rent_amount) ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @if ($page_type == 'detail')
             @component('backend._components.input_number', ['name' => 'rent_amount_man_tsubo', 'label' => __('label.cost_of_rent'), 'required' => null, 'value' => $item->man_per_tsubo ?? '', 'isReadOnly' => true]) @endcomponent
             @component('backend._components.input_number', ['name' => 'rent_amount_man', 'label' => __('label.rent_amount'), 'required' => null, 'value' => $item->rent_amount ?? '', 'isReadOnly' => true]) @endcomponent
@@ -180,21 +180,18 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                                 <div class="field-group clearfix">
-                                    {{-- @foreach($design_styles as $ds)
-
-                                    @endforeach --}}
                                     <div v-if="loadingData">
                                         <p>Loading Data...</p>
                                     </div>
                                     <div v-else class="row">
                                         <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
                                             <div style="position: relative;">
-                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
+                                                <img :src="pathToImage + dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
                                             </div>
                                             <div class="my-2">
                                                 <p>Design @{{dc.display_name}}</p>
-                                                {{-- <p>居抜き @{{estimationIndex(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
-                                                <p>スケルトン @{{estimationIndex(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p> --}}
+                                                <p>居抜き @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                                <p>スケルトン @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -203,19 +200,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row justify-content-center mt-4">
-                    <div class="col-12 border-bottom border-primary">
-                        <p class="text-center" style="font-size: 22px">Estimation Index</p>
-                    </div>
-                    <div class="col-12 text-left mt-4">
-                        <button id="estimate" class="btn btn-primary"> Estimation Index</button>
-                        <br>
-                        <div class="d-flex mt-4">
-                            <p style="font-size: 20px">Estimation Index Value : </p>
-                            <p id="estimation_index" style="font-size: 20px; margin-left:5px;"> </p>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
         @if(!Auth::check())
@@ -252,11 +236,9 @@
                     <h5>{{$item->city->display_name}} で似た坪数の物件</h5>
                 </div>
                 <div class="row py-2">
-                    @foreach ($property_related as $pr)
-                        <div class="col-lg-4">
-                            @component('frontend._components.property_related_list', ['pr' => $pr])@endcomponent
-                        </div>
-                    @endforeach
+                    <div class="col-lg-4" v-for="pr in property_related">
+                        <property-related-list :property="pr"></property-related-list>
+                    </div>
                 </div>
             </div>
         @endif
@@ -269,7 +251,7 @@
 @endpush
 
 @push('vue-scripts')
-
+@include('frontend._components.property_related_list')
 <script>
 
     // ----------------------------------------------------------------------
@@ -293,6 +275,7 @@
                 preset: {
                     users_options: @json($users_options),
                     property: @json($item),
+                    property_related: @json($property_related),
                 },
                 // ----------------------------------------------------------
             };
@@ -340,6 +323,7 @@
                     property_id: null,
                     visited_property: [],
                     disabled: @json($disableSelect2),
+                    list_estimation: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -446,7 +430,10 @@
                 } else {
                     return false;
                 }
-            }
+            },
+            property_related: function(){
+                return this.$store.state.preset.property_related;
+            },
         },
 
         /*
@@ -481,19 +468,11 @@
                 this.items.selected_dc = event.target.value
                 this.getDesignByCategory(designCat);
 
-                if(this.items.area_id){
-                    this.showPlanByArea();
-                } else {
-                    this.getPlanByCategory(designCat)
-                }
-                this.items.loading = false;
-            },
-            showPlanByArea: async function(event) {
-                this.items.area_id = event.target.value;
-                let response = await fetch(root_url + '/api/v1/plans/getPlanByAreaGroup/' + this.items.selected_dc + '/' + this.items.area_id);
-                let data = await response.json();
-                this.items.list_plans = data;
+                this.getPlanByCategory(designCat)
 
+                this.estimationIndex();
+
+                this.items.loading = false;
             },
             getDesignByCategory: async function(designCat){
                 let response = await fetch(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
@@ -530,22 +509,32 @@
                 }
             },
 
-            estimationIndex: function(designStyleId, kitchen){
+            estimationIndex: function(){
                 let plans = this.$store.state.preset.property.property_plans;
-                let plan_id = '';
+                let id_plans = '';
+                let id_designs = [];
                 for (let i = 0; i < plans.length; i++) {
                     if(plans[i].plan.design_category_id == this.items.selected_dc){
-                        plan_id = plans[i].plan.id;
+                        id_plans = plans[i].plan_id;
                     }
+
+                }
+                console.log(id_plans);
+                for(let j=1; j < this.items.list_design_style.length; j++){
+                    id_designs.push(this.items.list_design_style[j].id)
                 }
                 let surface_area = document.querySelector("input[name=surface_area]").value;
-                axios.get(root_url + '/api/v1/plans/getGrandTotalEstimation/' + plan_id + '/' + surface_area + '/' + designStyleId + '/' + kitchen + '/' + this.items.selected_dc)
-                    .then((result) => {
-                        document.getElementById("furnished-"+designStyleId).innerHTML = result.data.min + '坪';
-                        document.getElementById("skeleton-"+designStyleId).innerHTML = result.data.min + '坪';
+                axios.post(root_url + '/api/v1/plans/getEstimationByPlanAndCategory', {
+                    plan_id : id_plans,
+                    design_category_id : this.items.selected_dc,
+                    design_style_id : id_designs,
+                    surface_area: surface_area
+                    })
+                    .then((response) => {
+                        this.items.list_estimation = response.data;
                     }).catch((err) => {
-                       console.log(err);
-                    });;
+                        console.log(err);
+                    });
             },
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
@@ -579,6 +568,19 @@
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
             },
+            has_kitchen: function(id, kitchen){
+                if(this.items.list_estimation && this.items.list_estimation.length > 0){
+                    return this.items.list_estimation.filter(kitchen => kitchen.design_category_id === id && kitchen.has_kitchen === 1).grand_total[0];
+                }
+            },
+            pathToImage: function(){
+                let pathUploads = @json(asset('uploads'));
+                return pathUploads + '/';
+            },
+            handleImageNotFound: function(event){
+                let noimage = @json(asset('img/backend/noimage.png'));
+                event.target.src = noimage;
+            }
             // --------------------------------------------------------------
         }
     }
