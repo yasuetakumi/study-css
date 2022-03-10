@@ -12,7 +12,6 @@
             <!-- /.card-header -->
             <form action="{{route('property.filter')}}" method="POST" id="formElement">
                 @csrf
-                <input v-model="items.filter.filterType" name="filterType" type="hidden">
                 <div style="display: none" v-for="(city, index) in filterCity" :key="index">
                     <input type="hidden" name="city[]" :value="city">
                 </div>
@@ -244,10 +243,55 @@
                         </div>
                     </div>
                 </div>
+
+                <input v-model="searchCondition" type="name" name="search_condition">
+
             </form>
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-center">
+                <h3 class="card-title mb-0">
+                    選択中の条件
+                </h3>
+            </div>
+
+            <div class="card-body clearfix">
+                <div>検索条件</div>
+                <div v-html="searchCondition"></div>
+                {{-- @{{ searchCondition }} --}}
+
+                <button @click="searchCondition = ''" class="btn btn-dark px-4 py-2 w-100">
+                    条件クリア
+                </button>
+
+                <hr>
+                今の検索条件で
+                <ul>
+                    <li></li>
+                </ul>
+
+                <div class="row">
+                    <div class="col-5">
+                        <button @click="registerSearchCondition" class="btn btn-dark py-2 px-4">
+                            <span class="fa fa-list-alt"></span>
+                            保存する
+                        </button>
+                    </div>
+                    <div class="col-7">
+                        <button class="btn btn-dark py-2 px-4">
+                            <span class="fa fa-envelope"></span>
+                            新規メールを登録
+                        </button>
+                    </div>
+                </div>
+
+                この条件で新規メールを受け取る
+            </div>
+        </div>
+
         <div class="px-1">
             <h5 class="mb-3">
                 条件で絞る
@@ -335,6 +379,8 @@
         */
         data: function() {
             var data = {
+                searchCondition: '',
+
                 // ----------------------------------------------------------
                 // Form result set here
                 // ----------------------------------------------------------
@@ -347,7 +393,6 @@
                     like_property: [],
                     list_history_property: [],
                     filter: {
-                        filterType: 'city',
                         surface_min: null,
                         surface_max: null,
                         rent_amount_min: null,
@@ -387,6 +432,9 @@
             this.getLikeProperty();
             this.getCountProperty();
             this.getHistoryProperty();
+
+            this.searchCondition = @json($searchCondition);
+
             this.items.loading = false;
 
         },
@@ -461,7 +509,6 @@
             getQueryString: function(){
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
-                const filterType = queries.get('filterType');
                 const getUndergroundQs = queries.getAll('underground'); //filter for floor underground
                 const getUAbovegroundQs = queries.getAll('aboveground'); //filter for floor aboveground
                 const getPreferenceQs = queries.getAll('preference'); //filter for property preference
@@ -480,9 +527,6 @@
                 const getCityQs = queries.getAll('city');
                 const getStationQs = queries.getAll('station');
 
-                if(filterType != null){
-                    this.items.filter.filterType = filterType;
-                }
                 if(getSurfaceMinQs != null){
                     this.items.filter.surface_min = getSurfaceMinQs;
                 }
@@ -634,6 +678,10 @@
                     });
             },
             // --------------------------------------------------------------
+
+            registerSearchCondition: function() {
+                localStorage.setItem('registeredSearchCondition', _.takeRight(this.searchCondition, 1));
+            },
         }
     }
 

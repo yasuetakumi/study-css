@@ -17,6 +17,10 @@ use App\Models\TransferPriceOption;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
 use App\Models\WalkingDistanceFromStationOption;
+
+use App\Models\City;
+use App\Models\Station;
+
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -44,6 +48,13 @@ class PropertyController extends Controller {
         $data['cuisines'] = Cuisine::select('id', 'label_jp')->orderBy('id')->get();
         $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['page_title'] = __('Property List');
+
+        $searchCondition = '';
+        if ($request->session()->has('searchCondition')) {
+            $searchCondition = session()->get('searchCondition');
+        }
+        $data['searchCondition'] = $searchCondition;
+
         return view('frontend.property.index', $data);
     }
     // -------------------------------------------------------------------------
@@ -55,11 +66,9 @@ class PropertyController extends Controller {
 
         // Default data
         $withQuery = array();
+        $filter = "";
 
         // Set route parameter
-        if (array_key_exists('filterType', $queryString)) {
-            $withQuery['filterType'] = $queryString['filterType'];
-        }
         if(!empty($queryString['surface_min'])){
             $withQuery['surface_min'] = $queryString['surface_min'];
         }
@@ -113,14 +122,29 @@ class PropertyController extends Controller {
         if(!empty($queryString['city'])){
             $stringCity= implode(",", $queryString['city']);
             $withQuery['city'] = $stringCity;
+
+            // $filter .= City::find($queryString['city'])->pluck('display_name')->join(',');
+            $filter .= "test <br> test";
         }
         if(!empty($queryString['station'])){
             $stringStation= implode(",", $queryString['station']);
             $withQuery['station'] = $stringStation;
+
+            $filter .= Station::find($queryString['station'])->pluck('display_name')->join(',');
         }
 
-        // Redirect with param
-        return redirect()->route('property.index', $withQuery);
+        // // Redirect with param
+        if (array_key_exists('search_condition', $queryString)) {
+            $data = collect([
+                'searchCondition' => $filter,
+                'searchButtonClicked' => true,
+            ]);
+
+            return redirect()->route('property.index', $withQuery)->with($data->toArray());
+        } else {
+            return redirect()->route('property.index', $withQuery);
+        }
+
     }
     // -------------------------------------------------------------------------
 }
