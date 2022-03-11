@@ -41,7 +41,7 @@
 
         @component('backend._components.vue.form.select2', [
             'name'          => 'user_id',
-            'label'         => __('label.company'),
+            'label'         => __('label.real_estate_agent_in_charge'),
             'required'      => 'true',
             'options'       => '$store.state.preset.users_options',
             'model'         => 'items.user_id',
