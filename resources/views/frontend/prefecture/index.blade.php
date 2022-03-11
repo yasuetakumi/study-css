@@ -20,6 +20,8 @@
                 <form action="{{route('property.filter')}}" method="POST">
                     @csrf
 
+                    <input type="hidden" name="from_prefecture" value="true">
+
                     <div v-if="items.activeTab == 'city'">
                         @include('frontend.prefecture.filter.city')
                     </div>

@@ -16,7 +16,7 @@
         <!-- End - Search Condition -->
 
         <!-- Start - Clear Search Condition -->
-        <button @click="searchCondition = []" :disabled="!Object.keys(displayedSearchCondition).length"
+        <button @click="searchCondition = []" :disabled="!Object.keys(searchCondition).length"
             class="btn btn-dark px-4 py-2 w-100">
             条件クリア
         </button>
@@ -29,7 +29,7 @@
 
             <!-- Start - Add Search Condition to Local Storage -->
             <div class="col-5">
-                <button @click="registerSearchCondition(searchCondition)" :disabled="!Object.keys(displayedSearchCondition).length"
+                <button @click="registerSearchCondition(searchCondition)" :disabled="!Object.keys(searchCondition).length"
                     class="btn btn-dark py-2 px-4">
                     <span class="fa fa-list-alt"></span>
                     保存する
@@ -39,7 +39,7 @@
 
             <!-- Start - Add Search Condition to Local Storage -->
             <div class="col-7">
-                <button @click="registerNewEmail(searchCondition)" :disabled="!Object.keys(displayedSearchCondition).length"
+                <button @click="registerNewEmail(searchCondition)" :disabled="!Object.keys(searchCondition).length"
                     class="btn btn-dark py-2 px-4" style="width: inherit">
                     <span class="fa fa-envelope"></span>
                     新規メールを登録

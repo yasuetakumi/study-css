@@ -49,7 +49,10 @@ class PropertyController extends Controller {
         $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['page_title'] = __('Property List');
 
+        // Default value for search condition
         $searchCondition = [];
+        // If this function was called by clicking search button on C2 Page
+        // The search condition will contain at least created at, number of match property and url
         if ($request->session()->has('searchCondition')) {
             $searchCondition = session()->get('searchCondition');
         }
@@ -69,6 +72,9 @@ class PropertyController extends Controller {
         $filter = collect([]);
 
         // Set route parameter
+        if(!empty($queryString['from_prefecture'])){
+            $withQuery['from_prefecture'] = $queryString['from_prefecture'];
+        }
         if(!empty($queryString['surface_min'])){
             $withQuery['surface_min'] = $queryString['surface_min'];
         }
@@ -133,21 +139,15 @@ class PropertyController extends Controller {
         // Return filter url with query string
         if ($toJson) return response()->json(route('property.index', $withQuery));
 
-        // Compile the filter for search history
-        $filter = $this->compileFilter($request);
-
         // Redirect with param
         // If this function was called by clicking search button on C2
         if (array_key_exists('search_button', $queryString)) {
-            $data = collect([
-                'searchCondition' => $filter,
-                'searchButtonClicked' => true,
-            ]);
-            return redirect()->route('property.index', $withQuery)->with($data->toArray());
+            // Compile the filter for search history
+            $filter = $this->compileFilter($request);
+            return redirect()->route('property.index', $withQuery)->with(['searchCondition' => $filter]);
         }
         // This function was called from C5
         else return redirect()->route('property.index', $withQuery);
-
     }
     // -------------------------------------------------------------------------
 
@@ -162,27 +162,27 @@ class PropertyController extends Controller {
         // Compile filter data
         if(!empty($filter['surface_min'])){
             $surfaceMin = fromTsubo($filter['surface_min']);
-            $result['面積下限'] = $surfaceMin;
+            $result['面積下限'] = "{$surfaceMin}坪";
         }
         if(!empty($filter['surface_max'])){
             $surfaceMax = fromTsubo($filter['surface_max']);
-            $result['面積下限'] = $surfaceMax;
+            $result['面積下限'] = "{$surfaceMax}坪";
         }
         if(!empty($filter['rent_amount_min'])){
             $rentAmountMin = fromMan($filter['rent_amount_min']);
-            $result['賃料下限'] = $rentAmountMin;
+            $result['賃料下限'] = "{$rentAmountMin}万円";
         }
         if(!empty($filter['rent_amount_max'])){
             $rentAmountMax = fromMan($filter['rent_amount_max']);
-            $result['賃料上限'] = $rentAmountMax;
+            $result['賃料上限'] = "{$rentAmountMax}万円";
         }
         if(!empty($filter['transfer_price_min'])){
             $transferPriceMin = fromMan($filter['transfer_price_min']);
-            $result['譲渡額下限'] = $transferPriceMin;
+            $result['譲渡額下限'] = "{$transferPriceMin}万円";
         }
         if(!empty($filter['transfer_price_max'])){
             $transferPriceMax = fromMan($filter['transfer_price_max']);
-            $result['譲渡額上限'] = $transferPriceMax;
+            $result['譲渡額上限'] = "{$transferPriceMax}万円";
         }
         if(isset($filter['name'])){
             $result['フリーワード'] = $filter['name'];
