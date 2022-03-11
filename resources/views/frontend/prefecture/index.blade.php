@@ -26,7 +26,6 @@
                     <div v-else-if="items.activeTab == 'station'">
                         @include('frontend.prefecture.filter.station')
                     </div>
-                    <input v-model="items.activeTab" name="filterType" type="hidden">
 
                     @include('frontend.prefecture.filter.other')
 
@@ -127,7 +126,6 @@
                 // -------------------------------------------------------------
                 initial: {
                     filter: {
-                        filterType: 'city',
                         surface_min: null,
                         surface_max: null,
                         rent_amount_min: null,
@@ -229,9 +227,6 @@
                     Vue.delete(filter, 'abovegrounds');
                     Vue.delete(filter, 'preferences');
                     Vue.delete(filter, 'types');
-
-                    // Filter type (by city or station)
-                    filter.filterType = this.items.activeTab;
 
                     // Assign selected city and station to filter
                     filter.city = items.activeTab == 'city' ? _.cloneDeep(this.items.selectedCities) : [];
