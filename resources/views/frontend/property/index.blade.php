@@ -88,6 +88,7 @@
                     like_property: [],
                     list_history_property: [],
                     filter: {
+                        from_prefecture: null,
                         surface_min: null,
                         surface_max: null,
                         rent_amount_min: null,
@@ -221,6 +222,7 @@
             getQueryString: function(){
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
+                const fromPrefecture = queries.get('from_prefecture');
                 const getUndergroundQs = queries.getAll('underground'); //filter for floor underground
                 const getUAbovegroundQs = queries.getAll('aboveground'); //filter for floor aboveground
                 const getPreferenceQs = queries.getAll('preference'); //filter for property preference
@@ -239,6 +241,9 @@
                 const getCityQs = queries.getAll('city');
                 const getStationQs = queries.getAll('station');
 
+                if(fromPrefecture != null){
+                    this.items.filter.from_prefecture = fromPrefecture;
+                }
                 if(getSurfaceMinQs != null){
                     this.items.filter.surface_min = getSurfaceMinQs;
                 }
@@ -399,7 +404,7 @@
             },
             // -----------------------------------------------------------------
             registerSearchCondition: function(searchCondition, byPassCondition = false) {
-                if (Object.keys(this.displayedSearchCondition).length || byPassCondition) {
+                if (Object.keys(this.searchCondition).length || byPassCondition) {
                     // Get local storage
                     let registeredSearchCondition = localStorage.getItem('searchCondition');
                     registeredSearchCondition = _.takeRight(JSON.parse(registeredSearchCondition), 9);

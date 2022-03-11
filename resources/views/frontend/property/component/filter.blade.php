@@ -13,6 +13,7 @@
         <div style="display: none" v-for="(station, index) in filterStation" :key="index">
             <input type="hidden" name="station[]" :value="station">
         </div>
+        <input v-model="items.filter.from_prefecture" type="hidden" name="from_prefecture">
         <div class="card-body clearfix">
 
             {{-- Surface Area Filter--}}
