@@ -7,5 +7,7 @@
 </div>
 
 <div v-else v-for="pd in property_data" :key=pd.id>
-    @include('frontend._components.property_list')
+    <property-list :property="pd">
+        <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+    </property-list>
 </div>

@@ -193,11 +193,11 @@ class PropertyController extends Controller {
         }
         if(isset($filter['floor_under'])){
             $underGrounds = NumberOfFloorsUnderGround::find($filter['floor_under'])->pluck('label_jp')->join(', ');
-            $result['階数(地下)'] = $underGrounds;
+            $result['階数_地下'] = $underGrounds;
         }
         if(isset($filter['floor_above'])){
             $aboveGrounds = NumberOfFloorsAboveGround::find($filter['floor_above'])->pluck('label_jp')->join(', ');
-            $result['階数(地下)'] = $aboveGrounds;
+            $result['階数_地下'] = $aboveGrounds;
         }
         if(isset($filter['property_preference'])){
             $preferences = PropertyPreference::find($filter['property_preference'])->pluck('label_jp')->join(', ');
@@ -216,7 +216,7 @@ class PropertyController extends Controller {
             $skeletonOrFurnished->push(Property::FURNISHED_JP_LABEL);
         }
         if (count($skeletonOrFurnished)) {
-            $result['スケルトン物件・居抜き物件'] = $skeletonOrFurnished->join(', ');
+            $result['スケルトン物件_居抜き物件'] = $skeletonOrFurnished->join(', ');
         }
 
         if(isset($filter['cuisine'])){

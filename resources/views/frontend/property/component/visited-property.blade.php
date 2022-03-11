@@ -3,7 +3,7 @@
         条件で絞る
     </h5>
     <div v-if="historyProperty" v-for="pd in historyProperty" :key="pd.id">
-        @include('frontend._components.property_list')
+        <property-related-list :property="pd"></property-related-list>
     </div>
     <div v-else>
         <p>No Property Visited yet</p>
