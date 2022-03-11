@@ -24,63 +24,61 @@
 @push('scripts')
 <script type="text/javascript">
     var root_url = "{{ url('/') }}";
-
 </script>
 @endpush
 
 @push('vue-scripts')
 <script>
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Vuex store - Centralized data
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     store = {
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Reactive central data
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         state: function() {
             var state = {
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Status flags
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 status: {},
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
 
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Preset data
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 preset: {},
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             return state;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Updating state data will need to go through these mutations
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         mutations: {}
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
     };
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
     mixin = {
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE DATA
-        ## vue data binding, difine a properties
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE DATA
+        // vue data binding, difine a properties
+        // ---------------------------------------------------------------------
         data: function() {
             var data = {
                 searchCondition: '',
 
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Form result set here
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 items: {
                     user_id: null,
                     property_count: null,
@@ -109,47 +107,46 @@
                         stations: [],
                     }
                 },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             return data;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE MOUNTED
-        ## vue on mounted state
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE MOUNTED
+        // vue on mounted state
+        // ---------------------------------------------------------------------
         mounted: function() {
             this.getListProperty();
             this.getLikeProperty();
             this.getCountProperty();
             this.getHistoryProperty();
-
             this.searchCondition = @json($searchCondition);
-
             this.items.loading = false;
 
         },
+        // ---------------------------------------------------------------------
 
         created: function() {
             this.getQueryString();
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE COMPUTED
-        ## define a property with custom logic
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE COMPUTED
+        // define a property with custom logic
+        // ---------------------------------------------------------------------
         computed: {
+            // -----------------------------------------------------------------
             property_count: function(){
                 return this.items.property_count;
             },
+            // -----------------------------------------------------------------
             property_data: function(){
                 if(this.items.property_data && this.items.property_data.length > 0){
                     return this.items.property_data;
@@ -157,18 +154,23 @@
                     return false;
                 }
             },
+            // -----------------------------------------------------------------
             disabled: function(){
                 return this.items.disable;
             },
+            // -----------------------------------------------------------------
             loading: function() {
                 return this.items.loading;
             },
+            // -----------------------------------------------------------------
             filterCity: function(){
                 return this.items.filter.cities;
             },
+            // -----------------------------------------------------------------
             filterStation: function(){
                 return this.items.filter.stations;
             },
+            // -----------------------------------------------------------------
             historyProperty: function(){
                 if(this.items.list_history_property && this.items.list_history_property.length > 0){
                     return this.items.list_history_property;
@@ -176,24 +178,36 @@
                     return false;
                 }
             },
+            // -----------------------------------------------------------------
+            displayedSearchCondition: function() {
+                searchCondition = [];
+
+                if (this.searchCondition) {
+                    searchCondition = _.cloneDeep(this.searchCondition);
+                    Vue.delete(searchCondition, 'number_of_match_property');
+                    Vue.delete(searchCondition, 'url');
+                    Vue.delete(searchCondition, 'created_at');
+                }
+
+                return searchCondition;
+            }
+            // -----------------------------------------------------------------
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE WATCH
-        ## vue reactive data watch
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE WATCH
+        // vue reactive data watch
+        // ---------------------------------------------------------------------
         watch: {},
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE METHOD
-        ## function associated with the vue instance
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE METHOD
+        // function associated with the vue instance
+        // ---------------------------------------------------------------------
         methods: {
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             refreshParsley: function() {
                 setTimeout(() => {
                     if ($('.parsley-errors-list.filled').length > 0) {
@@ -203,6 +217,7 @@
                     }
                 }, 400);
             },
+            // -----------------------------------------------------------------
             getQueryString: function(){
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
@@ -304,6 +319,7 @@
                         }
                 }
             },
+            // -----------------------------------------------------------------
             getListProperty: function(event) {
                 this.items.loading = true;
                 let url = window.location.href;
@@ -315,8 +331,12 @@
                         console.log(err);
                 });
             },
+            // -----------------------------------------------------------------
             getCountProperty: function(event) {
                 if(this.$refs.skeleton.checked == true && this.$refs.furnished.checked == true){
+                    this.items.filter.cuisines = [];
+                    this.items.filter.transfer_price_min = null;
+                    this.items.filter.transfer_price_max = null;
                     this.items.disable = false;
                 } else {
                     this.items.disable = true;
@@ -330,10 +350,12 @@
                         console.log(err);
                 });
             },
+            // -----------------------------------------------------------------
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
                 this.items.like_property = JSON.parse(local) || [];
             },
+            // -----------------------------------------------------------------
             setLikeProperty: function (id) {
                 let propertyID = id;
                 var properties_like = [];
@@ -358,6 +380,7 @@
 
                 this.getLikeProperty();
             },
+            // -----------------------------------------------------------------
             getHistoryProperty: function() {
                 let local = localStorage.getItem("visitedPropertyId");
                 let propertyID = JSON.parse(local) || [];
@@ -374,39 +397,50 @@
                             console.log(err);
                     });
             },
-            // --------------------------------------------------------------
-
-            registerSearchCondition: function(searchCondition) {
-                if (Object.keys(searchCondition).length) {
-                    let registeredSearchCondition = localStorage.getItem('registeredSearchCondition');
+            // -----------------------------------------------------------------
+            registerSearchCondition: function(searchCondition, byPassCondition = false) {
+                if (Object.keys(this.displayedSearchCondition).length || byPassCondition) {
+                    // Get local storage
+                    let registeredSearchCondition = localStorage.getItem('searchCondition');
                     registeredSearchCondition = _.takeRight(JSON.parse(registeredSearchCondition), 9);
                     registeredSearchCondition.push(searchCondition);
 
-                    localStorage.setItem('registeredSearchCondition', JSON.stringify(registeredSearchCondition));
+                    // Add search condition to local storage
+                    localStorage.setItem('searchCondition', JSON.stringify(registeredSearchCondition));
+
+                    // Show success alert
+                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 }
             },
-
+            // -----------------------------------------------------------------
             registerNewEmail: function(searchCondition) {
                 this.registerSearchCondition(searchCondition);
 
                 // Todo
                 // Register new email
             },
-
+            // -----------------------------------------------------------------
             registerCurrentFilter: function() {
+                // Define filter data
                 let filter = new FormData(filterForm);
                 filter.append('toJson', true);
 
+                // Do server request to get compiled filter data
                 let vm = this;
                 axios.post(root_url + '/compile-filter', filter)
                     .then((result) => {
-                        vm.registerSearchCondition(result.data);
+                        vm.registerSearchCondition(result.data, true);
                     }).catch((err) => {
                          console.log(err);
                     });
             },
+            // -----------------------------------------------------------------
         }
+        // ---------------------------------------------------------------------
     }
-
+    // -------------------------------------------------------------------------
 </script>
 @endpush

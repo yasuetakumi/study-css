@@ -120,6 +120,12 @@ return [
     //C2
     'recently_view_property' => 'Recently Viewed Property',
     'view_favorite_property' => 'View Favorite Property',
+    'search_condition' => 'Search Conditions',
+    'clear_search_condition' => 'Clear Search Conditions',
+    'with_the_current_search_condition' => 'With the current search conditions',
+    'save_search_history' => 'Save',
+    'register_new_email' => 'Register a new mail',
+    'search_with_these_search_condition' => 'Search with these search conditions',
 
     //D1 PROPERTY
     'property' => 'Property',

@@ -119,6 +119,12 @@ return [
     //C2
     'recently_view_property' => '最新の閲覧履歴',
     'view_favorite_property' => 'お気に入り一覧を見る',
+    'search_condition' => '検索条件',
+    'clear_search_condition' => '条件クリア',
+    'with_the_current_search_condition' => '今の検索条件で',
+    'save_search_history' => '保存する',
+    'register_new_email' => '新規メールを登録',
+    'search_with_these_search_condition' => 'この条件で新規メールを受け取る',
 
     //D1 Property
     'property' => '物件の一覧',

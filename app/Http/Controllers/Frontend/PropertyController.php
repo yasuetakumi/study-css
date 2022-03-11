@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Frontend;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
+use App\Http\Controllers\API\ApiPropertyController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 // -----------------------------------------------------------------------------
+use App\Models\City;
+use App\Models\Station;
 use App\Models\Cuisine;
 use App\Models\Property;
 use App\Models\PropertyType;
@@ -17,10 +21,6 @@ use App\Models\TransferPriceOption;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
 use App\Models\WalkingDistanceFromStationOption;
-
-use App\Models\City;
-use App\Models\Station;
-
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class PropertyController extends Controller {
     // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
-    public function filter(Request $request) {
+    public function filter(Request $request, $toJson = false) {
         // Filter data
         $queryString = $request->all();
 
@@ -128,28 +128,38 @@ class PropertyController extends Controller {
             $withQuery['station'] = $stringStation;
         }
 
+        // Compiled filter data need filter url to be store on local storage
+        // If this function was called from compile filter function
+        // Return filter url with query string
+        if ($toJson) return response()->json(route('property.index', $withQuery));
+
+        // Compile the filter for search history
         $filter = $this->compileFilter($request);
 
         // Redirect with param
+        // If this function was called by clicking search button on C2
         if (array_key_exists('search_button', $queryString)) {
             $data = collect([
                 'searchCondition' => $filter,
                 'searchButtonClicked' => true,
             ]);
-
             return redirect()->route('property.index', $withQuery)->with($data->toArray());
-        } else {
-            return redirect()->route('property.index', $withQuery);
         }
+        // This function was called from C5
+        else return redirect()->route('property.index', $withQuery);
 
     }
     // -------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
+    // Compile filter data
+    // -------------------------------------------------------------------------
     public function compileFilter(Request $request) {
+        // FIlter and result data
         $filter = $request->all();
         $result = [];
 
-        // Set route parameter
+        // Compile filter data
         if(!empty($filter['surface_min'])){
             $surfaceMin = fromTsubo($filter['surface_min']);
             $result['面積下限'] = $surfaceMin;
@@ -167,11 +177,11 @@ class PropertyController extends Controller {
             $result['賃料上限'] = $rentAmountMax;
         }
         if(!empty($filter['transfer_price_min'])){
-            $transferPriceMin = $filter['transfer_price_min'];
+            $transferPriceMin = fromMan($filter['transfer_price_min']);
             $result['譲渡額下限'] = $transferPriceMin;
         }
         if(!empty($filter['transfer_price_max'])){
-            $transferPriceMax = $filter['transfer_price_min'];
+            $transferPriceMax = fromMan($filter['transfer_price_max']);
             $result['譲渡額上限'] = $transferPriceMax;
         }
         if(isset($filter['name'])){
@@ -197,14 +207,21 @@ class PropertyController extends Controller {
             $types = PropertyType::find($filter['property_type'])->pluck('label_jp')->join(', ');
             $result['飲食店の種類'] = $types;
         }
-        if(isset($filter['skeleton'])){
 
+        $skeletonOrFurnished = collect();
+        if(isset($filter['skeleton'])){
+            $skeletonOrFurnished->push(Property::SKELETON_JP_LABEL);
         }
         if(isset($filter['furnished'])){
-
+            $skeletonOrFurnished->push(Property::FURNISHED_JP_LABEL);
         }
-        if(isset($filter['cuisine'])){
+        if (count($skeletonOrFurnished)) {
+            $result['スケルトン物件・居抜き物件'] = $skeletonOrFurnished->join(', ');
+        }
 
+        if(isset($filter['cuisine'])){
+            $cuisines = Cuisine::find($filter['cuisine'])->pluck('label_jp')->join(', ');
+            $result['料理'] = $cuisines;
         }
         if(!empty($filter['city'])){
             $citiesName = City::find($filter['city'])->pluck('display_name')->join(', ');
@@ -215,11 +232,24 @@ class PropertyController extends Controller {
             $result['駅'] = $stationsName;
         }
 
-        if (!isset($request['toJson'])) {
-            return $result;
-        } else {
-            return response()->json($result);
-        }
+        // Created at
+        $result['created_at'] = Carbon::now()->format('Y/m/d h:i:s');
+
+        // Get number of match property related to the filter
+        $request->merge(['count' => true]);
+        $response = app(ApiPropertyController::class)->getPropertyByFilter($request);
+        $result['number_of_match_property'] = $response->getData()->data->count ?? 0;
+
+        // Get filter url with query string
+        $response = $this->filter($request, true);
+        $result['url'] = $response->getData();
+
+        // Return result
+        // This function was called from filter function (search button on C2 was clicked)
+        if (!isset($request['toJson'])) return $result;
+        // This function was called from axios (current condition on form filter)
+        else return response()->json($result);
     }
+    // -------------------------------------------------------------------------
 }
 // -----------------------------------------------------------------------------

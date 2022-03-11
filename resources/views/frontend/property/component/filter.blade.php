@@ -4,7 +4,7 @@
             条件で絞る
         </h3>
     </div>
-    <!-- /.card-header -->
+
     <form action="{{route('property.filter')}}" method="POST" id="filterForm">
         @csrf
         <div style="display: none" v-for="(city, index) in filterCity" :key="index">
@@ -14,6 +14,7 @@
             <input type="hidden" name="station[]" :value="station">
         </div>
         <div class="card-body clearfix">
+
             {{-- Surface Area Filter--}}
             <div class="search-area mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.surface_area')</p>
@@ -36,6 +37,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Rent Price Filter --}}
             <div class="search-rent mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.rent_amount')</p>
@@ -58,6 +60,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Search All  Filter--}}
             <div class="search-all mb-3">
                 <p class="border-left border-primary pl-2">フリーワード</p>
@@ -67,6 +70,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Walking Distance Filter --}}
             <div class="search-walking-distance mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.walking_distance_from_station')</p>
@@ -81,6 +85,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Floor Underground Filter --}}
             <div class="search-underground-floor mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.number_of_floor_underground')</p>
@@ -99,6 +104,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Floor Aboveground Filter --}}
             <div class="search-aboveground-floor mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.number_of_floor_aboveground')</p>
@@ -117,6 +123,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Property Preference Filter --}}
             <div class="search-property-preference mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.property_preference')</p>
@@ -131,6 +138,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Property Type Filter --}}
             <div class="search-property-type mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.property_types')</p>
@@ -145,6 +153,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Is Skeleton Filter --}}
             <div class="search-is-skeleton mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.skeleton')</p>
@@ -161,8 +170,8 @@
                     </div>
                 </div>
             </div>
+
             {{-- Cuisine Filter --}}
-            <!-- Button trigger modal -->
             <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#exampleModalCenter" :disabled="disabled">
                 居抜き物件をさらに絞る
             </button>
@@ -178,6 +187,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
+
                             {{-- Cuisines Filter --}}
                             <div class="search-cuisines mb-3">
                                 <p class="border-left border-primary pl-2">@lang('label.cuisines')</p>
@@ -193,7 +203,9 @@
                                     @endforeach
                                 </div>
                             </div>
+
                             <hr>
+
                             {{-- Transfer Price Option --}}
                             <div class="search-walking-distance mb-3">
                                 <p class="border-left border-primary pl-2">@lang('label.transfer_price_option')</p>
@@ -216,6 +228,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
@@ -223,6 +236,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- Show Count Property After Filter --}}
             <div class="result-total mt-3">
                 <div class="row">
@@ -237,6 +251,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
     </form>
