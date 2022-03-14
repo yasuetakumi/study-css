@@ -130,10 +130,11 @@
         mounted: function(){
             this.getLocalStorage();
             this.$nextTick(() => {
-                for(let i=0; i < this.items.search_condition.length; i++){
-                    this.titleEditOrSave(i);
-                    this.showCancelButton(i);
-                }
+                if(this.items.search_condition && this.items.search_condition.length > 0)
+                    for(let i=0; i < this.items.search_condition.length; i++){
+                        this.titleEditOrSave(i);
+                        this.showCancelButton(i);
+                    }
             });
         },
 
