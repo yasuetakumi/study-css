@@ -12,7 +12,8 @@
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
 
-        <search-condition-list></search-condition-list>
+        <search-condition-list @getindex="getCurrentIndexSearch"></search-condition-list>
+
 
     </div>
 
@@ -20,6 +21,8 @@
         {{-- property list result --}}
         @include('frontend.property.component.property-list-result')
     </div>
+    {{-- Modal Dialog Email Search Preference--}}
+    <email-search-preference @register="registerEmailSearchPreference" v-model="items.email_search_preference"></email-search-preference>
 </div>
 @endsection
 
@@ -34,6 +37,7 @@
 @include('frontend._components.button_favorite')
 @include('frontend._components.property_related_list')
 @include('frontend._components.search_condition_list')
+@include('frontend._components.email_search_preference')
 <script>
     // -------------------------------------------------------------------------
     // Vuex store - Centralized data
@@ -114,6 +118,8 @@
                         stations: [],
                     },
                     search_condition: false,
+                    current_search_preference: null,
+                    email_search_preference: null,
                 },
                 // -------------------------------------------------------------
             };
@@ -449,6 +455,22 @@
                          console.log(err);
                     });
             },
+            registerEmailSearchPreference: function(){
+                let email = {"customer_email" : this.items.email_search_preference};
+                let data = this.items.current_search_preference;
+                Object.assign(data, email);
+                console.log(data);
+                axios.post(root_url + '/search-preference', data)
+                    .then((result) => {
+                        console.log(result);
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            },
+            getCurrentIndexSearch: function(value){
+                this.items.current_search_preference = value;
+                console.log(this.items.current_search_preference);
+            }
             // -----------------------------------------------------------------
         }
         // ---------------------------------------------------------------------

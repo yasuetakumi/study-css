@@ -28,6 +28,10 @@
             },
             titleLink: function(){
                 return this.property.location + '/' + this.property.tsubo + '/' + this.property.property_stations[0].station.display_name + '駅 ' +  this.property.property_stations[0].walking_distance.value + '分';
+            },
+            routeToPropertyDetail: function(){
+                let route = @json(url('/property-detail/'));
+                return route + '/' + this.property.id;
             }
         },
         methods: {
@@ -35,10 +39,7 @@
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
             },
-            routeToPropertyDetail: function(){
-                let route = @json(url('/property-detail/'));
-                return route + this.property.id;
-            }
+
         }
 
     });

@@ -9,17 +9,19 @@
         </button>
         <!-- Modal -->
         <div class="modal fade" id="modalSearchCondition" tabindex="-1" role="dialog" aria-labelledby="modalSearchConditionTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document" v-for="(sc, index) in items.search_condition" :key="index">
-                <div class="modal-content">
-                    <div class="d-flex align-items-center p-2 border-bottom">
-                        <div class="d-flex flex-grow-1 justify-content-between">
-                            <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
-                            <p class="mb-0">$value件の保存条件があります/最大１０件</p>
-                        </div>
-                        <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
-                            <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
-                        </a>
+            <div class="modal-lg bg-white mx-auto border rounded-0 shadow-sm" role="document">
+                <div class="d-flex align-items-center p-2 border-bottom ">
+                    <div class="d-flex flex-grow-1 justify-content-between">
+                        <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
+                        <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
                     </div>
+                    <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
+                        <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-dialog modal-dialog-scrollable modal-lg mt-0" role="document" v-for="(sc, index) in items.search_condition" :key="index">
+                <div class="modal-content rounded-0">
                     <div class="modal-body">
                         <div class="position-relative bg-white">
                             <div class="position-absolute" style="top: 0px; left: 0px;">
@@ -48,7 +50,7 @@
                                     </div>
                                     <div class="col-4">
                                         <!-- Button Mail-->
-                                        <button type="button" class="shadow-md w-100 btn btn-secondary text-xs">
+                                        <button type="button" class="shadow-md w-100 btn btn-secondary text-xs" data-toggle="modal" data-target="#emailPreferenceModal" @click="getIndexSearchPref(sc)">
                                             <span><i class="fas fa-envelope"></i>新規メールを受け取る</span>
                                         </button>
                                     </div>
@@ -137,7 +139,13 @@
 
         // Computed properties
         computed: {
-
+            totalSavedSearchCondition: function(){
+                let savedCondition = [];
+                if(this.items.search_condition && this.items.search_condition.length > 0){
+                    savedCondition = this.items.search_condition;
+                    return savedCondition.length;
+                }
+            }
         },
         methods: {
             handleEditOrSave: function(index){
@@ -206,6 +214,9 @@
                     document.getElementById("btnCancel"+index).classList.add("d-block");
                     // return true;
                 }
+            },
+            getIndexSearchPref: function(sc){
+                this.$emit("getindex", sc)
             }
 
         }
