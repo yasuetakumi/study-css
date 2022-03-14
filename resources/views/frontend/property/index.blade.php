@@ -3,281 +3,20 @@
 @section('content')
 <div class="row">
     <div class="col-md-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-center">
-                <h3 class="card-title mb-0">
-                    条件で絞る
-                </h3>
-            </div>
-            <!-- /.card-header -->
-            <form action="{{route('property.filter')}}" method="POST" id="formElement">
-                @csrf
-                <input v-model="items.filter.filterType" name="filterType" type="hidden">
-                <div style="display: none" v-for="(city, index) in filterCity" :key="index">
-                    <input type="hidden" name="city[]" :value="city">
-                </div>
-                <div style="display: none" v-for="(station, index) in filterStation" :key="index">
-                    <input type="hidden" name="station[]" :value="station">
-                </div>
-                <div class="card-body clearfix">
-                    {{-- Surface Area Filter--}}
-                    <div class="search-area mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.surface_area')</p>
-                        <div class="row">
-                            <div class="col-6">
-                                <select v-model="items.filter.surface_min" class="form-control" name="surface_min" @change="getCountProperty">
-                                    <option :value="null" >下限なし</option>
-                                    @foreach ($surface_areas as $surface)
-                                    <option value="{{$surface->value}}">{{$surface->label_jp}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <select v-model="items.filter.surface_max" class="form-control" name="surface_max" @change="getCountProperty">
-                                    <option :value="null">上限なし</option>
-                                    @foreach ($surface_areas as $surface)
-                                    <option value="{{$surface->value}}">{{$surface->label_jp}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Rent Price Filter --}}
-                    <div class="search-rent mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.rent_amount')</p>
-                        <div class="row">
-                            <div class="col-6">
-                                <select v-model="items.filter.rent_amount_min" class="form-control" name="rent_amount_min" id="rent" @change="getCountProperty">
-                                    <option :value="null">下限なし</option>
-                                    @foreach ($rent_amounts as $rent)
-                                    <option value="{{$rent->value}}">{{$rent->label_jp}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <select v-model="items.filter.rent_amount_max" class="form-control" name="rent_amount_max" id="rent" @change="getCountProperty">
-                                    <option :value="null">上限なし</option>
-                                    @foreach ($rent_amounts as $rent)
-                                    <option value="{{$rent->value}}">{{$rent->label_jp}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Search All  Filter--}}
-                    <div class="search-all mb-3">
-                        <p class="border-left border-primary pl-2">フリーワード</p>
-                        <div class="row">
-                            <div class="col-12">
-                                <input v-model="items.filter.name" type="text" name="name" class="form-control" placeholder="恵比寿、山手線、渋谷区など" value="" @change="getCountProperty">
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Walking Distance Filter --}}
-                    <div class="search-walking-distance mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.walking_distance_from_station')</p>
-                        <div class="row">
-                            <div class="col-6">
-                                <select v-model="items.filter.walking_distance" class="form-control" name="walking_distance" @change="getCountProperty">
-                                    <option :value="null">選択なし</option>
-                                    @foreach ($walking_distances as $walking)
-                                    <option value="{{$walking->value}}">{{$walking->label_jp}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Floor Underground Filter --}}
-                    <div class="search-underground-floor mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.number_of_floor_underground')</p>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    @foreach ($floor_undergrounds as $underground)
-                                    <div class="col-6">
-                                        <div class="form-check">
-                                            <input v-model="items.filter.undergrounds" class="form-check-input" name="floor_under[]" type="checkbox" value="{{$underground->value}}" id="floor-under-{{$underground->id}}" @change="getCountProperty">
-                                            <label for="floor-under-{{$underground->id}}" class="form-check-label">{{$underground->label_jp}}</label>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Floor Aboveground Filter --}}
-                    <div class="search-aboveground-floor mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.number_of_floor_aboveground')</p>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    @foreach ($floor_abovegrounds as $above)
-                                    <div class="col-6">
-                                        <div class="form-check">
-                                            <input v-model="items.filter.abovegrounds" class="form-check-input" name="floor_above[]" type="checkbox" value="{{$above->value}}" id="floor-above-{{$above->id}}" @change="getCountProperty">
-                                            <label for="floor-above-{{$above->id}}" class="form-check-label">{{$above->label_jp}}</label>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Property Preference Filter --}}
-                    <div class="search-property-preference mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.property_preference')</p>
-                        <div class="row">
-                            <div class="col-12">
-                                @foreach ($property_preferences as $pp)
-                                <div class="form-check">
-                                    <input v-model="items.filter.preferences" class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}" @change="getCountProperty">
-                                    <label class="form-check-label">{{$pp->label_jp}}</label>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Property Type Filter --}}
-                    <div class="search-property-type mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.property_types')</p>
-                        <div class="row">
-                            <div class="col-12">
-                                @foreach ($property_types as $pt)
-                                <div class="form-check">
-                                    <input v-model="items.filter.types" class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}" @change="getCountProperty">
-                                    <label class="form-check-label">{{$pt->label_jp}}</label>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Is Skeleton Filter --}}
-                    <div class="search-is-skeleton mb-3">
-                        <p class="border-left border-primary pl-2">@lang('label.skeleton')</p>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox" @change="getCountProperty">
-                                    <label class="form-check-label">スケルトン物件</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox" @change="getCountProperty">
-                                    <label class="form-check-label">居抜き物件</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Cuisine Filter --}}
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#exampleModalCenter" :disabled="disabled">
-                        居抜き物件をさらに絞る
-                    </button>
+        {{-- filter form --}}
+        @include('frontend.property.component.filter')
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog  modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">居抜き物件をさらに絞る</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    {{-- Cuisines Filter --}}
-                                    <div class="search-cuisines mb-3">
-                                        <p class="border-left border-primary pl-2">@lang('label.cuisines')</p>
-                                        <hr>
-                                        <div class="row">
-                                            @foreach ($cuisines as $cu)
-                                                <div class="col-4">
-                                                    <div class="form-check">
-                                                        <input v-model="items.filter.cuisines" class="form-check-input" name="cuisine[]" type="checkbox" value="{{$cu->id}}" id="cuisine-{{$cu->id}}" @change="getCountProperty">
-                                                        <label for="cuisine-{{$cu->id}}" class="form-check-label">{{$cu->label_jp}}</label>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    {{-- Transfer Price Option --}}
-                                    <div class="search-walking-distance mb-3">
-                                        <p class="border-left border-primary pl-2">@lang('label.transfer_price_option')</p>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <select v-model="items.filter.transfer_price_min" class="form-control" name="transfer_price_min" @change="getCountProperty">
-                                                    <option :value="null">選択なし</option>
-                                                    @foreach ($transfer_price_options as $opt)
-                                                    <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-4">
-                                                <select v-model="items.filter.transfer_price_max" class="form-control" name="transfer_price_max" @change="getCountProperty">
-                                                    <option :value="null">選択なし</option>
-                                                    @foreach ($transfer_price_options as $opt)
-                                                    <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Show Count Property After Filter --}}
-                    <div class="result-total mt-3">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">@{{property_count}} <span style="font-size: 16px; color: black"> 件の該当物件</span> </h3>
-                                <button type="submit" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
-                                    <span>
-                                        <i class="fas fa-search"></i>
-                                        この条件で検索
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-        <div class="px-1">
-            <h5 class="mb-3">
-                条件で絞る
-            </h5>
-            <div v-if="historyProperty" v-for="pd in historyProperty" :key="pd.id">
-                @include('frontend._components.property_list')
-            </div>
-            <div v-else>
-                <p>No Property Visited yet</p>
-            </div>
-            <a href="{{route('property.history', ['favorite' => true ])}}" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
-                <span>
-                    お気に入り一覧を見る
-                    <i class="fas fa-arrow-right"></i>
-                </span>
-            </a>
-        </div>
+        {{-- search history --}}
+        @include('frontend.property.component.search-history')
+
+        {{-- visited property --}}
+        @include('frontend.property.component.visited-property')
+
     </div>
+
     <div class="col-md-8">
-        <div v-if="loading">
-            <p>Loading data...</p>
-        </div>
-        <div v-else-if="!property_data">
-            <p>No data</p>
-        </div>
-        <div v-else v-for="pd in property_data" :key=pd.id>
-            <property-list :property="pd">
-                <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
-            </property-list>
-        </div>
+        {{-- property list result --}}
+        @include('frontend.property.component.property-list-result')
     </div>
 </div>
 @endsection
@@ -285,7 +24,6 @@
 @push('scripts')
 <script type="text/javascript">
     var root_url = "{{ url('/') }}";
-
 </script>
 @endpush
 
@@ -293,55 +31,56 @@
 @include('frontend._components.property_list')
 @include('frontend._components.button_favorite')
 <script>
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Vuex store - Centralized data
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     store = {
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Reactive central data
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         state: function() {
             var state = {
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Status flags
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 status: {},
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
 
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 // Preset data
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 preset: {},
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             return state;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Updating state data will need to go through these mutations
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         mutations: {}
-        // ------------------------------------------------------------------
+        // ---------------------------------------------------------------------
     };
-    // ----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
     mixin = {
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE DATA
-        ## vue data binding, difine a properties
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE DATA
+        // vue data binding, difine a properties
+        // ---------------------------------------------------------------------
         data: function() {
             var data = {
-                // ----------------------------------------------------------
+                searchCondition: '',
+
+                // -------------------------------------------------------------
                 // Form result set here
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
                 items: {
                     user_id: null,
                     property_count: null,
@@ -351,7 +90,7 @@
                     like_property: [],
                     list_history_property: [],
                     filter: {
-                        filterType: 'city',
+                        from_prefecture: null,
                         surface_min: null,
                         surface_max: null,
                         rent_amount_min: null,
@@ -371,44 +110,46 @@
                         stations: [],
                     }
                 },
-                // ----------------------------------------------------------
+                // -------------------------------------------------------------
             };
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
 
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             return data;
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE MOUNTED
-        ## vue on mounted state
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE MOUNTED
+        // vue on mounted state
+        // ---------------------------------------------------------------------
         mounted: function() {
             this.getListProperty();
             this.getLikeProperty();
             this.getCountProperty();
             this.getHistoryProperty();
+            this.searchCondition = @json($searchCondition);
             this.items.loading = false;
 
         },
+        // ---------------------------------------------------------------------
 
         created: function() {
             this.getQueryString();
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE COMPUTED
-        ## define a property with custom logic
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE COMPUTED
+        // define a property with custom logic
+        // ---------------------------------------------------------------------
         computed: {
+            // -----------------------------------------------------------------
             property_count: function(){
                 return this.items.property_count;
             },
+            // -----------------------------------------------------------------
             property_data: function(){
                 if(this.items.property_data && this.items.property_data.length > 0){
                     return this.items.property_data;
@@ -416,43 +157,60 @@
                     return false;
                 }
             },
+            // -----------------------------------------------------------------
             disabled: function(){
                 return this.items.disable;
             },
+            // -----------------------------------------------------------------
             loading: function() {
                 return this.items.loading;
             },
+            // -----------------------------------------------------------------
             filterCity: function(){
                 return this.items.filter.cities;
             },
+            // -----------------------------------------------------------------
             filterStation: function(){
                 return this.items.filter.stations;
             },
+            // -----------------------------------------------------------------
             historyProperty: function(){
                 if(this.items.list_history_property && this.items.list_history_property.length > 0){
                     return this.items.list_history_property;
                 } else {
                     return false;
                 }
+            },
+            // -----------------------------------------------------------------
+            displayedSearchCondition: function() {
+                searchCondition = [];
+
+                if (this.searchCondition) {
+                    searchCondition = _.cloneDeep(this.searchCondition);
+                    Vue.delete(searchCondition, 'number_of_match_property');
+                    Vue.delete(searchCondition, 'url');
+                    Vue.delete(searchCondition, 'created_at');
+                }
+
+                return searchCondition;
             }
+            // -----------------------------------------------------------------
         },
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE WATCH
-        ## vue reactive data watch
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE WATCH
+        // vue reactive data watch
+        // ---------------------------------------------------------------------
         watch: {},
+        // ---------------------------------------------------------------------
 
-        /*
-        ## ------------------------------------------------------------------
-        ## VUE METHOD
-        ## function associated with the vue instance
-        ## ------------------------------------------------------------------
-        */
+        // ---------------------------------------------------------------------
+        // VUE METHOD
+        // function associated with the vue instance
+        // ---------------------------------------------------------------------
         methods: {
-            // --------------------------------------------------------------
+            // -----------------------------------------------------------------
             refreshParsley: function() {
                 setTimeout(() => {
                     if ($('.parsley-errors-list.filled').length > 0) {
@@ -462,10 +220,11 @@
                     }
                 }, 400);
             },
+            // -----------------------------------------------------------------
             getQueryString: function(){
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
-                const filterType = queries.get('filterType');
+                const fromPrefecture = queries.get('from_prefecture');
                 const getUndergroundQs = queries.getAll('underground'); //filter for floor underground
                 const getUAbovegroundQs = queries.getAll('aboveground'); //filter for floor aboveground
                 const getPreferenceQs = queries.getAll('preference'); //filter for property preference
@@ -484,8 +243,8 @@
                 const getCityQs = queries.getAll('city');
                 const getStationQs = queries.getAll('station');
 
-                if(filterType != null){
-                    this.items.filter.filterType = filterType;
+                if(fromPrefecture != null){
+                    this.items.filter.from_prefecture = fromPrefecture;
                 }
                 if(getSurfaceMinQs != null){
                     this.items.filter.surface_min = getSurfaceMinQs;
@@ -567,10 +326,11 @@
                         }
                 }
             },
+            // -----------------------------------------------------------------
             getListProperty: function(event) {
                 this.items.loading = true;
                 let url = window.location.href;
-                let data = new FormData(formElement);
+                let data = new FormData(filterForm);
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
                         this.items.property_data = result.data.data.result;
@@ -578,13 +338,17 @@
                         console.log(err);
                 });
             },
+            // -----------------------------------------------------------------
             getCountProperty: function(event) {
                 if(this.$refs.skeleton.checked == true && this.$refs.furnished.checked == true){
+                    this.items.filter.cuisines = [];
+                    this.items.filter.transfer_price_min = null;
+                    this.items.filter.transfer_price_max = null;
                     this.items.disable = false;
                 } else {
                     this.items.disable = true;
                 }
-                let data = new FormData(formElement);
+                let data = new FormData(filterForm);
                 data.append("count", 1);
                 axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
                     .then((result) => {
@@ -593,10 +357,12 @@
                         console.log(err);
                 });
             },
+            // -----------------------------------------------------------------
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
                 this.items.like_property = JSON.parse(local) || [];
             },
+            // -----------------------------------------------------------------
             setLikeProperty: function (id) {
                 let propertyID = id;
                 var properties_like = [];
@@ -606,13 +372,22 @@
                     let index = properties_like.indexOf(propertyID);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                    let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 } else {
                     properties_like.push(propertyID);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 }
 
                 this.getLikeProperty();
             },
+            // -----------------------------------------------------------------
             getHistoryProperty: function() {
                 let local = localStorage.getItem("visitedPropertyId");
                 let propertyID = JSON.parse(local) || [];
@@ -629,9 +404,50 @@
                             console.log(err);
                     });
             },
-            // --------------------------------------------------------------
-        }
-    }
+            // -----------------------------------------------------------------
+            registerSearchCondition: function(searchCondition, byPassCondition = false) {
+                if (Object.keys(this.searchCondition).length || byPassCondition) {
+                    // Get local storage
+                    let registeredSearchCondition = localStorage.getItem('searchCondition');
+                    registeredSearchCondition = _.takeRight(JSON.parse(registeredSearchCondition), 9);
+                    registeredSearchCondition.push(searchCondition);
 
+                    // Add search condition to local storage
+                    localStorage.setItem('searchCondition', JSON.stringify(registeredSearchCondition));
+
+                    // Show success alert
+                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
+                }
+            },
+            // -----------------------------------------------------------------
+            registerNewEmail: function(searchCondition) {
+                this.registerSearchCondition(searchCondition);
+
+                // Todo
+                // Register new email
+            },
+            // -----------------------------------------------------------------
+            registerCurrentFilter: function() {
+                // Define filter data
+                let filter = new FormData(filterForm);
+                filter.append('toJson', true);
+
+                // Do server request to get compiled filter data
+                let vm = this;
+                axios.post(root_url + '/compile-filter', filter)
+                    .then((result) => {
+                        vm.registerSearchCondition(result.data, true);
+                    }).catch((err) => {
+                         console.log(err);
+                    });
+            },
+            // -----------------------------------------------------------------
+        }
+        // ---------------------------------------------------------------------
+    }
+    // -------------------------------------------------------------------------
 </script>
 @endpush
