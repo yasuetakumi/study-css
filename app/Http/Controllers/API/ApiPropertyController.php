@@ -31,7 +31,9 @@ class ApiPropertyController extends Controller
         $selectedStations = array();
 
         // Base query
-        $query = Property::with(['properties_property_preferences', 'property_stations']);
+        $query = Property::with(['properties_property_preferences', 'cuisine', 'city', 'property_stations.station.station_line', 'property_stations' => function($query){
+            $query->orderBy('distance_from_station', 'ASC');
+        }]);
 
         // Filter city
         if(!empty($filter->city)){
