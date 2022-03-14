@@ -72,6 +72,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PropertyPlanSeeder::class);
 
+        //Customer Search Preference
+        $this->call(CustomerSkeletonPreferenceSeeder::class);
+        $this->call(CustomerSearchPreferenceSeeder::class);
+        $this->call(CustomerSearchPreferenceCitySeeder::class);
+        $this->call(CustomerSearchPreferencesPropertyPreferenceSeeder::class);
+        $this->call(CustomerSearchPreferencesPropertyTypeSeeder::class);
+        $this->call(CustomerSearchPreferencesFloorAboveSeeder::class);
+        $this->call(CustomerSearchPreferencesFloorUnderSeeder::class);
 
     }
 }
