@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CustomerSearchPreference extends Model
 {
     use SoftDeletes;
+    const ENABLE_EMAIL = 1;
+    const DISABLE_EMAIL = 0;
     protected $fillable = [
         'customer_email',
         'is_email_enabled',

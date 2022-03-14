@@ -158,7 +158,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
     Route::post('result', 'Frontend\PropertyController@filter')->name('property.filter');
     Route::post('compile-filter', 'Frontend\PropertyController@compileFilter');
-    Route::post('search-preference', 'Frontend\CustomerSearchPreference@store');
+    Route::post('search-preference', 'Frontend\CustomerSearchPreferenceController@store');
     // C3
     Route::get('map', function () {
         return 'map';
