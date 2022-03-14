@@ -38,6 +38,8 @@ class Property extends Model
         'city_id',
         'plan_id',
         'location',
+        'publication_status_id',
+        'publication_date',
         'surface_area',
         'rent_amount',
         'number_of_floors_under_ground',

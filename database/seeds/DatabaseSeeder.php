@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CitySeeder::class);
         $this->call(StationsLineSeeder::class);
         $this->call(StationSeeder::class);
+        $this->call(PropertyPublicationStatusesSeeder::class);
         $this->call(PropertySeeder::class);
         $this->call(ContactUsTypeSeeder::class);
         $this->call(CustomerInquirySeeder::class);
@@ -71,7 +72,5 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertyStationSeeder::class);
 
         $this->call(PropertyPlanSeeder::class);
-
-
     }
 }
