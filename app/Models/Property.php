@@ -25,6 +25,9 @@ class Property extends Model
     const FURNISHED = 0;
     const SKELETON = 1;
 
+    const FURNISHED_JP_LABEL = 'スケルトン物件';
+    const SKELETON_JP_LABEL = '居抜き物件';
+
     protected $appends = [
         'tsubo', 'man', 'man_per_tsubo'
     ];
@@ -33,7 +36,6 @@ class Property extends Model
         'postcode_id',
         'prefecture_id',
         'city_id',
-        'plan_id',
         'location',
         'surface_area',
         'rent_amount',

@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Frontend;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
+use App\Http\Controllers\API\ApiPropertyController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 // -----------------------------------------------------------------------------
+use App\Models\City;
+use App\Models\Station;
 use App\Models\Cuisine;
 use App\Models\Property;
 use App\Models\PropertyType;
@@ -44,21 +48,32 @@ class PropertyController extends Controller {
         $data['cuisines'] = Cuisine::select('id', 'label_jp')->orderBy('id')->get();
         $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['page_title'] = __('Property List');
+
+        // Default value for search condition
+        $searchCondition = [];
+        // If this function was called by clicking search button on C2 Page
+        // The search condition will contain at least created at, number of match property and url
+        if ($request->session()->has('searchCondition')) {
+            $searchCondition = session()->get('searchCondition');
+        }
+        $data['searchCondition'] = $searchCondition;
+
         return view('frontend.property.index', $data);
     }
     // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
-    public function filter(Request $request) {
+    public function filter(Request $request, $toJson = false) {
         // Filter data
         $queryString = $request->all();
 
         // Default data
         $withQuery = array();
+        $filter = collect([]);
 
         // Set route parameter
-        if (array_key_exists('filterType', $queryString)) {
-            $withQuery['filterType'] = $queryString['filterType'];
+        if(!empty($queryString['from_prefecture'])){
+            $withQuery['from_prefecture'] = $queryString['from_prefecture'];
         }
         if(!empty($queryString['surface_min'])){
             $withQuery['surface_min'] = $queryString['surface_min'];
@@ -119,8 +134,121 @@ class PropertyController extends Controller {
             $withQuery['station'] = $stringStation;
         }
 
+        // Compiled filter data need filter url to be store on local storage
+        // If this function was called from compile filter function
+        // Return filter url with query string
+        if ($toJson) return response()->json(route('property.index', $withQuery));
+
         // Redirect with param
-        return redirect()->route('property.index', $withQuery);
+        // If this function was called by clicking search button on C2
+        if (array_key_exists('search_button', $queryString)) {
+            // Compile the filter for search history
+            $filter = $this->compileFilter($request);
+            return redirect()->route('property.index', $withQuery)->with(['searchCondition' => $filter]);
+        }
+        // This function was called from C5
+        else return redirect()->route('property.index', $withQuery);
+    }
+    // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // Compile filter data
+    // -------------------------------------------------------------------------
+    public function compileFilter(Request $request) {
+        // FIlter and result data
+        $filter = $request->all();
+        $result = [];
+
+        // Compile filter data
+        if(!empty($filter['surface_min'])){
+            $surfaceMin = fromTsubo($filter['surface_min']);
+            $result['面積下限'] = "{$surfaceMin}坪";
+        }
+        if(!empty($filter['surface_max'])){
+            $surfaceMax = fromTsubo($filter['surface_max']);
+            $result['面積下限'] = "{$surfaceMax}坪";
+        }
+        if(!empty($filter['rent_amount_min'])){
+            $rentAmountMin = fromMan($filter['rent_amount_min']);
+            $result['賃料下限'] = "{$rentAmountMin}万円";
+        }
+        if(!empty($filter['rent_amount_max'])){
+            $rentAmountMax = fromMan($filter['rent_amount_max']);
+            $result['賃料上限'] = "{$rentAmountMax}万円";
+        }
+        if(!empty($filter['transfer_price_min'])){
+            $transferPriceMin = fromMan($filter['transfer_price_min']);
+            $result['譲渡額下限'] = "{$transferPriceMin}万円";
+        }
+        if(!empty($filter['transfer_price_max'])){
+            $transferPriceMax = fromMan($filter['transfer_price_max']);
+            $result['譲渡額上限'] = "{$transferPriceMax}万円";
+        }
+        if(isset($filter['name'])){
+            $result['フリーワード'] = $filter['name'];
+        }
+        if(!empty($filter['walking_distance'])){
+            $walkingDistance = WalkingDistanceFromStationOption::find($filter['walking_distance']);
+            $result['徒歩'] = $walkingDistance->label_jp;
+        }
+        if(isset($filter['floor_under'])){
+            $underGrounds = NumberOfFloorsUnderGround::find($filter['floor_under'])->pluck('label_jp')->join(', ');
+            $result['階数(地下)'] = $underGrounds;
+        }
+        if(isset($filter['floor_above'])){
+            $aboveGrounds = NumberOfFloorsAboveGround::find($filter['floor_above'])->pluck('label_jp')->join(', ');
+            $result['階数(地下)'] = $aboveGrounds;
+        }
+        if(isset($filter['property_preference'])){
+            $preferences = PropertyPreference::find($filter['property_preference'])->pluck('label_jp')->join(', ');
+            $result['こだわり条件'] = $preferences;
+        }
+        if(isset($filter['property_type'])){
+            $types = PropertyType::find($filter['property_type'])->pluck('label_jp')->join(', ');
+            $result['飲食店の種類'] = $types;
+        }
+
+        $skeletonOrFurnished = collect();
+        if(isset($filter['skeleton'])){
+            $skeletonOrFurnished->push(Property::SKELETON_JP_LABEL);
+        }
+        if(isset($filter['furnished'])){
+            $skeletonOrFurnished->push(Property::FURNISHED_JP_LABEL);
+        }
+        if (count($skeletonOrFurnished)) {
+            $result['スケルトン物件・居抜き物件'] = $skeletonOrFurnished->join(', ');
+        }
+
+        if(isset($filter['cuisine'])){
+            $cuisines = Cuisine::find($filter['cuisine'])->pluck('label_jp')->join(', ');
+            $result['料理'] = $cuisines;
+        }
+        if(!empty($filter['city'])){
+            $citiesName = City::find($filter['city'])->pluck('display_name')->join(', ');
+            $result['市'] = $citiesName;
+        }
+        if(!empty($filter['station'])){
+            $stationsName = Station::find($filter['station'])->pluck('display_name')->join(', ');
+            $result['駅'] = $stationsName;
+        }
+
+        // Created at
+        $result['created_at'] = Carbon::now()->format('Y/m/d h:i:s');
+
+        // Get number of match property related to the filter
+        $request->merge(['count' => true]);
+        $response = app(ApiPropertyController::class)->getPropertyByFilter($request);
+        $result['number_of_match_property'] = $response->getData()->data->count ?? 0;
+
+        // Get filter url with query string
+        $response = $this->filter($request, true);
+        $result['url'] = $response->getData();
+
+        // Return result
+        // This function was called from filter function (search button on C2 was clicked)
+        if (!isset($request['toJson'])) return $result;
+        // This function was called from axios (current condition on form filter)
+        else return response()->json($result);
     }
     // -------------------------------------------------------------------------
 }

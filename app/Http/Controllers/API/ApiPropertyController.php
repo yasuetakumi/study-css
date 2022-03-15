@@ -138,10 +138,9 @@ class ApiPropertyController extends Controller
         $count = $query->count();
         $response = $query->get();
 
-        // If there is no city or station provided
+        // If there is no city and station provided and it comes from C5 Page
         // Set property to empty collection
-        if ($filter->filterType == 'city' && empty($filter->city)
-            || $filter->filterType == 'station' && empty($filter->station)) {
+        if (empty($filter->city) && empty($filter->station) && !empty($filter->from_prefecture)) {
             $count = 0;
             $response = collect();
         }
