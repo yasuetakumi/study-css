@@ -6,4 +6,8 @@
     <p>No data</p>
 </div>
 
-<property-list v-else v-for="pd in property_data" :property="pd" :key=pd.id></property-list>
+<div v-else v-for="pd in property_data" :key=pd.id>
+    <property-list :property="pd">
+        <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+    </property-list>
+</div>
