@@ -28,6 +28,8 @@
 @endpush
 
 @push('vue-scripts')
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
 <script>
     // -------------------------------------------------------------------------
     // Vuex store - Centralized data
