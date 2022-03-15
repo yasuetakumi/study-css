@@ -39,6 +39,7 @@ Route::prefix('v1')->group(function () {
 
     // Get Grand total Estimation
     Route::get('/plans/getGrandTotalEstimation/{plan}/{tsubo}/{design}/{kitchen}/{designCat?}','API\ApiEstimateController@getGrandTotalEstimation');
+    Route::post('/plans/getEstimationByPlanAndCategory', 'API\ApiEstimateController@getEstimationByPlanAndCategory');
 
     //Get Property
     Route::post('property/getProperties', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
