@@ -6,6 +6,4 @@
     <p>No data</p>
 </div>
 
-<div v-else v-for="pd in property_data" :key=pd.id>
-    @include('frontend._components.property_list')
-</div>
+<property-list v-else v-for="pd in property_data" :property="pd" :key=pd.id></property-list>
