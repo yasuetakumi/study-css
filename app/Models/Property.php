@@ -36,7 +36,6 @@ class Property extends Model
         'postcode_id',
         'prefecture_id',
         'city_id',
-        'plan_id',
         'location',
         'surface_area',
         'rent_amount',

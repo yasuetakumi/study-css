@@ -43,4 +43,16 @@ class ApiEstimateController extends Controller
           ]);
         }
     }
+    public function getEstimationByPlanAndCategory(Request $request){
+        $data = EstimationIndex::where('plan_id', $request->plan_id)
+                ->where('design_category_id', $request->design_category_id)
+                ->where('tsubo_area', toTsubo($request->surface_area))
+                ->whereIn('design_style_id', $request->design_style_id)
+                ->get();
+        // $grandTotal = array();
+        // foreach($data as $d){
+        //     array_push($grandTotal,floor($d->grand_total / 10000));
+        // }
+        return response()->json($data);
+    }
 }
