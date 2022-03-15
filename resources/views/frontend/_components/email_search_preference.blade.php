@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" @click="$emit('register')">Register</button>
+                    <button type="button" class="btn btn-primary" @click="$emit('register')" :disabled="value == null ? true : false">Register</button>
                 </div>
             </div>
         </div>

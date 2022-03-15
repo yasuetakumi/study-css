@@ -34,18 +34,18 @@
                                 <div class="row mb-3">
                                     <div class="col-8">
                                         <p class="mb-0">詳しく条件：
-                                            <span v-if="sc.市">市@{{sc.市}} - </span>
-                                            <span v-if="sc.面積下限">面積下限@{{sc.面積下限}} - </span>
-                                            <span v-if="sc.面積上限">面積上限@{{sc.面積上限}} - </span>
-                                            <span v-if="sc.賃料下限">賃料下限@{{sc.賃料下限}} - </span>
-                                            <span v-if="sc.賃料上限">賃料上限@{{sc.賃料上限}} - </span>
-                                            <span v-if="sc.徒歩">徒歩@{{sc.徒歩}} - </span>
-                                            <span v-if="sc.譲渡額下限">譲渡額下限@{{sc.譲渡額下限}} - </span>
-                                            <span v-if="sc.譲渡額上限">譲渡額上限@{{sc.譲渡額上限}} - </span>
-                                            <span v-if="sc.階数_地上">階数(地上)@{{sc.階数_地上}} - </span>
-                                            <span v-if="sc.階数_地下">階数(地下)@{{sc.階数_地下}} - </span>
-                                            <span v-if="sc.こだわり条件">こだわり条件@{{sc.こだわり条件}} - </span>
-                                            <span v-if="sc.スケルトン物件_居抜き物件">スケルトン物件・居抜き物件@{{sc.スケルトン物件_居抜き物件}} - </span>
+                                            <span v-if="sc.市"><span style="color: rgb(243, 78, 5)">市</span>@{{sc.市}} - </span>
+                                            <span v-if="sc.面積下限"><span style="color: rgb(243, 78, 5)">面積下限 </span>@{{sc.面積下限}} - </span>
+                                            <span v-if="sc.面積上限"><span style="color: rgb(243, 78, 5)">面積上限 </span>@{{sc.面積上限}} - </span>
+                                            <span v-if="sc.賃料下限"><span style="color: rgb(243, 78, 5)">賃料下限 </span>@{{sc.賃料下限}} - </span>
+                                            <span v-if="sc.賃料上限"><span style="color: rgb(243, 78, 5)">賃料上限 </span>@{{sc.賃料上限}} - </span>
+                                            <span v-if="sc.徒歩"><span style="color: rgb(243, 78, 5)">徒歩 </span>@{{sc.徒歩}} - </span>
+                                            <span v-if="sc.譲渡額下限"><span style="color: rgb(243, 78, 5)">譲渡額下限 </span>@{{sc.譲渡額下限}} - </span>
+                                            <span v-if="sc.譲渡額上限"><span style="color: rgb(243, 78, 5)">譲渡額上限 </span>@{{sc.譲渡額上限}} - </span>
+                                            <span v-if="sc.階数_地上"><span style="color: rgb(243, 78, 5)">階数(地上) </span>@{{sc.階数_地上}} - </span>
+                                            <span v-if="sc.階数_地下"><span style="color: rgb(243, 78, 5)">階数(地下) </span>@{{sc.階数_地下}} - </span>
+                                            <span v-if="sc.こだわり条件"><span style="color: rgb(243, 78, 5)">こだわり条件 </span>@{{sc.こだわり条件}} - </span>
+                                            <span v-if="sc.スケルトン物件_居抜き物件"><span style="color: rgb(243, 78, 5)"> スケルトン物件・居抜き物件 </span> @{{sc.スケルトン物件_居抜き物件}} - </span>
                                         </p>
                                     </div>
                                     <div class="col-4">

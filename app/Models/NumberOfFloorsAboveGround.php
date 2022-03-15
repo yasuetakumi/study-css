@@ -13,4 +13,9 @@ class NumberOfFloorsAboveGround extends Model
         'label_en',
         'label_jp'
     ];
+
+    public function customer_search_preferences()
+    {
+        return $this->belongsToMany(CustomerSearchPreference::class, 'customer_search_preferences_floor_aboves', 'floor_above_id');
+    }
 }

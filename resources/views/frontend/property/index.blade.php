@@ -462,7 +462,7 @@
                 console.log(data);
                 axios.post(root_url + '/search-preference', data)
                     .then((result) => {
-                        console.log(result);
+                        console.log(result.data);
                     }).catch((err) => {
                         console.log(err);
                     })
