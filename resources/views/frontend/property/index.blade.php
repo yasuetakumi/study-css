@@ -30,6 +30,8 @@
 @push('vue-scripts')
 @include('frontend._components.property_list')
 @include('frontend._components.button_favorite')
+@include('frontend._components.property_related_list')
+@include('frontend._components.search_condition_list')
 <script>
     // -------------------------------------------------------------------------
     // Vuex store - Centralized data
@@ -108,7 +110,8 @@
                         cuisines: [],
                         cities: [],
                         stations: [],
-                    }
+                    },
+                    search_condition: false,
                 },
                 // -------------------------------------------------------------
             };
