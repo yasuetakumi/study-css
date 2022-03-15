@@ -12,6 +12,8 @@
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
 
+        <search-condition-list></search-condition-list>
+
     </div>
 
     <div class="col-md-8">

@@ -9,7 +9,7 @@
         </button>
         <!-- Modal -->
         <div class="modal fade" id="modalSearchCondition" tabindex="-1" role="dialog" aria-labelledby="modalSearchConditionTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document" v-for="(filter, index) in items.filter" :key="filter.id">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document" v-for="(sc, index) in items.search_condition" :key="index">
                 <div class="modal-content">
                     <div class="d-flex align-items-center p-2 border-bottom">
                         <div class="d-flex flex-grow-1 justify-content-between">
@@ -24,14 +24,27 @@
                         <div class="position-relative bg-white">
                             <div class="position-absolute" style="top: 0px; left: 0px;">
                                 <div class="px-2 py-1 bg-primary rounded-sm">
-                                    <span>1</span>
+                                    <span>@{{index + 1}}</span>
                                 </div>
                             </div>
-                            <p class="text-right">登録日:$value</p>
+                            <p class="text-right">登録日:@{{sc.created_at}}</p>
                             <div class="pl-5">
                                 <div class="row mb-3">
                                     <div class="col-8">
-                                        <p class="mb-0">詳しく条件：</p>
+                                        <p class="mb-0">詳しく条件：
+                                            <span v-if="sc.市">市@{{sc.市}} - </span>
+                                            <span v-if="sc.面積下限">面積下限@{{sc.面積下限}} - </span>
+                                            <span v-if="sc.面積上限">面積上限@{{sc.面積上限}} - </span>
+                                            <span v-if="sc.賃料下限">賃料下限@{{sc.賃料下限}} - </span>
+                                            <span v-if="sc.賃料上限">賃料上限@{{sc.賃料上限}} - </span>
+                                            <span v-if="sc.徒歩">徒歩@{{sc.徒歩}} - </span>
+                                            <span v-if="sc.譲渡額下限">譲渡額下限@{{sc.譲渡額下限}} - </span>
+                                            <span v-if="sc.譲渡額上限">譲渡額上限@{{sc.譲渡額上限}} - </span>
+                                            <span v-if="sc.階数_地上">階数(地上)@{{sc.階数_地上}} - </span>
+                                            <span v-if="sc.階数_地下">階数(地下)@{{sc.階数_地下}} - </span>
+                                            <span v-if="sc.こだわり条件">こだわり条件@{{sc.こだわり条件}} - </span>
+                                            <span v-if="sc.スケルトン物件_居抜き物件">スケルトン物件・居抜き物件@{{sc.スケルトン物件_居抜き物件}} - </span>
+                                        </p>
                                     </div>
                                     <div class="col-4">
                                         <!-- Button Mail-->
@@ -46,34 +59,35 @@
                                     </div>
                                     <div class="col-4">
                                         <!-- Total of Matches Property-->
-                                        <p class="text-primary text-lg mb-0">81 <span class="text-xs">$value件がマッチ</span></p>
+                                        <p class="text-primary text-lg mb-0">@{{sc.number_of_match_property}}<span class="text-xs">件がマッチ</span></p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-8 mt-1">
-                                        <textarea class="form-control w-100" name="comment" v-model="items.comment" id="" cols="30" rows="5" style="height: 50px;" :readonly="!items.controlTextArea"></textarea>
+                                        <textarea class="form-control w-100" name="comment" :id="'comment'+index" cols="30" rows="5" readonly>@{{sc.comment ? sc.comment : ''}}</textarea>
                                         <div class="d-flex justify-content-end">
                                             <div class="text-right">
-                                                <button type="button" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleEditOrSave">
-                                                    @{{titleEditOrSave}}
-                                                </button>
+                                                <input :id="'btnEdit' + index" value="" type="button" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleEditOrSave(index)">
+                                                    {{-- @{{titleEditOrSave(index) ? '編集' : '保存'}} --}}
+
+
                                             </div>
                                             <!-- Cancel Button-->
-                                            <div class="text-right ml-2" v-if="showCancelButton">
-                                                <button type="button" class="px-2 py-1 btn btn-secondary rounded-0">
-                                                    キャンセル
-                                                </button>
+                                            <div class="text-right ml-2">
+                                                <input :id="'btnCancel'+index" type="button" value="キャンセル" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleCancel(index)">
+
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <!-- Link to C2 with Filter -->
-                                        <button type="button" class="shadow-md w-100 btn btn-primary text-xs ">
+                                        <a :href="sc.url" class="shadow-md w-100 btn btn-primary text-xs ">
                                             <span><i class="fas fa-search"></i>マッチした一覧を表示</span>
-                                        </button>
+                                        </a>
                                         <!-- Delete Button -->
-                                        <button type="button" class="shadow-md w-100 btn btn-danger text-xs mt-3" @click="deleteSearchCondition(filter.id)">
-                                            <span><i class="fas fa-search"></i>この条件削除する</span>
+                                        <button type="button" class="shadow-md w-100 btn btn-danger text-xs mt-3" @click="deleteSearchCondition(index)">
+                                            <span><i class="fas fa-trash"></i>この条件削除する</span>
                                         </button>
                                     </div>
                                 </div>
@@ -81,7 +95,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                        <button type="button" id="btn-close" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
                     </div>
                 </div>
             </div>
@@ -105,20 +119,7 @@
                 items: {
                     controlTextArea: false,
                     comment: null,
-                    filter: [
-                        {
-                            id: 1,
-                            value: 'a',
-                        },
-                        {
-                            id: 2,
-                            value: 'b',
-                        },
-                        {
-                            id: 3,
-                            value: 'c',
-                        },
-                    ]
+                    search_condition: null,
                 }
             }
             return data;
@@ -126,58 +127,84 @@
 
         mounted: function(){
             this.getLocalStorage();
+            this.$nextTick(() => {
+                for(let i=0; i < this.items.search_condition.length; i++){
+                    this.titleEditOrSave(i);
+                    this.showCancelButton(i);
+                }
+            });
         },
 
         // Computed properties
         computed: {
-            titleEditOrSave: function(){
-                if(this.items.controlTextArea == false){
-                    return '編集'; //edit
-                } else {
-                    return '保存'; //save
-                }
-            },
-            showCancelButton: function(){
-                if(this.items.controlTextArea == true){
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+
         },
         methods: {
-            handleEditOrSave: function(){
-                if(this.items.controlTextArea == false){
-                    this.items.controlTextArea = true;
+            handleEditOrSave: function(index){
+                let currentTextArea = document.getElementById("comment"+index);
+                if(currentTextArea.hasAttribute("readonly")){
+                    currentTextArea.removeAttribute("readonly");
+                    document.getElementById("btnEdit"+index).setAttribute("value", "保存");
+                    document.getElementById("btnCancel"+index).classList.add("d-block");
 
                 } else {
-                    this.items.controlTextArea = false;
-                    localStorage.setItem("comment", this.items.comment);
-                    localStorage.setItem('searchConditions', JSON.stringify(this.items.filter));
+                    let local = localStorage.getItem('searchCondition');
+                    conditions = JSON.parse(local) || [];
+                    const newData = Object.assign(conditions[index], {"comment" : currentTextArea.value})
+                    conditions[index] = newData;
+                    localStorage.setItem('searchCondition', JSON.stringify(conditions));
+                    currentTextArea.setAttribute("readonly", "true");
+                    document.getElementById("btnEdit"+index).setAttribute("value", "編集");
+                    document.getElementById("btnCancel"+index).classList.add("d-none");
                 }
+                this.getLocalStorage();
+            },
+
+            handleCancel: function(index){
+                let currentTextArea = document.getElementById("comment"+index);
+                currentTextArea.setAttribute("readonly", "true");
+
             },
             getLocalStorage: function(){
-                let local = localStorage.getItem("comment");
+                let local = localStorage.getItem("searchCondition");
                 if(local != null){
-                    this.items.comment = local;
+                    this.items.search_condition = JSON.parse(local);
                 }
             },
-            deleteSearchCondition: function(id){
-                console.log(id);
+            deleteSearchCondition: function(index){
+                console.log(index);
                 var conditions = [];
-                let local = localStorage.getItem('searchConditions');
+                let local = localStorage.getItem('searchCondition');
                 conditions = JSON.parse(local) || [];
                 console.log(conditions);
                 if(conditions.length > 0){
-                    var values = conditions.map(object => object.id);
-                    console.log(values);
-                    let index = values.indexOf(id);
                     conditions.splice(index, 1);
-                    localStorage.setItem('searchConditions', JSON.stringify(conditions));
+                    localStorage.setItem('searchCondition', JSON.stringify(conditions));
                     let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
                     this.$toasted.show( msg, {
                         type: 'success'
                     });
+                }
+                this.getLocalStorage();
+            },
+            titleEditOrSave: function(index){
+                let currentTextArea = document.getElementById("comment"+index);
+                if(currentTextArea.hasAttribute("readonly")){
+                    document.getElementById("btnEdit"+index).setAttribute("value", "編集"); //edit
+                    // return true;
+                } else {
+                    document.getElementById("btnEdit"+index).setAttribute("value", "保存"); //save
+                    // return false;
+                }
+            },
+            showCancelButton: function(index){
+                let currentTextArea = document.getElementById("comment"+index);
+                if( currentTextArea.hasAttribute("readonly") ){
+                    document.getElementById("btnCancel"+index).classList.add("d-none");
+                    // return false;
+                } else {List
+                    document.getElementById("btnCancel"+index).classList.add("d-block");
+                    // return true;
                 }
             }
 
