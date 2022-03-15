@@ -27,9 +27,13 @@ class AddPlanIdToPropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('properties', function (Blueprint $table) {
-            $table->dropForeign(['plan_id']);
-            $table->dropColumn('plan_id');
-        });
+        if (Schema::hasColumn('properties', 'plan_id')){
+            Schema::table('properties', function (Blueprint $table)
+            {
+                $table->dropForeign(['plan_id']);
+                $table->dropColumn('plan_id');
+            });
+        }
+
     }
 }
