@@ -1,7 +1,7 @@
 <script type="text/x-template" id="search-condition-list-tpl">
     <div>
         {{-- Button Trigger Search Condition --}}
-        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" data-target="#modalSearchCondition">
+        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" data-target="#modalSearchCondition" @click="getLocalStorage">
             <span>
                 <i class="fas fa-search"></i>
                 Search Condition
