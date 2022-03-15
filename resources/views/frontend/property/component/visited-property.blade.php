@@ -3,11 +3,9 @@
     <h5 class="mb-3">
         条件で絞る
     </h5>
-
-    <property-list v-if="historyProperty" v-for="pd in historyProperty"
-        :property="pd" :key=pd.id>
-    </property-list>
-
+    <div v-if="historyProperty" v-for="pd in historyProperty" :key="pd.id">
+        <property-related-list :property="pd"></property-related-list>
+    </div>
     <div v-else>
         <p>No Property Visited yet</p>
     </div>
