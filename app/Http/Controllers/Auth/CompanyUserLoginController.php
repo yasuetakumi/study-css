@@ -68,12 +68,19 @@ class CompanyUserLoginController extends Controller
     protected function login(Request $request)
     {
         if (auth()->guard('user')->attempt(['email' => $request->email, 'password' => $request->password ])) {
-            $this->saveLog('User login succeed', 'Email = ' . $request->email . ', User Name = ' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
+            //check if company user status is active
+            if(auth()->guard('user')->user()->company->status == 'active'){
+                $this->saveLog('User login succeed', 'Email = ' . $request->email . ', User Name = ' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
 
-            // Logging gout admin user, now user will be login as company user
-            Auth::guard('web')->logout();
+                // Logging gout admin user, now user will be login as company user
+                Auth::guard('web')->logout();
 
-            return redirect()->route('company.property.index');
+                return redirect()->route('company.property.index');
+            } else {
+                Auth::guard('user')->logout();
+                $this->saveLog('User login fail', 'Email = ' . $request->email . ', Password = ' . $request->password);
+                return back()->withErrors(['status' => 'Your belong company is not active yet']);
+            }
         }
         $this->saveLog('User login fail', 'Email = ' . $request->email . ', Password = ' . $request->password);
         return back()->withErrors(['email' => 'Email or password are wrong.']);
