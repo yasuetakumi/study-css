@@ -269,6 +269,7 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['form_action'] = route('company.property.store');
         }
+        $data['property_related'] = '';
         $data['page_type'] = 'create';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         //$data['users'] = User::pluck('display_name', 'id')->all();
