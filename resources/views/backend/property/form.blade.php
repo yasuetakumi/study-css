@@ -419,8 +419,7 @@
         },
 
         created: function(){
-            // this.getDesignByCategory(1);
-            this.getPlanByCategory(1);
+            this.getDesignByCategory(1);
             this.getLikeProperty();
 
         },
@@ -509,21 +508,14 @@
                 this.items.selected_dc = event.target.value
                 this.getDesignByCategory(designCat);
 
-                this.getPlanByCategory(designCat)
-
                 this.estimationIndex();
 
                 this.items.loading = false;
             },
             getDesignByCategory: async function(designCat){
-                let response = await fetch(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
-                let data = await response.json();
+                let response = await axios.get(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
+                let data = await response.data;
                 this.items.list_design_style = data;
-            },
-            getPlanByCategory: async function(designCat){
-                let response2 = await fetch(root_url + '/api/v1/plans/getPlansByCategory/' + designCat);
-                let data2 = await response2.json();
-                this.items.list_plans = data2;
             },
             changePlanBySurfaceArea: function(){
                 this.getPlanBySurfaceCategory(1);
