@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CustomerSearchPreference extends Model
 {
     use SoftDeletes;
+    const ENABLE_EMAIL = 1;
+    const DISABLE_EMAIL = 0;
     protected $fillable = [
         'customer_email',
         'is_email_enabled',
@@ -59,4 +61,30 @@ class CustomerSearchPreference extends Model
     {
         return $this->belongsTo(CustomerSkeletonPreference::class, 'skeleton');
     }
+
+    public function cities()
+    {
+        return $this->belongsToMany(City::class, 'customer_search_preference_cities', 'customer_search_preference_id');
+    }
+
+    public function abovegrounds()
+    {
+        return $this->belongsToMany(NumberOfFloorsAboveGround::class, 'customer_search_preferences_floors_above', 'customer_search_preference_id');
+    }
+
+    public function undergrounds()
+    {
+        return $this->belongsToMany(NumberOfFloorsUnderGround::class, 'customer_search_preferences_floor_unders', 'customer_search_preference_id');
+    }
+
+    public function property_preferences()
+    {
+        return $this->belongsToMany(PropertyPreference::class, 'customer_search_preferences_property_preferences', 'customer_search_preference_id');
+    }
+
+    public function property_types()
+    {
+        return $this->belongsToMany(PropertyType::class, 'customer_search_preferences_property_types', 'customer_search_preference_id');
+    }
+
 }

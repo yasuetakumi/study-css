@@ -1,7 +1,7 @@
 <script type="text/x-template" id="search-condition-list-tpl">
     <div>
         {{-- Button Trigger Search Condition --}}
-        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" data-target="#modalSearchCondition">
+        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" data-target="#modalSearchCondition" @click="getLocalStorage">
             <span>
                 <i class="fas fa-search"></i>
                 Search Condition
@@ -9,17 +9,19 @@
         </button>
         <!-- Modal -->
         <div class="modal fade" id="modalSearchCondition" tabindex="-1" role="dialog" aria-labelledby="modalSearchConditionTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document" v-for="(sc, index) in items.search_condition" :key="index">
-                <div class="modal-content">
-                    <div class="d-flex align-items-center p-2 border-bottom">
-                        <div class="d-flex flex-grow-1 justify-content-between">
-                            <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
-                            <p class="mb-0">$value件の保存条件があります/最大１０件</p>
-                        </div>
-                        <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
-                            <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
-                        </a>
+            <div class="modal-lg bg-white mx-auto border rounded-0 shadow-sm" role="document">
+                <div class="d-flex align-items-center p-2 border-bottom ">
+                    <div class="d-flex flex-grow-1 justify-content-between">
+                        <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
+                        <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
                     </div>
+                    <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
+                        <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-dialog modal-dialog-scrollable modal-lg mt-0" role="document" v-for="(sc, index) in items.search_condition" :key="index">
+                <div class="modal-content rounded-0">
                     <div class="modal-body">
                         <div class="position-relative bg-white">
                             <div class="position-absolute" style="top: 0px; left: 0px;">
@@ -32,23 +34,23 @@
                                 <div class="row mb-3">
                                     <div class="col-8">
                                         <p class="mb-0">詳しく条件：
-                                            <span v-if="sc.市">市@{{sc.市}} - </span>
-                                            <span v-if="sc.面積下限">面積下限@{{sc.面積下限}} - </span>
-                                            <span v-if="sc.面積上限">面積上限@{{sc.面積上限}} - </span>
-                                            <span v-if="sc.賃料下限">賃料下限@{{sc.賃料下限}} - </span>
-                                            <span v-if="sc.賃料上限">賃料上限@{{sc.賃料上限}} - </span>
-                                            <span v-if="sc.徒歩">徒歩@{{sc.徒歩}} - </span>
-                                            <span v-if="sc.譲渡額下限">譲渡額下限@{{sc.譲渡額下限}} - </span>
-                                            <span v-if="sc.譲渡額上限">譲渡額上限@{{sc.譲渡額上限}} - </span>
-                                            <span v-if="sc.階数_地上">階数(地上)@{{sc.階数_地上}} - </span>
-                                            <span v-if="sc.階数_地下">階数(地下)@{{sc.階数_地下}} - </span>
-                                            <span v-if="sc.こだわり条件">こだわり条件@{{sc.こだわり条件}} - </span>
-                                            <span v-if="sc.スケルトン物件_居抜き物件">スケルトン物件・居抜き物件@{{sc.スケルトン物件_居抜き物件}} - </span>
+                                            <span v-if="sc.市"><span style="color: rgb(243, 78, 5)">市</span>@{{sc.市}} - </span>
+                                            <span v-if="sc.面積下限"><span style="color: rgb(243, 78, 5)">面積下限 </span>@{{sc.面積下限}} - </span>
+                                            <span v-if="sc.面積上限"><span style="color: rgb(243, 78, 5)">面積上限 </span>@{{sc.面積上限}} - </span>
+                                            <span v-if="sc.賃料下限"><span style="color: rgb(243, 78, 5)">賃料下限 </span>@{{sc.賃料下限}} - </span>
+                                            <span v-if="sc.賃料上限"><span style="color: rgb(243, 78, 5)">賃料上限 </span>@{{sc.賃料上限}} - </span>
+                                            <span v-if="sc.徒歩"><span style="color: rgb(243, 78, 5)">徒歩 </span>@{{sc.徒歩}} - </span>
+                                            <span v-if="sc.譲渡額下限"><span style="color: rgb(243, 78, 5)">譲渡額下限 </span>@{{sc.譲渡額下限}} - </span>
+                                            <span v-if="sc.譲渡額上限"><span style="color: rgb(243, 78, 5)">譲渡額上限 </span>@{{sc.譲渡額上限}} - </span>
+                                            <span v-if="sc.階数_地上"><span style="color: rgb(243, 78, 5)">階数(地上) </span>@{{sc.階数_地上}} - </span>
+                                            <span v-if="sc.階数_地下"><span style="color: rgb(243, 78, 5)">階数(地下) </span>@{{sc.階数_地下}} - </span>
+                                            <span v-if="sc.こだわり条件"><span style="color: rgb(243, 78, 5)">こだわり条件 </span>@{{sc.こだわり条件}} - </span>
+                                            <span v-if="sc.スケルトン物件_居抜き物件"><span style="color: rgb(243, 78, 5)"> スケルトン物件・居抜き物件 </span> @{{sc.スケルトン物件_居抜き物件}} - </span>
                                         </p>
                                     </div>
                                     <div class="col-4">
                                         <!-- Button Mail-->
-                                        <button type="button" class="shadow-md w-100 btn btn-secondary text-xs">
+                                        <button type="button" class="shadow-md w-100 btn btn-secondary text-xs" data-toggle="modal" data-target="#emailPreferenceModal" @click="getIndexSearchPref(sc)">
                                             <span><i class="fas fa-envelope"></i>新規メールを受け取る</span>
                                         </button>
                                     </div>
@@ -128,16 +130,23 @@
         mounted: function(){
             this.getLocalStorage();
             this.$nextTick(() => {
-                for(let i=0; i < this.items.search_condition.length; i++){
-                    this.titleEditOrSave(i);
-                    this.showCancelButton(i);
-                }
+                if(this.items.search_condition && this.items.search_condition.length > 0)
+                    for(let i=0; i < this.items.search_condition.length; i++){
+                        this.titleEditOrSave(i);
+                        this.showCancelButton(i);
+                    }
             });
         },
 
         // Computed properties
         computed: {
-
+            totalSavedSearchCondition: function(){
+                let savedCondition = [];
+                if(this.items.search_condition && this.items.search_condition.length > 0){
+                    savedCondition = this.items.search_condition;
+                    return savedCondition.length;
+                }
+            }
         },
         methods: {
             handleEditOrSave: function(index){
@@ -206,6 +215,9 @@
                     document.getElementById("btnCancel"+index).classList.add("d-block");
                     // return true;
                 }
+            },
+            getIndexSearchPref: function(sc){
+                this.$emit("getindex", sc)
             }
 
         }
