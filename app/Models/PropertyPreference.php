@@ -15,4 +15,9 @@ class PropertyPreference extends Model
     {
         return $this->belongsToMany(Property::class, 'properties_property_preferences', 'property_preferences_id');
     }
+
+    public function customer_search_preferences()
+    {
+        return $this->belongsToMany(CustomerSearchPreference::class, 'customer_search_preferences_property_preferences', 'property_preference_id');
+    }
 }

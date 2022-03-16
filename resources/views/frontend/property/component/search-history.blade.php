@@ -39,7 +39,7 @@
 
             <!-- Start - Add Search Condition to Local Storage -->
             <div class="col-7">
-                <button @click="registerNewEmail(searchCondition)" :disabled="!Object.keys(searchCondition).length"
+                <button data-toggle="modal" data-target="#emailPreferenceModal"  @click="registerNewEmail(searchCondition)" :disabled="!Object.keys(searchCondition).length"
                     class="btn btn-dark py-2 px-4" style="width: inherit">
                     <span class="fa fa-envelope"></span>
                     新規メールを登録

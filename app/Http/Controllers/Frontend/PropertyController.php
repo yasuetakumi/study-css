@@ -166,7 +166,7 @@ class PropertyController extends Controller {
         }
         if(!empty($filter['surface_max'])){
             $surfaceMax = fromTsubo($filter['surface_max']);
-            $result['面積下限'] = "{$surfaceMax}坪";
+            $result['面積上限'] = "{$surfaceMax}坪";
         }
         if(!empty($filter['rent_amount_min'])){
             $rentAmountMin = fromMan($filter['rent_amount_min']);
@@ -193,7 +193,7 @@ class PropertyController extends Controller {
         }
         if(isset($filter['floor_under'])){
             $underGrounds = NumberOfFloorsUnderGround::find($filter['floor_under'])->pluck('label_jp')->join(', ');
-            $result['階数_地下'] = $underGrounds;
+            $result['階数_地上'] = $underGrounds;
         }
         if(isset($filter['floor_above'])){
             $aboveGrounds = NumberOfFloorsAboveGround::find($filter['floor_above'])->pluck('label_jp')->join(', ');
