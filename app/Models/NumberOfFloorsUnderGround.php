@@ -13,4 +13,9 @@ class NumberOfFloorsUnderGround extends Model
         'label_jp'
     ];
 
+    public function customer_search_preferences()
+    {
+        return $this->belongsToMany(CustomerSearchPreference::class, 'customer_search_preferences_floor_unders', 'floor_under_id');
+    }
+
 }
