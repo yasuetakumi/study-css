@@ -24,13 +24,13 @@ class CustomerSearchPreferenceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $cities = array();
-        $property_preferences = array();
-        $property_types = array();
-        $undergrounds = array();
-        $abovegrounds = array();
-        $skeleton = array();
-        $walking_distance = array();
+        $cities = collect();
+        $property_preferences = collect();
+        $property_types = collect();
+        $undergrounds = collect();
+        $abovegrounds = collect();
+        $skeleton = '';
+        $walking_distance = collect();
         $response = '';
         //get cities
         if(isset($data['市'])){
@@ -65,8 +65,15 @@ class CustomerSearchPreferenceController extends Controller
         //get skeleton
         if(isset($data['スケルトン物件_居抜き物件'])){
             $arr_data = explode(", ", $data['スケルトン物件_居抜き物件']);
-            $skeleton = CustomerSkeletonPreference::whereIn('label_jp', $arr_data)->first();
+            $csp = CustomerSkeletonPreference::where('label_jp', $arr_data)->get();
+            return $arr_data;
+            if($csp->count() == 2){
+                $skeleton = 3;
+            } else {
+                $skeleton = $csp[0]->id;
+            }
         }
+        //get walking distance
         if(isset($data['徒歩'])){
             $walking_distance = WalkingDistanceFromStationOption::where('label_jp', $data['徒歩'])->first();
         }
@@ -80,11 +87,11 @@ class CustomerSearchPreferenceController extends Controller
         $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : '';
         $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : '';
         $customer->freetext = isset($data['フリーワード']) ?? '';
-        $customer->walking_distance = $walking_distance->id ?? '';
+        $customer->walking_distance = $walking_distance->count() > 0 ? $walking_distance->id : null ;
         $customer->transfer_price_min = isset($data['譲渡額下限'] ) ? (int) filter_var($data['譲渡額下限'], FILTER_SANITIZE_NUMBER_INT) : '';
         $customer->transfer_price_max = isset($data['譲渡額上限']) ? (int) filter_var($data['譲渡額上限'], FILTER_SANITIZE_NUMBER_INT) : '';
 
-        $customer->skeleton_id = 1;
+        $customer->skeleton_id = !empty($skeleton) ? $skeleton : '';
         $customer->save();
         if($customer){
             $response = 'succes';

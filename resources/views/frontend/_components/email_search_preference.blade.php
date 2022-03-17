@@ -11,7 +11,8 @@
                 <div class="modal-body">
                     <div class="d-flex flex-column">
                         <label for="emailPreferences">メールアドレス：</label>
-                        <input type="email" class="form-control" :value="value" @input="$emit('input', $event.target.value)" id="emailPreferences" placeholder="Enter email" aria-describedby="emailHelp">
+                        <input type="email" :class="validateEmail && value != null ? 'is-invalid' : '' " class="form-control" :value="value" @input="$emit('input', $event.target.value)" id="emailPreferences" placeholder="Enter email" aria-describedby="emailHelp">
+                        <span v-if="validateEmail && value != null" id="emailHelp" class="error invalid-feedback">Please enter valid email address</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -50,21 +51,21 @@
 
         // Computed properties
         computed: {
-            emailPeference: {
-                get(){
-                    return this.value;
-                },
-                set(val) {
-                    this.$emit('input', val);
+            disableButton: function(){
+                if(this.validateEmail){
+                    return true;
+                } else {
+                    return false;
                 }
             },
-            disableButton: function(){
-                if(this.value != null){
+            validateEmail: function() {
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
+                    //email invalid
                     return false;
                 } else {
                     return true;
                 }
-            },
+            }
 
         },
         methods: {
