@@ -120,6 +120,8 @@
                     search_condition: false,
                     current_search_preference: null,
                     email_search_preference: null,
+                    confirm_delete: false,
+                    selectedIdFavorite: null,
                 },
                 // -------------------------------------------------------------
             };
@@ -376,17 +378,13 @@
             // -----------------------------------------------------------------
             setLikeProperty: function (id) {
                 let propertyID = id;
+                this.items.selectedIdFavorite = id;
                 var properties_like = [];
                 let local = localStorage.getItem('favoritePropertyId');
                 properties_like = JSON.parse(local) || [];
                 if(properties_like.length > 0 && properties_like.includes(propertyID)){
-                    let index = properties_like.indexOf(propertyID);
-                    properties_like.splice(index, 1);
-                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = '気に入り物件から削除しました。'; //remove like
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
+                    //popup alert confirmation
+                    this.items.confirmDelete = true;
                 } else {
                     properties_like.push(propertyID);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
@@ -396,6 +394,28 @@
                     });
                 }
 
+                this.getLikeProperty();
+            },
+            deleteFavorite: function(confirm) {
+                let propertyID = this.items.selectedIdFavorite;
+                var properties_like = [];
+                let local = localStorage.getItem('favoritePropertyId');
+                properties_like = JSON.parse(local) || [];
+                //if confirm = true remove like property
+                if (confirm == true) {
+                    if (properties_like.length > 0 && properties_like.includes(propertyID)) {
+                        let index = properties_like.indexOf(propertyID);
+                        console.log("index", index);
+                        properties_like.splice(index, 1);
+                        localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                        let msg = '気に入り物件から削除しました。'; //remove like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
+                }
+                this.items.confirmDelete = false;
+                this.items.selectedIdFavorite = '';
                 this.getLikeProperty();
             },
             // -----------------------------------------------------------------
