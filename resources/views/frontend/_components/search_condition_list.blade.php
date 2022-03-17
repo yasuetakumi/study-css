@@ -1,12 +1,21 @@
 <script type="text/x-template" id="search-condition-list-tpl">
     <div>
         {{-- Button Trigger Search Condition --}}
-        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" data-target="#modalSearchCondition" @click="getLocalStorage">
+        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">
             <span>
                 <i class="fas fa-search"></i>
                 Search Condition
             </span>
         </button>
+        <div class="modal fade" id="modalAlert" tabindex="-1" aria-labelledby="modalAlertLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p class="text-center">No Search Condition Saved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="modalSearchCondition" tabindex="-1" role="dialog" aria-labelledby="modalSearchConditionTitle" aria-hidden="true">
             <div class="modal-lg bg-white mx-auto border rounded-0 shadow-sm" role="document">
@@ -145,6 +154,13 @@
                 if(this.items.search_condition && this.items.search_condition.length > 0){
                     savedCondition = this.items.search_condition;
                     return savedCondition.length;
+                }
+            },
+            activeModal: function(){
+                if(this.items.search_condition != null){
+                    return '#modalSearchCondition';
+                } else {
+                    return '#modalAlert';
                 }
             }
         },
