@@ -183,4 +183,7 @@ return [
 
     // C5
     'underground' => '地下',
+
+    //C15
+    'postcode_notfound'     => '郵便番号が見つかりません',
 ];

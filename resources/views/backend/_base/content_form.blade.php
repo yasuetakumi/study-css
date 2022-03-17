@@ -20,8 +20,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="row mb-2">
-                                <div class="col-sm-6 card-title">
+                            <div class="row">
+                                <div class="col-sm-6 card-title mb-0">
                                     @if (empty($page_type))
                                     @elseif ($page_type == "detail")
                                         <h3 class="card-title"></h3>
@@ -30,6 +30,8 @@
                                     @else
                                         <!-- <h3 class="card-title">@lang('label.edit')</h3> -->
                                     @endif
+                                    <br>
+                                    <h3 class="card-title">@yield('form_title')</h3>
                                 </div>
                                 <div class="col-sm-6 card-header-link">
                                     @yield('top_buttons')
@@ -72,6 +74,9 @@
     <script src="{{asset('plugins/select2/js/i18n/ja.js')}}"></script>
     <script>
         $(function () {
+            //used for select2 component
+            $('.select2').select2();
+            
             // init: show tooltip on hover
             $('[data-toggle="tooltip"]').tooltip({
                 container: 'body'
@@ -127,6 +132,8 @@
                 $postcode_btn = $(this);
                 $postcode_form = $(this).siblings('input')
                 $address_form = $("#input-address")
+                $city_form = $("#input-city")
+                $prefecture_form = $("#input-prefecture")
                 $url = window.location.origin + '/api/v1/postcode/'+ $postcode_form.val()
                 let request = $.ajax({
                     url: $url,
@@ -135,13 +142,21 @@
                 })
 
                 request.done(function(data){
-                    console.log(data);
-                    $address_form.val(data.address)
-                    $postcode_btn.closest('.postcode-group').siblings('.address-error-text').prop('hidden', true);
-
+                    if(data.status == 201){
+                        toastr.error(data.message);
+                    }else{
+                        $address_form.val(data.address)
+                        $city_form.val(data.city)
+                        $prefecture_form.val(data.prefecture)
+                        $prefecture_form.val(data.prefecture).trigger('change');
+                        $postcode_btn.closest('.postcode-group').siblings('.address-error-text').prop('hidden', true);
+                    }
                 })
                 request.fail(function(data){
                     $address_form.val('')
+                    $city_form.val('')
+                    $prefecture_form.val('')
+                    $prefecture_form.val('').trigger('change');
                     $postcode_btn.closest('.postcode-group').siblings('.address-error-text').prop('hidden', false);
                 })
             })
@@ -246,44 +261,6 @@
                 });
             })
 
-            $('.select2ajax').each(function(){
-                $(this).select2({
-                    theme: 'bootstrap4',
-                    minimumInputLength: 0,
-                    {!! App::isLocale('ja') ? 'language: "ja",' : '' !!}
-                    ajax: {
-                        delay: 500,
-                        url: $(this).data('url'),
-                        data: function (params) {
-                            var query = {
-                                q: params.term,
-                                page: params.page || 1
-                            };
-                            return query;
-                        },
-                        processResults: function (response) {
-                            var is_more = response.items.next_page_url !== null ? true : false;
-                            return {
-                                results:  $.map(response.items.data, function (item) {
-                                    return {
-                                        text: item[response.display],
-                                        id: item[response.value]
-                                    }
-                                }),
-                                pagination: {
-                                    "more": is_more
-                                }
-                            };
-                        },
-                        cache: true
-                    }
-                });
-                $(this).on('change', function(){
-                    var selected_label = $(this).find('option:selected').text();
-                    $(this).closest('.col-content').find('.selected-label').val( selected_label );
-                });
-            })
-
             $('.input-decimal-ratio').each(function(){
                 $( '#' + $(this).data('target') ).val(
                     parseFloat( $(this).val() * $(this).data('multiply') ).toFixed(2)
@@ -294,6 +271,30 @@
                         parseFloat( $(this).val() * $(this).data('multiply') ).toFixed(2)
                     );
                 });
+            });
+
+            //full width HIRAGANA & full width KATAKANA & KANJI
+            window.Parsley.addValidator("fullwidthjpntext", {
+                validateString: function(value, element) {
+                    regex = /^[ぁ-んァ-ン一-龥]+$/;
+                    return regex.test(value);
+                }
+            });
+
+            //full width KANJI
+            window.Parsley.addValidator("fullwidthkanji", {
+                validateString: function(value, element) {
+                    regex = /^[\u4E00-\u9FFF ]+$/;
+                    return regex.test(value);
+                }
+            });
+
+            //full width KATAKANA
+            window.Parsley.addValidator("fullwidthkatakana", {
+                validateString: function(value, element) {
+                    regex = /^[\u30A0-\u30FF ]+$/;
+                    return regex.test(value);
+                }
             });
         });
     </script>

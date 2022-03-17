@@ -185,4 +185,6 @@ return [
     // C5
     'underground' => 'Underground',
 
+    //C15
+    'postcode_notfound'     => 'Zip code not found',
 ];

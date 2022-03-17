@@ -187,5 +187,9 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('terms-of-service', function() {
         return '利用規約';
     });
+    // C15 registration of new real estate agency
+    Route::get('estate/register', 'Frontend\EstateController@create')->name('company.register');
+    Route::post('estate/confirm', 'Frontend\EstateController@confirm')->name('company.confirm');
+    Route::post('estate/store', 'Frontend\EstateController@store')->name('company.store');
 
 });
