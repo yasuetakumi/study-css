@@ -17,13 +17,11 @@ use App\Models\CustomerSkeletonPreference;
 use App\Models\WalkingDistanceFromStationOption;
 
 $factory->define(CustomerSearchPreference::class, function (Faker $faker) {
-    $getSurfaceMax = fromTsubo(SurfaceAreaOption::all()->pluck('value')->random());
-    $getSurfaceMin = fromTsubo(SurfaceAreaOption::where('value', '<=', toTsubo($getSurfaceMax))->pluck('value')->random());
+    $getSurfaceMax = SurfaceAreaOption::all()->pluck('value')->random();
+    $getSurfaceMin = SurfaceAreaOption::where('value', '<=', $getSurfaceMax)->pluck('value')->random();
 
-    $getRentMin = fromMan(RentPriceOption::all()->pluck('value')->random());
-    $rent_amount = [100,150,200,250,300,350,400,450,500];
-
-    $getRentMax = fromMan(RentPriceOption::where('value','>=', toTsubo($getRentMin))->pluck('value')->random());
+    $getRentMin = RentPriceOption::all()->pluck('value')->random();
+    $getRentMax = RentPriceOption::where('value','>=', $getRentMin)->pluck('value')->random();
 
     $getTransferMin = TransferPriceOption::all()->pluck('value')->random();
     $getTransferMax = TransferPriceOption::where('value', '>=', toTsubo($getTransferMin))->pluck('value')->random();
@@ -35,14 +33,14 @@ $factory->define(CustomerSearchPreference::class, function (Faker $faker) {
         'customer_email' => $faker->email,
         'is_email_enabled' => rand(0,1),
         'city_id' => City::all()->pluck('id')->random(),
-        'surface_min' => $getSurfaceMin,
-        'surface_max' => $getSurfaceMax,
-        'rent_amount_min' => $getRentMin,
-        'rent_amount_max' => $getRentMax,
+        'surface_min' => fromTsubo($getSurfaceMin),
+        'surface_max' => fromTsubo($getSurfaceMax),
+        'rent_amount_min' => fromMan($getRentMin),
+        'rent_amount_max' => fromMan($getRentMax),
         'freetext' => $faker->name,
         'walking_distance' => WalkingDistanceFromStationOption::all()->pluck('id')->random(),
-        'transfer_price_min' => $getTransferMin,
-        'transfer_price_max' => $getTransferMax,
+        'transfer_price_min' => fromMan($getTransferMin),
+        'transfer_price_max' => fromMan($getTransferMax),
         'floor_under' => $getFloorUnder,
         'floor_above' => $getFloorAbove,
         'property_preference' => PropertyPreference::all()->pluck('id')->random(),
