@@ -383,14 +383,14 @@
                     let index = properties_like.indexOf(propertyID);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
+                    let msg = '気に入り物件から削除しました。'; //remove like
                     this.$toasted.show( msg, {
                         type: 'success'
                     });
                 } else {
                     properties_like.push(propertyID);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    let msg = 'お気に入り登録しました'; //add like
                     this.$toasted.show( msg, {
                         type: 'success'
                     });
