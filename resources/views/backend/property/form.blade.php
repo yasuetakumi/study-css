@@ -628,9 +628,17 @@
                     console.log("index", index);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                    let msg = '気に入り物件から削除しました。'; //remove like
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 } else {
                     properties_like.push(this.items.property_id);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                    let msg = 'お気に入り登録しました'; //add like
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
                 }
 
                 this.getLikeProperty();
