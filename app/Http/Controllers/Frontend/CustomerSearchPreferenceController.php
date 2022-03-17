@@ -66,7 +66,6 @@ class CustomerSearchPreferenceController extends Controller
         if(isset($data['スケルトン物件_居抜き物件'])){
             $arr_data = explode(", ", $data['スケルトン物件_居抜き物件']);
             $csp = CustomerSkeletonPreference::where('label_jp', $arr_data)->get();
-            return $arr_data;
             if($csp->count() == 2){
                 $skeleton = 3;
             } else {
