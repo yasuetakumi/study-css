@@ -187,5 +187,5 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('terms-of-service', function() {
         return '利用規約';
     });
-
+    Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
 });

@@ -48,7 +48,7 @@
             'disabled'      => 'items.disabled'
         ])
         @endcomponent
-
+        @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'companyName']) @endcomponent
         @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
@@ -381,6 +381,7 @@
                     design_category_2: 2,
                     design_category_3: 3,
                     design_category_4: 4,
+                    company_name: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -475,6 +476,20 @@
             property_related: function(){
                 return this.$store.state.preset.property_related;
             },
+            companyName: function(){
+                if(this.items.user_id != null){
+                    axios.get(root_url + '/company-name/' + this.items.user_id)
+                        .then((response) =>{
+                            console.log(response.data.company.company_name);
+                            this.items.company_name = response.data.company.company_name;
+                            return response.data.company.company_name;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                } else{
+                    return this.items.company_name;
+                }
+            }
         },
 
         /*

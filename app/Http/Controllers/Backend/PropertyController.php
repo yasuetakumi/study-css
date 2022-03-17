@@ -467,5 +467,10 @@ class PropertyController extends Controller
         // return redirect()->back()->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
 
+    public function getCompanyName($id){
+        $data = User::with(['company'])->find($id);
+        return response()->json($data);
+    }
+
 
 }
