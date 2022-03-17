@@ -26,7 +26,7 @@ class CustomerSearchPreference extends Model
         'floor_above',
         'property_preference',
         'property_type',
-        'skeleton',
+        'skeleton_id',
     ];
 
     public function city()
