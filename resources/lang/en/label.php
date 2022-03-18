@@ -110,6 +110,9 @@ return [
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
 
+    //A16
+    'company_approval_list' => 'Company Approval List',
+
     //C1
     'walking_distance_from_station' => 'Walking Distance From Station',
     'property_preference' => 'Property Preference',

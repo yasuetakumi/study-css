@@ -128,6 +128,22 @@
                         </li>
                     </ul>
                 </li>
+                {{-- Company Approval --}}
+                <li class="nav-item has-treeview" id="tree_approvals">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-check-double"></i>
+                        <p> @lang('label.company_approval_list')<i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li id="list_approval" class="nav-item">
+                            <a href="{{route('admin.approval.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('label.list')</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item has-treeview" id="tree_admins">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user-alt"></i>
