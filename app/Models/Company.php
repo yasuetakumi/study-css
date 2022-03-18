@@ -12,9 +12,15 @@ class Company extends Model
     protected $fillable = [
         'company_admin_id',
         'company_name',
+        'company_name_kana',
+        'agent_license_name',
+        'agent_license_renewals',
+        'agent_license_number',
         'post_code',
         'address',
         'phone',
+        'fax',
+        'url',
         'status',
     ];
 
