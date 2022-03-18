@@ -1,3 +1,6 @@
+@php
+    $isApproval = Route::currentRouteName() == 'admin.approval.index';
+@endphp
 @extends('backend._base.content_datatables')
 
 @section('breadcrumbs')
@@ -8,7 +11,9 @@
 @endsection
 
 @section('top_buttons')
-    <a href="{{ route('admin.admins.create') }}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+    @if (!$isApproval)
+        <a href="{{ route('admin.admins.create') }}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+    @endif
 @endsection
 
 @section('content')

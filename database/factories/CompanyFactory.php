@@ -8,6 +8,7 @@ $factory->define(App\Models\Company::class, function(Faker $faker){
 
     $hkFaker = \Faker\Factory::create('en_HK');
     $companyName = $faker->company;
+    $statuses = collect(['active', 'pending']);
 
     return [
         'company_name'      => $companyName,
@@ -20,7 +21,7 @@ $factory->define(App\Models\Company::class, function(Faker $faker){
         'phone' => $faker->e164PhoneNumber,
         'fax' => $faker->url,
         'url' => $hkFaker->faxNumber,
-        'status' => 'active',
+        'status' => $statuses->random(),
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now()
     ];
