@@ -76,6 +76,10 @@
         $(function () {
             //used for select2 component
             $('.select2').select2();
+
+            $(".select2").change(function() {
+                $(this).parsley().validate();
+            }); 
             
             // init: show tooltip on hover
             $('[data-toggle="tooltip"]').tooltip({
@@ -293,6 +297,14 @@
             window.Parsley.addValidator("fullwidthkatakana", {
                 validateString: function(value, element) {
                     regex = /^[\u30A0-\u30FF ]+$/;
+                    return regex.test(value);
+                }
+            });
+
+            //no space
+            window.Parsley.addValidator("nospace", {
+                validateString: function(value, element) {
+                    regex = /^[^-\s]+$/;
                     return regex.test(value);
                 }
             });

@@ -9,24 +9,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\Select2AjaxHelper;
 use App\Traits\CommonToolsTraits;
+use Illuminate\Support\Str;
 
 //models used
 use App\Models\Postcode;
+use App\Models\Company;
+use App\Models\User;
+use App\Models\UserRole;
 
 class EstateController extends Controller
 {
     use CommonToolsTraits;
 
-    protected function validator( array $data, $type ){
-        return Validator::make($data, [
-            'name'         => 'required',
-            'name_kana'    => 'required',
-        ]);
-    }
-
-    public function create(){
+    public function create(Request $request){
+        $data = $request->all();
         $data['page_title']     = '会員 （不動産業者） 登録申し込み';
-        $data['item']           = new StdClass();
         $data['form_action']    = route('company.store');
 
         // options for vue select 2 options
@@ -37,15 +34,48 @@ class EstateController extends Controller
 
     public function confirm(Request $request){
         $data = $request->all();
-        $this->validator($data, 'create')->validate();
-        return response()->json($data, 200);  
+        
+        $data['page_title']     = '登録申し込みー内容の確認';
+        $data['form_action']    = route('company.store');
+
+        // options for vue select 2 options
+        $data['prefecture_options']     = Postcode::groupBy('prefecture')->pluck('prefecture', 'prefecture');
+
+        return view('frontend.estate.confirm', $data);
     }
 
     public function store(Request $request){
         $data = $request->all();
+        $response = new \stdClass;
+        
+        \DB::beginTransaction();
+        try {
+            //insert into companies table
+            $Company = new Company();
+            $dataCompany = $data['companies'];
+            $dataCompany['status'] = "pending";
+            $dataCompany['company_name'] = $data['companies']['name'];
+            $dataCompany['company_name_kana'] = $data['companies']['name_kana'];
+            $dataCompany['address'] = $data['companies']['prefecture'].$data['companies']['city'].$data['companies']['area_number'].$data['companies']['name_building'];
+            $Company->fill($dataCompany)->save();
 
-        $new = new News();
-        $new->fill($data)->save();
-        return redirect()->route('frontend.estate.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            //insert into users table
+            $User = new User();
+            $dataUser['display_name'] = $data['users']['display_name'];
+            $dataUser['user_role_id'] = UserRole::ROLE_SUPERVISOR;
+            $dataUser['belong_company_id'] = $Company->id;
+            $dataUser['email'] = $dataCompany['email'];
+            $dataUser['password'] = \Hash::make(Str::random(10));
+            $User->fill($dataUser)->save();
+
+            \DB::commit();
+
+            $response->status = 'success';
+            return response()->json($response, 200);
+        }catch(Exception $e) {
+            \DB::rollback();
+            $response->status = 'false';
+            return response()->json($response, 201);
+        }
     }
 }
