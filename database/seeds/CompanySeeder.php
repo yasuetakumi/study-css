@@ -22,7 +22,7 @@ class CompanySeeder extends Seeder
             'updated_at'    => Carbon::now(),
         ]);
         // Insert other test data.
-        factory(Admin::class, 10)->create(['admin_role_id' => AdminRole::ROLE_COMPANY_ADMIN])->each(function ($admin) {
+        factory(Admin::class, 30)->create(['admin_role_id' => AdminRole::ROLE_COMPANY_ADMIN])->each(function ($admin) {
             $company = factory(Company::class)->make();
             $admin->company()->save($company);
         });
