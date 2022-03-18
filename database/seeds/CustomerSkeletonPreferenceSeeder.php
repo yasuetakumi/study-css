@@ -17,7 +17,7 @@ class CustomerSkeletonPreferenceSeeder extends Seeder
         $data->insert([
             [
                 'label_en'       => 'Furnished/with kitchen',
-                'label_jp'      => ' スケルトン ',
+                'label_jp'      => '居抜き物件',
             ],
             [
                 'label_en'       => 'skeleton',
@@ -25,7 +25,7 @@ class CustomerSkeletonPreferenceSeeder extends Seeder
             ],
             [
                 'label_en'       => 'Furnished/with kitchen and skeleton',
-                'label_jp'      => '・スケルトン',
+                'label_jp'      => '居抜き物件・スケルトン',
             ],
         ]);
     }
