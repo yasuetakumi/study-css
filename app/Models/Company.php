@@ -9,6 +9,9 @@ class Company extends Model
 {
     use SoftDeletes;
 
+    const ACTIVE = 'active';
+    const PENDING = 'pending';
+
     protected $fillable = [
         'company_admin_id',
         'company_name',
