@@ -3,8 +3,11 @@
     @include('backend._components._input_header',['label'=>$label, 'required'=>$required])
 
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-        <input type="text" id="input-{{ $name }}" name="{{ $name }}" style="width:50%;display:inline-block;vertical-align: middle;" class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }} />
-        <button type="button" id="postcodeserch" class="address-search btn btn-primary postcode-button" style="line-height:normal;">Submit</button>
+        <input type="text" id="input-{{ $name }}" name="{{ $name }}" style="width:50%;display:inline-block;vertical-align: middle;" class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
+        {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }} />
+        <button type="button" id="postcodeserch" class="address-search btn btn-primary postcode-button" style="line-height:normal;" {{isset($isReadOnly) && $isReadOnly == true ? 'disabled' : '' }}>
+            Submit
+        </button>
     </div>
 </div>
 

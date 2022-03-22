@@ -88,9 +88,17 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
 
                 Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
 
-                Route::resource('company', 'CompanyController');
-
                 Route::resource('property', 'PropertyController')->except('detail');
+
+                Route::prefix('company')->group(function(){
+                    //manual name route to fix issue route name auto generate with double dots, ex: admin.company..create
+                    Route::resource('', 'CompanyController', ['names' => [
+                        'store' => 'company.store',
+                        'create' => 'company.create',
+                        'destroy' => 'company.destroy',
+                    ]]);
+                    Route::resource('approval', 'CompanyApprovalController');
+                });
 
                 // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
             });
