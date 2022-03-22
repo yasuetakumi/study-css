@@ -46,6 +46,11 @@ class PropertyController extends Controller
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
             'is_skeleton'   => 'required',
+            'plan_id_dc_1'  => 'required',
+            'plan_id_dc_2'  => 'required',
+            'plan_id_dc_3'  => 'required',
+            'plan_id_dc_4'  => 'required',
+
         ]);
     }
 
@@ -316,16 +321,27 @@ class PropertyController extends Controller
     public function store( Request $request)
     {
         $data = $request->all();
+        $this->validator($data, 'create')->validate();
+
         $properties_plans = array();
-        array_push($properties_plans, $data['plan_id_dc_1']);
-        array_push($properties_plans, $data['plan_id_dc_2']);
-        array_push($properties_plans, $data['plan_id_dc_3']);
-        array_push($properties_plans, $data['plan_id_dc_4']);
+        if(isset($data['plan_id_dc_1'])){
+            array_push($properties_plans, $data['plan_id_dc_1']);
+        }
+        if(isset($data['plan_id_dc_2'])){
+            array_push($properties_plans, $data['plan_id_dc_2']);
+        }
+        if(isset($data['plan_id_dc_3'])){
+            array_push($properties_plans, $data['plan_id_dc_3']);
+        }
+        if(isset($data['plan_id_dc_4'])){
+            array_push($properties_plans, $data['plan_id_dc_4']);
+        }
+
         //return $data;
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
-        $this->validator($data, 'create')->validate();
+
         //return $data;
         $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main') );
         for($i=1; $i<=6; $i++){

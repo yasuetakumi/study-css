@@ -533,33 +533,41 @@
                         this.items.message_plan_properties = '';
                         if(catId == this.items.design_category_1){
                             this.items.plans_design_category_1 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_1.length; i++){
-                                if(this.items.plans_design_category_1[i].id == this.itemPropertyPlans[0].plan_id){
-                                    this.items.selected_plan_dc_1 = this.items.plans_design_category_1[i].id;
+                            if(@json($page_type) == 'edit'){
+                                    for(let i = 0; i < this.items.plans_design_category_1.length; i++){
+                                    if(this.items.plans_design_category_1[i].id == this.itemPropertyPlans[0].plan_id){
+                                        this.items.selected_plan_dc_1 = this.items.plans_design_category_1[i].id;
+                                    }
                                 }
                             }
 
                         } else if(catId == this.items.design_category_2){
                             this.items.plans_design_category_2 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_2.length; i++){
-                                if(this.items.plans_design_category_2[i].id == this.itemPropertyPlans[1].plan_id){
-                                    this.items.selected_plan_dc_2 = this.items.plans_design_category_2[i].id;
+                            if(@json($page_type) == 'edit'){
+                                for(let i = 0; i < this.items.plans_design_category_2.length; i++){
+                                    if(this.items.plans_design_category_2[i].id == this.itemPropertyPlans[1].plan_id){
+                                        this.items.selected_plan_dc_2 = this.items.plans_design_category_2[i].id;
+                                    }
                                 }
                             }
 
                         } else if(catId == this.items.design_category_3){
                             this.items.plans_design_category_3 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_3.length; i++){
-                                if(this.items.plans_design_category_3[i].id == this.itemPropertyPlans[2].plan_id){
-                                    this.items.selected_plan_dc_3 = this.items.plans_design_category_3[i].id;
+                            if(@json($page_type) == 'edit'){
+                                for(let i = 0; i < this.items.plans_design_category_3.length; i++){
+                                    if(this.items.plans_design_category_3[i].id == this.itemPropertyPlans[2].plan_id){
+                                        this.items.selected_plan_dc_3 = this.items.plans_design_category_3[i].id;
+                                    }
                                 }
                             }
 
                         } else if(catId == this.items.design_category_4){
                             this.items.plans_design_category_4 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_4.length; i++){
-                                if(this.items.plans_design_category_4[i].id == this.itemPropertyPlans[3].plan_id){
-                                    this.items.selected_plan_dc_4 = this.items.plans_design_category_4[i].id;
+                            if(@json($page_type) == 'edit'){
+                                for(let i = 0; i < this.items.plans_design_category_4.length; i++){
+                                    if(this.items.plans_design_category_4[i].id == this.itemPropertyPlans[3].plan_id){
+                                        this.items.selected_plan_dc_4 = this.items.plans_design_category_4[i].id;
+                                    }
                                 }
                             }
                         }
