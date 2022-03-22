@@ -43,12 +43,15 @@
         <div class="w-100" v-else-if="!list_favorite && items.isActiveFavorite">
             <p class="text-center">No data</p>
         </div>
-        <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4" v-for="pd in list_favorite"
-            :key="pd.id">
-            @include('frontend._components.property_list')
+        <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4" v-for="pd in list_favorite" :key="pd.id">
+            <property-list :property="pd">
+                <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+            </property-list>
         </div>
         <div v-else class="col-md-4" v-for="pd in list_history" :key="pd.id">
-            @include('frontend._components.property_list')
+            <property-list :property="pd">
+                <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
+            </property-list>
         </div>
     </div>
 @endsection
@@ -59,27 +62,29 @@
     </script>
 @endpush
 @push('vue-scripts')
-    <script>
-        // ----------------------------------------------------------------------
-        // Vuex store - Centralized data
-        // ----------------------------------------------------------------------
-        store = {
-            // ------------------------------------------------------------------
-            // Reactive central data
-            // ------------------------------------------------------------------
-            state: function() {
-                var state = {
-                    // ----------------------------------------------------------
-                    // Status flags
-                    // ----------------------------------------------------------
-                    status: {},
-                    // ----------------------------------------------------------
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
+<script>
+    // ----------------------------------------------------------------------
+    // Vuex store - Centralized data
+    // ----------------------------------------------------------------------
+    store = {
+        // ------------------------------------------------------------------
+        // Reactive central data
+        // ------------------------------------------------------------------
+        state: function(){
+            var state = {
+                // ----------------------------------------------------------
+                // Status flags
+                // ----------------------------------------------------------
+                status: { },
+                // ----------------------------------------------------------
 
-                    // ----------------------------------------------------------
-                    // Preset data
-                    // ----------------------------------------------------------
-                    preset: {},
-                    // ----------------------------------------------------------
+                // ----------------------------------------------------------
+                // Preset data
+                // ----------------------------------------------------------
+                preset: {},
+                // ----------------------------------------------------------
                 };
                 // --------------------------------------------------------------
 
@@ -241,9 +246,17 @@
                             console.log("index", index);
                             properties_like.splice(index, 1);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                            let msg = '気に入り物件から削除しました。'; //remove like
+                            this.$toasted.show( msg, {
+                                type: 'success'
+                            });
                         } else {
                             properties_like.push(propertyID);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                            let msg = 'お気に入り登録しました'; //add like
+                            this.$toasted.show( msg, {
+                                type: 'success'
+                            });
                         }
                     }
 
@@ -261,6 +274,10 @@
                             console.log("index", index);
                             properties_like.splice(index, 1);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                            let msg = '気に入り物件から削除しました。'; //remove like
+                            this.$toasted.show( msg, {
+                                type: 'success'
+                            });
                         }
                     }
                     this.items.confirmDelete = false;

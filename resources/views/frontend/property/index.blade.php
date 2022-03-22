@@ -12,12 +12,17 @@
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
 
+        <search-condition-list @getindex="getCurrentIndexSearch"></search-condition-list>
+
+
     </div>
 
     <div class="col-md-8">
         {{-- property list result --}}
         @include('frontend.property.component.property-list-result')
     </div>
+    {{-- Modal Dialog Email Search Preference--}}
+    <email-search-preference @register="registerEmailSearchPreference" v-model="items.email_search_preference"></email-search-preference>
 </div>
 @endsection
 
@@ -28,6 +33,11 @@
 @endpush
 
 @push('vue-scripts')
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
+@include('frontend._components.property_related_list')
+@include('frontend._components.search_condition_list')
+@include('frontend._components.email_search_preference')
 <script>
     // -------------------------------------------------------------------------
     // Vuex store - Centralized data
@@ -106,7 +116,12 @@
                         cuisines: [],
                         cities: [],
                         stations: [],
-                    }
+                    },
+                    search_condition: false,
+                    current_search_preference: null,
+                    email_search_preference: null,
+                    confirm_delete: false,
+                    selectedIdFavorite: null,
                 },
                 // -------------------------------------------------------------
             };
@@ -363,26 +378,44 @@
             // -----------------------------------------------------------------
             setLikeProperty: function (id) {
                 let propertyID = id;
+                this.items.selectedIdFavorite = id;
                 var properties_like = [];
                 let local = localStorage.getItem('favoritePropertyId');
                 properties_like = JSON.parse(local) || [];
                 if(properties_like.length > 0 && properties_like.includes(propertyID)){
-                    let index = properties_like.indexOf(propertyID);
-                    properties_like.splice(index, 1);
-                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
+                    //popup alert confirmation
+                    this.items.confirmDelete = true;
                 } else {
                     properties_like.push(propertyID);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    let msg = 'お気に入り登録しました'; //add like
                     this.$toasted.show( msg, {
                         type: 'success'
                     });
                 }
 
+                this.getLikeProperty();
+            },
+            deleteFavorite: function(confirm) {
+                let propertyID = this.items.selectedIdFavorite;
+                var properties_like = [];
+                let local = localStorage.getItem('favoritePropertyId');
+                properties_like = JSON.parse(local) || [];
+                //if confirm = true remove like property
+                if (confirm == true) {
+                    if (properties_like.length > 0 && properties_like.includes(propertyID)) {
+                        let index = properties_like.indexOf(propertyID);
+                        console.log("index", index);
+                        properties_like.splice(index, 1);
+                        localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                        let msg = '気に入り物件から削除しました。'; //remove like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
+                }
+                this.items.confirmDelete = false;
+                this.items.selectedIdFavorite = '';
                 this.getLikeProperty();
             },
             // -----------------------------------------------------------------
@@ -423,7 +456,7 @@
             // -----------------------------------------------------------------
             registerNewEmail: function(searchCondition) {
                 this.registerSearchCondition(searchCondition);
-
+                this.items.current_search_preference = searchCondition;
                 // Todo
                 // Register new email
             },
@@ -442,6 +475,27 @@
                          console.log(err);
                     });
             },
+            registerEmailSearchPreference: function(){
+                let email = {"customer_email" : this.items.email_search_preference};
+                let data = this.items.current_search_preference;
+                Object.assign(data, email);
+                console.log(data);
+                axios.post(root_url + '/search-preference', data)
+                    .then((result) => {
+                        console.log(result.data);
+                        // Show success alert
+                        let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            },
+            getCurrentIndexSearch: function(value){
+                this.items.current_search_preference = value;
+                console.log(this.items.current_search_preference);
+            }
             // -----------------------------------------------------------------
         }
         // ---------------------------------------------------------------------

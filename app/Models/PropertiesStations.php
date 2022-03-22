@@ -14,6 +14,10 @@ class PropertiesStations extends Model
         'distance_from_station',
     ];
 
+    public function station(){
+        return $this->belongsTo(Station::class, 'station_id');
+    }
+
     public function walking_distance(){
         return $this->belongsTo(WalkingDistanceFromStationOption::class, 'distance_from_station');
     }

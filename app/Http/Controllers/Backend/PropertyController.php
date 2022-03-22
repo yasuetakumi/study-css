@@ -28,6 +28,7 @@ use App\Traits\CommonToolsTraits;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUsType;
 use App\Models\CustomerInquiry;
+use App\Models\PropertyPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,7 +77,7 @@ class PropertyController extends Controller
         }
         //abort(404);
         $id = $param;
-        $data['item']       = Property::find($id);
+        $data['item']       = Property::with(['city'])->find($id);
 
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -247,7 +248,14 @@ class PropertyController extends Controller
             $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
             $data['form_action_inquiry'] = route('enduser.inquiry.store');
         }
-
+        $data['property_related'] = Property::with(['city', 'property_stations.station'])
+                ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
+                ->where('city_id', $data['item']->city_id)
+                ->where('id', '!=', $data['item']->id)
+                ->orderByRaw('RAND()')
+                ->limit(3)
+                ->get();
+        // return $data['property_related'];
         //dd($data['design_categories']);
         return view('backend.property.form', $data);
     }
@@ -261,6 +269,7 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['form_action'] = route('company.property.store');
         }
+        $data['property_related'] = '';
         $data['page_type'] = 'create';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         //$data['users'] = User::pluck('display_name', 'id')->all();
@@ -307,6 +316,11 @@ class PropertyController extends Controller
     public function store( Request $request)
     {
         $data = $request->all();
+        $properties_plans = array();
+        array_push($properties_plans, $data['plan_id_dc_1']);
+        array_push($properties_plans, $data['plan_id_dc_2']);
+        array_push($properties_plans, $data['plan_id_dc_3']);
+        array_push($properties_plans, $data['plan_id_dc_4']);
         //return $data;
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
@@ -330,6 +344,13 @@ class PropertyController extends Controller
         $feature = new Property();
         $feature->fill($data)->save();
 
+        foreach($properties_plans as $pp){
+            PropertyPlan::create([
+                'plan_id' => $pp,
+                'property_id' => $feature->id,
+            ]);
+        }
+
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
         } else {
@@ -339,7 +360,7 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = Property::find($id);
+        $data['item'] = Property::with(['property_plans'])->find($id);
 
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -353,6 +374,7 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['form_action'] = route('company.property.update', $id);
         }
+        $data['property_related'] = '';
         $data['page_type'] = 'edit';
         $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
         //$data['users'] = User::pluck('display_name', 'id')->all();
@@ -401,6 +423,11 @@ class PropertyController extends Controller
     public function update( Request $request, $id)
     {
         $data = $request->all();
+        $properties_plans = array();
+        array_push($properties_plans, $data['plan_id_dc_1']);
+        array_push($properties_plans, $data['plan_id_dc_2']);
+        array_push($properties_plans, $data['plan_id_dc_3']);
+        array_push($properties_plans, $data['plan_id_dc_4']);
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
@@ -423,6 +450,7 @@ class PropertyController extends Controller
         $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $edit->update($data);
+        $edit->plans()->sync($properties_plans);
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {
