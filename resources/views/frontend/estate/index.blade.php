@@ -280,7 +280,7 @@
                                 data-parsley-trigger                = "change focusout"
                                 data-parsley-required-message       = "TELを入力してください"
                                 data-parsley-pattern                = "^\d{2,5}-\d{1,4}-\d{4}$"
-                                data-parsley-pattern-message        = "例のような形式を入力してください<br>(2-5桁)-(1-4桁)-(4桁)<br>123-456-7890"
+                                data-parsley-pattern-message        = "例のような形式を入力してください<br>(2-5桁)-(1-4桁)-(4桁)<br>ex:123-456-7890"
                                 data-parsley-errors-container       = "#errorBlock-phone"
                                 class="form-control @error('phone') is-invalid @enderror"
                             />
@@ -322,6 +322,8 @@
                                 data-parsley-type                   = "email"
                                 data-parsley-required-message       = "E-MAILを入力してください"
                                 data-parsley-type-message           = "メールアドレスを入力してください"
+                                data-parsley-remote                 = "{{ route('company.check_email') }}"
+                                data-parsley-remote-message         = "このメールはすでに使用されていますので、別のメールアカウントを使用してください"
                                 data-parsley-errors-container       = "#errorBlock-email"
                                 class="form-control @error('email') is-invalid @enderror"
                             />
@@ -382,6 +384,9 @@
                                     <span class="interface">確認画面へ</span>
                                     <span class="interface" v-if="isLoading">
                                         <i class="fa fa-spinner fa-spin"></i>
+                                    </span>
+                                    <span class="interface" v-if="!isLoading">
+                                        <i class="fa fa-arrow-right"></i>
                                     </span>
                                 </span>
                             </button>
@@ -594,6 +599,8 @@
             register: function(){
                 // ----------------------------------------------------------
                 let vm = this; let valid = true;
+                //set loading state
+                vm.$store.commit( 'setLoading', true );
                 // ----------------------------------------------------------
                 // Set validation using parsley
                 // ----------------------------------------------------------
@@ -603,15 +610,15 @@
 
                 // ----------------------------------------------------------
                 if(valid !== false && $('.parsley-errors-list.filled').length == 0){
-                    //set loading state
-                    vm.$store.commit( 'setLoading', true );
-
-                    //submit form after validation success
-                    this.$refs.registerForm.submit();
-
-                    //set loading state
-                    vm.$store.commit( 'setLoading', false );
+                    form.whenValidate({
+                    }).done(function() {
+                        //submit form after validation success
+                        $form.submit();
+                    });
                 }
+
+                //set loading state
+                vm.$store.commit( 'setLoading', false );
             },
             
             // -----------------------------------------------------------------

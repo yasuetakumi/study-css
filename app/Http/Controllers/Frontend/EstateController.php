@@ -78,4 +78,15 @@ class EstateController extends Controller
             return response()->json($response, 201);
         }
     }
+
+    //check email exist for validation
+    public function check_email(Request $request){
+        $response = "success";
+        $check = User::where('email', '=', $request->email)->whereNull('deleted_at')->exists();
+        
+        if($check){
+            return response()->json($response, 405);
+        }
+        return response()->json($response, 200);   
+    }
 }

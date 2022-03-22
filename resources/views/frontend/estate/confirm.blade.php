@@ -19,6 +19,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name}}</span>
+                            <input type="hidden" 
+                                v-model="companies.name"
+                                name="name"
+                            />
                         </div>
                     </div>
 
@@ -29,6 +33,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name_kana}}</span>
+                            <input type="hidden" 
+                                v-model="companies.name_kana"
+                                name="name_kana"
+                            />
                         </div>
                     </div>
 
@@ -40,6 +48,18 @@
                         <!--agent_license_name -->
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.agent_license_name}}</span> (<span>@{{companies.agent_license_renewals}}</span>) 第<span>@{{companies.agent_license_number}}</span>号
+                            <input type="hidden" 
+                                v-model="companies.agent_license_name"
+                                name="agent_license_name"
+                            />
+                            <input type="hidden" 
+                                v-model="companies.agent_license_renewals"
+                                name="agent_license_renewals"
+                            />
+                            <input type="hidden" 
+                                v-model="companies.agent_license_number"
+                                name="agent_license_number"
+                            />
                         </div>
                     </div>
 
@@ -50,6 +70,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{users.display_name}}</span>
+                            <input type="hidden" 
+                                v-model="users.display_name"
+                                name="display_name"
+                            />
                         </div>
                     </div>
 
@@ -60,6 +84,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.post_code}}</span>
+                            <input type="hidden" 
+                                v-model="companies.post_code"
+                                name="postcode"
+                            />
                         </div>
                     </div>
 
@@ -70,6 +98,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content select2-container">
                             <span>@{{companies.prefecture}}</span>
+                            <input type="hidden" 
+                                v-model="companies.prefecture"
+                                name="prefecture"
+                            />
                         </div>
                     </div>
 
@@ -80,6 +112,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.city}}</span>
+                            <input type="hidden" 
+                                v-model="companies.city"
+                                name="city"
+                            />
                         </div>
                     </div>
 
@@ -90,6 +126,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.area_number}}</span>
+                            <input type="hidden" 
+                                v-model="companies.area_number"
+                                name="area_number"
+                            />
                         </div>
                     </div>
 
@@ -100,6 +140,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name_building}}</span>
+                            <input type="hidden" 
+                                v-model="companies.name_building"
+                                name="name_building"
+                            />
                         </div>
                     </div>
 
@@ -110,6 +154,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.phone}}</span>
+                            <input type="hidden" 
+                                v-model="companies.phone"
+                                name="phone"
+                            />
                         </div>
                     </div>
                     
@@ -120,6 +168,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.fax}}</span>
+                            <input type="hidden" 
+                                v-model="companies.fax"
+                                name="fax"
+                            />
                         </div>
                     </div>
                     
@@ -130,6 +182,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.email}}</span>
+                            <input type="hidden" 
+                                v-model="companies.email"
+                                name="email"
+                            />
                         </div>
                     </div>
 
@@ -140,6 +196,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.url}}</span>
+                            <input type="hidden" 
+                                v-model="companies.url"
+                                name="url"
+                            />
                         </div>
                     </div>
 
@@ -153,12 +213,28 @@
                             <span v-else-if="companies.reason == 2">客付け物件を閲覧したい</span>
                             <span v-else-if="companies.reason == 3">その他</span>
                             <span v-else></span>
+                            <input type="hidden" 
+                                v-model="companies.reason"
+                                name="reason"
+                            />
                         </div>
                     </div>
 
                     <!-- Button -->
                     <div id="form-group--button" class="row form-group">
                         <div class="col-6">
+                            <button type="submit" class="btn btn-secondary mr-2 border border-white" style="float:left"
+                                :disabled="isLoading">
+                                <span class="innerset">
+                                    <span class="interface" v-if="!isLoading">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </span>
+                                    <span class="interface">登録</span>
+                                    <span class="interface" v-if="isLoading">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                    </span>
+                                </span>
+                            </button>
                         </div>
 
                         <div class="col-6">
@@ -168,6 +244,9 @@
                                     <span class="interface">登録</span>
                                     <span class="interface" v-if="isLoading">
                                         <i class="fa fa-spinner fa-spin"></i>
+                                    </span>
+                                    <span class="interface" v-if="!isLoading">
+                                        <i class="fa fa-arrow-right"></i>
                                     </span>
                                 </span>
                             </button>
