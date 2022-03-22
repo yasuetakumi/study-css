@@ -22,10 +22,18 @@ class CompanyApprovalController extends Controller
     {
         if( $param == 'json' ){
             $model = Company::where('status', Company::PENDING);
-            return (new DatatablesHelper)->instance($model, true, false)->toJson();
+            return (new DatatablesHelper)->instance($model, false, false, true)->toJson();
 
         }
-        abort(404);
+        // abort(404);
+        $id = $param;
+        $data['item']           = Company::with('admin')->where('companies.id', $id)->first();
+
+        $data['page_title']     = __('label.edit') . __('label.company_approval_list');
+        $data['form_action']    = route('admin.approval.update', $id);
+        $data['page_type']      = 'edit';
+
+        return view('backend.company.form', $data);
     }
 
     /**
@@ -76,13 +84,7 @@ class CompanyApprovalController extends Controller
      */
     public function edit($id)
     {
-        $data['item']           = Company::with('admin')->where('companies.id', $id)->first();
 
-        $data['page_title']     = __('label.edit') . __('label.company_approval_list');
-        $data['form_action']    = route('admin.approval.update', $id);
-        $data['page_type']      = 'edit';
-
-        return view('backend.company.form', $data);
     }
 
     /**
