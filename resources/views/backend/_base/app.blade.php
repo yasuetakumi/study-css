@@ -42,6 +42,7 @@
             padding: 0;
             margin: 0;
         }
+        .modal { overflow: auto !important; }
     </style>
     @stack('css')
 </head>
