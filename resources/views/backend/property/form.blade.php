@@ -192,12 +192,15 @@
             @endcomponent
         @endif
         @if ($page_type == 'detail')
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-header">
                     <h5>{{$item->city->display_name}} で似た坪数の物件</h5>
                 </div>
                 <div class="row py-2">
-                    <div class="col-lg-4" v-for="pr in property_related">
+                    <div class="col-12" v-if="property_related == null">
+                        <p class="text-center">No Related Property Found</p>
+                    </div>
+                    <div v-else class="col-lg-4" v-for="pr in property_related">
                         <property-related-list :property="pr"></property-related-list>
                     </div>
                 </div>
@@ -275,6 +278,7 @@
                     list_design_style: null,
                     list_plans: null,
                     list_plans_properties: null,
+                    list_estimation: null,
                     design_category_id: null,
                     plan_id: null,
                     message_plan_properties: '*Please Input Surface Area (Tsubo) and Select Design Category*',
@@ -322,14 +326,23 @@
                 var id = @json($companyUserId);
                 this.items.user_id = id;
             }
-            this.changePlanBySurfaceArea();
+
+            if(@json($page_type) != 'detail'){
+                this.changePlanBySurfaceArea();
+            }
+            if(@json($page_type) == 'detail'){
+                this.getDesignByCategory(1);
+                setTimeout(() => {
+                    this.estimationIndex();
+                }, 2000);
+            }
+
+
 
         },
 
         created: function(){
-            this.getDesignByCategory(1);
             this.getLikeProperty();
-
         },
 
         /*
@@ -382,6 +395,13 @@
             property_related: function(){
                 return this.$store.state.preset.property_related;
             },
+            pathToImage: function(){
+                let pathUploads = @json(asset('uploads'));
+                return pathUploads + '/';
+            },
+        },
+        updated: function(){
+            // this.has_kitchen();
         },
 
         /*
@@ -415,9 +435,9 @@
                 let designCat = event.target.value;
                 this.items.selected_dc = event.target.value
                 this.getDesignByCategory(designCat);
-
-                this.estimationIndex();
-
+                setTimeout(() => {
+                    this.estimationIndex();
+                }, 2000);
                 this.items.loading = false;
             },
             getDesignByCategory: async function(designCat){
@@ -502,7 +522,7 @@
 
                 }
                 console.log(id_plans);
-                for(let j=1; j < this.items.list_design_style.length; j++){
+                for(let j=0; j < this.items.list_design_style.length; j++){
                     id_designs.push(this.items.list_design_style[j].id)
                 }
                 let surface_area = document.querySelector("input[name=surface_area]").value;
@@ -560,17 +580,22 @@
             },
             has_kitchen: function(id, kitchen){
                 if(this.items.list_estimation && this.items.list_estimation.length > 0){
-                    return this.items.list_estimation.filter(kitchen => kitchen.design_category_id === id && kitchen.has_kitchen === 1).grand_total[0];
+
+                    // $data = this.items.list_estimation.find();
+                    const filtered = this.items.list_estimation.filter(el => el.design_style_id == id && el.has_kitchen == kitchen );
+                    if(filtered.length > 0){
+                        const grand_total = filtered[0].grand_total / 10000 + '万円';
+                        return grand_total;
+                    } else {
+                        return '-';
+                    }
+
                 }
-            },
-            pathToImage: function(){
-                let pathUploads = @json(asset('uploads'));
-                return pathUploads + '/';
             },
             handleImageNotFound: function(event){
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
-            }
+            },
             // --------------------------------------------------------------
         }
     }
