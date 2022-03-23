@@ -51,6 +51,11 @@ class PropertyController extends Controller
             'plan_id_dc_3'  => 'required',
             'plan_id_dc_4'  => 'required',
 
+        ], [
+            'plan_id_dc_1.required' => 'Plan for Design Category 居酒屋 is Required',
+            'plan_id_dc_2.required' => 'Plan for Design Category カフェ is Required',
+            'plan_id_dc_3.required' => 'Plan for Design Category バー is Required',
+            'plan_id_dc_4.required' => 'Plan for Design Category ラーメン is Required'
         ]);
     }
 
@@ -439,6 +444,7 @@ class PropertyController extends Controller
     public function update( Request $request, $id)
     {
         $data = $request->all();
+        $this->validator($data, 'update')->validate();
         $properties_plans = array();
         array_push($properties_plans, $data['plan_id_dc_1']);
         array_push($properties_plans, $data['plan_id_dc_2']);
@@ -447,7 +453,7 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
-        $this->validator($data, 'update')->validate();
+
         $edit = Property::find($id);
 
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
