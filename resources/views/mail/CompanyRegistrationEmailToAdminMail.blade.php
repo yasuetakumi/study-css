@@ -44,15 +44,15 @@
                             <!-- Body content -->
                             <tr>
                                 <td class="content-cell" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
-                                    <p>An Application Has Been Made With The Following Details:</p>
+                                    <p><strong>An Application Has Been Made With The Following Details:</strong></p>
                                     <p>
-                                        [Company]<br>
+                                        <strong>[Company]</strong><br>
                                         {{ $content->company_name }}<br>
                                         {{ $content->address }}<br>
                                         {{ $content->motivation_to_join }}<br>
                                         <a href="{{ $content->company_detail_page }}">{{ $content->company_detail_page }}</a><br>
                                         <br>
-                                        [Contact Person]<br>
+                                        <strong>[Contact Person]</strong><br>
                                         {{ $content->member_name }}<br>
                                         {{ $content->email }}<br>
                                         {{ $content->phone }}<br>

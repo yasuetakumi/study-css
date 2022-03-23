@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 
 //use for email
 use App\Mail\CompanyRegistrationToAdminMail;
+use App\Mail\CompanyRegistrationToClientMail;
 use Illuminate\Support\Facades\Mail;
 
 //models used
@@ -92,32 +93,31 @@ class EstateController extends Controller
             //send email To all admin 3-1
             $adminEmailList = Admin::pluck('email')->toArray();
             
-            //send with bcc if DEV_EMAIL is provided in ENV
-            if(env('DEV_EMAIL')){
-                $bccEmail = env('DEV_EMAIL');
+            //send with bcc if BCC_PROPERTY_INQUIRY is provided in ENV
+            if(env('BCC_PROPERTY_INQUIRY')){
+                $bccEmail = env('BCC_PROPERTY_INQUIRY');
                 Mail::to($adminEmailList)->bcc($bccEmail)->send(new CompanyRegistrationToAdminMail($content));
             }else{
                 Mail::to($adminEmailList)->send(new CompanyRegistrationToAdminMail($content));
             }
 
-            //if mail failed then dont save data and return error
-            if (Mail::failures()) {
+            //END SEND EMAIL TO ADMIN 3-1
+            //-----------------------------------------
+            //send email to registered user 3-2
+            //send with bcc if BCC_PROPERTY_INQUIRY is provided in ENV
+            if(env('BCC_PROPERTY_INQUIRY')){
+                $bccEmail = env('BCC_PROPERTY_INQUIRY');
+                Mail::to($dataCompany['email'])->bcc($bccEmail)->send(new CompanyRegistrationToClientMail($content));
+            }else{
+                Mail::to($dataCompany['email'])->send(new CompanyRegistrationToClientMail($content));
+            }
+             //if mail failed then dont save data and return error
+             if (Mail::failures()) {
                 // return failed mails
                 $response->status = "false";
                 return response()->json($response, 201); 
             }
             //END SEND EMAIL TO ADMIN 3-1
-            //-----------------------------------------
-            //send email to registered user 3-2
-            //send with bcc if DEV_EMAIL is provided in ENV
-            if(env('DEV_EMAIL')){
-                $bccEmail = env('DEV_EMAIL');
-                Mail::to($dataCompany['email'])->bcc($bccEmail)->send(new CompanyRegistrationToClientMail($content));
-            }else{
-                Mail::to($dataCompany['email'])->send(new CompanyRegistrationToClientMail($content));
-            }
-
-            
             //-----------------------------------------
             //END SENDING EMAIL
             //-----------------------------------------

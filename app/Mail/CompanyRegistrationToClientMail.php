@@ -32,11 +32,11 @@ class CompanyRegistrationToClientMail extends Mailable
         //if there is NOREPLY_SITE_EMAIL variable in env then set from
         if(env('NOREPLY_SITE_EMAIL')){
             return $this->from(env('NOREPLY_SITE_EMAIL'))
-                    ->subject('New Application From Real Estate Agent To Join The Site')
+                    ->subject('Thank You For The Application To Join The Site')
                     ->view('mail.CompanyRegistrationEmailToClientMail');
         }
 
-        return $this->subject('New Application From Real Estate Agent To Join The Site')
+        return $this->subject('Thank You For The Application To Join The Site')
                     ->view('mail.CompanyRegistrationEmailToClientMail');
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>New Application From Real Estate Agent To Join The Site</title>
+    <title>Thank You For The Application To Join The Site</title>
 </head>
 <body style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; background-color: #f5f8fa; color: #74787E; height: 100%; hyphens: auto; line-height: 1.4; margin: 0; -moz-hyphens: auto; -ms-word-break: break-all; width: 100% !important; -webkit-hyphens: auto; -webkit-text-size-adjust: none; word-break: break-word;">
 <style>
@@ -44,19 +44,19 @@
                             <!-- Body content -->
                             <tr>
                                 <td class="content-cell" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
-                                    <p>An Application Has Been Made With The Following Details:</p>
+                                    <p><strong>Your Application Has Been Made With The Following Details:</strong></p>
                                     <p>
-                                        [Company]<br>
+                                        <strong>[Company]</strong><br>
                                         {{ $content->company_name }}<br>
                                         {{ $content->address }}<br>
                                         {{ $content->motivation_to_join }}<br>
-                                        <a href="{{ $content->company_detail_page }}">{{ $content->company_detail_page }}</a><br>
                                         <br>
-                                        [Contact Person]<br>
+                                        <strong>[Contact Person]</strong><br>
                                         {{ $content->member_name }}<br>
                                         {{ $content->email }}<br>
                                         {{ $content->phone }}<br>
                                     </p>
+                                    <p><strong>We contact you with the result or for further details later. Thank you in advance for your patience.</strong></p>
                                 </td>
                             </tr>
                         </table>
