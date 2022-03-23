@@ -57,12 +57,12 @@ class EstateController extends Controller
         $data = $request->all();
         $response = new \stdClass;
         
-        \DB::beginTransaction();
         try {
             //insert into companies table
             $Company = new Company();
             $dataCompany = $data['companies'];
             $dataCompany['status'] = "pending";
+            $dataCompany['company_admin_id'] = 1;
             $dataCompany['company_name'] = $data['companies']['name'];
             $dataCompany['company_name_kana'] = $data['companies']['name_kana'];
             $dataCompany['address'] = $data['companies']['prefecture'].$data['companies']['city'].$data['companies']['area_number'].$data['companies']['name_building'];
@@ -85,7 +85,7 @@ class EstateController extends Controller
             $content->company_name          = $dataCompany['company_name'];
             $content->address               = $dataCompany['address'];
             $content->motivation_to_join    = $dataCompany['reason'] == 1 ? '物件を掲載したい' : ($dataCompany['reason'] == 2 ? '客付け物件を閲覧したい' : 'その他');
-            $content->company_detail_page   = route('company.register');
+            $content->company_detail_page   = route('admin.approval.edit', $Company->id);
             $content->member_name           = $data['users']['display_name'];
             $content->email                 = $dataCompany['email'];
             $content->phone                 = $dataCompany['phone'];
@@ -122,15 +122,11 @@ class EstateController extends Controller
             //END SENDING EMAIL
             //-----------------------------------------
 
-            //if everything is fine then save data
-            \DB::commit();
-
             //send success response
             $response->status = 'success';
             return response()->json($response, 200);
         }catch(Exception $e) {
             //send failure response
-            \DB::rollback();
             $response->status = 'false';
             return response()->json($response, 201);
         }
