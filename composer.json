@@ -17,6 +17,7 @@
         "nesbot/carbon": "^2.25",
         "olssonm/l5-very-basic-auth": "^6.3",
         "orangehill/iseed": "^3.0",
+        "stripe/stripe-php": "^7.118",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

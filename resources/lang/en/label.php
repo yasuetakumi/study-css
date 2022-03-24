@@ -185,6 +185,21 @@ return [
     //B3
     'administrator' => 'Administrator',
 
+    //B8
+    'edit_company_payment_details' => 'Edit Company Payment Detail',
+    'remaining_points' => 'Remaining Points',
+    'subscription_plan' => 'Subscription Plan',
+    'card_number' => 'Card Number',
+    'security_number' => 'Security Number',
+    'card_holder_name' => 'Card Holder Name',
+    'card_brand' => 'Card Brand',
+    'expiry_year' => 'Expiry Year',
+    'expiry_month' => 'Expiry Month',
+    'expiry_date_subscription' => 'Expiry date of subscription plan',
+    'register_details' => 'Register Details',
+    'time_of_payment' => 'Time of Payment Detail Registration',
+    'time_of_updating' => 'Time of Updating Registration Details',
+
     // C5
     'underground' => 'Underground',
 

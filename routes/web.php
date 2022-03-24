@@ -151,7 +151,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B7
             Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
             // B8
-            // Route::get('property_detail/{id}', 'Backend\PropertyController@detail')->name('company.property.show');
+            Route::get('payment', 'Backend\CompanyPaymentController@edit')->name('company.payment.edit');
+            Route::post('payment', 'Backend\CompanyPaymentController@edit')->name('company.payment.update');
         });
     });
 
