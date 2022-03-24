@@ -269,9 +269,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('company.payment')}}" class="nav-link">
+                        <a href="{{route('company.payment.edit')}}" class="nav-link">
                             <i class="fas fa-user nav-icon"></i>
-                            <p>@lang('label.')</p>
+                            <p>@lang('label.edit_company_payment_details')</p>
                         </a>
                     </li>
                     {{-- Property --}}

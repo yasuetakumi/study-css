@@ -8,29 +8,24 @@
 @endsection
 
 @section('top_buttons')
-    @if(!$isApproval)
-        @if ($page_type == "create")
-            <a href="{{route('admin.company.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
-        @else
-            {{-- Create company : ONLY SHOW for super_admin or admin --}}
-            @if(Auth::user()->has_permit_edit_company )
-                <a href="{{route('admin.company.create')}}" class="btn btn-secondary float-sm-right">@lang('label.createNew')</a>
-            @endif
-            @if (Auth::user()->adminRole)
-                <a href="{{route('admin.company.index')}}" class="btn btn-secondary float-sm-right">@lang('label.list')</a>
-            @endif
-        @endif
-    @endif
+
 @endsection
 
 @section('content')
-    @component('backend._components.form_container', ["action" => $form_action, "page_type" => $page_type, "files" => false])
-        @component('backend._components.input_text', ['name' => 'company_name', 'label' => __('label.company_name'), 'required' => 1, 'value' => $item->company_name]) @endcomponent
-        @component('backend._components.input_postcode', ['name' => 'post_code', 'label' => __('label.post_code'), 'required' => 1, 'value' => $item->post_code]) @endcomponent
-        @component('backend._components.input_text', ['name' => 'address', 'label' => __('label.address'), 'required' => 1, 'value' => $item->address]) @endcomponent
-        @component('backend._components.input_text', ['name' => 'phone', 'label' => __('label.phone'), 'required' => 1, 'value' => $item->phone]) @endcomponent
-        @component('backend._components.input_radio', ['name' => 'status', 'options' => ['pending', 'active', 'block'], 'label' => __('label.status'), 'required' => 1, 'value' => $item->status]) @endcomponent
+    @component('backend._components.form_container', ["action" => $form_action, 'id' => 'company-payment', "page_type" => $page_type, "files" => false])
+        @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => $company->remaining_points, 'required' => 0]) @endcomponent
+        @component('backend._components.input_select',['label' => __('label.subscription_plan'), 'options' => $subscription_plan, 'name' => 'subscription_plan_id', 'value' => $company->company_payment_detail->subscription_plan_id ?? '', 'required' => 1])@endcomponent
+        @component('backend._components.input_number', ['label' => __('label.card_number'), 'value' => $company->company_payment_detail->card_number ?? '', 'name' => 'card_number', 'required' => 1])@endcomponent
+        @component('backend._components.input_number', ['label' => __('label.security_number'), 'value' => $company->company_payment_detail->card_security_number ?? '', 'name' => 'card_security_number', 'required' => 0])@endcomponent
+        @component('backend._components.input_text', ['label' => __('label.card_holder_name'), 'value' => $company->company_payment_detail->cardholder_name ?? '', 'name' => 'card_holder_name', 'required' => 1])@endcomponent
+        @component('backend._components.input_text', ['label' => __('label.card_brand'), 'value' => $company->company_payment_detail->card_brand ?? '', 'name' => 'card_brand', 'required' => 1])@endcomponent
+        @component('backend._components.input_select_date', ['label' => __('label.expiry_month'), 'options' => $months, 'name' => 'card_month_expire_at', 'required' => 1, 'value' => !empty($company_month_expire) ? $company_month_expire : '']) @endcomponent
+        @component('backend._components.input_select_date', ['label' => __('label.expiry_year'), 'options' => $years, 'name' => 'card_year_expire_at', 'required' => 1, 'value' => !empty($company_year_expire) ? $company_year_expire : '']) @endcomponent
 
+        @component('backend._components.text_label', ['label' => __('label.expiry_date_subscription'), 'name' => 'subscription_expires_at', 'value' => $company->company_payment_detail->subscription_expires_at ?? '', 'required' => 0]) @endcomponent
+        @component('backend._components.text_label', ['label' => __('label.register_details'), 'name' => 'register_detail', 'value' => $company->company_payment_detail->updated_at ?? '', 'required' => 0]) @endcomponent
+        @component('backend._components.text_label', ['label' => __('label.time_of_payment'), 'name'=> 'time_payment', 'value' => $company->company_payment_detail->created_at ?? '', 'required' => 0]) @endcomponent
+        @component('backend._components.text_label', ['label' => __('label.time_of_updating'), 'name' => 'time_updating', 'value' => $company->company_payment_detail->updated_at ?? '', 'required' => 0]) @endcomponent
         @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
     @endcomponent
 @endsection
@@ -145,7 +140,7 @@
             refreshParsley: function() {
                 setTimeout(() => {
                     if($('.parsley-errors-list.filled').length > 0) {
-                        var $form = $('#property-form');
+                        var $form = $('#company-payment');
                         $form.parsley().validate();
                         checkSelect2Class();
                     }
