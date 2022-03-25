@@ -18,19 +18,17 @@
         </div>
         <!-- Modal -->
         <div class="modal fade" id="modalSearchCondition" tabindex="-1" role="dialog" aria-labelledby="modalSearchConditionTitle" aria-hidden="true">
-            <div class="modal-lg bg-white mx-auto border rounded-0 shadow-sm" role="document">
-                <div class="d-flex align-items-center p-2 border-bottom ">
-                    <div class="d-flex flex-grow-1 justify-content-between">
-                        <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
-                        <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
-                    </div>
-                    <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
-                        <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
-                    </a>
-                </div>
-            </div>
-            <div class="modal-dialog modal-dialog-scrollable modal-lg mt-0" role="document" v-for="(sc, index) in items.search_condition" :key="index">
+            <div class="modal-dialog modal-lg mt-0" role="document" v-for="(sc, index) in items.search_condition" :key="index">
                 <div class="modal-content rounded-0">
+                    <div class="modal-header" v-if="index == 0">
+                        <div class="d-flex flex-grow-1 justify-content-between">
+                            <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
+                            <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
+                        </div>
+                        <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
+                            <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
+                        </a>
+                      </div>
                     <div class="modal-body">
                         <div class="position-relative bg-white">
                             <div class="position-absolute" style="top: 0px; left: 0px;">
@@ -77,17 +75,13 @@
                                     <div class="col-8 mt-1">
                                         <textarea class="form-control w-100" name="comment" :id="'comment'+index" cols="30" rows="5" readonly>@{{sc.comment ? sc.comment : ''}}</textarea>
                                         <div class="d-flex justify-content-end">
+                                            {{-- Edit Or Save Button --}}
                                             <div class="text-right">
                                                 <input :id="'btnEdit' + index" value="" type="button" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleEditOrSave(index)">
-                                                    {{-- @{{titleEditOrSave(index) ? '編集' : '保存'}} --}}
-
-
                                             </div>
                                             <!-- Cancel Button-->
                                             <div class="text-right ml-2">
                                                 <input :id="'btnCancel'+index" type="button" value="キャンセル" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleCancel(index)">
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -146,6 +140,13 @@
                     }
             });
         },
+        updated: function(){
+            if(this.items.search_condition && this.items.search_condition.length > 0)
+                for(let i=0; i < this.items.search_condition.length; i++){
+                    this.titleEditOrSave(i);
+                    this.showCancelButton(i);
+                }
+        },
 
         // Computed properties
         computed: {
@@ -180,6 +181,7 @@
                     localStorage.setItem('searchCondition', JSON.stringify(conditions));
                     currentTextArea.setAttribute("readonly", "true");
                     document.getElementById("btnEdit"+index).setAttribute("value", "編集");
+                    document.getElementById("btnCancel"+index).classList.remove("d-block")
                     document.getElementById("btnCancel"+index).classList.add("d-none");
                 }
                 this.getLocalStorage();
@@ -187,13 +189,17 @@
 
             handleCancel: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
+                let currentBtnCancel = document.getElementById("btnCancel"+index);
                 currentTextArea.setAttribute("readonly", "true");
+                currentBtnCancel.classList.remove("d-block");
+                currentBtnCancel.classList.add("d-none");
 
             },
             getLocalStorage: function(){
                 let local = localStorage.getItem("searchCondition");
-                if(local != null){
-                    this.items.search_condition = JSON.parse(local);
+                let localArr = JSON.parse(local) || []; // parse to array
+                if(localArr.length > 0){ //check if array null
+                    this.items.search_condition = localArr;
                 }
             },
             deleteSearchCondition: function(index){
@@ -227,7 +233,7 @@
                 if( currentTextArea.hasAttribute("readonly") ){
                     document.getElementById("btnCancel"+index).classList.add("d-none");
                     // return false;
-                } else {List
+                } else {
                     document.getElementById("btnCancel"+index).classList.add("d-block");
                     // return true;
                 }

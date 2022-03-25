@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -69,8 +70,12 @@ class LoginController extends Controller
         $this->saveLog('User login succeed', 'Email = ' . $user->email . ', User Name = ' . $user->display_name, $user->id);
 
         // Set target url
-        if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN)
-            $targetURL = session('targetURL') == route('login') ? route('admin.property.index') : session('targetURL');
+        if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN) {
+            // If previous url is not admin site or previous url is login, redirect to property index
+            // Else redirect to target url (admin site)
+            $targetURL = !Str::contains(session('targetURL'), 'admin') || session('targetURL') == route('login')
+                ? route('admin.property.index') : session('targetURL');
+        }
         elseif (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_COMPANY_ADMIN)
             $targetURL = route('admin.company.user.index', Auth::guard('web')->user()->company->id);
 
