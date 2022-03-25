@@ -29,7 +29,19 @@
     {{--custom css--}}
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{AssetHelper::version('css/backend/backend-custom.css')}}">
+
     <style>
+        .parsley-errors-list{
+            list-style-type: none;
+        }
+        .errorBlock{
+            color: red;
+            font-size: 11px;
+        }
+        .errorBlock ul{
+            padding: 0;
+            margin: 0;
+        }
         .modal { overflow: auto !important; }
     </style>
     @stack('css')
