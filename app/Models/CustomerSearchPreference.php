@@ -34,7 +34,7 @@ class CustomerSearchPreference extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function walking_distance()
+    public function walking_distance_option()
     {
         return $this->belongsTo(WalkingDistanceFromStationOption::class, 'walking_distance');
     }

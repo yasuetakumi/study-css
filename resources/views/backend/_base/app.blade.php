@@ -29,6 +29,9 @@
     {{--custom css--}}
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{AssetHelper::version('css/backend/backend-custom.css')}}">
+    <style>
+        .modal { overflow: auto !important; }
+    </style>
     @stack('css')
 </head>
 <body class="hold-transition sidebar-mini">

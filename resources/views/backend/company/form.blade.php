@@ -1,5 +1,5 @@
 @php
-    $isApproval = Route::currentRouteName() == 'admin.approval.edit';
+    $isApproval = Route::currentRouteName() == 'admin.approval.show';
 @endphp
 @extends('backend._base.content_form')
 

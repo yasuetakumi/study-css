@@ -483,6 +483,7 @@
                 axios.post(root_url + '/search-preference', data)
                     .then((result) => {
                         console.log(result.data);
+                        this.items.email_search_preference = null;
                         // Show success alert
                         let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
                         this.$toasted.show( msg, {
