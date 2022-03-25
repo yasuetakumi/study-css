@@ -201,4 +201,5 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::post('estate/store', 'Frontend\EstateController@store')->name('company.store');
     Route::get('estate/check_email', 'Frontend\EstateController@check_email')->name('company.check_email');
 
+    Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
 });
