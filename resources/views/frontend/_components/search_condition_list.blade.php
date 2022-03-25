@@ -140,6 +140,13 @@
                     }
             });
         },
+        updated: function(){
+            if(this.items.search_condition && this.items.search_condition.length > 0)
+                for(let i=0; i < this.items.search_condition.length; i++){
+                    this.titleEditOrSave(i);
+                    this.showCancelButton(i);
+                }
+        },
 
         // Computed properties
         computed: {
@@ -190,8 +197,9 @@
             },
             getLocalStorage: function(){
                 let local = localStorage.getItem("searchCondition");
-                if(local != null){
-                    this.items.search_condition = JSON.parse(local);
+                let localArr = JSON.parse(local) || []; // parse to array
+                if(localArr.length > 0){ //check if array null
+                    this.items.search_condition = localArr;
                 }
             },
             deleteSearchCondition: function(index){
@@ -225,7 +233,7 @@
                 if( currentTextArea.hasAttribute("readonly") ){
                     document.getElementById("btnCancel"+index).classList.add("d-none");
                     // return false;
-                } else {List
+                } else {
                     document.getElementById("btnCancel"+index).classList.add("d-block");
                     // return true;
                 }
