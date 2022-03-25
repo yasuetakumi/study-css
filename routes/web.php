@@ -3,7 +3,9 @@
 use App\Models\User;
 use App\Models\Property;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
+use Stripe\StripeClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,6 +155,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             // B8
             Route::get('payment', 'Backend\CompanyPaymentController@edit')->name('company.payment.edit');
             Route::put('payment', 'Backend\CompanyPaymentController@update')->name('company.payment.update');
+            Route::post('payment', 'Backend\CompanyPaymentController@store')->name('company.payment.store');
         });
     });
 

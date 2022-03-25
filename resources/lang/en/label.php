@@ -199,6 +199,9 @@ return [
     'register_details' => 'Register Details',
     'time_of_payment' => 'Time of Payment Detail Registration',
     'time_of_updating' => 'Time of Updating Registration Details',
+    'points_to_charge' => 'Points to Charge',
+    'costs_of_points' => 'Costs of Points',
+    'buy_points' => 'Buy Points',
 
     // C5
     'underground' => 'Underground',

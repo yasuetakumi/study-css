@@ -46,7 +46,16 @@ class CompanyPaymentController extends Controller
      */
     public function create()
     {
-        //
+
+        $idCompany = Auth::guard('user')->user()->belong_company_id;
+        $company = CompanyPaymentDetail::where('company_id', $idCompany)->first();
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $data['customer'] = $stripe->customers->retrieve(
+            $company->stripe_checkout_token, []
+        );
+
+
+        return view('backend.company.payment_create', $data);
     }
 
     /**
@@ -57,7 +66,26 @@ class CompanyPaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $idCompany = Auth::guard('user')->user()->belong_company_id;
+        $companyPayment = CompanyPaymentDetail::where('company_id', $idCompany)->first();
+
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $data = $stripe->paymentIntents->create([
+            "customer" => $companyPayment->stripe_customer_id,
+            "amount" => $request->point_charge,
+            "currency" => "jpy",
+            "payment_method" => $companyPayment->stripe_checkout_token,
+            // "payment_method_types " => ['card'],
+            // "description" => "Test Remaining Points from real estate media"
+        ]);
+        $company = Company::find($idCompany);
+        $company->update([
+            'remaining_points' => $company->remaining_points + $request->point_charge
+        ]);
+        // return response()->json($data);
+
+        return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
 
     /**
@@ -83,8 +111,13 @@ class CompanyPaymentController extends Controller
         $data['company'] = Company::with(['company_payment_detail'])->find($idCompany);
 
         $data['page_title'] = __('label.edit_company_payment_details');
-        $data['page_type'] = 'edit';
-        $data['form_action'] = route('company.payment.update');
+
+        $data['page_type_detail'] = 'edit';
+        $data['form_action_detail'] = route('company.payment.update');
+
+        $data['page_type_charge'] = 'create';
+        $data['form_action_charge'] = route('company.payment.store');
+
         $data['subscription_plan'] = SubscriptionPlan::all()->pluck('label_jp', 'id');
         $data['company_month_expire'] = isset($data['company']->company_payment_detail->card_expires_at) ? $data['company']->company_payment_detail->card_expires_at->format('m') : '';
         $data['company_year_expire'] = isset($data['company']->company_payment_detail->card_expires_at) ? $data['company']->company_payment_detail->card_expires_at->format('Y') : '';
@@ -106,8 +139,16 @@ class CompanyPaymentController extends Controller
                 'value' => $year->format('Y')
             ));
         }
+        $points = array();
+        for($k = 0; $k <= 1000; $k = $k+50){
+            array_push($points, array(
+                'label' => $k,
+                'value' => $k
+            ));
+        }
         $data['years'] = $years;
         $data['months'] = $months;
+        $data['points'] = $points;
         // return $data;
         return view('backend.company.payment_detail', $data);
     }
@@ -127,20 +168,59 @@ class CompanyPaymentController extends Controller
 
         $date = $data['card_year_expire_at'] . '-' . $data['card_month_expire_at'] . '-' . '01';
         $cardExpireAt = Carbon::parse($date)->format("Y-m-d");
-        try{
-            CompanyPaymentDetail::updateOrCreate([
-                'company_id' => $idCompany
-            ],[
-                'subscription_plan_id' => $data['subscription_plan_id'],
-                'card_number' => $data['card_number'],
-                'card_security_number' => $data['card_security_number'],
-                'cardholder_name' => $data['card_holder_name'],
-                'card_brand' => $data['card_brand'],
-                'card_expires_at' => $cardExpireAt,
+
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $company = CompanyPaymentDetail::updateOrCreate([
+            'company_id' => $idCompany
+        ],[
+            'subscription_plan_id' => $data['subscription_plan_id'],
+            'card_number' => $data['card_number'],
+            'card_security_number' => $data['card_security_number'],
+            'cardholder_name' => $data['card_holder_name'],
+            'card_brand' => $data['card_brand'],
+            'card_expires_at' => $cardExpireAt,
+        ]);
+        //create as stripe customer if stripe_customer_id null
+        if(empty($company->stripe_customer_id)){
+            $customer = $stripe->customers->create([
+                "name" => Auth::guard("user")->user()->display_name,
+                "email" => Auth::guard("user")->user()->email,
+                "description" => "User Company"
             ]);
-        } catch( \Exception $e){
-            return redirect()->back()->with('errors', __('label.FAILED_UPDATE_MESSAGE'));
+            $company->update([
+                'stripe_customer_id' => $customer->id
+            ]);
+
         }
+        // create payment method
+        $payment = $stripe->paymentMethods->create([
+            'type' => 'card',
+            'card' => [
+                'number' => $data['card_number'],
+                'exp_month' => $request->card_month_expire_at,
+                'exp_year' => $request->card_year_expire_at,
+                'cvc' => $data['card_security_number'],
+            ],
+            'billing_details' => [
+                'name' => $data['card_holder_name']
+            ]
+        ]);
+        //get again after update stripe_customer_id
+
+        $dataCustomer = CompanyPaymentDetail::where('stripe_customer_id', $customer->id)->first();
+
+        //add payment method to stripe
+        $method = $stripe->paymentMethods->attach(
+            $payment->id,[
+                "customer" =>  $dataCustomer->stripe_customer_id //add to spesific customer
+            ]
+        );
+        //save payment method token id
+        $company->update([
+            'stripe_checkout_token' => $method->id
+        ]);
+
+        // return response()->json($method);
         return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
 

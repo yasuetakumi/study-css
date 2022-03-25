@@ -198,6 +198,9 @@ return [
     'register_details' => '登録',
     'time_of_payment' => '購入情報登録時刻',
     'time_of_updating' => '購入情報更新時刻',
+    'points_to_charge' => '追加したいポイント',
+    'costs_of_points' => 'コスト',
+    'buy_points' => 'ポイントを使います',
 
     // C5
     'underground' => '地下',
