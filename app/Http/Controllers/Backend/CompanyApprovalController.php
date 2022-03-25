@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\User;
 use App\Models\Company;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\DatatablesHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\CompanyApprovalMail;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyApprovalController extends Controller
 {
@@ -95,8 +99,23 @@ class CompanyApprovalController extends Controller
     public function update(Request $request, $id)
     {
         $company = Company::find($id);
+        $user_email = User::where('belong_company_id', $company->id)->pluck('email');
         $data['status'] = Company::ACTIVE;
         $company->update($data);
+
+        foreach($user_email as $email){
+            $rand_password = Str::random(8);
+            $compose_email = [
+                'email' => $email,
+                'password' => $rand_password,
+            ];
+            //update users password
+            User::where('email', $email)->update([
+                'password' => bcrypt($rand_password)
+            ]);
+            //send mail to each user belong to company
+            Mail::to($email)->bcc("adminrem@noreply.com")->send(new CompanyApprovalMail($compose_email));
+        }
 
         return redirect()->route('admin.approval.index')->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
