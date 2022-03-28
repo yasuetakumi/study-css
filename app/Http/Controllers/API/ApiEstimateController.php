@@ -46,7 +46,7 @@ class ApiEstimateController extends Controller
     public function getEstimationByPlanAndCategory(Request $request){
         $data = EstimationIndex::where('plan_id', $request->plan_id)
                 ->where('design_category_id', $request->design_category_id)
-                ->where('tsubo_area', toTsubo($request->surface_area))
+                ->where('tsubo_area', $request->surface_area)
                 ->whereIn('design_style_id', $request->design_style_id)
                 ->get();
         // $grandTotal = array();
