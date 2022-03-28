@@ -82,92 +82,7 @@
         @component('backend._components.input_number', ['name' => 'interior_transfer_price', 'label' => __('label.interior_transfer_price'), 'required' => null, 'value' => $item->interior_transfer_price ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         {{-- Plan --}}
         @if ($page_type == 'create' || $page_type == 'edit')
-            <div class="row">
-                {{-- <div class="col-12">
-                    <div id="form-group--plans" class="row form-group">
-
-                        @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>false])
-
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <div class="field-group clearfix">
-                                @foreach($design_categories as $dc)
-                                    <div class="icheck-cyan d-inline">
-                                        <input {{isset($dc_id->design_category_id) && $dc_id->design_category_id == $dc['value'] ? 'checked' : '' }} type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" @change="getPlanBySurfaceCategory"/>
-                                        <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <div class="col-12">
-                    <div id="form-group--plans" class="row form-group">
-
-                        @include('backend._components._input_header',['label'=>'Plans', 'required'=>true])
-
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <div class="field-group clearfix">
-                                <div v-if="loadingData">
-                                    Search Plans..
-                                </div>
-                                <div v-else-if="message_plan_properties">
-                                    @{{items.message_plan_properties}}
-                                </div>
-                                <div v-else>
-                                    <div class="mb-2" v-if="items.plans_design_category_1">
-                                        <p>居酒屋</p>
-                                        <div class="row">
-                                            <div v-for="plan in items.plans_design_category_1" :key="plan.id" class="col-md-3">
-                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
-                                                <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.selected_plan_dc_1 != null && items.selected_plan_dc_1 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-1-'+ plan.display_name" v-model="items.selected_plan_dc_1" name="plan_id_dc_1"/>
-                                                    <label :for="'plan-dc-1-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2" v-if="items.plans_design_category_2">
-                                        <p>カフェ</p>
-                                        <div class="row" >
-                                            <div v-for="plan in items.plans_design_category_2" :key="plan.id" class="col-md-3">
-                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
-                                                <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.selected_plan_dc_2 != null && items.selected_plan_dc_2 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-2-'+ plan.display_name" v-model="items.selected_plan_dc_2" name="plan_id_dc_2"/>
-                                                    <label :for="'plan-dc-2-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2" v-if="items.plans_design_category_3">
-                                        <p>バー</p>
-                                        <div class="row" >
-                                            <div v-for="plan in items.plans_design_category_3" :key="plan.id" class="col-md-3">
-                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
-                                                <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.selected_plan_dc_3 != null && items.selected_plan_dc_3 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-3-'+ plan.display_name" v-model="items.selected_plan_dc_3" name="plan_id_dc_3"/>
-                                                    <label :for="'plan-dc-3-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2" v-if="items.plans_design_category_4">
-                                        <p>ラーメン</p>
-                                        <div class="row">
-                                            <div v-for="plan in items.plans_design_category_4" :key="plan.id" class="col-md-3">
-                                                <img src="{{asset('img/backend/noimage.png')}}" alt="" onerror="{{asset('img/backend/noimage.png')}}" class="w-100 img-thumbnail d-block mx-auto">
-                                                <div class="icheck-cyan d-inline" >
-                                                    <input :checked="items.selected_plan_dc_4 != null && items.selected_plan_dc_4 == plan.id" type="radio" :value="plan.id" :id="'plan-dc-4-'+ plan.display_name" v-model="items.selected_plan_dc_4" name="plan_id_dc_4"/>
-                                                    <label :for="'plan-dc-4-'+ plan.display_name" class="text-uppercase mr-5">@{{plan.display_name}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('backend.property.components.plans_design_category')
         @endif
         @component('backend._components.input_image', ['name' => 'thumbnail_image_main', 'label' => __('Thumbnail Image Main'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'thumbnail_image_1', 'label' => __('Thumbnail Image 1'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_1 ?? '']) @endcomponent
@@ -408,14 +323,7 @@
                 var id = @json($companyUserId);
                 this.items.user_id = id;
             }
-            if(@json($page_type) == 'edit'){
-                this.getPlanBySurfaceCategory(1);
-                this.getPlanBySurfaceCategory(2);
-                this.getPlanBySurfaceCategory(3);
-                this.getPlanBySurfaceCategory(4);
-            } else if(@json($page_type) == 'create'){
-                console.log("create property");
-            }
+            this.changePlanBySurfaceArea();
 
         },
 
@@ -539,52 +447,61 @@
                 this.getPlanBySurfaceCategory(4);
             },
             getPlanBySurfaceCategory: function (catId) {
-                this.items.loading = true;
                 let surface_area = document.querySelector("input[name=surface_area]").value;
-                if(surface_area != null && catId != null){
+                var isSurfaceEmpty = surface_area === '';
+                if(isSurfaceEmpty == false && catId != null){
+                    this.items.loading = true;
                     axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + catId)
                     .then((result) => {
                         console.log("RESULTTT", result.data.data);
                         this.items.message_plan_properties = '';
                         if(catId == this.items.design_category_1){
                             this.items.plans_design_category_1 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_1.length; i++){
-                                if(this.items.plans_design_category_1[i].id == this.itemPropertyPlans[0].plan_id){
-                                    this.items.selected_plan_dc_1 = this.items.plans_design_category_1[i].id;
+                            if(@json($page_type) == 'edit'){
+                                    for(let i = 0; i < this.items.plans_design_category_1.length; i++){
+                                    if(this.items.plans_design_category_1[i].id == this.itemPropertyPlans[0].plan_id){
+                                        this.items.selected_plan_dc_1 = this.items.plans_design_category_1[i].id;
+                                    }
                                 }
                             }
 
                         } else if(catId == this.items.design_category_2){
                             this.items.plans_design_category_2 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_2.length; i++){
-                                if(this.items.plans_design_category_2[i].id == this.itemPropertyPlans[1].plan_id){
-                                    this.items.selected_plan_dc_2 = this.items.plans_design_category_2[i].id;
+                            if(@json($page_type) == 'edit'){
+                                for(let i = 0; i < this.items.plans_design_category_2.length; i++){
+                                    if(this.items.plans_design_category_2[i].id == this.itemPropertyPlans[1].plan_id){
+                                        this.items.selected_plan_dc_2 = this.items.plans_design_category_2[i].id;
+                                    }
                                 }
                             }
 
                         } else if(catId == this.items.design_category_3){
                             this.items.plans_design_category_3 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_3.length; i++){
-                                if(this.items.plans_design_category_3[i].id == this.itemPropertyPlans[2].plan_id){
-                                    this.items.selected_plan_dc_3 = this.items.plans_design_category_3[i].id;
+                            if(@json($page_type) == 'edit'){
+                                for(let i = 0; i < this.items.plans_design_category_3.length; i++){
+                                    if(this.items.plans_design_category_3[i].id == this.itemPropertyPlans[2].plan_id){
+                                        this.items.selected_plan_dc_3 = this.items.plans_design_category_3[i].id;
+                                    }
                                 }
                             }
 
                         } else if(catId == this.items.design_category_4){
                             this.items.plans_design_category_4 = result.data.data;
-                            for(let i = 0; i < this.items.plans_design_category_4.length; i++){
-                                if(this.items.plans_design_category_4[i].id == this.itemPropertyPlans[3].plan_id){
-                                    this.items.selected_plan_dc_4 = this.items.plans_design_category_4[i].id;
+                            if(@json($page_type) == 'edit'){
+                                for(let i = 0; i < this.items.plans_design_category_4.length; i++){
+                                    if(this.items.plans_design_category_4[i].id == this.itemPropertyPlans[3].plan_id){
+                                        this.items.selected_plan_dc_4 = this.items.plans_design_category_4[i].id;
+                                    }
                                 }
                             }
                         }
                     }).catch((err) => {
                         console.log(err);
                         console.log("checkkk err");
-                        this.items.message_plan_properties = 'Plan Not Found';
+                        this.items.message_plan_properties = 'Plan with surface area : ' + surface_area + '坪' + ' not found!';
                     });
                     this.items.loading = false;
-                } else if (surface_area == null){
+                } else if (isSurfaceEmpty){
                     this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
                 }
             },
