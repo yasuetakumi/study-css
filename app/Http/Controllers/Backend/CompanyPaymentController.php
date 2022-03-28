@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPSTORM_META\type;
+
 class CompanyPaymentController extends Controller
 {
     protected function validator( array $data, $type ){
@@ -192,22 +194,31 @@ class CompanyPaymentController extends Controller
             ]);
 
         }
+        //get again after update stripe_customer_id
+        $dataCustomer = CompanyPaymentDetail::where('stripe_customer_id', $customer->id)->first();
+
+        $cards = $stripe->customers->createSource(
+            $dataCustomer->stripe_customer_id,
+            [
+                'source' => $data['stripeToken']
+            ]
+        );
         // create payment method
         $payment = $stripe->paymentMethods->create([
-            'type' => 'card',
-            'card' => [
-                'number' => $data['card_number'],
-                'exp_month' => $request->card_month_expire_at,
-                'exp_year' => $request->card_year_expire_at,
-                'cvc' => $data['card_security_number'],
-            ],
-            'billing_details' => [
-                'name' => $data['card_holder_name']
-            ]
-        ]);
-        //get again after update stripe_customer_id
 
-        $dataCustomer = CompanyPaymentDetail::where('stripe_customer_id', $customer->id)->first();
+        ]);
+        // $payment = $stripe->paymentMethods->create([
+        //     'type' => 'card',
+        //     'card' => [
+        //         'number' => $data['card_number'],
+        //         'exp_month' => $request->card_month_expire_at,
+        //         'exp_year' => $request->card_year_expire_at,
+        //         'cvc' => $data['card_security_number'],
+        //     ],
+        //     'billing_details' => [
+        //         'name' => $data['card_holder_name']
+        //     ]
+        // ]);
 
         //add payment method to stripe
         $method = $stripe->paymentMethods->attach(
