@@ -81,6 +81,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomerSearchPreferencesPropertyTypeSeeder::class);
         $this->call(CustomerSearchPreferencesFloorAboveSeeder::class);
         $this->call(CustomerSearchPreferencesFloorUnderSeeder::class);
+        $this->call(CustomerSearchPreferenceStationSeeder::class);
+        $this->call(CustomerSearchPreferenceCuisineSeeder::class);
 
         //Payment Detail
         $this->call(SubscriptionPlanSeeder::class);

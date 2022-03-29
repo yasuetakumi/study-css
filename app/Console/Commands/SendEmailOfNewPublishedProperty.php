@@ -1,45 +1,45 @@
 <?php
-
+// -----------------------------------------------------------------------------
 namespace App\Console\Commands;
+// -----------------------------------------------------------------------------
 
-use App\Http\Controllers\API\ApiPropertyController;
-use App\Http\Controllers\Frontend\PropertyController as FrontendPropertyController;
-
+// -----------------------------------------------------------------------------
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\API\ApiPropertyController;
+use App\Http\Controllers\Frontend\PropertyController as FrontendPropertyController;
+use App\Mail\NewPropertyPublished;
 use App\Models\CustomerSearchPreference;
+// -----------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------
 class SendEmailOfNewPublishedProperty extends Command {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+    // -------------------------------------------------------------------------
+    // The name and signature of the console command.
+    // -------------------------------------------------------------------------
     protected $signature = 'command-1';
+    // -------------------------------------------------------------------------
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    // -------------------------------------------------------------------------
+    // The console command description.
+    // -------------------------------------------------------------------------
     protected $description = 'Send email automatically to end user when there is a new property published';
+    // -------------------------------------------------------------------------
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
+    // -------------------------------------------------------------------------
+    // Create a new command instance.
+    // -------------------------------------------------------------------------
     public function __construct() {
         parent::__construct();
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
+    // -------------------------------------------------------------------------
+    // Execute the console command.
+    // -------------------------------------------------------------------------
     public function handle() {
+        // Instruction
         // 1. Get all customer_search_preferences
         // 2. Get all properties where published_date is greater than or equal to now - 24 hours
         // 3. For each customer search preference
@@ -53,12 +53,27 @@ class SendEmailOfNewPublishedProperty extends Command {
         // Create request and execute filter property api
         // Get filtered property which date is yesterday - today
 
+        // ---------------------------------------------------------------------
+        // Get all customer preferences
+        // ---------------------------------------------------------------------
         $customerSearchPreferences = CustomerSearchPreference::all();
+        // ---------------------------------------------------------------------
 
+        // ---------------------------------------------------------------------
+        // Get matched properties
+        // ---------------------------------------------------------------------
         $data = $customerSearchPreferences->map(function($search, $searchKey) {
+            // -----------------------------------------------------------------
+            // Create new request
+            // -----------------------------------------------------------------
             $request= new Request();
+            // -----------------------------------------------------------------
 
+            // -----------------------------------------------------------------
+            // Add search condition to request
+            // -----------------------------------------------------------------
             if (count($search->cities)) $request->merge(['city' => $search->cities->pluck('id')->toArray()]);
+            if (count($search->stations)) $request->merge(['station' => $search->stations->pluck('id')->toArray()]);
             if ($search->surface_min) $request->merge(['surface_min' => $search->surface_min]);
             if ($search->surface_mac) $request->merge(['surface_mac' => $search->surface_mac]);
             if ($search->rent_amount_min) $request->merge(['rent_amount_min' => $search->rent_amount_min]);
@@ -72,34 +87,58 @@ class SendEmailOfNewPublishedProperty extends Command {
             if (count($search->property_preferences)) $request->merge(['property_preference' => $search->property_preferences->pluck('id')->toArray()]);
             if ($search->freetext) $request->merge(['name' => $search->freetext]);
             if ($search->walking_distance) $request->merge(['walking_distance' => $search->walking_distance]);
+            if (count($search->cuisines)) $request->merge(['cuisine' => $search->cuisines->pluck('id')->toArray()]);
+            // -----------------------------------------------------------------
 
-            // $request->merge([
-            //     'station' => '',
-            //     'cuisine' => '',
-            // ]);
-
+            // -----------------------------------------------------------------
+            // Add publication date condition to request
+            // -----------------------------------------------------------------
             $request->merge(['contain_date' => true]);
             $request->merge(['toJson' => 'true']);
+            // -----------------------------------------------------------------
 
+            // -----------------------------------------------------------------
+            // Get properties match with the condition
+            // -----------------------------------------------------------------
             $response = app(ApiPropertyController::class)->getPropertyByFilter($request);
             $properties = $response->getData()->data->result;
+            // -----------------------------------------------------------------
 
+            // -----------------------------------------------------------------
+            // Get compiled search condition
+            // -----------------------------------------------------------------
             $response = app(FrontendPropertyController::class)->compileFilter($request);
             $searchCondition = $response->getData();
+            // -----------------------------------------------------------------
 
+            // -----------------------------------------------------------------
+            // Compile data if properties found
+            // -----------------------------------------------------------------
             if (count($properties) && $search->is_email_enabled) {
                 return [
                     'email' => $search->customer_email,
                     'properties' => $properties,
-                    'searchCondition' => $searchCondition
+                    'searchCondition' => collect($searchCondition)->except(['created_at', 'number_of_match_property', 'url'])
                 ];
             }
-            else {
-                return null;
-            }
+            // -----------------------------------------------------------------
+            else return null;
+            // -----------------------------------------------------------------
         })->filter();
+        // ---------------------------------------------------------------------
 
-        // Todo
-        // Send the email
+        // ---------------------------------------------------------------------
+        // Send the email to customer
+        // ---------------------------------------------------------------------
+        foreach ($data as $key => $row) {
+            $row = (object) $row;
+
+            env('BCC_PROPERTY_INQUIRY') ?
+                Mail::to($row->email)->bcc(env('BCC_PROPERTY_INQUIRY'))->send(new NewPropertyPublished($row))
+                : Mail::to($row->email)->send(new NewPropertyPublished($row));
+        }
+        // ---------------------------------------------------------------------
     }
+    // -------------------------------------------------------------------------
 }
+// -----------------------------------------------------------------------------
