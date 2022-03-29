@@ -106,9 +106,9 @@ class ApiPropertyController extends Controller
 
         // Filter walking distance
         if(isset($filter->walking_distance)){
-            $id = $filter->walking_distance;
-            $query->whereHas('property_stations', function($q) use($id) {
-                $q->where('distance_from_station', $id);
+            $walkingDistance = $filter->walking_distance;
+            $query->whereHas('property_stations.walking_distance', function($q) use($walkingDistance) {
+                $q->where('value', '<=', $walkingDistance);
             });
         }
 

@@ -82,5 +82,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomerSearchPreferencesFloorAboveSeeder::class);
         $this->call(CustomerSearchPreferencesFloorUnderSeeder::class);
 
+        //Payment Detail
+        $this->call(SubscriptionPlanSeeder::class);
+        $this->call(CompanyPaymentDetailSeeder::class);
+        $this->call(PointTypeSeeder::class);
+        $this->call(CompanyPointSeeder::class);
+
     }
 }
