@@ -32,7 +32,6 @@ $factory->define(CustomerSearchPreference::class, function (Faker $faker) {
     return [
         'customer_email' => $faker->email,
         'is_email_enabled' => rand(0,1),
-        'city_id' => City::all()->pluck('id')->random(),
         'surface_min' => fromTsubo($getSurfaceMin),
         'surface_max' => fromTsubo($getSurfaceMax),
         'rent_amount_min' => fromMan($getRentMin),
@@ -41,10 +40,6 @@ $factory->define(CustomerSearchPreference::class, function (Faker $faker) {
         'walking_distance' => WalkingDistanceFromStationOption::all()->pluck('id')->random(),
         'transfer_price_min' => fromMan($getTransferMin),
         'transfer_price_max' => fromMan($getTransferMax),
-        'floor_under' => $getFloorUnder,
-        'floor_above' => $getFloorAbove,
-        'property_preference' => PropertyPreference::all()->pluck('id')->random(),
-        'property_type' => PropertyType::all()->pluck('id')->random(),
         'skeleton_id' => CustomerSkeletonPreference::all()->pluck('id')->random(),
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),

@@ -246,7 +246,7 @@ class PropertyController extends Controller {
 
         // Return result
         // This function was called from filter function (search button on C2 was clicked)
-        if (!isset($request['toJson'])) return $result;
+        if (!$request->has('toJson')) return $result;
         // This function was called from axios (current condition on form filter)
         else return response()->json($result);
     }

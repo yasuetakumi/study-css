@@ -19,6 +19,8 @@ class CreatePropertiesTable extends Migration
             $table->unsignedBigInteger('postcode_id')->nullable();
             $table->unsignedBigInteger('prefecture_id')->nullable();
             $table->string('location')->nullable();
+            $table->unsignedBigInteger('publication_status_id')->default(1);
+            $table->timestamp('publication_date')->nullable();
             $table->integer('surface_area')->nullable();
             $table->integer('rent_amount')->nullable();
             $table->integer('number_of_floors_under_ground')->nullable();
@@ -70,6 +72,7 @@ class CreatePropertiesTable extends Migration
             $table->foreign('structure_id')->references('id')->on('structures')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('business_terms_id')->references('id')->on('business_terms')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('cuisine_id')->references('id')->on('cuisines')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('publication_status_id')->references('id')->on('property_publication_statuses')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

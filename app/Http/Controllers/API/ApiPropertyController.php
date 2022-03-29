@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 // -----------------------------------------------------------------------------
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
 use App\Models\Property;
 // -----------------------------------------------------------------------------
@@ -132,6 +133,13 @@ class ApiPropertyController extends Controller
         // Filter name
         if(isset($filter->name)){
             $query->where('location', 'like', '%' . $filter->name . '%')->orWhere('repayment', 'like', '%' . $filter->name . '%')->orWhere('renewal_fee', 'like', '%' . $filter->name . '%');
+        }
+
+        // Filter date (for email)
+        if(isset($filter->contain_date)){
+            $yesterday = Carbon::now()->addDay('-1')->format('Y/m/d');
+            $today = Carbon::now()->format('Y/m/d');
+            $query->whereDate('publication_date', '>=',$yesterday)->whereDate('publication_date', '<=', $today);
         }
 
         // Get property
