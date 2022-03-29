@@ -89,9 +89,9 @@ class Property extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function prefectures()
+    public function prefecture()
     {
-        return $this->belongsTo(Prefecture::class);
+        return $this->belongsTo(Prefecture::class, 'prefecture_id');
     }
 
     public function property_type()
@@ -106,7 +106,7 @@ class Property extends Model
 
     public function business_term()
     {
-        return $this->belongsTo(BusinessTerm::class);
+        return $this->belongsTo(BusinessTerm::class, 'business_terms_id');
     }
 
     public function cuisine()

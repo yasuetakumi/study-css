@@ -4,23 +4,24 @@ namespace App\Http\Controllers\Frontend;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-use App\Http\Controllers\API\ApiPropertyController;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-// -----------------------------------------------------------------------------
 use App\Models\City;
-use App\Models\Station;
 use App\Models\Cuisine;
+use App\Models\Station;
+// -----------------------------------------------------------------------------
 use App\Models\Property;
 use App\Models\PropertyType;
+use Illuminate\Http\Request;
+use App\Models\ContactUsType;
 use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 use App\Models\PropertyPreference;
 use App\Models\TransferPriceOption;
+use App\Http\Controllers\Controller;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
 use App\Models\WalkingDistanceFromStationOption;
+use App\Http\Controllers\API\ApiPropertyController;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -59,6 +60,51 @@ class PropertyController extends Controller {
         $data['searchCondition'] = $searchCondition;
 
         return view('frontend.property.index', $data);
+    }
+
+    public function show($id)
+    {
+        $data['item']       = Property::with(['city', 'postcode', 'user.company', 'prefecture', 'property_type', 'structure', 'business_term', 'cuisine', 'property_plans.plan' => function($query){
+            $query->select('id', 'display_name', 'design_category_id');
+        }])->find($id);
+        // return $data['item'];
+        $data['page_title'] = 'Property Detail';
+        $categories =  [
+            [
+                'value' => Cuisine::IZAKAYA,
+                'label_en' => 'Izakaya / Dining Bar',
+                'label_jp' => '居酒屋・ダイニングバー',
+            ],
+            [
+                'value' => Cuisine::CAFE,
+                'label_en' => 'Cafe',
+                'label_jp' => 'カフェ',
+            ],
+            [
+                'value' => Cuisine::BAR,
+                'label_en' => 'Bar',
+                'label_jp' => 'バー',
+            ],
+            [
+                'value' => Cuisine::RAMEN,
+                'label_en' => 'Ramen',
+                'label_jp' => 'ラーメン',
+            ],
+
+        ];
+        $data['design_categories'] = collect($categories)->all();
+        $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
+        $data['form_action_inquiry'] = route('enduser.inquiry.store');
+        $data['property_related'] = Property::with(['city', 'property_stations.station'])
+                ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
+                ->where('city_id', $data['item']->city_id)
+                ->where('id', '!=', $data['item']->id)
+                ->orderByRaw('RAND()')
+                ->limit(3)
+                ->get();
+
+        //dd($data['design_categories']);
+        return view('frontend.property.show', $data);
     }
     // -------------------------------------------------------------------------
 
