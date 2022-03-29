@@ -37,6 +37,8 @@ class Property extends Model
         'prefecture_id',
         'city_id',
         'location',
+        'publication_status_id',
+        'publication_date',
         'surface_area',
         'rent_amount',
         'number_of_floors_under_ground',
