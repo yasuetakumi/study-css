@@ -188,7 +188,7 @@ class PropertyController extends Controller {
             $result['フリーワード'] = $filter['name'];
         }
         if(!empty($filter['walking_distance'])){
-            $walkingDistance = WalkingDistanceFromStationOption::find($filter['walking_distance']);
+            $walkingDistance = WalkingDistanceFromStationOption::where('value', $filter['walking_distance'])->first();
             $result['徒歩'] = $walkingDistance->label_jp;
         }
         if(isset($filter['floor_under'])){
