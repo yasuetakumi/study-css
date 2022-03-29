@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\AreaGroup;
+use App\Models\AsreaGroup;
 use App\Models\Area;
 use App\Models\Cuisine;
 use App\Models\DesignPlanStatus;
