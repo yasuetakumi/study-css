@@ -11,6 +11,7 @@ use App\Http\Controllers\API\ApiPropertyController;
 use App\Http\Controllers\Frontend\PropertyController as FrontendPropertyController;
 use App\Mail\NewPropertyPublished;
 use App\Models\CustomerSearchPreference;
+use App\Models\WalkingDistanceFromStationOption;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -86,7 +87,11 @@ class SendEmailOfNewPublishedProperty extends Command {
             if (count($search->property_types)) $request->merge(['property_type' => $search->property_types->pluck('id')->toArray()]);
             if (count($search->property_preferences)) $request->merge(['property_preference' => $search->property_preferences->pluck('id')->toArray()]);
             if ($search->freetext) $request->merge(['name' => $search->freetext]);
-            if ($search->walking_distance) $request->merge(['walking_distance' => $search->walking_distance]);
+            // if ($search->walking_distance) $request->merge(['walking_distance' => $search->walking_distance]);
+            if ($search->walking_distance) {
+                $walkingDistance = WalkingDistanceFromStationOption::find($search->walking_distance);
+                $request->merge(['walking_distance' => $walkingDistance->value]);
+            };
             if (count($search->cuisines)) $request->merge(['cuisine' => $search->cuisines->pluck('id')->toArray()]);
             // -----------------------------------------------------------------
 
@@ -115,10 +120,13 @@ class SendEmailOfNewPublishedProperty extends Command {
             // Compile data if properties found
             // -----------------------------------------------------------------
             if (count($properties) && $search->is_email_enabled) {
+                $searchCondition = collect($searchCondition)->except(['created_at', 'number_of_match_property', 'url']);
+                if (!count($searchCondition)) $searchCondition['-'] = 'no condition';
+
                 return [
                     'email' => $search->customer_email,
                     'properties' => $properties,
-                    'searchCondition' => collect($searchCondition)->except(['created_at', 'number_of_match_property', 'url'])
+                    'searchCondition' => $searchCondition
                 ];
             }
             // -----------------------------------------------------------------
