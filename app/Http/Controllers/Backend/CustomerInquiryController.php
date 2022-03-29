@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Backend;
 
 // -----------------------------------------------------------------------------
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Helpers\DatatablesHelper;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\CustomerInquiryMail;
-// -----------------------------------------------------------------------------
 use App\Models\Admin;
-use App\Models\CustomerInquiry;
-use App\Models\ContactUsType;
 use App\Models\Property;
+use Illuminate\Http\Request;
+use App\Models\ContactUsType;
+use App\Models\CustomerInquiry;
+// -----------------------------------------------------------------------------
+use App\Helpers\DatatablesHelper;
+use App\Mail\CustomerInquiryMail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -71,7 +72,9 @@ class CustomerInquiryController extends Controller {
     public function show($param) {
         if( $param == 'json' ){
 
-            $model = CustomerInquiry::with(['property', 'contact_us_type']);
+            $model = CustomerInquiry::with(['property', 'contact_us_type'])->whereHas('property', function($query) {
+                $query->where('user_id', Auth::guard('user')->user()->id);
+            });
             return (new DatatablesHelper)->instance($model)
                                             ->filterColumn('property.id', function($query, $keyword){
                                                 $query->whereHas('property', function($q) use ($keyword){
