@@ -8926,7 +8926,7 @@ if (mixin) app = new Vue(vueOptions); // Initiate Vue
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/real-estate-media/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! D:\real-estate-media\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

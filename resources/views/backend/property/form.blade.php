@@ -38,17 +38,27 @@
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, 'id' => 'property-form',  "page_type" => $page_type, "files" => true])
         {{-- @component('backend._components.input_select', ['name' => 'user_id', 'options' => $users, 'label' => __('label.user'), 'required' => null, 'value' => $item->user_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
-
-        @component('backend._components.vue.form.select2', [
+        @component('backend._components.vue.form.vue-select', [
+            'name'          => 'company_id',
+            'label'         => __('label.real_estate_agency'),
+            'label_select'  => 'text',
+            'required'      => 'true',
+            'options'       => 'companies_options',
+            'model'         => 'items.company_id',
+            'method'        => 'handleSelectCompany',
+            'disabled'       => 'items.disabled',
+        ])@endcomponent
+        @component('backend._components.vue.form.vue-select', [
             'name'          => 'user_id',
             'label'         => __('label.real_estate_agent_in_charge'),
+            'label_select'  => 'text',
             'required'      => 'true',
-            'options'       => '$store.state.preset.users_options',
+            'options'       => 'users_options',
             'model'         => 'items.user_id',
-            'disabled'      => 'items.disabled'
-        ])
-        @endcomponent
-        @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent
+            'disabled'       => 'items.disabled',
+        ])@endcomponent
+        <input type="hidden" :value="items.user_id" name="user_id" id="user_id">
+        {{-- @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent --}}
         {{-- @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
         @component('backend._components.input_select_ajax',[
             'name'              => 'postcode_id',
@@ -161,7 +171,7 @@
                 // Preset data
                 // ----------------------------------------------------------
                 preset: {
-                    users_options: @json($users_options),
+                    companies_options: @json($companies_options),
                     property: @json($item),
                     property_related: @json($property_related),
                 },
@@ -197,6 +207,8 @@
                 // ----------------------------------------------------------
                 items: {
                     user_id: null,
+                    list_user: null,
+                    company_id: null,
                     area_id: null,
                     selected_dc: 1,
                     list_design_style: null,
@@ -224,7 +236,6 @@
                     design_category_2: 2,
                     design_category_3: 3,
                     design_category_4: 4,
-                    company_name: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -242,16 +253,20 @@
         ## ------------------------------------------------------------------
         */
         mounted: function(){
-            if(@json($page_type) == 'edit' || @json($page_type) == 'detail'){
+
+            if(@json($page_type) == 'edit'){
                 var item = @json($item);
+                this.items.company_id = item.user.company.id;
                 this.items.user_id = item.user_id;
                 this.items.property_id = item.id;
                 this.setVisitedProperty();
-            } else if (@json($page_type) == 'create' && @json($companyUserId) != null) {
+            }
+            if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
                 this.items.user_id = id;
             }
 
+            this.handleSelectCompany();
             if(@json($page_type) != 'detail'){
                 this.changePlanBySurfaceArea();
             }
@@ -271,6 +286,21 @@
         ## ------------------------------------------------------------------
         */
         computed: {
+            companies_options: function(){
+                return this.$store.state.preset.companies_options;
+            },
+            users_options: function(){
+                if(this.items.list_user != null){
+                    return this.items.list_user
+                }
+                else {
+                    return [];
+                }
+
+            },
+            propertyList: function(){
+                return this.$store.state.preset.property;
+            },
             itemPropertyPlans: function(){
                 return this.$store.state.preset.property.property_plans;
             },
@@ -313,20 +343,6 @@
             },
             property_related: function(){
                 return this.$store.state.preset.property_related;
-            },
-            companyName: function(){
-                if(this.items.user_id != null){
-                    axios.get(root_url + '/company-name/' + this.items.user_id)
-                        .then((response) =>{
-                            console.log(response.data.company.company_name);
-                            this.items.company_name = response.data.company.company_name;
-                        }).catch((err) => {
-                            this.items.company_name = '';
-                            console.log(err);
-                        });
-                } else{
-                    return this.items.company_name;
-                }
             },
             pathToImage: function(){
                 let pathUploads = @json(asset('uploads'));
@@ -474,6 +490,29 @@
             handleImageNotFound: function(event){
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
+            },
+            handleSelectCompany: function(){
+                if(this.items.company_id == null){
+                    axios.get(root_url + '/api/v1/select2usercompany/')
+                        .then((result) => {
+                            this.items.list_user = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    axios.get(root_url + '/api/v1/select2usercompany/' + this.items.company_id)
+                        .then((result) => {
+                            this.items.list_user = result.data;
+                            if(this.items.user_id != null){
+                                const filtered = this.items.list_user.filter(el => el.id == this.items.user_id);
+                                if(filtered.length == 0){
+                                    this.items.user_id = null;
+                                }
+                            }
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                }
             },
             // --------------------------------------------------------------
         }

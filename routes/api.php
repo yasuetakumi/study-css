@@ -41,7 +41,8 @@ Route::prefix('v1')->group(function () {
     Route::get('select2Prefecture', 'API\ApiPrefectureController@seletc2Prefecture')->name('select2.prefecture');
     // City
     Route::get('select2city', 'API\ApiCityController@select2City')->name('select2.city');
-
+    // User Company
+    Route::get('select2usercompany/{companyId?}', 'API\ApiUserCompanyController@select2UserCompany')->name('select2.usercompany');
     // Get Grand total Estimation
     Route::get('/plans/getGrandTotalEstimation/{plan}/{tsubo}/{design}/{kitchen}/{designCat?}','API\ApiEstimateController@getGrandTotalEstimation');
     Route::post('/plans/getEstimationByPlanAndCategory', 'API\ApiEstimateController@getEstimationByPlanAndCategory');
