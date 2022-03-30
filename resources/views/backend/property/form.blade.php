@@ -49,9 +49,34 @@
         ])
         @endcomponent
         @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent
-        @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        {{-- @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
+        @component('backend._components.input_select_ajax',[
+            'name'              => 'postcode_id',
+            'options'           => [empty($item->postcode->postcode) ? '' : $item->postcode->postcode],
+            'label'             => __('label.postcode'),
+            'required'          => 1,
+            'url'               => route('select2.postcode'),
+            'value'             => $item->postcode_id ?? ''])
+        @endcomponent
+        @component('backend._components.input_select_ajax',[
+            'name'              => 'prefecture_id',
+            'options'           => [empty($item->prefecture->display_name) ? '' : $item->prefecture->display_name],
+            'label'             => __('label.prefecture'),
+            'required'          => 1,
+            'url'               => route('select2.prefecture'),
+            'value'             => $item->prefecture_id ?? ''])
+        @endcomponent
+        @component('backend._components.input_select_ajax',[
+            'name'              => 'city_id',
+            'options'           => [empty($item->city->display_name) ? '' : $item->city->display_name],
+            'label'             => __('label.cities'),
+            'required'          => 1,
+            'url'               => route('select2.city'),
+            'value'             => $item->city_id ?? ''])
+        @endcomponent
+
+        {{-- @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
+        {{-- @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
 

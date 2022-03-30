@@ -22,7 +22,7 @@ use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use App\Models\TagArchitecture;
 use App\Helpers\DatatablesHelper;
-
+use App\Helpers\Select2AjaxHelper;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Http\Controllers\Controller;
@@ -114,9 +114,7 @@ class PropertyController extends Controller
         }
         $data['property_related'] = '';
         $data['page_type'] = 'create';
-        $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
-        //$data['users'] = User::pluck('display_name', 'id')->all();
-        $data['cities'] = City::pluck('display_name', 'id')->all();
+
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
@@ -152,7 +150,6 @@ class PropertyController extends Controller
         ];
         $data['design_categories'] = collect($categories)->all();
 
-        $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
         return view('backend.property.form', $data);
     }
 
@@ -214,7 +211,7 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = Property::with(['property_plans'])->find($id);
+        $data['item'] = Property::with(['property_plans', 'postcode', 'prefecture', 'city'])->find($id);
 
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -230,9 +227,6 @@ class PropertyController extends Controller
         }
         $data['property_related'] = '';
         $data['page_type'] = 'edit';
-        $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
-        //$data['users'] = User::pluck('display_name', 'id')->all();
-        $data['cities'] = City::pluck('display_name', 'id')->all();
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
@@ -243,8 +237,6 @@ class PropertyController extends Controller
         // options for vue select 2 options
         $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
         $data['users_options']     = $this->initSelect2Options($users);
-
-        $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
 
         $categories =  [
             [
@@ -305,7 +297,18 @@ class PropertyController extends Controller
         $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $edit->update($data);
-        $edit->plans()->sync($properties_plans);
+
+        $property_plans_old = array();
+        foreach($edit->plans as $plan){
+            array_push($property_plans_old, $plan->pivot->plan_id);
+        }
+
+        $shouldUpdatePlan = ($property_plans_old != $properties_plans); //check if property plan need update
+        if($shouldUpdatePlan){
+            $edit->plans()->detach();
+            $edit->plans()->attach($properties_plans);
+        }
+
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {

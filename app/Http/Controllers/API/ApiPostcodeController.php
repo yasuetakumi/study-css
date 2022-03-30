@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\Select2AjaxHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Postcode;
 use Illuminate\Http\Request;
@@ -18,9 +19,13 @@ class ApiPostcodeController extends Controller
             $local = $item->local;
             return response()->json(['status' => 200, 'address' => $address, 'city' => $city, 'prefecture' => $prefecture, 'local' => $local]);
         }else{
-            return response()->json(['status' => 201, 
-                                    'message' => __('label.postcode_notfound'), 
+            return response()->json(['status' => 201,
+                                    'message' => __('label.postcode_notfound'),
                                 ]);
         }
+    }
+    public function getPostcode()
+    {
+        return Select2AjaxHelper::set(Postcode::query(), 'id', 'postcode');
     }
 }

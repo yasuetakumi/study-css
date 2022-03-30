@@ -36,6 +36,11 @@ Route::prefix('v1')->group(function () {
 
     /*POSTCODE*/
     Route::get('postcode/{postcode}', 'API\ApiPostcodeController@address');
+    Route::get('getPostCode', 'API\ApiPostcodeController@getPostcode')->name('select2.postcode');
+    // Prefecture
+    Route::get('select2Prefecture', 'API\ApiPrefectureController@seletc2Prefecture')->name('select2.prefecture');
+    // City
+    Route::get('select2city', 'API\ApiCityController@select2City')->name('select2.city');
 
     // Get Grand total Estimation
     Route::get('/plans/getGrandTotalEstimation/{plan}/{tsubo}/{design}/{kitchen}/{designCat?}','API\ApiEstimateController@getGrandTotalEstimation');
