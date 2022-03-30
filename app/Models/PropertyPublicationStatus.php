@@ -15,4 +15,9 @@ class PropertyPublicationStatus extends Model {
         'label_en',
         'label_jp'
     ];
+
+    public function property_publication_status_period()
+    {
+        return $this->hasMany(PropertyPublicationStatusPeriod::class, 'publication_status_id');
+    }
 }
