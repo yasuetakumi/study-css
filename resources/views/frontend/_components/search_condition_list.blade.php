@@ -1,12 +1,17 @@
 <script type="text/x-template" id="search-condition-list-tpl">
     <div>
+        <!-- if its used on page as button then show button search -->
         {{-- Button Trigger Search Condition --}}
-        <button type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">
+        <button v-if="isbutton=='true'" type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">
             <span>
                 <i class="fas fa-search"></i>
                 Search Condition
             </span>
         </button>
+
+        <!-- if its used on navbar then show navlink -->
+        <a href="" v-if="isbutton=='false'" class="nav-link text-light" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">@{{label}}</a>
+
         <div class="modal fade" id="modalAlert" tabindex="-1" aria-labelledby="modalAlertLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -116,7 +121,16 @@
 
         // Aavailable properties
         props: {
-
+            isbutton: {
+                type: String,
+                required: false,
+                default: "true"
+            },
+            label: {
+                type: String,
+                required: false,
+                default: ""
+            },
         },
 
         data: function(){
