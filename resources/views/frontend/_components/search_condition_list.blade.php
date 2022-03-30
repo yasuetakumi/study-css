@@ -40,7 +40,7 @@
                             <div class="pl-5">
                                 <div class="row mb-3">
                                     <div class="col-8">
-                                        <p class="mb-0">詳しく条件：
+                                        <p class="mb-0">検索条件:
                                             <span v-if="sc.市"><span style="color: rgb(243, 78, 5)">市</span>@{{sc.市}} - </span>
                                             <span v-if="sc.面積下限"><span style="color: rgb(243, 78, 5)">面積下限 </span>@{{sc.面積下限}} - </span>
                                             <span v-if="sc.面積上限"><span style="color: rgb(243, 78, 5)">面積上限 </span>@{{sc.面積上限}} - </span>
@@ -58,7 +58,7 @@
                                     <div class="col-4">
                                         <!-- Button Mail-->
                                         <button type="button" class="shadow-md w-100 btn btn-secondary text-xs" data-toggle="modal" data-target="#emailPreferenceModal" @click="getIndexSearchPref(sc)">
-                                            <span><i class="fas fa-envelope"></i>新規メールを受け取る</span>
+                                            <span><i class="fas fa-envelope"></i>新しくメール受信登録をする</span>
                                         </button>
                                     </div>
                                 </div>
@@ -88,11 +88,11 @@
                                     <div class="col-4">
                                         <!-- Link to C2 with Filter -->
                                         <a :href="sc.url" class="shadow-md w-100 btn btn-primary text-xs ">
-                                            <span><i class="fas fa-search"></i>マッチした一覧を表示</span>
+                                            <span><i class="fas fa-search"></i>この条件で一覧表示</span>
                                         </a>
                                         <!-- Delete Button -->
                                         <button type="button" class="shadow-md w-100 btn btn-danger text-xs mt-3" @click="deleteSearchCondition(index)">
-                                            <span><i class="fas fa-trash"></i>この条件削除する</span>
+                                            <span><i class="fas fa-trash"></i>この条件を削除する</span>
                                         </button>
                                     </div>
                                 </div>
