@@ -91,7 +91,7 @@ class Property extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function prefectures()
+    public function prefecture()
     {
         return $this->belongsTo(Prefecture::class);
     }
