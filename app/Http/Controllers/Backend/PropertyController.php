@@ -196,7 +196,7 @@ class PropertyController extends Controller
         $data['property_types'] = PropertyType::pluck('label_en', 'label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_en', 'label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_en', 'label_jp', 'id')->all();
-        $data['page_title'] = 'Property Detail';
+        $data['page_title'] = 'Temporary Property Detail Enduser. Inherits appearance from backend property form';
         $data['is_skeleton'] = [Property::FURNISHED => 'Furnished', Property::SKELETON => 'Updated by the Scraping Process'];
         $data['cuisines'] = Cuisine::pluck('label_en', 'label_jp', 'id')->all();
         //$data['form_action']= route('admin.user.store');
