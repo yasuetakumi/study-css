@@ -37,7 +37,13 @@
 
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, 'id' => 'property-form',  "page_type" => $page_type, "files" => true])
-        {{-- @component('backend._components.input_select', ['name' => 'user_id', 'options' => $users, 'label' => __('label.user'), 'required' => null, 'value' => $item->user_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
+        <div class="row justify-content-end">
+            <div class="col-12 text-right">
+                <a href="" class="btn btn-danger text-right">
+                    {{isset($item) && $item->publication_status_id == 1 ? '保存して非掲載にする' : '保存して掲載する'}}
+                </a>
+            </div>
+        </div>
         @component('backend._components.vue.form.vue-select', [
             'name'          => 'company_id',
             'label'         => __('label.real_estate_agency'),
@@ -57,7 +63,7 @@
             'model'         => 'items.user_id',
             'disabled'       => 'items.disabled',
         ])@endcomponent
-        <input type="hidden" :value="items.user_id" name="user_id" id="user_id">
+
         {{-- @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent --}}
         {{-- @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
         @component('backend._components.input_select_ajax',[
