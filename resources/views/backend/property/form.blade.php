@@ -134,7 +134,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <!-- show all data if there is data for design styles-->
+                    <div class="col-12" v-if="designStyles.length > 0">
                         <div id="form-group--plans" class="row form-group">
 
                             @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
@@ -151,8 +152,15 @@
                                             </div>
                                             <div class="my-2">
                                                 <p>Design @{{dc.display_name}}</p>
-                                                <p>居抜き @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
-                                                <p>スケルトン @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
+                                                <span v-if="estimationLoading">
+                                                    <div class="spinner-border text-primary" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                </span>
+                                                <span v-else>
+                                                    <p>居抜き @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                                    <p>スケルトン @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -160,6 +168,31 @@
                             </div>
                         </div>
                     </div>
+                    <!-- if no data on design styles then show contact us-->
+                    <div class="col-12" v-else>
+                        <div id="form-group--plans" class="row form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-content" style="border:2px solid #2462A2">
+                                <div class="row no-gutters list-plans clearfix">
+                                    <div id="under_contruction" class="clearfix" style="display: block; margin: auto; padding: 30px 0;">
+                                        <div class="plan-under-contruction d-flex">
+                                            <div class="under-contruction-wrapper justify-content-center align-items-center">
+                                                <div class="message text-center">
+                                                    現在準備中です<br class="sp-only">ので個別にお問合わせください。<br> すでに準備してあるデザインを使用し、<br>迅速かつリーズナブルな<br class="sp-only">施工が可能です。
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="phone-button">お電話でのご相談はこちら</div>
+                                                    <a class="btn-phone-bottom" href="tel:03-6262-8740"><i class="fa fa-phone"></i>03-6262-8740</a>
+                                                    <p>【受付時間】9:00～18:00<br class="sp-only">（土日祝日も対応しています）</p>
+                                                    <a class="contact-buttons" href="{{ route('contact') }}">メールでのご相談はこちら</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -301,6 +334,7 @@
                     design_category_3: 3,
                     design_category_4: 4,
                     company_name: null,
+                    estimation_loading: true,
                 },
                 // ----------------------------------------------------------
             };
@@ -383,6 +417,9 @@
             loadingData: function(){
                 return this.items.loading;
             },
+            estimationLoading: function(){
+                return this.items.estimation_loading;
+            },
             areaSelected: function(){
                 return this.items.area_selected;
             },
@@ -445,6 +482,7 @@
                 }, 400);
             },
             showDesignPlanByCategory: function(event) {
+                this.items.estimation_loading = true;
                 this.items.loading = true;
                 console.log(event.target.value);
                 let designCat = event.target.value;
@@ -527,6 +565,8 @@
             },
 
             estimationIndex: function(){
+                //set estimation loading start
+                this.items.estimation_loading = true;
                 let plans = this.$store.state.preset.property.property_plans;
                 let id_plans = '';
                 let id_designs = [];
@@ -551,6 +591,9 @@
                         this.items.list_estimation = response.data;
                     }).catch((err) => {
                         console.log(err);
+                    }).then(() => { 
+                        //set estimation loading complete
+                        this.items.estimation_loading = false;
                     });
             },
             getLikeProperty: function() {
