@@ -146,7 +146,6 @@
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
                 const favorite = queries.get("favorite");
-                console.log(favorite);
                 let state = 'history'
                 if(favorite != null){
                     state = 'favorite';
