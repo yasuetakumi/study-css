@@ -38,30 +38,60 @@
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, 'id' => 'property-form',  "page_type" => $page_type, "files" => true])
         {{-- @component('backend._components.input_select', ['name' => 'user_id', 'options' => $users, 'label' => __('label.user'), 'required' => null, 'value' => $item->user_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
-
-        @component('backend._components.vue.form.select2', [
+        @component('backend._components.vue.form.vue-select', [
+            'name'          => 'company_id',
+            'label'         => __('label.real_estate_agency'),
+            'label_select'  => 'text',
+            'required'      => 'true',
+            'options'       => 'companies_options',
+            'model'         => 'items.company_id',
+            'method'        => 'handleSelectCompany',
+            'disabled'       => 'items.disabled',
+        ])@endcomponent
+        @component('backend._components.vue.form.vue-select', [
             'name'          => 'user_id',
             'label'         => __('label.real_estate_agent_in_charge'),
+            'label_select'  => 'text',
             'required'      => 'true',
-            'options'       => '$store.state.preset.users_options',
+            'options'       => 'users_options',
             'model'         => 'items.user_id',
-            'disabled'      => 'items.disabled'
-        ])
+            'disabled'       => 'items.disabled',
+        ])@endcomponent
+        <input type="hidden" :value="items.user_id" name="user_id" id="user_id">
+        {{-- @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent --}}
+        {{-- @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
+        @component('backend._components.input_select_ajax',[
+            'name'              => 'postcode_id',
+            'options'           => [empty($item->postcode->postcode) ? '' : $item->postcode->postcode],
+            'label'             => __('label.postcode'),
+            'required'          => 1,
+            'url'               => route('select2.postcode'),
+            'value'             => $item->postcode_id ?? ''])
         @endcomponent
-        @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent
-        @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
-        @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        @component('backend._components.input_select_ajax',[
+            'name'              => 'prefecture_id',
+            'options'           => [empty($item->prefecture->display_name) ? '' : $item->prefecture->display_name],
+            'label'             => __('label.prefecture'),
+            'required'          => 1,
+            'url'               => route('select2.prefecture'),
+            'value'             => $item->prefecture_id ?? ''])
+        @endcomponent
+        @component('backend._components.input_select_ajax',[
+            'name'              => 'city_id',
+            'options'           => [empty($item->city->display_name) ? '' : $item->city->display_name],
+            'label'             => __('label.cities'),
+            'required'          => 1,
+            'url'               => route('select2.city'),
+            'value'             => $item->city_id ?? ''])
+        @endcomponent
+
+        {{-- @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
+        {{-- @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
-        @if ($page_type == 'detail')
-            @component('backend._components.input_number', ['name' => 'surface_area_meter', 'label' => __('label.surface_area_meter'), 'required' => null, 'value' => $item->surface_area ?? '', 'isReadOnly' => true ]) @endcomponent
-        @endif
+
         @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toMan($item->rent_amount), 'isReadOnly' => $disableForm]) @endcomponent
-        @if ($page_type == 'detail')
-            @component('backend._components.input_number', ['name' => 'rent_amount_man_tsubo', 'label' => __('label.cost_of_rent'), 'required' => null, 'value' => $item->man_per_tsubo ?? '', 'isReadOnly' => true]) @endcomponent
-            @component('backend._components.input_number', ['name' => 'rent_amount_man', 'label' => __('label.rent_amount'), 'required' => null, 'value' => $item->rent_amount ?? '', 'isReadOnly' => true]) @endcomponent
-        @endif
+
         @component('backend._components.input_number', ['name' => 'number_of_floors_under_ground', 'label' => __('label.number_of_floor_underground'), 'required' => null, 'value' => $item->number_of_floors_under_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_number', ['name' => 'number_of_floors_above_ground', 'label' => __('label.number_of_floor_aboveground'), 'required' => null, 'value' => $item->number_of_floors_above_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_select', ['name' => 'property_type_id', 'options' => $property_types, 'label' => __('label.restaurant_type'), 'required' => null, 'value' => $item->property_type_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
@@ -109,104 +139,8 @@
         @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
-        @if ($page_type != 'detail')
-            @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
-        @endif
+        @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
     @endcomponent
-    @if ($page_type == 'detail')
-        <div class="row">
-            <div class="col-12">
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    @foreach($design_categories as $dc)
-                                        <div class="icheck-cyan d-inline">
-                                            <input @change="showDesignPlanByCategory" data-id="{{$dc['value']}}" type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" {{ $loop->first ? 'checked' : '' }} />
-                                            <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    <div v-if="loadingData">
-                                        <p>Loading Data...</p>
-                                    </div>
-                                    <div v-else class="row">
-                                        <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
-                                            <div style="position: relative;">
-                                                <img :src="pathToImage + dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
-                                            </div>
-                                            <div class="my-2">
-                                                <p>Design @{{dc.display_name}}</p>
-                                                <p>居抜き @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
-                                                <p>スケルトン @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @if(!Auth::check())
-            @component('backend._components.form_container', ["action" => $form_action_inquiry, 'id' => 'customer-inquiry',  "page_type" => 'create', "files" => false])
-                <input type="hidden" name="property_id" value="{{ request()->id }}">
-                <div class="col-12 border-bottom border-primary">
-                    <p class="text-center" style="font-size: 22px">Customer Inquiry</p>
-                </div>
-                <div id="form-group--contact_us_type" class="row form-group">
-
-                    @include('backend._components._input_header',['label'=>__('Customer Inquiry'), 'required'=> true])
-
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                        <select type="text" id="input-contact_us_type" name="contact_us_type_id" class="form-control @error('contact_us_type_id') is-invalid @enderror" value="{{ old('contact_us_type_id') }}" required>
-                            @foreach($contact_us_type as $contact)
-                                <option value="{{ $contact->id }}" id="input-contact_us_type">{{ $contact->label_jp }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                @component('backend._components.input_text', ['name' => 'name', 'label' => __('label.name'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-                @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.enterEmailAddress'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-                @component('backend._components.input_textarea', ['name' => 'text', 'label' => __('label.comments'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 text-left mt-4">
-                        <button id="inquiry" class="btn btn-primary"> Send Inquiry </button>
-                    </div>
-                </div>
-            @endcomponent
-        @endif
-        @if ($page_type == 'detail')
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5>{{$item->city->display_name}} で似た坪数の物件</h5>
-                </div>
-                <div class="row py-2">
-                    <div class="col-12" v-if="property_related == null">
-                        <p class="text-center">No Related Property Found</p>
-                    </div>
-                    <div v-else class="col-lg-4" v-for="pr in property_related">
-                        <property-related-list :property="pr"></property-related-list>
-                    </div>
-                </div>
-            </div>
-        @endif
-    @endif
 
 @endsection
 
@@ -215,7 +149,7 @@
 @endpush
 
 @push('vue-scripts')
-@include('frontend._components.property_related_list')
+
 <script>
 
     // ----------------------------------------------------------------------
@@ -237,7 +171,7 @@
                 // Preset data
                 // ----------------------------------------------------------
                 preset: {
-                    users_options: @json($users_options),
+                    companies_options: @json($companies_options),
                     property: @json($item),
                     property_related: @json($property_related),
                 },
@@ -273,6 +207,8 @@
                 // ----------------------------------------------------------
                 items: {
                     user_id: null,
+                    list_user: null,
+                    company_id: null,
                     area_id: null,
                     selected_dc: 1,
                     list_design_style: null,
@@ -300,7 +236,6 @@
                     design_category_2: 2,
                     design_category_3: 3,
                     design_category_4: 4,
-                    company_name: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -318,24 +253,22 @@
         ## ------------------------------------------------------------------
         */
         mounted: function(){
-            if(@json($page_type) == 'edit' || @json($page_type) == 'detail'){
+
+            if(@json($page_type) == 'edit'){
                 var item = @json($item);
+                this.items.company_id = item.user.company.id;
                 this.items.user_id = item.user_id;
                 this.items.property_id = item.id;
                 this.setVisitedProperty();
-            } else if (@json($page_type) == 'create' && @json($companyUserId) != null) {
+            }
+            if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
                 this.items.user_id = id;
             }
 
+            this.handleSelectCompany();
             if(@json($page_type) != 'detail'){
                 this.changePlanBySurfaceArea();
-            }
-            if(@json($page_type) == 'detail'){
-                this.getDesignByCategory(1);
-                setTimeout(() => {
-                    this.estimationIndex();
-                }, 2000);
             }
 
 
@@ -353,6 +286,21 @@
         ## ------------------------------------------------------------------
         */
         computed: {
+            companies_options: function(){
+                return this.$store.state.preset.companies_options;
+            },
+            users_options: function(){
+                if(this.items.list_user != null){
+                    return this.items.list_user
+                }
+                else {
+                    return [];
+                }
+
+            },
+            propertyList: function(){
+                return this.$store.state.preset.property;
+            },
             itemPropertyPlans: function(){
                 return this.$store.state.preset.property.property_plans;
             },
@@ -396,20 +344,6 @@
             property_related: function(){
                 return this.$store.state.preset.property_related;
             },
-            companyName: function(){
-                if(this.items.user_id != null){
-                    axios.get(root_url + '/company-name/' + this.items.user_id)
-                        .then((response) =>{
-                            console.log(response.data.company.company_name);
-                            this.items.company_name = response.data.company.company_name;
-                        }).catch((err) => {
-                            this.items.company_name = '';
-                            console.log(err);
-                        });
-                } else{
-                    return this.items.company_name;
-                }
-            },
             pathToImage: function(){
                 let pathUploads = @json(asset('uploads'));
                 return pathUploads + '/';
@@ -444,22 +378,8 @@
                     }
                 }, 400);
             },
-            showDesignPlanByCategory: function(event) {
-                this.items.loading = true;
-                console.log(event.target.value);
-                let designCat = event.target.value;
-                this.items.selected_dc = event.target.value
-                this.getDesignByCategory(designCat);
-                setTimeout(() => {
-                    this.estimationIndex();
-                }, 2000);
-                this.items.loading = false;
-            },
-            getDesignByCategory: async function(designCat){
-                let response = await axios.get(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
-                let data = await response.data;
-                this.items.list_design_style = data;
-            },
+
+
             changePlanBySurfaceArea: function(){
                 this.getPlanBySurfaceCategory(1);
                 this.getPlanBySurfaceCategory(2);
@@ -526,33 +446,6 @@
                 }
             },
 
-            estimationIndex: function(){
-                let plans = this.$store.state.preset.property.property_plans;
-                let id_plans = '';
-                let id_designs = [];
-                for (let i = 0; i < plans.length; i++) {
-                    if(plans[i].plan.design_category_id == this.items.selected_dc){
-                        id_plans = plans[i].plan_id;
-                    }
-
-                }
-                console.log(id_plans);
-                for(let j=0; j < this.items.list_design_style.length; j++){
-                    id_designs.push(this.items.list_design_style[j].id)
-                }
-                let surface_area = document.querySelector("input[name=surface_area]").value;
-                axios.post(root_url + '/api/v1/plans/getEstimationByPlanAndCategory', {
-                    plan_id : id_plans,
-                    design_category_id : this.items.selected_dc,
-                    design_style_id : id_designs,
-                    surface_area: surface_area
-                    })
-                    .then((response) => {
-                        this.items.list_estimation = response.data;
-                    }).catch((err) => {
-                        console.log(err);
-                    });
-            },
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
                 this.items.like_property = JSON.parse(local);
@@ -593,23 +486,33 @@
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
             },
-            has_kitchen: function(id, kitchen){
-                if(this.items.list_estimation && this.items.list_estimation.length > 0){
 
-                    // $data = this.items.list_estimation.find();
-                    const filtered = this.items.list_estimation.filter(el => el.design_style_id == id && el.has_kitchen == kitchen );
-                    if(filtered.length > 0){
-                        const grand_total = filtered[0].grand_total / 10000 + '万円';
-                        return grand_total;
-                    } else {
-                        return '-';
-                    }
-
-                }
-            },
             handleImageNotFound: function(event){
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
+            },
+            handleSelectCompany: function(){
+                if(this.items.company_id == null){
+                    axios.get(root_url + '/api/v1/select2usercompany/')
+                        .then((result) => {
+                            this.items.list_user = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    axios.get(root_url + '/api/v1/select2usercompany/' + this.items.company_id)
+                        .then((result) => {
+                            this.items.list_user = result.data;
+                            if(this.items.user_id != null){
+                                const filtered = this.items.list_user.filter(el => el.id == this.items.user_id);
+                                if(filtered.length == 0){
+                                    this.items.user_id = null;
+                                }
+                            }
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                }
             },
             // --------------------------------------------------------------
         }

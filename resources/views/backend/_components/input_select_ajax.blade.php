@@ -9,7 +9,7 @@
                 $value      = old($name);
             }
         @endphp
-        <select data-url="{{ $url }}" type="text" id="input-{{ $name }}" name="{{ $name }}" class="select2ajax form-control @error($name) is-invalid @enderror" {{ !empty($required) ? 'required' : '' }}>
+        <select value="{{ !empty($value) ? $value : old($name) }}" data-url="{{ $url }}" type="text" id="input-{{ $name }}" name="{{ $name }}" class="select2ajax form-control @error($name) is-invalid @enderror" {{ !empty($required) ? 'required' : '' }} {{isset($isDisabled) && $isDisabled == true ? 'disabled' : '' }}>
             @foreach($options as $id => $label)
                 <option value="{{ $value }}" id="input-{{ $name }}-{{ $id }}" {{ $value == $id ? "selected" : "" }}>{{ $label }}</option>
             @endforeach
@@ -17,3 +17,11 @@
         <input type="hidden" name="{{ $name }}_label" id="input-{{ $name }}-selected-label" class="selected-label" />
     </div>
 </div>
+
+@push('css')
+<style>
+    .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow b{
+        margin-top: 10px !important;
+    }
+</style>
+@endpush

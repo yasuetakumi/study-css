@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertySeeder::class);
         $this->call(ContactUsTypeSeeder::class);
         $this->call(CustomerInquirySeeder::class);
+        $this->call(PropertyPublicationStatusPeriodSeeder::class);
 
         //estimation index
         $this->call(AreaGroupSeeder::class);
