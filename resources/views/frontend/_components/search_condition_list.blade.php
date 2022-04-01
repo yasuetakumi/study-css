@@ -46,24 +46,26 @@
                                 <div class="row mb-3">
                                     <div class="col-8">
                                         <p class="mb-0">検索条件:
-                                            <span v-if="sc.市"><span style="color: rgb(243, 78, 5)">市</span>@{{sc.市}} - </span>
-                                            <span v-if="sc.面積下限"><span style="color: rgb(243, 78, 5)">面積下限 </span>@{{sc.面積下限}} - </span>
-                                            <span v-if="sc.面積上限"><span style="color: rgb(243, 78, 5)">面積上限 </span>@{{sc.面積上限}} - </span>
-                                            <span v-if="sc.賃料下限"><span style="color: rgb(243, 78, 5)">賃料下限 </span>@{{sc.賃料下限}} - </span>
-                                            <span v-if="sc.賃料上限"><span style="color: rgb(243, 78, 5)">賃料上限 </span>@{{sc.賃料上限}} - </span>
-                                            <span v-if="sc.徒歩"><span style="color: rgb(243, 78, 5)">徒歩 </span>@{{sc.徒歩}} - </span>
-                                            <span v-if="sc.譲渡額下限"><span style="color: rgb(243, 78, 5)">譲渡額下限 </span>@{{sc.譲渡額下限}} - </span>
-                                            <span v-if="sc.譲渡額上限"><span style="color: rgb(243, 78, 5)">譲渡額上限 </span>@{{sc.譲渡額上限}} - </span>
-                                            <span v-if="sc.階数_地上"><span style="color: rgb(243, 78, 5)">階数(地上) </span>@{{sc.階数_地上}} - </span>
-                                            <span v-if="sc.階数_地下"><span style="color: rgb(243, 78, 5)">階数(地下) </span>@{{sc.階数_地下}} - </span>
-                                            <span v-if="sc.こだわり条件"><span style="color: rgb(243, 78, 5)">こだわり条件 </span>@{{sc.こだわり条件}} - </span>
-                                            <span v-if="sc.スケルトン物件_居抜き物件"><span style="color: rgb(243, 78, 5)"> スケルトン物件・居抜き物件 </span> @{{sc.スケルトン物件_居抜き物件}} - </span>
+                                            <span v-if="sc.市"><span style="color: rgb(243, 78, 5)">[市区町村]</span>@{{sc.市}} - </span>
+                                            <span v-if="sc.面積下限"><span style="color: rgb(243, 78, 5)">[面積下限] </span>@{{sc.面積下限}} - </span>
+                                            <span v-if="sc.面積上限"><span style="color: rgb(243, 78, 5)">[面積上限] </span>@{{sc.面積上限}} - </span>
+                                            <span v-if="sc.賃料下限"><span style="color: rgb(243, 78, 5)">賃料下限] </span>@{{sc.賃料下限}} - </span>
+                                            <span v-if="sc.賃料上限"><span style="color: rgb(243, 78, 5)">[賃料上限] </span>@{{sc.賃料上限}} - </span>
+                                            <span v-if="sc.フリーワード"><span style="color: rgb(243, 78, 5)">[フリーワード] </span>@{{sc.フリーワード}} - </span>
+                                            <span v-if="sc.徒歩"><span style="color: rgb(243, 78, 5)">[徒歩] </span>@{{sc.徒歩}} - </span>
+                                            <span v-if="sc.譲渡額下限"><span style="color: rgb(243, 78, 5)">[譲渡額下限] </span>@{{sc.譲渡額下限}} - </span>
+                                            <span v-if="sc.譲渡額上限"><span style="color: rgb(243, 78, 5)">[譲渡額上限] </span>@{{sc.譲渡額上限}} - </span>
+                                            <span v-if="sc.階数_地上"><span style="color: rgb(243, 78, 5)">[階数(地上)] </span>@{{sc.階数_地上}} - </span>
+                                            <span v-if="sc.階数_地下"><span style="color: rgb(243, 78, 5)">[階数(地下)] </span>@{{sc.階数_地下}} - </span>
+                                            <span v-if="sc.こだわり条件"><span style="color: rgb(243, 78, 5)">[こだわり条件] </span>@{{sc.こだわり条件}} - </span>
+                                            <span v-if="sc.飲食店の種類"><span style="color: rgb(243, 78, 5)">[飲食店の種類] </span>@{{sc.飲食店の種類}} - </span>
+                                            <span v-if="sc.スケルトン物件_居抜き物件"><span style="color: rgb(243, 78, 5)"> [スケルトン物件・居抜き物件] </span> @{{sc.スケルトン物件_居抜き物件}} - </span>
                                         </p>
                                     </div>
                                     <div class="col-4">
                                         <!-- Button Mail-->
                                         <button type="button" class="shadow-md w-100 btn btn-secondary text-xs" data-toggle="modal" data-target="#emailPreferenceModal" @click="getIndexSearchPref(sc)">
-                                            <span><i class="fas fa-envelope"></i>新しくメール受信登録をする</span>
+                                            <span><i class="fas fa-envelope"></i>メール配信登録</span>
                                         </button>
                                     </div>
                                 </div>
@@ -78,22 +80,22 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-8 mt-1">
-                                        <textarea class="form-control w-100" name="comment" :id="'comment'+index" cols="30" rows="5" readonly>@{{sc.comment ? sc.comment : ''}}</textarea>
+                                        <textarea @input="handleTextArea(index)" class="form-control w-100" name="comment" :id="'comment'+index" cols="30" rows="5">@{{sc.comment ? sc.comment : ''}}</textarea>
                                         <div class="d-flex justify-content-end">
                                             {{-- Edit Or Save Button --}}
                                             <div class="text-right">
-                                                <input :id="'btnEdit' + index" value="" type="button" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleEditOrSave(index)">
+                                                <input :id="'btnEdit' + index" value="保存" type="button" class="px-2 py-1 btn btn-secondary rounded-0 d-none" @click="handleEditOrSave(index)">
                                             </div>
                                             <!-- Cancel Button-->
                                             <div class="text-right ml-2">
-                                                <input :id="'btnCancel'+index" type="button" value="キャンセル" class="px-2 py-1 btn btn-secondary rounded-0" @click="handleCancel(index)">
+                                                <input :id="'btnCancel'+index" type="button" value="キャンセル" class="px-2 py-1 btn btn-secondary rounded-0 d-none" @click="handleCancel(index)">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <!-- Link to C2 with Filter -->
                                         <a :href="sc.url" class="shadow-md w-100 btn btn-primary text-xs ">
-                                            <span><i class="fas fa-search"></i>この条件で一覧表示</span>
+                                            <span><i class="fas fa-search"></i>マッチした物件の一覧を表示</span>
                                         </a>
                                         <!-- Delete Button -->
                                         <button type="button" class="shadow-md w-100 btn btn-danger text-xs mt-3" @click="deleteSearchCondition(index)">
@@ -150,7 +152,7 @@
                 if(this.items.search_condition && this.items.search_condition.length > 0)
                     for(let i=0; i < this.items.search_condition.length; i++){
                         this.titleEditOrSave(i);
-                        this.showCancelButton(i);
+                        // this.showCancelButton(i);
                     }
             });
         },
@@ -158,7 +160,7 @@
             if(this.items.search_condition && this.items.search_condition.length > 0)
                 for(let i=0; i < this.items.search_condition.length; i++){
                     this.titleEditOrSave(i);
-                    this.showCancelButton(i);
+                    // this.showCancelButton(i);
                 }
         },
 
@@ -182,22 +184,18 @@
         methods: {
             handleEditOrSave: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
-                if(currentTextArea.hasAttribute("readonly")){
-                    currentTextArea.removeAttribute("readonly");
-                    document.getElementById("btnEdit"+index).setAttribute("value", "保存");
-                    document.getElementById("btnCancel"+index).classList.add("d-block");
+                let local = localStorage.getItem('searchCondition');
+                conditions = JSON.parse(local) || [];
+                const newData = Object.assign(conditions[index], {"comment" : currentTextArea.value})
+                conditions[index] = newData;
+                localStorage.setItem('searchCondition', JSON.stringify(conditions));
 
-                } else {
-                    let local = localStorage.getItem('searchCondition');
-                    conditions = JSON.parse(local) || [];
-                    const newData = Object.assign(conditions[index], {"comment" : currentTextArea.value})
-                    conditions[index] = newData;
-                    localStorage.setItem('searchCondition', JSON.stringify(conditions));
-                    currentTextArea.setAttribute("readonly", "true");
-                    document.getElementById("btnEdit"+index).setAttribute("value", "編集");
-                    document.getElementById("btnCancel"+index).classList.remove("d-block")
-                    document.getElementById("btnCancel"+index).classList.add("d-none");
-                }
+                document.getElementById("btnCancel"+index).classList.remove("d-block")
+                document.getElementById("btnCancel"+index).classList.add("d-none");
+
+                document.getElementById("btnEdit"+index).classList.remove("d-block");
+                document.getElementById("btnEdit"+index).classList.add("d-none");
+
                 this.getLocalStorage();
             },
 
@@ -207,9 +205,10 @@
                 let currentTextArea = document.getElementById("comment"+index);
                 let currentBtnCancel = document.getElementById("btnCancel"+index);
                 currentTextArea.value = conditions[index].comment == undefined ? null : conditions[index].comment;
-                currentTextArea.setAttribute("readonly", "true");
                 currentBtnCancel.classList.remove("d-block");
                 currentBtnCancel.classList.add("d-none");
+                document.getElementById("btnEdit"+index).classList.remove("d-block");
+                document.getElementById("btnEdit"+index).classList.add("d-none");
 
             },
             getLocalStorage: function(){
@@ -257,6 +256,24 @@
             },
             getIndexSearchPref: function(sc){
                 this.$emit("getindex", sc)
+            },
+            handleTextArea: function(index){
+                let currentTextArea = document.getElementById("comment"+index);
+                let local = localStorage.getItem('searchCondition');
+                conditions = JSON.parse(local) || [];
+                if(currentTextArea.value != conditions[index]){
+                    // document.getElementById("btnEdit"+index).setAttribute("value", "保存");
+                    document.getElementById("btnEdit"+index).classList.remove("d-none");
+                    document.getElementById("btnEdit"+index).classList.add("d-block");
+                    document.getElementById("btnCancel"+index).classList.remove("d-none");
+                    document.getElementById("btnCancel"+index).classList.add("d-block");
+                } else {
+                    // document.getElementById("btnEdit"+index).setAttribute("value", "保存");
+                    document.getElementById("btnEdit"+index).classList.remove("d-block");
+                    document.getElementById("btnEdit"+index).classList.add("d-none");
+                    document.getElementById("btnCancel"+index).classList.remove("d-block");
+                    document.getElementById("btnCancel"+index).classList.add("d-none");
+                }
             }
 
         }
