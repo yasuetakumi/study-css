@@ -1,39 +1,41 @@
 <script type="text/x-template" id="property-list-tpl">
-    <div class="card card-secondary">
-        <div class="card-header">
-            <div class="d-flex align-items-center">
-                <div class="flex-grow-1">
-                    <p class="text-black mb-0">@{{cityName}}
-                        (@{{stationName}}} 徒歩 @{{distanceMinutes}}) の貸店舗</p>
+    <a :href="routeToPropertyDetail">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <p class="text-black mb-0">@{{cityName}}
+                            (@{{stationName}}駅　徒歩@{{distanceMinutes}}) の貸店舗</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
                 </div>
-                <i class="fas fa-chevron-right"></i>
             </div>
-        </div>
-        <div class="card-body p-2">
-            <div class="row">
-                <div class="col-5">
-                    <div class="position-relative">
-                        <img class="w-100" :src="path + property.thumbnail_image_main" v-on:error="handleImageNotFound" alt="thumbnail">
-                        <div class="position-absolute" style="top:3px; left:0px">
-                            <span class="p-1 bg-secondary rounded-sm">
-                                @{{labelImage}}
-                            </span>
+            <div class="card-body p-2">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="position-relative">
+                            <img class="w-100" :src="path + property.thumbnail_image_main" v-on:error="handleImageNotFound" alt="thumbnail">
+                            <div class="position-absolute" style="top:3px; left:0px">
+                                <span class="p-1 bg-secondary rounded-sm">
+                                    @{{labelImage}}
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-7">
+                        <dl>
+                            <dt class="text-dark">@{{ closestStationDistance }} </dt>
+                            <dt class="text-info">賃料／坪単価 <span class="text-dark">@{{man}} / @{{manPerTsubo}}</span></dt>
+                            <dt class="text-info">面積 <span class="text-dark">@{{rent_amount}} / @{{manPerTsubo}}</span></dt>
+                            <dt class="text-info">所在地 <span class="text-dark">@{{property.location}}</span></dt>
+                            <dt class="text-info">前業態／希望譲渡料 <span class="text-dark">@{{cuisineOrTransfer}}</span></dt>
+                        </dl>
+                    </div>
                 </div>
-                <div class="col-7">
-                    <dl>
-                        <dt class="text-dark">@{{ closestStationDistance }} </dt>
-                        <dt class="text-info">賃料／坪単価 <span class="text-dark">@{{man}} / @{{manPerTsubo}}</span></dt>
-                        <dt class="text-info">面積 <span class="text-dark">@{{rent_amount}} / @{{manPerTsubo}}</span></dt>
-                        <dt class="text-info">所在地 <span class="text-dark">@{{property.location}}</span></dt>
-                        <dt class="text-info">前業態／希望譲渡料 <span class="text-dark">@{{cuisineOrTransfer}}</span></dt>
-                    </dl>
-                </div>
+                <slot></slot>
             </div>
-            <slot></slot>
         </div>
-    </div>
+    </a>
 </script>
 <script>
     Vue.component('PropertyList', {
@@ -53,11 +55,11 @@
                 return asset + '/';
             },
             cityName: function(){
-                return this.property.city.display_name + '市';
+                return this.property.city.display_name;
             },
             stationName: function(){
                 if(this.property.property_stations[0] != null){
-                    return this.property.property_stations[0].station.display_name + '徒歩';
+                    return this.property.property_stations[0].station.display_name;
                 } else {
                     return '';
                 }
@@ -91,7 +93,7 @@
                 }
             },
             closestStationDistance: function(){
-                return this.stationLineName + this.stationName + this.distanceMinutes;
+                return this.stationLineName + "　" + this.stationName + "　" + "徒歩" + this.distanceMinutes;
             },
             manPerTsubo: function(){
                 return this.property.man_per_tsubo + '円';
@@ -102,6 +104,11 @@
             rent_amount: function(){
                 return this.property.rent_amount + '㎡';
             },
+            routeToPropertyDetail(){
+                let routeBase = @json(url('/'));
+                let routeWithParam = routeBase + '/properties/' + this.property.id
+                return routeWithParam;
+            }
         },
         methods: {
             handleImageNotFound: function(event){

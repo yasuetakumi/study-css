@@ -1,12 +1,13 @@
 <?php
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Models\Company;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\User::class, function(Faker $faker){
     return [
-        'belong_company_id'        => rand(1, 10),
+        'belong_company_id' => Company::all()->pluck('id')->random(),
         'user_role_id'      => rand(1, 2), // UserRole::ROLE_SUPERVISOR or UserRole::ROLE_OPERATOR
         'display_name'      => $faker->name,
         'email'             => $faker->unique()->safeEmail,

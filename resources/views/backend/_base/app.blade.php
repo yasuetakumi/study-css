@@ -43,6 +43,9 @@
             margin: 0;
         }
         .modal { overflow: auto !important; }
+        .modal-backdrop {
+            z-index : 0;
+        }
     </style>
     @stack('css')
 </head>
@@ -107,6 +110,39 @@
 
         </nav>
         @endif
+
+    @else
+    <!-- navbar for frontend user C-COMMON-1 -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #446eb8;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!-- C-1-1 -->
+                <li class="nav-item border-right">
+                    <a class="nav-link text-light" href="{{ route('property.index') }}"><span class="fas fa-search"> 店舗物件を探す</span></a>
+                </li>
+                <!-- C-1-2 -->
+                <li class="nav-item border-right">
+                    <search-condition-list @getindex="" isbutton="false" label="希望にマッチした物件"></search-condition-list>
+                </li>
+                <!-- C-1-3 -->
+                <!--<li class="nav-item dropdown border-right">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    駅か市で探す
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>-->
+                <!-- C-1-4 -->
+                <li class="nav-item border-right">
+                    <a class="nav-link text-light" href="{{ route('property.history', ['favorite' => true ]) }}">お気に入り</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     @endauth
     <!-- /.navbar -->
 
@@ -140,11 +176,13 @@
 </div>
 <!-- ./wrapper -->
 
+
 <!-- REQUIRED SCRIPTS -->
 <!-- vue init -->
 <script src="{{asset('js/manifest.js')}}"></script>
 <script src="{{asset('js/vendor.js')}}"></script>
 <script src="{{asset('js/app.js')}}"></script>
+@include('frontend._components.search_condition_list')
 <!-- jQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 {{-- <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script> --}}

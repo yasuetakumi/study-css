@@ -63,10 +63,6 @@
             </div>
         </div>
 
-        <div class="col-12 mt-5">
-            @include('frontend.prefecture.list.property')
-        </div>
-
     </div>
 </div>
 @endsection
