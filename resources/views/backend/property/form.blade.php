@@ -242,6 +242,8 @@
                     design_category_2: 2,
                     design_category_3: 3,
                     design_category_4: 4,
+                    company_name: null,
+                    estimation_loading: true,
                 },
                 // ----------------------------------------------------------
             };
@@ -337,6 +339,9 @@
             loadingData: function(){
                 return this.items.loading;
             },
+            estimationLoading: function(){
+                return this.items.estimation_loading;
+            },
             areaSelected: function(){
                 return this.items.area_selected;
             },
@@ -384,7 +389,6 @@
                     }
                 }, 400);
             },
-
 
             changePlanBySurfaceArea: function(){
                 this.getPlanBySurfaceCategory(1);

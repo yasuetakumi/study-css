@@ -116,7 +116,7 @@ class CompanyApprovalController extends Controller
                 'password' => bcrypt($rand_password)
             ]);
             //send mail to each user belong to company
-            Mail::to($email)->bcc("adminrem@noreply.com")->send(new CompanyApprovalMail($compose_email));
+            Mail::to($email)->bcc(env("BCC_PROPERTY_INQUIRY", "admin@mail.com"))->send(new CompanyApprovalMail($compose_email));
         }
 
         return redirect()->route('admin.approval.index')->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
