@@ -182,7 +182,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // C8
     Route::get('contact', function() {
         return 'お問い合わせ';
-    });
+    })->name('contact');
     // C9
     Route::get('sitemap', function() {
         return 'サイトマップ';

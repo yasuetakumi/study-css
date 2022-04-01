@@ -2,7 +2,7 @@
 @section('content-wrapper')
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-md-8 mt-3">
+        <div class="col-md-8 mt-5">
             <div class="card rounded-0">
                 <div class="card-header bg-white border-bottom-0">
                     <h3 class="card-title mb-0">都道府県</h3>
