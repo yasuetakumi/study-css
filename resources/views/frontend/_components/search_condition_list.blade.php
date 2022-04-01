@@ -202,8 +202,11 @@
             },
 
             handleCancel: function(index){
+                let local = localStorage.getItem('searchCondition');
+                conditions = JSON.parse(local) || [];
                 let currentTextArea = document.getElementById("comment"+index);
                 let currentBtnCancel = document.getElementById("btnCancel"+index);
+                currentTextArea.value = conditions[index].comment == undefined ? null : conditions[index].comment;
                 currentTextArea.setAttribute("readonly", "true");
                 currentBtnCancel.classList.remove("d-block");
                 currentBtnCancel.classList.add("d-none");
