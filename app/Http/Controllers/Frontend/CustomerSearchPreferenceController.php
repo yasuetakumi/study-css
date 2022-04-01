@@ -35,8 +35,8 @@ class CustomerSearchPreferenceController extends Controller
         $walking_distance = collect();
         $response = '';
         //get cities
-        if(isset($data['市'])){
-            $arr_data = explode(", ", $data['市']);
+        if(isset($data['市区町村'])){
+            $arr_data = explode(", ", $data['市区町村']);
             $cities = City::whereIn('display_name', $arr_data)->get();
         }
 
