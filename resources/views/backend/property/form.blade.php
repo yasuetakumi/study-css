@@ -37,13 +37,14 @@
 
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, 'id' => 'property-form',  "page_type" => $page_type, "files" => true])
-        <div class="row justify-content-end">
-            <div class="col-12 text-right">
-                <a href="" class="btn btn-danger text-right">
-                    {{isset($item) && $item->publication_status_id == 1 ? '保存して非掲載にする' : '保存して掲載する'}}
-                </a>
-            </div>
-        </div>
+        @if($page_type == 'edit')
+            @component('backend._components.input_button_anchor', [
+                'label' => isset($item) && $item->publication_status_id == 1 ? '保存して掲載する' : '保存して非掲載にする',
+                'value' => isset($item) ? $item->publication_status->label_jp : null,
+                'required' => 0,
+                'route' => isset($item) ? route('admin.publication.status', $item->id) : null
+            ])@endcomponent
+        @endif
         @component('backend._components.vue.form.vue-select', [
             'name'          => 'company_id',
             'label'         => __('label.real_estate_agency'),

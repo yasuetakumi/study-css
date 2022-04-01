@@ -11,6 +11,10 @@ class PropertyPublicationStatus extends Model {
     const NOT_PUBLISHED_LABEL_EN = 'NOT_PUBLISHED';
     const PUBLISHED_LABEL_EN = 'PUBLISHED';
 
+    const ID_NOT_PUBLISHED = 1;
+    const ID_PUBLISHED = 2;
+
+
     protected $fillable = [
         'label_en',
         'label_jp'

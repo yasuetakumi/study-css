@@ -156,6 +156,16 @@ class Property extends Model
         return $this->hasMany(PropertyPlan::class, 'property_id');
     }
 
+    public function publication_status()
+    {
+        return $this->belongsTo(PropertyPublicationStatus::class, 'publication_status_id');
+    }
+
+    public function publication_status_period()
+    {
+        return $this->hasMany(PropertyPublicationStatusPeriod::class, 'property_id');
+    }
+
     public function scopeRangeArea($query, $min, $max, $column){
          // ------------------------------------------------------------------
         // Minimum property
