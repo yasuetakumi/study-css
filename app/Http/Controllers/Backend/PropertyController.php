@@ -7,6 +7,7 @@ use TsuboHelper;
 use App\Models\City;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\Company;
 use App\Models\Cuisine;
 use App\Models\TagMood;
 use App\Models\Postcode;
@@ -18,17 +19,17 @@ use App\Helpers\FileHelper;
 use App\Models\DesignStyle;
 use App\Helpers\ImageHelper;
 use App\Models\BusinessTerm;
+use App\Models\PropertyPlan;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
-use App\Models\TagArchitecture;
-use App\Helpers\DatatablesHelper;
-
-use App\Models\SurfaceAreaOption;
-use App\Traits\CommonToolsTraits;
-use App\Http\Controllers\Controller;
 use App\Models\ContactUsType;
 use App\Models\CustomerInquiry;
-use App\Models\PropertyPlan;
+use App\Models\TagArchitecture;
+use App\Helpers\DatatablesHelper;
+use App\Models\SurfaceAreaOption;
+use App\Traits\CommonToolsTraits;
+use App\Helpers\Select2AjaxHelper;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -114,9 +115,6 @@ class PropertyController extends Controller
         }
         $data['property_related'] = '';
         $data['page_type'] = 'create';
-        $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
-        //$data['users'] = User::pluck('display_name', 'id')->all();
-        $data['cities'] = City::pluck('display_name', 'id')->all();
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
@@ -125,8 +123,8 @@ class PropertyController extends Controller
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
         // options for vue select 2 options
-        $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
-        $data['users_options']     = $this->initSelect2Options($users);
+        $companies                     = collect(Company::pluck('company_name', 'id')->all());
+        $data['companies_options']     = $this->initSelect2Options($companies);
         $categories =  [
             [
                 'value' => Cuisine::IZAKAYA,
@@ -152,7 +150,6 @@ class PropertyController extends Controller
         ];
         $data['design_categories'] = collect($categories)->all();
 
-        $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
         return view('backend.property.form', $data);
     }
 
@@ -160,6 +157,7 @@ class PropertyController extends Controller
     {
         $data = $request->all();
         $this->validator($data, 'create')->validate();
+        // dd($data);
 
         $properties_plans = array();
         if(isset($data['plan_id_dc_1'])){
@@ -214,8 +212,8 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = Property::with(['property_plans'])->find($id);
-
+        $data['item'] = Property::with(['property_plans', 'postcode', 'prefecture', 'city', 'user.company'])->find($id);
+        // return $data;
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
         if(Auth::guard('user')->check()){
@@ -230,9 +228,6 @@ class PropertyController extends Controller
         }
         $data['property_related'] = '';
         $data['page_type'] = 'edit';
-        $data['postcodes'] = Postcode::pluck('postcode', 'id')->take(10)->all();
-        //$data['users'] = User::pluck('display_name', 'id')->all();
-        $data['cities'] = City::pluck('display_name', 'id')->all();
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
@@ -241,10 +236,8 @@ class PropertyController extends Controller
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
         // options for vue select 2 options
-        $users                     = collect(User::pluck('display_name', 'id')->take(10)->all());
-        $data['users_options']     = $this->initSelect2Options($users);
-
-        $data['prefectures'] = Prefecture::orderBy('area_id','asc')->orderBy('id')->pluck('display_name', 'id');
+        $companies                     = collect(Company::pluck('company_name', 'id')->all());
+        $data['companies_options']     = $this->initSelect2Options($companies);
 
         $categories =  [
             [
@@ -305,7 +298,18 @@ class PropertyController extends Controller
         $data['rent_amount'] = fromMan($data['rent_amount']);
 
         $edit->update($data);
-        $edit->plans()->sync($properties_plans);
+
+        $property_plans_old = array();
+        foreach($edit->plans as $plan){
+            array_push($property_plans_old, $plan->pivot->plan_id);
+        }
+
+        $shouldUpdatePlan = ($property_plans_old != $properties_plans); //check if property plan need update
+        if($shouldUpdatePlan){
+            $edit->plans()->detach();
+            $edit->plans()->attach($properties_plans);
+        }
+
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {
