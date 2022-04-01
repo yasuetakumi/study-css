@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 // -----------------------------------------------------------------------------
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
 use App\Models\Property;
 // -----------------------------------------------------------------------------
@@ -20,7 +21,7 @@ class ApiPropertyController extends Controller
     public function getPropertyByFilter(Request $request) {
         // Filter data
         $filter = (object) $request->all();
-
+        // return response()->json($filter);
         // Default value
         $selectedUnderground = array();
         $selectedAboveground = array();
@@ -31,7 +32,7 @@ class ApiPropertyController extends Controller
         $selectedStations = array();
 
         // Base query
-        $query = Property::with(['properties_property_preferences', 'cuisine', 'city', 'property_stations.station.station_line', 'property_stations' => function($query){
+        $query = Property::with(['properties_property_preferences', 'cuisine', 'city', 'prefecture', 'property_stations.station.station_line', 'property_stations' => function($query){
             $query->orderBy('distance_from_station', 'ASC');
         }]);
 
@@ -104,7 +105,7 @@ class ApiPropertyController extends Controller
         }
 
         // Filter walking distance
-        if(isset($filter->walking_distance)){
+        if(!empty($filter->walking_distance)){
             $walkingDistance = $filter->walking_distance;
             $query->whereHas('property_stations.walking_distance', function($q) use($walkingDistance) {
                 $q->where('value', '<=', $walkingDistance);
@@ -128,10 +129,32 @@ class ApiPropertyController extends Controller
                 $q->whereIn('property_preferences_id', $selectedPropertyPreference);
             });
         }
+        // return $query->get();
 
         // Filter name
-        if(isset($filter->name)){
-            $query->where('location', 'like', '%' . $filter->name . '%')->orWhere('repayment', 'like', '%' . $filter->name . '%')->orWhere('renewal_fee', 'like', '%' . $filter->name . '%');
+        if(!empty($filter->name) ){
+            $query->where(function($query) use($filter){
+                $query->where('location', 'like', '%' . $filter->name . '%')
+                  ->orWhere('repayment', 'like', '%' . $filter->name . '%')
+                  ->orWhere('renewal_fee', 'like', '%' . $filter->name . '%')
+                  ->orWhere('comment', 'like', '%' . $filter->name . '%')
+                  ->orWhereHas('city', function($q) use ($filter){
+                    $q->where('display_name', 'like', '%' . $filter->name . '%');
+                  })
+                  ->orWhereHas('prefecture', function($q) use ($filter){
+                    $q->where('display_name', 'like', '%' . $filter->name . '%');
+                  })
+                  ->orWhereHas('property_stations.station', function($q) use ($filter){
+                        $q->where('display_name', 'like', '%' . $filter->name . '%');
+                  });
+            });
+        }
+
+        // Filter date (for email)
+        if(isset($filter->contain_date)){
+            $yesterday = Carbon::now()->addDay('-1')->format('Y/m/d');
+            $today = Carbon::now()->format('Y/m/d');
+            $query->whereDate('publication_date', '>=',$yesterday)->whereDate('publication_date', '<=', $today);
         }
 
         // Get property

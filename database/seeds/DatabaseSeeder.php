@@ -45,9 +45,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CitySeeder::class);
         $this->call(StationsLineSeeder::class);
         $this->call(StationSeeder::class);
+        $this->call(PropertyPublicationStatusesSeeder::class);
         $this->call(PropertySeeder::class);
         $this->call(ContactUsTypeSeeder::class);
         $this->call(CustomerInquirySeeder::class);
+        $this->call(PropertyPublicationStatusPeriodSeeder::class);
 
         //estimation index
         $this->call(AreaGroupSeeder::class);
@@ -80,6 +82,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomerSearchPreferencesPropertyTypeSeeder::class);
         $this->call(CustomerSearchPreferencesFloorAboveSeeder::class);
         $this->call(CustomerSearchPreferencesFloorUnderSeeder::class);
+        $this->call(CustomerSearchPreferenceStationSeeder::class);
+        $this->call(CustomerSearchPreferenceCuisineSeeder::class);
 
         //Payment Detail
         $this->call(SubscriptionPlanSeeder::class);

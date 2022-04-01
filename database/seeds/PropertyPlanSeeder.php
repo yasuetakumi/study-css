@@ -23,24 +23,35 @@ class PropertyPlanSeeder extends Seeder
         $properties = Property::get();
         foreach($properties as $property){
             $data = new PropertyPlan();
+            Log::info("Property Surface Area" . toTsubo($property->surface_area));
+            $plans = Plan::with(['area_group'])->where('design_category_id', 1)->where('area_tsubo', '>=', toTsubo($property->surface_area))->pluck('id')->random();
+            Log::info("PPlans" . $plans);
             $data->insert([
                 [
-                    'plan_id' => Plan::where('design_category_id', 1)->pluck('id')->random(),
+                    'plan_id' => Plan::with(['area_group'])->where('design_category_id', 1)->whereHas('area_group', function($query) use ($property){
+                        $query->where('maximum', '>=' ,toTsubo($property->surface_area))->where('minimum', '<=', toTsubo($property->surface_area));
+                    })->pluck('id')->random(),
                     'property_id' => $property->id,
                     'created_at' => Carbon::now(),
                 ],
                 [
-                    'plan_id' => Plan::where('design_category_id', 2)->pluck('id')->random(),
+                    'plan_id' => Plan::with(['area_group'])->where('design_category_id', 2)->whereHas('area_group', function($query) use ($property){
+                        $query->where('maximum', '>=' ,toTsubo($property->surface_area))->where('minimum', '<=', toTsubo($property->surface_area));
+                    })->pluck('id')->random(),
                     'property_id' => $property->id,
                     'created_at' => Carbon::now(),
                 ],
                 [
-                    'plan_id' => Plan::where('design_category_id', 3)->pluck('id')->random(),
+                    'plan_id' => Plan::with(['area_group'])->where('design_category_id', 3)->whereHas('area_group', function($query) use ($property){
+                        $query->where('maximum', '>=' ,toTsubo($property->surface_area))->where('minimum', '<=', toTsubo($property->surface_area));
+                    })->pluck('id')->random(),
                     'property_id' => $property->id,
                     'created_at' => Carbon::now(),
                 ],
                 [
-                    'plan_id' => Plan::where('design_category_id', 4)->pluck('id')->random(),
+                    'plan_id' => Plan::with(['area_group'])->where('design_category_id', 4)->whereHas('area_group', function($query) use ($property){
+                        $query->where('maximum', '>=' ,toTsubo($property->surface_area))->where('minimum', '<=', toTsubo($property->surface_area));
+                    })->pluck('id')->random(),
                     'property_id' => $property->id,
                     'created_at' => Carbon::now(),
                 ],

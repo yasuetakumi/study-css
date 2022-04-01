@@ -184,6 +184,24 @@ return [
     //B3
     'administrator' => '管理者',
 
+    //B8
+    'edit_company_payment_details' => '購入情報確認',
+    'remaining_points' => '保有ポイント',
+    'subscription_plan' => 'プラン',
+    'card_number' => 'カード番号',
+    'security_number' => 'セキュリティコード',
+    'card_holder_name' => 'クレジットカード名義人',
+    'card_brand' => 'カード企業',
+    'expiry_year' => '有効期限（年）',
+    'expiry_month' => '有効期限（月）',
+    'expiry_date_subscription' => 'プランの有効期限',
+    'register_details' => '登録',
+    'time_of_payment' => '購入情報登録時刻',
+    'time_of_updating' => '購入情報更新時刻',
+    'points_to_charge' => '追加したいポイント',
+    'costs_of_points' => 'コスト',
+    'buy_points' => 'ポイントを使います',
+
     // C5
     'underground' => '地下',
 
