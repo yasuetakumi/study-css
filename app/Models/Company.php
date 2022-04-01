@@ -19,6 +19,7 @@ class Company extends Model
         'agent_license_name',
         'agent_license_renewals',
         'agent_license_number',
+        'remaining_points',
         'post_code',
         'address',
         'phone',
@@ -33,6 +34,11 @@ class Company extends Model
 
     public function users() {
         return $this->hasMany(User::class, 'belong_company_id');
+    }
+
+    public function company_payment_detail()
+    {
+        return $this->hasOne(CompanyPaymentDetail::class);
     }
 
 }
