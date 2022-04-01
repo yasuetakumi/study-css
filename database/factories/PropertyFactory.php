@@ -20,7 +20,7 @@ $factory->define(\App\Models\Property::class, function (Faker $faker) {
         'prefecture_id' => $prefecture_id,
         'city_id' => City::where('prefecture_id', $prefecture_id)->pluck('id')->random(),
         'location' => $faker->city,
-        'surface_area'=> fromTsubo(SurfaceAreaOption::all()->pluck('value')->random()),
+        'surface_area'=> fromTsubo(rand(15,29)), //base on plan.design_category_id 1,2,3,4 has area tsubo 15 - 29, for matching between property.surface_area and property_plans.plan_id
         'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
         'number_of_floors_under_ground' => rand(0,7),
         'number_of_floors_above_ground' => rand(0,7),

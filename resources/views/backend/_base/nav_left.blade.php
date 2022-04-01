@@ -268,6 +268,12 @@
                             <p>@lang('label.my_account')</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('company.payment.edit')}}" class="nav-link">
+                            <i class="fas fa-user nav-icon"></i>
+                            <p>@lang('label.edit_company_payment_details')</p>
+                        </a>
+                    </li>
                     {{-- Property --}}
                     <li class="nav-item has-treeview" id="tree_propertys">
                         <a href="#" class="nav-link">

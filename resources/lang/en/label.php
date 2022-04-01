@@ -154,7 +154,7 @@ return [
     'repayment_conditions' => 'Repayment Conditions',
     'year_built' => 'Year Built',
     'renewal_fee' => 'Renewal Fee',
-    'contract_length' => 'Contract Lenght in Months',
+    'contract_length' => 'Contract Length in Months',
     'moving_fee' => 'Moving Fee',
     'business_terms' => 'Business Terms',
     'comments' => 'Comments',
@@ -185,9 +185,34 @@ return [
     //B3
     'administrator' => 'Administrator',
 
+    //B8
+    'edit_company_payment_details' => 'Edit Company Payment Detail',
+    'remaining_points' => 'Remaining Points',
+    'subscription_plan' => 'Subscription Plan',
+    'card_number' => 'Card Number',
+    'security_number' => 'Security Number',
+    'card_holder_name' => 'Card Holder Name',
+    'card_brand' => 'Card Brand',
+    'expiry_year' => 'Expiry Year',
+    'expiry_month' => 'Expiry Month',
+    'expiry_date_subscription' => 'Expiry date of subscription plan',
+    'register_details' => 'Register Details',
+    'time_of_payment' => 'Time of Payment Detail Registration',
+    'time_of_updating' => 'Time of Updating Registration Details',
+    'points_to_charge' => 'Points to Charge',
+    'costs_of_points' => 'Costs of Points',
+    'buy_points' => 'Buy Points',
+
     // C5
     'underground' => 'Underground',
 
     //C15
     'postcode_notfound'     => 'Zip code not found',
+
+    //C4
+    'thumbnail_image_main' => 'Thumbnail Image Main',
+    'thumbnail_image' => 'Thumbnail Image',
+    'image' => 'Image',
+    'image_360' => 'Image 360'
+
 ];

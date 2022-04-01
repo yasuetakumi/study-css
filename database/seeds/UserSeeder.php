@@ -1,9 +1,10 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\AdminRole;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class UserSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class UserSeeder extends Seeder
      * @return void
      */
     public function run(){
+        Schema::disableForeignKeyConstraints();
+        User::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $user = new User();
         $user->insert([
             [

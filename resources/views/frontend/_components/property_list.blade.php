@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
                         <p class="text-black mb-0">@{{cityName}}
-                            (@{{stationName}}} 徒歩 @{{distanceMinutes}}) の貸店舗</p>
+                            (@{{stationName}}駅　徒歩@{{distanceMinutes}}) の貸店舗</p>
                     </div>
                     <i class="fas fa-chevron-right"></i>
                 </div>
@@ -55,11 +55,11 @@
                 return asset + '/';
             },
             cityName: function(){
-                return this.property.city.display_name + '市';
+                return this.property.city.display_name;
             },
             stationName: function(){
                 if(this.property.property_stations[0] != null){
-                    return this.property.property_stations[0].station.display_name + '徒歩';
+                    return this.property.property_stations[0].station.display_name;
                 } else {
                     return '';
                 }
@@ -93,7 +93,7 @@
                 }
             },
             closestStationDistance: function(){
-                return this.stationLineName + this.stationName + this.distanceMinutes;
+                return this.stationLineName + "　" + this.stationName + "　" + "徒歩" + this.distanceMinutes;
             },
             manPerTsubo: function(){
                 return this.property.man_per_tsubo + '円';

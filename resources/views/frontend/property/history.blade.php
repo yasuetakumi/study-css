@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="text-right" v-if="items.isActiveHistory">
-        <button type="button" class="btn btn-danger" @click="clearHistory">
+        <button type="button" class="btn btn-danger" @click="clearHistory" :disabled="!list_history">
             履歴の消去
         </button>
     </div>
