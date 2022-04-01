@@ -161,7 +161,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
 
     // End User (C Module)
     // C4
-    Route::get('properties/{id}', 'Backend\PropertyController@detail')->name('property.detail');
+    Route::get('properties/{id}', 'Frontend\PropertyController@show')->name('property.detail');
     // C4
     Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
     // C1

@@ -154,7 +154,7 @@ return [
     'repayment_conditions' => 'Repayment Conditions',
     'year_built' => 'Year Built',
     'renewal_fee' => 'Renewal Fee',
-    'contract_length' => 'Contract Lenght in Months',
+    'contract_length' => 'Contract Length in Months',
     'moving_fee' => 'Moving Fee',
     'business_terms' => 'Business Terms',
     'comments' => 'Comments',
@@ -208,4 +208,11 @@ return [
 
     //C15
     'postcode_notfound'     => 'Zip code not found',
+
+    //C4
+    'thumbnail_image_main' => 'Thumbnail Image Main',
+    'thumbnail_image' => 'Thumbnail Image',
+    'image' => 'Image',
+    'image_360' => 'Image 360'
+
 ];

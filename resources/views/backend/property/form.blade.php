@@ -54,14 +54,9 @@
         @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
-        @if ($page_type == 'detail')
-            @component('backend._components.input_number', ['name' => 'surface_area_meter', 'label' => __('label.surface_area_meter'), 'required' => null, 'value' => $item->surface_area ?? '', 'isReadOnly' => true ]) @endcomponent
-        @endif
+
         @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toMan($item->rent_amount), 'isReadOnly' => $disableForm]) @endcomponent
-        @if ($page_type == 'detail')
-            @component('backend._components.input_number', ['name' => 'rent_amount_man_tsubo', 'label' => __('label.cost_of_rent'), 'required' => null, 'value' => $item->man_per_tsubo ?? '', 'isReadOnly' => true]) @endcomponent
-            @component('backend._components.input_number', ['name' => 'rent_amount_man', 'label' => __('label.rent_amount'), 'required' => null, 'value' => $item->rent_amount ?? '', 'isReadOnly' => true]) @endcomponent
-        @endif
+
         @component('backend._components.input_number', ['name' => 'number_of_floors_under_ground', 'label' => __('label.number_of_floor_underground'), 'required' => null, 'value' => $item->number_of_floors_under_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_number', ['name' => 'number_of_floors_above_ground', 'label' => __('label.number_of_floor_aboveground'), 'required' => null, 'value' => $item->number_of_floors_above_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_select', ['name' => 'property_type_id', 'options' => $property_types, 'label' => __('label.restaurant_type'), 'required' => null, 'value' => $item->property_type_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
@@ -109,137 +104,8 @@
         @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('Image 360 4'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('Image 360 5'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
-        @if ($page_type != 'detail')
-            @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
-        @endif
+        @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
     @endcomponent
-    @if ($page_type == 'detail')
-        <div class="row">
-            <div class="col-12">
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    @foreach($design_categories as $dc)
-                                        <div class="icheck-cyan d-inline">
-                                            <input @change="showDesignPlanByCategory" data-id="{{$dc['value']}}" type="radio" value="{{$dc['value']}}" id="input-dc-{{ $dc['value'] }}" name="design_category_id" {{ $loop->first ? 'checked' : '' }} />
-                                            <label for="input-dc-{{ $dc['value'] }}" class="text-uppercase mr-5">{{ $dc['label_jp'] }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- show all data if there is data for design styles-->
-                    <div class="col-12" v-if="designStyles.length > 0">
-                        <div id="form-group--plans" class="row form-group">
-
-                            @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
-
-                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                                <div class="field-group clearfix">
-                                    <div v-if="loadingData">
-                                        <p>Loading Data...</p>
-                                    </div>
-                                    <div v-else class="row">
-                                        <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
-                                            <div style="position: relative;">
-                                                <img :src="pathToImage + dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
-                                            </div>
-                                            <div class="my-2">
-                                                <p>Design @{{dc.display_name}}</p>
-                                                <span v-if="estimationLoading">
-                                                    <div class="spinner-border text-primary" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                </span>
-                                                <span v-else>
-                                                    <p>居抜き @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
-                                                    <p>スケルトン @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- if no data on design styles then show contact us-->
-                    <div class="col-12" v-else>
-                        <div id="form-group--plans" class="row form-group">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-content" style="border:2px solid #2462A2">
-                                <div class="row no-gutters list-plans clearfix">
-                                    <div id="under_contruction" class="clearfix" style="display: block; margin: auto; padding: 30px 0;">
-                                        <div class="plan-under-contruction d-flex">
-                                            <div class="under-contruction-wrapper justify-content-center align-items-center">
-                                                <div class="message text-center">
-                                                    現在準備中です<br class="sp-only">ので個別にお問合わせください。<br> すでに準備してあるデザインを使用し、<br>迅速かつリーズナブルな<br class="sp-only">施工が可能です。
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="phone-button">お電話でのご相談はこちら</div>
-                                                    <a class="btn-phone-bottom" href="tel:03-6262-8740"><i class="fa fa-phone"></i>03-6262-8740</a>
-                                                    <p>【受付時間】9:00～18:00<br class="sp-only">（土日祝日も対応しています）</p>
-                                                    <a class="contact-buttons" href="{{ route('contact') }}">メールでのご相談はこちら</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        @if(!Auth::check())
-            @component('backend._components.form_container', ["action" => $form_action_inquiry, 'id' => 'customer-inquiry',  "page_type" => 'create', "files" => false])
-                <input type="hidden" name="property_id" value="{{ request()->id }}">
-                <div class="col-12 border-bottom border-primary">
-                    <p class="text-center" style="font-size: 22px">Customer Inquiry</p>
-                </div>
-                <div id="form-group--contact_us_type" class="row form-group">
-
-                    @include('backend._components._input_header',['label'=>__('Customer Inquiry'), 'required'=> true])
-
-                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                        <select type="text" id="input-contact_us_type" name="contact_us_type_id" class="form-control @error('contact_us_type_id') is-invalid @enderror" value="{{ old('contact_us_type_id') }}" required>
-                            @foreach($contact_us_type as $contact)
-                                <option value="{{ $contact->id }}" id="input-contact_us_type">{{ $contact->label_jp }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                @component('backend._components.input_text', ['name' => 'name', 'label' => __('label.name'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-                @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.enterEmailAddress'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-                @component('backend._components.input_textarea', ['name' => 'text', 'label' => __('label.comments'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
-                <div class="row justify-content-center mt-4">
-                    <div class="col-12 text-left mt-4">
-                        <button id="inquiry" class="btn btn-primary"> Send Inquiry </button>
-                    </div>
-                </div>
-            @endcomponent
-        @endif
-        @if ($page_type == 'detail')
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5>{{$item->city->display_name}} で似た坪数の物件</h5>
-                </div>
-                <div class="row py-2">
-                    <div class="col-12" v-if="property_related == null">
-                        <p class="text-center">No Related Property Found</p>
-                    </div>
-                    <div v-else class="col-lg-4" v-for="pr in property_related">
-                        <property-related-list :property="pr"></property-related-list>
-                    </div>
-                </div>
-            </div>
-        @endif
-    @endif
 
 @endsection
 
@@ -248,7 +114,7 @@
 @endpush
 
 @push('vue-scripts')
-@include('frontend._components.property_related_list')
+
 <script>
 
     // ----------------------------------------------------------------------
@@ -365,12 +231,6 @@
             if(@json($page_type) != 'detail'){
                 this.changePlanBySurfaceArea();
             }
-            if(@json($page_type) == 'detail'){
-                this.getDesignByCategory(1);
-                setTimeout(() => {
-                    this.estimationIndex();
-                }, 2000);
-            }
 
 
 
@@ -481,23 +341,7 @@
                     }
                 }, 400);
             },
-            showDesignPlanByCategory: function(event) {
-                this.items.estimation_loading = true;
-                this.items.loading = true;
-                console.log(event.target.value);
-                let designCat = event.target.value;
-                this.items.selected_dc = event.target.value
-                this.getDesignByCategory(designCat);
-                setTimeout(() => {
-                    this.estimationIndex();
-                }, 2000);
-                this.items.loading = false;
-            },
-            getDesignByCategory: async function(designCat){
-                let response = await axios.get(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
-                let data = await response.data;
-                this.items.list_design_style = data;
-            },
+
             changePlanBySurfaceArea: function(){
                 this.getPlanBySurfaceCategory(1);
                 this.getPlanBySurfaceCategory(2);
@@ -564,38 +408,6 @@
                 }
             },
 
-            estimationIndex: function(){
-                //set estimation loading start
-                this.items.estimation_loading = true;
-                let plans = this.$store.state.preset.property.property_plans;
-                let id_plans = '';
-                let id_designs = [];
-                for (let i = 0; i < plans.length; i++) {
-                    if(plans[i].plan.design_category_id == this.items.selected_dc){
-                        id_plans = plans[i].plan_id;
-                    }
-
-                }
-                console.log(id_plans);
-                for(let j=0; j < this.items.list_design_style.length; j++){
-                    id_designs.push(this.items.list_design_style[j].id)
-                }
-                let surface_area = document.querySelector("input[name=surface_area]").value;
-                axios.post(root_url + '/api/v1/plans/getEstimationByPlanAndCategory', {
-                    plan_id : id_plans,
-                    design_category_id : this.items.selected_dc,
-                    design_style_id : id_designs,
-                    surface_area: surface_area
-                    })
-                    .then((response) => {
-                        this.items.list_estimation = response.data;
-                    }).catch((err) => {
-                        console.log(err);
-                    }).then(() => { 
-                        //set estimation loading complete
-                        this.items.estimation_loading = false;
-                    });
-            },
             getLikeProperty: function() {
                 let local = localStorage.getItem('favoritePropertyId');
                 this.items.like_property = JSON.parse(local);
@@ -636,20 +448,7 @@
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
             },
-            has_kitchen: function(id, kitchen){
-                if(this.items.list_estimation && this.items.list_estimation.length > 0){
 
-                    // $data = this.items.list_estimation.find();
-                    const filtered = this.items.list_estimation.filter(el => el.design_style_id == id && el.has_kitchen == kitchen );
-                    if(filtered.length > 0){
-                        const grand_total = filtered[0].grand_total / 10000 + '万円';
-                        return grand_total;
-                    } else {
-                        return '-';
-                    }
-
-                }
-            },
             handleImageNotFound: function(event){
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
