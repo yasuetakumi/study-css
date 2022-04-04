@@ -201,6 +201,7 @@ return [
     'points_to_charge' => '追加したいポイント',
     'costs_of_points' => 'コスト',
     'buy_points' => 'ポイントを使います',
+    'charge_points' => 'ポイントをチャージする',
 
     // C5
     'underground' => '地下',
