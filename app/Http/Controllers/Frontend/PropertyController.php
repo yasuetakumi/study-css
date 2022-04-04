@@ -271,7 +271,7 @@ class PropertyController extends Controller {
         }
         if(!empty($filter['city'])){
             $citiesName = City::find($filter['city'])->pluck('display_name')->join(', ');
-            $result['市'] = $citiesName;
+            $result['市区町村'] = $citiesName;
         }
         if(!empty($filter['station'])){
             $stationsName = Station::find($filter['station'])->pluck('display_name')->join(', ');

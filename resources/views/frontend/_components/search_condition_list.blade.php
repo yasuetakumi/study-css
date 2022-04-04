@@ -1,13 +1,5 @@
 <script type="text/x-template" id="search-condition-list-tpl">
     <div>
-        <!-- if its used on page as button then show button search -->
-        {{-- Button Trigger Search Condition --}}
-        <button v-if="isbutton=='true'" type="button" class="btn btn-primary w-100 mt-3 px-4 py-2" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">
-            <span>
-                <i class="fas fa-search"></i>
-                Search Condition
-            </span>
-        </button>
 
         <!-- if its used on navbar then show navlink -->
         <a href="" v-if="isbutton=='false'" class="nav-link text-light" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">@{{label}}</a>
@@ -46,7 +38,7 @@
                                 <div class="row mb-3">
                                     <div class="col-8">
                                         <p class="mb-0">検索条件:
-                                            <span v-if="sc.市"><span style="color: rgb(243, 78, 5)">[市区町村]</span>@{{sc.市}} - </span>
+                                            <span v-if="sc.市区町村"><span style="color: rgb(243, 78, 5)">[市区町村]</span>@{{sc.市区町村}} - </span>
                                             <span v-if="sc.面積下限"><span style="color: rgb(243, 78, 5)">[面積下限] </span>@{{sc.面積下限}} - </span>
                                             <span v-if="sc.面積上限"><span style="color: rgb(243, 78, 5)">[面積上限] </span>@{{sc.面積上限}} - </span>
                                             <span v-if="sc.賃料下限"><span style="color: rgb(243, 78, 5)">賃料下限] </span>@{{sc.賃料下限}} - </span>

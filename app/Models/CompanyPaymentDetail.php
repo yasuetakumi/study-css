@@ -20,7 +20,8 @@ class CompanyPaymentDetail extends Model
 		'card_brand',
 		'card_expires_at',
 		'stripe_checkout_token',
-        'stripe_customer_id'
+        'subscription_expires_at',
+        'stripe_customer_id',
 	];
 
     public function company()
