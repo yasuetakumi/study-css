@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
 use App\Models\Property;
+use App\Models\WalkingDistanceFromStationOption;
+
 // -----------------------------------------------------------------------------
 
 
@@ -106,9 +108,9 @@ class ApiPropertyController extends Controller
 
         // Filter walking distance
         if(!empty($filter->walking_distance)){
-            $walkingDistance = $filter->walking_distance;
+            $walkingDistance = WalkingDistanceFromStationOption::find($filter->walking_distance);
             $query->whereHas('property_stations.walking_distance', function($q) use($walkingDistance) {
-                $q->where('value', '<=', $walkingDistance);
+                $q->where('id', $walkingDistance->id);
             });
         }
 
