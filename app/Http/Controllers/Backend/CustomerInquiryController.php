@@ -64,11 +64,11 @@ class CustomerInquiryController extends Controller {
         $inquiry->fill($data)->save();
 
         // Send email to company user
-        Mail::to($company_user_email)->bcc($adminsEmail->toArray())->send(new CustomerInquiryMail($dataToCustomer));
+        Mail::to($company_user_email)->bcc($adminsEmail->toArray())->send(new CustomerInquiryMail($dataToAdmin));
         // Send email to customer
         $developerEmail ?
-            Mail::to($data['email'])->bcc($developerEmail)->send(new CustomerInquiryMail($dataToAdmin))
-            : Mail::to($data['email'])->send(new CustomerInquiryMail($dataToAdmin));
+            Mail::to($data['email'])->bcc($developerEmail)->send(new CustomerInquiryMail($dataToCustomer))
+            : Mail::to($data['email'])->send(new CustomerInquiryMail($dataToCustomer));
 
         return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
