@@ -26,6 +26,7 @@ class Company extends Model
         'fax',
         'url',
         'status',
+        'stripe_customer_id'
     ];
 
     public function admin(){

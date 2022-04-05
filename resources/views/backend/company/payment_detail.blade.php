@@ -13,7 +13,7 @@
 
 @section('content')
     @component('backend._components.form_container', ["action" => "", 'id' => 'company-payment', "page_type" => $page_type_detail, "files" => false])
-        @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => $company->remaining_points, 'required' => 0]) @endcomponent
+        @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => number_format($company->remaining_points), 'required' => 0]) @endcomponent
         @component('backend._components.input_select',['label' => __('label.subscription_plan'), 'options' => $subscription_plan, 'name' => 'subscription_plan_id', 'value' => $company->company_payment_detail->subscription_plan_id ?? '', 'required' => 1])@endcomponent
         @component('backend._components.input_number', ['label' => __('label.card_number'), 'value' => $company->company_payment_detail->card_number ?? '', 'name' => 'card_number', 'required' => 1])@endcomponent
         @component('backend._components.input_number', ['label' => __('label.security_number'), 'value' => $company->company_payment_detail->card_security_number ?? '', 'name' => 'card_security_number', 'required' => 0])@endcomponent
@@ -22,18 +22,31 @@
         @component('backend._components.input_select_date', ['label' => __('label.expiry_month'), 'options' => $months, 'name' => 'card_month_expire_at', 'required' => 1, 'value' => !empty($company_month_expire) ? $company_month_expire : '']) @endcomponent
         @component('backend._components.input_select_date', ['label' => __('label.expiry_year'), 'options' => $years, 'name' => 'card_year_expire_at', 'required' => 1, 'value' => !empty($company_year_expire) ? $company_year_expire : '']) @endcomponent
         @component('backend._components.text_label', ['label' => __('label.expiry_date_subscription'), 'name' => 'subscription_expires_at', 'value' => $company->company_payment_detail->subscription_expires_at ?? '', 'required' => 0]) @endcomponent
-        @component('backend._components.input_buttons', ['page_type' => $page_type_detail])@endcomponent
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-secondary" id="input-submit">
+                <i class="fas fa-save"></i> @lang('label.register_details')
+            </button>
+        </div>
 
         @component('backend._components.text_label', ['label' => __('label.time_of_payment'), 'name'=> 'time_payment', 'value' => $company->company_payment_detail->created_at ?? '', 'required' => 0]) @endcomponent
         @component('backend._components.text_label', ['label' => __('label.time_of_updating'), 'name' => 'time_updating', 'value' => $company->company_payment_detail->updated_at ?? '', 'required' => 0]) @endcomponent
     @endcomponent
-
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4 class="text-center">@lang('label.charge_points')</h4>
+        </div>
+    </div>
     @component('backend._components.form_container', ["action" => $form_action_charge, 'id' => 'company-charge', "page_type" => $page_type_charge, "files" => false])
-        @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => $company->remaining_points, 'required' => 0]) @endcomponent
+        @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => number_format($company->remaining_points), 'required' => 0]) @endcomponent
         @component('backend._components.input_select_date', ['label' => __('label.points_to_charge'), 'options' => $points, 'name' => 'point_charge', 'required' => 1, 'value' => '',  'method' => 'getSelectedPointCharge']) @endcomponent
         @component('backend._components.input_label', ['label' => __('label.costs_of_points'), 'name' => 'items.cost_point', 'required' => 0]) @endcomponent
 
-        @component('backend._components.input_buttons', ['page_type' => $page_type_charge])@endcomponent
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-secondary" id="input-submit">
+                <i class="fas fa-save"></i> @lang('label.buy_points')
+            </button>
+        </div>
+
     @endcomponent
 
 @endsection
@@ -127,7 +140,9 @@
         ## ------------------------------------------------------------------
         */
         computed: {
-
+            cost_point: function(){
+                return this.items.cost_point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
         },
 
         /*

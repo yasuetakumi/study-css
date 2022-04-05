@@ -206,6 +206,7 @@ return [
     'points_to_charge' => 'Points to Charge',
     'costs_of_points' => 'Costs of Points',
     'buy_points' => 'Buy Points',
+    'charge_points' => 'Charge Points',
 
     // C5
     'underground' => 'Underground',
