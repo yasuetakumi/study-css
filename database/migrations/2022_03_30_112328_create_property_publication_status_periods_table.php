@@ -15,7 +15,7 @@ class CreatePropertyPublicationStatusPeriodsTable extends Migration
     {
         Schema::create('property_publication_status_periods', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('property_id')->unique();
+            $table->unsignedBigInteger('property_id');
             $table->date('status_start_date');
             $table->date('status_end_date')->nullable();
             $table->boolean('is_current_status');
