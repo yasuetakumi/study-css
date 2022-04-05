@@ -1,6 +1,6 @@
 <script type="text/x-template" id="property-list-tpl">
-    <a :href="routeToPropertyDetail">
-        <div class="card card-secondary">
+    <div class="card card-secondary">
+        <a :href="routeToPropertyDetail">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
@@ -10,7 +10,9 @@
                     <i class="fas fa-chevron-right"></i>
                 </div>
             </div>
-            <div class="card-body p-2">
+        </a>
+        <div class="card-body p-2">
+            <a :href="routeToPropertyDetail">
                 <div class="row">
                     <div class="col-5">
                         <div class="position-relative">
@@ -32,10 +34,10 @@
                         </dl>
                     </div>
                 </div>
-                <slot></slot>
-            </div>
+            </a>
+            <slot></slot>
         </div>
-    </a>
+    </div>
 </script>
 <script>
     Vue.component('PropertyList', {
