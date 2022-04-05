@@ -41,7 +41,8 @@ class CustomerInquiryController extends Controller {
         ]);
 
         // Get necessary data
-        $subject  = ContactUsType::find($request->contact_us_type_id);
+        $subjectToCustomer  = '[' . config('app.name') . ']' . 'お問い合わせありがとうございます。';
+        $subjectToAdmin = '[' . config('app.name') . ']' . '物件のお問い合わせがありました。';
         $property = Property::with('user')->find($request->property_id);
         $company_user_email = $property->user->email;
         $developerEmail = env('BCC_PROPERTY_INQUIRY');
@@ -51,18 +52,23 @@ class CustomerInquiryController extends Controller {
         // Compile request data
         $data = $request->all();
         $data['company_name'] = $property->user->company->company_name;
-        $data['subject'] = $subject->label_jp;
+
+        $dataToCustomer = $data;
+        $dataToCustomer['subject'] = $subjectToCustomer;
+
+        $dataToAdmin = $data;
+        $dataToAdmin['subject'] = $subjectToAdmin;
 
         // Save inquiry
         $inquiry = new CustomerInquiry();
         $inquiry->fill($data)->save();
 
         // Send email to company user
-        Mail::to($company_user_email)->bcc($adminsEmail->toArray())->send(new CustomerInquiryMail($data));
+        Mail::to($company_user_email)->bcc($adminsEmail->toArray())->send(new CustomerInquiryMail($dataToCustomer));
         // Send email to customer
         $developerEmail ?
-            Mail::to($data['email'])->bcc($developerEmail)->send(new CustomerInquiryMail($data))
-            : Mail::to($data['email'])->send(new CustomerInquiryMail($data));
+            Mail::to($data['email'])->bcc($developerEmail)->send(new CustomerInquiryMail($dataToAdmin))
+            : Mail::to($data['email'])->send(new CustomerInquiryMail($dataToAdmin));
 
         return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }

@@ -185,6 +185,10 @@ return [
     //B3
     'administrator' => 'Administrator',
 
+    //B7
+    'inquiry_created_at' => 'Created At',
+    'inquiry_updated_at' => 'Updated At',
+
     //B8
     'edit_company_payment_details' => 'Edit Company Payment Detail',
     'remaining_points' => 'Remaining Points',

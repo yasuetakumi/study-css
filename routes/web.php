@@ -100,6 +100,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                         'destroy' => 'company.destroy',
                     ]]);
                     Route::resource('approval', 'CompanyApprovalController');
+                    Route::get('update-status/{propertyId}', 'PropertyController@updatePublicationStatus')->name('publication.status');
                 });
 
                 // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');

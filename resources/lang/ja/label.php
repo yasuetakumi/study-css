@@ -184,6 +184,10 @@ return [
     //B3
     'administrator' => '管理者',
 
+    //B7
+    'inquiry_created_at' => '作成時間',
+    'inquiry_updated_at' => '更新時間',
+
     //B8
     'edit_company_payment_details' => '購入情報確認',
     'remaining_points' => '保有ポイント',

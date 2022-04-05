@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\AsreaGroup;
-use App\Models\Area;
+use App\Models\AreaGroup;
 use App\Models\Cuisine;
 use App\Models\DesignPlanStatus;
-use App\Models\SurfaceAreaOption;
 use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
