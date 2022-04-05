@@ -76,7 +76,7 @@ class CustomerSearchPreferenceController extends Controller
         }
         //get walking distance
         if(isset($data['徒歩'])){
-            $walking_distance = WalkingDistanceFromStationOption::where('label_jp', $data['徒歩'])->first();
+            $walking_distance = WalkingDistanceFromStationOption::find($data['徒歩']);
         }
 
         DB::beginTransaction(function() use ($data, $walking_distance, $cities, $property_preferences, $property_types, $abovegrounds, $undergrounds, $skeleton){

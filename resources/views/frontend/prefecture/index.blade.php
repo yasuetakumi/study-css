@@ -20,7 +20,7 @@
                 <form action="{{route('property.filter')}}" method="POST">
                     @csrf
 
-                    <input type="hidden" name="from_prefecture" value="true">
+                    <input id="from-prefecture" type="hidden" name="from_prefecture" value="true">
 
                     <div v-if="items.activeTab == 'city'">
                         @include('frontend.prefecture.filter.city')
@@ -161,6 +161,7 @@
                     checkall: false,
                     uncheckall: false,
                     number_of_property: 0,
+                    prefecture_id: @json($prefecture->id)
                 },
                 // -------------------------------------------------------------
             };
@@ -266,7 +267,7 @@
             // -----------------------------------------------------------------
             getStationByStationLine: async function () {
                 this.items.loading = true;
-                let response = await axios.get(root_url + '/api/v1/station/getStationByStationLine/' +  this.items.station_line_id);
+                let response = await axios.get(root_url + '/api/v1/station/getStationByStationLine/' +  this.items.station_line_id + '/' + this.items.prefecture_id);
                 this.items.list_stations = response.data;
                 this.items.loading = false;
             },
@@ -299,7 +300,11 @@
             },
             // -----------------------------------------------------------------
             getNumberOfProperty: function(filter) {
-                let request = axios.post(root_url + '/api/v1/property/getPropertiesCount', filter);
+                let isPrefecture = document.getElementById("from-prefecture").value;
+                let prefecture = {from_prefecture : isPrefecture};
+                let finalFilter = Object.assign(filter, prefecture);
+                // console.log(finalFilter);
+                let request = axios.post(root_url + '/api/v1/property/getPropertiesCount', finalFilter);
                 request.then((result) => {
                     this.items.number_of_property = result.data.data.count ?? 0;
                 });
