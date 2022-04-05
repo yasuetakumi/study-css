@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class ApiStationController extends Controller
 {
-    public function getStationByStationLine($stationLine)
+    public function getStationByStationLine($stationLine, $prefectureId)
     {
-        $stations = Station::withCount('properties')->where('station_line_id', $stationLine)->get();
+        $stations = Station::where('station_line_id', $stationLine)->withCount('properties')->having('prefecture_id', $prefectureId)->get();
 
         return response()->json($stations);
     }

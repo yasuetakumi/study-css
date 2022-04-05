@@ -59,7 +59,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/plans/getPlanBySurfaceAndCategory/{surface}/{area_id}', 'API\ApiPlanController@getPlanBySurfaceAndCategory');
 
     //Station
-    Route::get('/station/getStationByStationLine/{station_line}', 'API\ApiStationController@getStationByStationLine');
+    Route::get('/station/getStationByStationLine/{station_line}/{prefecture_id}', 'API\ApiStationController@getStationByStationLine');
 
     //History
     Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');
