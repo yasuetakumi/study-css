@@ -6,7 +6,7 @@
         <div class="field-group clearfix @error($name) is-invalid @enderror">
             @foreach($options as $option)
                 @php
-                    $current_value = empty($is_indexed_value) ? $loop->index + 1 : $option;
+                    $current_value = !empty($is_indexed_value) ? $loop->index + 1 : $option;
                 @endphp
                 <div class="icheck-cyan d-inline">
                     <input type="radio" value="{{ $current_value }}" id="input-{{ $name }}-{{ $loop->index }}" name="{{ $name }}" {{ !empty($loop->first) && (!empty($value) || $value == "") ? "checked" : "" }} {{ $value == $current_value ? "checked" : "" }}

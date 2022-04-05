@@ -12,7 +12,7 @@
 
 @section('top_buttons')
     @if (!$isApproval)
-        <a href="{{ route('admin.admins.create') }}" class="btn btn-secondary">@lang(('label.createNew'))</a>
+        <a href="{{ route('admin.company.create') }}" class="btn btn-secondary">@lang(('label.createNew'))</a>
     @endif
 @endsection
 
