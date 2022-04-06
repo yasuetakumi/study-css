@@ -68,10 +68,14 @@ class CustomerSearchPreferenceController extends Controller
         if(isset($data['スケルトン物件_居抜き物件'])){
             $arr_data = explode(", ", $data['スケルトン物件_居抜き物件']);
             $csp = CustomerSkeletonPreference::whereIn('label_jp', $arr_data)->get();
-            if($csp->count() == 2){
-                $skeleton = 3;
-            } else {
-                $skeleton = $csp[0]->id;
+            if(count($csp)){
+                if($csp->count() == 2){
+                    $skeleton = 3;
+                } else {
+                    $skeleton = $csp[0]->id;
+                }
+            }else{
+                $skeleton = null;
             }
         }
         //get walking distance
@@ -79,7 +83,9 @@ class CustomerSearchPreferenceController extends Controller
             $walking_distance = WalkingDistanceFromStationOption::where('label_jp', $data['徒歩'])->first();
         }
 
-        DB::beginTransaction(function() use ($data, $walking_distance, $cities, $property_preferences, $property_types, $abovegrounds, $undergrounds, $skeleton){
+        DB::beginTransaction();
+
+        try {
             $customer = new CustomerSearchPreference();
             $customer->customer_email = $data['customer_email'];
             $customer->is_email_enabled = CustomerSearchPreference::DISABLE_EMAIL;
@@ -88,8 +94,8 @@ class CustomerSearchPreferenceController extends Controller
             $customer->surface_max = isset($data['面積上限']) ? (int) filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : '';
-            $customer->freetext = isset($data['フリーワード']) ?? null;
-            $customer->walking_distance = $walking_distance->count() > 0 ? $walking_distance->id : null ;
+            $customer->freetext = isset($data['フリーワード']) ? $data['フリーワード'] : null;
+            $customer->walking_distance = $walking_distance ? $walking_distance->id : null ;
             $customer->transfer_price_min = isset($data['譲渡額下限'] ) ? (int) filter_var($data['譲渡額下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->transfer_price_max = isset($data['譲渡額上限']) ? (int) filter_var($data['譲渡額上限'], FILTER_SANITIZE_NUMBER_INT) : '';
 
@@ -141,8 +147,16 @@ class CustomerSearchPreferenceController extends Controller
                 }
             }
 
-        });
-        $response = 'success';
-        return response()->json($response);
+            //if all inserted successfully then commit the database insert
+            DB::commit();
+            $response = 'success';
+            return response()->json($response);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            $response = 'failed';
+            return response()->json($response);
+        }
+        
     }
 }
