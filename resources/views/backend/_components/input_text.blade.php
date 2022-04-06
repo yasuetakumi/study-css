@@ -4,6 +4,8 @@
         <input type="text"
             id="input-{{ $name }}" name="{{ $name }}"
             class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
-            {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }} />
+            {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }}
+            {{isset($onlyjapanese) && $onlyjapanese == true ? 'data-parsley-fullwidthjpntext' : null }}
+            {{isset($nospace) && $nospace == true ? 'data-parsley-nospace' : null}}/>
     </div>
 </div>

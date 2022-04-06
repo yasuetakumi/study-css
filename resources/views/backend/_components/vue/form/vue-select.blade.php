@@ -19,9 +19,10 @@
                 @if(isset($name)) name="{{ $name }}"@endif
                 v-on:input="{{isset($method) ? $method : ''}}"
                 @if(isset($disabled)) :disabled="{{$disabled}}" @endif
+                data-parsley-trigger="change focusout"
                 @if(isset($function)) @change="{{ $function }}" @else @change="refreshParsley" @endif>
             </v-select>
-            <input type="hidden" :value="{{$model}}" name="{{$name}}" id="{{$name}}">
+            <input id="input-{{$name}}" type="hidden" :value="{{$model}}" name="{{$name}}" id="{{$name}}">
         </div>
     </div>
 </div>
