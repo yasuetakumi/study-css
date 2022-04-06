@@ -100,3 +100,8 @@ a.contact-button:hover {
 		display: block !important;
 	}
 }
+
+.form-control.is-invalid{
+    background-image: none;
+	padding-right: inherit;
+}
