@@ -131,6 +131,7 @@ return [
     'search_with_these_search_condition' => 'Search with these search conditions',
 
     //D1 PROPERTY
+    'plans' => 'Plans',
     'property' => 'Property',
     'property_list' => 'Property List',
     'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',

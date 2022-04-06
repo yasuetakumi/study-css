@@ -34,6 +34,8 @@ class ApiPlanController extends Controller
                 'status' => "failed",
                 'message' => "Plans Not Found",
                 'total'=> 0,
+                'design_category_id' => $category_id,
+                'surface_area_tsubo' => $surface,
             ], 401);
         }
     }

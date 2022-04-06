@@ -50,10 +50,10 @@ class PropertyController extends Controller
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
             'is_skeleton'   => 'required',
-            'plan_id_dc_1'  => 'required',
-            'plan_id_dc_2'  => 'required',
-            'plan_id_dc_3'  => 'required',
-            'plan_id_dc_4'  => 'required',
+            'plan_id_dc_1'  => isset($data['plan_id_dc_1']) ? 'required' : '',
+            'plan_id_dc_2'  => isset($data['plan_id_dc_2']) ? 'required' : '',
+            'plan_id_dc_3'  => isset($data['plan_id_dc_3']) ? 'required' : '',
+            'plan_id_dc_4'  => isset($data['plan_id_dc_4']) ? 'required' : '',
 
         ], [
             'plan_id_dc_1.required' => 'Plan for Design Category 居酒屋 is Required',
@@ -215,7 +215,7 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = Property::with(['property_plans', 'postcode', 'prefecture', 'city', 'user.company'])->find($id);
+        $data['item'] = Property::with(['property_plans.plan', 'postcode', 'prefecture', 'city', 'user.company'])->find($id);
         // return $data;
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -275,10 +275,18 @@ class PropertyController extends Controller
         $data = $request->all();
         $this->validator($data, 'update')->validate();
         $properties_plans = array();
-        array_push($properties_plans, $data['plan_id_dc_1']);
-        array_push($properties_plans, $data['plan_id_dc_2']);
-        array_push($properties_plans, $data['plan_id_dc_3']);
-        array_push($properties_plans, $data['plan_id_dc_4']);
+        if(isset($data['plan_id_dc_1'])){
+            array_push($properties_plans, $data['plan_id_dc_1']);
+        }
+        if(isset($data['plan_id_dc_2'])){
+            array_push($properties_plans, $data['plan_id_dc_2']);
+        }
+        if(isset($data['plan_id_dc_3'])){
+            array_push($properties_plans, $data['plan_id_dc_3']);
+        }
+        if(isset($data['plan_id_dc_4'])){
+            array_push($properties_plans, $data['plan_id_dc_4']);
+        }
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }

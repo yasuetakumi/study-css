@@ -65,8 +65,6 @@
             'disabled'       => 'items.disabled',
         ])@endcomponent
 
-        {{-- @component('backend._components.input_label', ['label' => __('label.real_estate_agency'), 'required' => true, 'name' => 'items.company_name']) @endcomponent --}}
-        {{-- @component('backend._components.input_select', ['name' => 'postcode_id', 'options' => $postcodes, 'label' => __('label.postcode'), 'required' => 1, 'value' => $item->postcode_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
         @component('backend._components.input_select_ajax',[
             'name'              => 'postcode_id',
             'options'           => [empty($item->postcode->postcode) ? '' : $item->postcode->postcode],
@@ -92,8 +90,6 @@
             'value'             => $item->city_id ?? ''])
         @endcomponent
 
-        {{-- @component('backend._components.input_select', ['name' => 'prefecture_id', 'options' => $prefectures, 'label' => __('label.prefecture'), 'required' => 1, 'value' => $item->prefecture_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
-        {{-- @component('backend._components.input_select', ['name' => 'city_id', 'options' => $cities, 'label' => __('label.cities'), 'required' => 1, 'value' => $item->cities_id ?? '', 'isDisabled' => $disableForm]) @endcomponent --}}
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
 
@@ -226,7 +222,6 @@
                     plan_id: null,
                     message_plan_properties: '*Please Input Surface Area (Tsubo) and Select Design Category*',
                     loading: false,
-                    area_selected: null,
                     like_property: [],
                     property_id: null,
                     visited_property: [],
@@ -243,8 +238,7 @@
                     design_category_2: 2,
                     design_category_3: 3,
                     design_category_4: 4,
-                    company_name: null,
-                    estimation_loading: true,
+                    surface_area: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -340,12 +334,6 @@
             loadingData: function(){
                 return this.items.loading;
             },
-            estimationLoading: function(){
-                return this.items.estimation_loading;
-            },
-            areaSelected: function(){
-                return this.items.area_selected;
-            },
             isLiked: function () {
                 if(this.items.like_property && this.items.like_property.length > 0 && this.items.like_property.includes(this.items.property_id)){
                     return true;
@@ -360,6 +348,34 @@
                 let pathUploads = @json(asset('uploads'));
                 return pathUploads + '/';
             },
+            plans_design_category_1: function(){
+                if(this.items.plans_design_category_1 && this.items.plans_design_category_1.length > 0){
+                    return this.items.plans_design_category_1;
+                } else {
+                    return false;
+                }
+            },
+            plans_design_category_2: function(){
+                if(this.items.plans_design_category_2 && this.items.plans_design_category_2.length > 0){
+                    return this.items.plans_design_category_2;
+                } else {
+                    return false;
+                }
+            },
+            plans_design_category_3: function(){
+                if(this.items.plans_design_category_3 && this.items.plans_design_category_3.length > 0){
+                    return this.items.plans_design_category_3;
+                } else {
+                    return false;
+                }
+            },
+            plans_design_category_4: function(){
+                if(this.items.plans_design_category_4 && this.items.plans_design_category_4.length > 0){
+                    return this.items.plans_design_category_4;
+                } else {
+                    return false;
+                }
+            }
         },
         updated: function(){
             // this.has_kitchen();
@@ -399,6 +415,7 @@
             },
             getPlanBySurfaceCategory: function (catId) {
                 let surface_area = document.querySelector("input[name=surface_area]").value;
+                this.items.surface_area = surface_area;
                 var isSurfaceEmpty = surface_area === '';
                 if(isSurfaceEmpty == false && catId != null){
                     this.items.loading = true;
@@ -409,8 +426,9 @@
                         if(catId == this.items.design_category_1){
                             this.items.plans_design_category_1 = result.data.data;
                             if(@json($page_type) == 'edit'){
-                                    for(let i = 0; i < this.items.plans_design_category_1.length; i++){
-                                    if(this.items.plans_design_category_1[i].id == this.itemPropertyPlans[0].plan_id){
+                                const filteredIdCat1 = this.itemPropertyPlans.filter(el => el.plan.design_category_id == this.items.design_category_1);
+                                for(let i = 0; i < this.items.plans_design_category_1.length; i++){
+                                    if(this.items.plans_design_category_1[i].id == filteredIdCat1[0].plan_id){
                                         this.items.selected_plan_dc_1 = this.items.plans_design_category_1[i].id;
                                     }
                                 }
@@ -419,8 +437,9 @@
                         } else if(catId == this.items.design_category_2){
                             this.items.plans_design_category_2 = result.data.data;
                             if(@json($page_type) == 'edit'){
+                                const filteredIdCat2 = this.itemPropertyPlans.filter(el => el.plan.design_category_id == this.items.design_category_2);
                                 for(let i = 0; i < this.items.plans_design_category_2.length; i++){
-                                    if(this.items.plans_design_category_2[i].id == this.itemPropertyPlans[1].plan_id){
+                                    if(this.items.plans_design_category_2[i].id == filteredIdCat2[0].plan_id){
                                         this.items.selected_plan_dc_2 = this.items.plans_design_category_2[i].id;
                                     }
                                 }
@@ -429,8 +448,9 @@
                         } else if(catId == this.items.design_category_3){
                             this.items.plans_design_category_3 = result.data.data;
                             if(@json($page_type) == 'edit'){
+                                const filteredIdCat3 = this.itemPropertyPlans.filter(el => el.plan.design_category_id == this.items.design_category_3);
                                 for(let i = 0; i < this.items.plans_design_category_3.length; i++){
-                                    if(this.items.plans_design_category_3[i].id == this.itemPropertyPlans[2].plan_id){
+                                    if(this.items.plans_design_category_3[i].id == filteredIdCat3[0].plan_id){
                                         this.items.selected_plan_dc_3 = this.items.plans_design_category_3[i].id;
                                     }
                                 }
@@ -439,17 +459,32 @@
                         } else if(catId == this.items.design_category_4){
                             this.items.plans_design_category_4 = result.data.data;
                             if(@json($page_type) == 'edit'){
+                                const filteredIdCat4 = this.itemPropertyPlans.filter(el => el.plan.design_category_id == this.items.design_category_4);
                                 for(let i = 0; i < this.items.plans_design_category_4.length; i++){
-                                    if(this.items.plans_design_category_4[i].id == this.itemPropertyPlans[3].plan_id){
+                                    if(this.items.plans_design_category_4[i].id == filteredIdCat4[0].plan_id){
                                         this.items.selected_plan_dc_4 = this.items.plans_design_category_4[i].id;
                                     }
                                 }
                             }
                         }
                     }).catch((err) => {
-                        console.log(err);
-                        console.log("checkkk err");
-                        this.items.message_plan_properties = 'Plan with surface area : ' + surface_area + '坪' + ' not found!';
+                        if(err.response){
+                            let idDesignCat = parseInt(err.response.data.design_category_id);
+                            if(idDesignCat == this.items.design_category_1){
+                                this.items.plans_design_category_1 = null;
+                            }
+                            if(idDesignCat == this.items.design_category_2){
+                                this.items.plans_design_category_2 = null;
+                            }
+                            if(idDesignCat == this.items.design_category_3){
+                                this.items.plans_design_category_3 = null;
+                            }
+                            if(idDesignCat == this.items.design_category_4){
+                                this.items.plans_design_category_4 = null;
+                            }
+                            console.log(err.response.data);
+                        }
+                        // console.log("err");
                     });
                     this.items.loading = false;
                 } else if (isSurfaceEmpty){
