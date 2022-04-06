@@ -172,6 +172,7 @@
                     design_category_2: 2,
                     design_category_3: 3,
                     design_category_4: 4,
+                    estimation_loading: true,
                 },
                 // ----------------------------------------------------------
             };
@@ -226,6 +227,9 @@
             loadingData: function(){
                 return this.items.loading;
             },
+            estimationLoading: function(){
+                return this.items.estimation_loading;
+            },
             pathToImage: function(){
                 let pathUploads = @json(asset('uploads'));
                 return pathUploads + '/';
@@ -261,6 +265,7 @@
                 }, 400);
             },
             showDesignPlanByCategory: function(event) {
+                this.items.estimation_loading = true;
                 this.items.loading = true;
                 console.log(event.target.value);
                 let designCat = event.target.value;
@@ -278,6 +283,8 @@
             },
 
             estimationIndex: function(){
+                //set estimation loading start
+                this.items.estimation_loading = true;
                 let plans = this.$store.state.preset.property.property_plans;
                 let id_plans = '';
                 let id_designs = [];
@@ -307,6 +314,9 @@
                         this.items.list_estimation = response.data;
                     }).catch((err) => {
                         console.log(err);
+                    }).then(() => { 
+                        //set estimation loading complete
+                        this.items.estimation_loading = false;
                     });
             },
             getLikeProperty: function() {
