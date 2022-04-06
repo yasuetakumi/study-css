@@ -84,10 +84,10 @@
 
     <div class="card mt-3">
         <div class="card-header">
-            <h5>{{$item->city->display_name}} で似た坪数の物件</h5>
+            <h5>{{$item->city->display_name}} で似た物件</h5>
         </div>
         <div class="row py-2">
-            <div class="col-12" v-if="property_related == null">
+            <div class="col-12" v-if="property_related == null || property_related == ''">
                 <p class="text-center">No Related Property Found</p>
             </div>
             <div v-else class="col-lg-4" v-for="pr in property_related">

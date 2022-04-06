@@ -99,7 +99,7 @@ class PropertyController extends Controller {
                 ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
                 ->where('city_id', $data['item']->city_id)
                 ->where('id', '!=', $data['item']->id)
-                ->orderByRaw('RAND()')
+                ->orderByRaw('ABS(surface_area - '.$data['item']->surface_area.') ASC')
                 ->limit(3)
                 ->get();
 
