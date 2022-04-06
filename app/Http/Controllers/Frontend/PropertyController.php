@@ -238,11 +238,11 @@ class PropertyController extends Controller {
             $result['徒歩'] = $walkingDistance->label_jp;
         }
         if(isset($filter['floor_under'])){
-            $underGrounds = NumberOfFloorsUnderGround::find($filter['floor_under'])->pluck('label_jp')->join(', ');
+            $underGrounds = NumberOfFloorsUnderGround::whereIn('value', $filter['floor_under'])->pluck('label_jp')->join(', ');
             $result['階数_地上'] = $underGrounds;
         }
         if(isset($filter['floor_above'])){
-            $aboveGrounds = NumberOfFloorsAboveGround::find($filter['floor_above'])->pluck('label_jp')->join(', ');
+            $aboveGrounds = NumberOfFloorsAboveGround::whereIn('value', $filter['floor_above'])->pluck('label_jp')->join(', ');
             $result['階数_地下'] = $aboveGrounds;
         }
         if(isset($filter['property_preference'])){

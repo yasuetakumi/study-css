@@ -16,7 +16,7 @@ class ApiPropertyHistoryController extends Controller
                 $q->orderBy('distance_from_station', 'ASC');
             }])
             ->whereIn('id', $property_id)
-            ->orderByRaw('FIELD (id, ' . implode(', ', $property_id) . ') DESC')
+            ->orderByRaw('FIELD (id, ' . implode(', ', array_filter($property_id)) . ') DESC')
             ->get();
 
             return response()->json($data);

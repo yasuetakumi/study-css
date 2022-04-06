@@ -18,7 +18,7 @@ class WalkingDistanceFromStationOptionSeeder extends Seeder
             [
                 'value'         => 1,
                 'label_en'       => '1 Minutes',
-                'label_jp'      => ' 1分',
+                'label_jp'      => '1分',
             ],
             [
                 'value'         => 3,
