@@ -50,12 +50,15 @@ class PropertyController extends Controller
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
             'is_skeleton'   => 'required',
+            'location'      => 'required|regex:/^[ぁ-んァ-ン一-龥]/|alpha_dash',
             'plan_id_dc_1'  => isset($data['plan_id_dc_1']) ? 'required' : '',
             'plan_id_dc_2'  => isset($data['plan_id_dc_2']) ? 'required' : '',
             'plan_id_dc_3'  => isset($data['plan_id_dc_3']) ? 'required' : '',
             'plan_id_dc_4'  => isset($data['plan_id_dc_4']) ? 'required' : '',
 
         ], [
+            'location.regex'        => 'Only Japanase Characther Allowed!',
+            'location.alpha_dash'   => 'No space allowed!',
             'plan_id_dc_1.required' => 'Plan for Design Category 居酒屋 is Required',
             'plan_id_dc_2.required' => 'Plan for Design Category カフェ is Required',
             'plan_id_dc_3.required' => 'Plan for Design Category バー is Required',
@@ -182,16 +185,33 @@ class PropertyController extends Controller
         }
 
         //return $data;
-        $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main') );
-        for($i=1; $i<=6; $i++){
-            $data['thumbnail_image_' . $i]  = ImageHelper::upload( $request->file('thumbnail_image_' . $i) );
-        }
-        for($i=1; $i<=10; $i++){
-            $data['image_' . $i]     = ImageHelper::upload( $request->file('image_'. $i) );
-        }
-        for($i=1; $i<=5; $i++){
-            $data['image_360_' . $i]     = ImageHelper::upload( $request->file('image_360_'. $i) );
-        }
+        $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main'));
+
+        $data['thumbnail_image_1']  = ImageHelper::upload( $request->file('thumbnail_image_1'));
+        $data['thumbnail_image_2']  = ImageHelper::upload( $request->file('thumbnail_image_2'));
+        $data['thumbnail_image_3']  = ImageHelper::upload( $request->file('thumbnail_image_3'));
+        $data['thumbnail_image_4']  = ImageHelper::upload( $request->file('thumbnail_image_4'));
+        $data['thumbnail_image_4']  = ImageHelper::upload( $request->file('thumbnail_image_4'));
+        $data['thumbnail_image_5']  = ImageHelper::upload( $request->file('thumbnail_image_5'));
+        $data['thumbnail_image_6']  = ImageHelper::upload( $request->file('thumbnail_image_6'));
+
+        $data['image_1']     = ImageHelper::upload( $request->file('image_1'));
+        $data['image_2']     = ImageHelper::upload( $request->file('image_2'));
+        $data['image_3']     = ImageHelper::upload( $request->file('image_3'));
+        $data['image_4']     = ImageHelper::upload( $request->file('image_4'));
+        $data['image_5']     = ImageHelper::upload( $request->file('image_5'));
+        $data['image_6']     = ImageHelper::upload( $request->file('image_6'));
+        $data['image_7']     = ImageHelper::upload( $request->file('image_7'));
+        $data['image_8']     = ImageHelper::upload( $request->file('image_8'));
+        $data['image_9']     = ImageHelper::upload( $request->file('image_9'));
+        $data['image_10']    = ImageHelper::upload( $request->file('image_10'));
+
+        $data['image_360_1']     = ImageHelper::upload( $request->file('image_360_1'));
+        $data['image_360_2']     = ImageHelper::upload( $request->file('image_360_2'));
+        $data['image_360_3']     = ImageHelper::upload( $request->file('image_360_3'));
+        $data['image_360_4']     = ImageHelper::upload( $request->file('image_360_4'));
+        $data['image_360_5']     = ImageHelper::upload( $request->file('image_360_5'));
+
         // change to meter and yen before save
         $data['surface_area'] = fromTsubo($data['surface_area']);
         $data['rent_amount'] = fromMan($data['rent_amount']);
@@ -273,6 +293,7 @@ class PropertyController extends Controller
     public function update( Request $request, $id)
     {
         $data = $request->all();
+        // return $data;
         $this->validator($data, 'update')->validate();
         $properties_plans = array();
         if(isset($data['plan_id_dc_1'])){
@@ -294,16 +315,31 @@ class PropertyController extends Controller
         $edit = Property::find($id);
 
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
-        for($i=1; $i<=5; $i++){
-            $data['thumbnail_image_' . $i]  = ImageHelper::update( $request->file('thumbnail_image_' . $i), $edit->thumbnail_image_ . $i);
-        }
+
+        $data['thumbnail_image_1']  = ImageHelper::update( $request->file('thumbnail_image_1'), $edit->thumbnail_image_1);
+        $data['thumbnail_image_2']  = ImageHelper::update( $request->file('thumbnail_image_2'), $edit->thumbnail_image_2);
+        $data['thumbnail_image_3']  = ImageHelper::update( $request->file('thumbnail_image_3'), $edit->thumbnail_image_3);
+        $data['thumbnail_image_4']  = ImageHelper::update( $request->file('thumbnail_image_4'), $edit->thumbnail_image_4);
+        $data['thumbnail_image_5']  = ImageHelper::update( $request->file('thumbnail_image_5'), $edit->thumbnail_image_5);
         $data['thumbnail_image_6']  = ImageHelper::update( $request->file('thumbnail_image_6'), $edit->thumbnail_image_6);
-        for($i=1; $i<=10; $i++){
-            $data['image_' . $i]     = ImageHelper::update( $request->file('image_'. $i), $edit->image_ . $i);
-        }
-        for($i=1; $i<=5; $i++){
-            $data['image_360_' . $i]     = ImageHelper::update( $request->file('image_360_'. $i), $edit->image_360_ . $i);
-        }
+
+        $data['image_1']     = ImageHelper::update( $request->file('image_1'), $edit->image_1);
+        $data['image_2']     = ImageHelper::update( $request->file('image_2'), $edit->image_2);
+        $data['image_3']     = ImageHelper::update( $request->file('image_3'), $edit->image_3);
+        $data['image_4']     = ImageHelper::update( $request->file('image_4'), $edit->image_4);
+        $data['image_5']     = ImageHelper::update( $request->file('image_5'), $edit->image_5);
+        $data['image_6']     = ImageHelper::update( $request->file('image_6'), $edit->image_6);
+        $data['image_7']     = ImageHelper::update( $request->file('image_7'), $edit->image_7);
+        $data['image_8']     = ImageHelper::update( $request->file('image_8'), $edit->image_8);
+        $data['image_9']     = ImageHelper::update( $request->file('image_9'), $edit->image_9);
+        $data['image_10']    = ImageHelper::update( $request->file('image_10'), $edit->image_10);
+
+        $data['image_360_1']     = ImageHelper::update( $request->file('image_360_1'), $edit->image_360_1);
+        $data['image_360_2']     = ImageHelper::update( $request->file('image_360_2'), $edit->image_360_2);
+        $data['image_360_3']     = ImageHelper::update( $request->file('image_360_3'), $edit->image_360_3);
+        $data['image_360_4']     = ImageHelper::update( $request->file('image_360_4'), $edit->image_360_4);
+        $data['image_360_5']     = ImageHelper::update( $request->file('image_360_5'), $edit->image_360_5);
+
         // change to meter and yen before update
         $data['surface_area'] = fromTsubo($data['surface_area']);
         $data['rent_amount'] = fromMan($data['rent_amount']);
