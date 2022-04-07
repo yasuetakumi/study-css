@@ -26,10 +26,11 @@ class CompanyPaymentController extends Controller
             'subscription_plan_id'       => 'required',
             'card_number'                => 'required|between:12,19',
             'card_security_number'       => 'required|between:3,7',
-            'card_holder_name'            => 'required',
+            'card_holder_name'           => 'required',
             'card_brand'                 => 'required',
             'card_year_expire_at'        => 'required',
-            'card_month_expire_at'       => 'required'
+            'card_month_expire_at'       => 'required',
+            'card_expiry_at'             => 'after_or_equal:' . now()->format('Y-m')
         ]);
     }
     /**
@@ -246,7 +247,7 @@ class CompanyPaymentController extends Controller
             return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
 
         } catch(CardException $e){
-            return redirect()->back()->with('success', $e);
+            return redirect()->back()->withErrors(['msg' => $e->getError()->message]);
         }
 
     }

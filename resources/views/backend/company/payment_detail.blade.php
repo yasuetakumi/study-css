@@ -19,9 +19,10 @@
         @component('backend._components.input_number', ['label' => __('label.security_number'), 'value' => $company->company_payment_detail->card_security_number ?? '', 'name' => 'card_security_number', 'required' => 0])@endcomponent
         @component('backend._components.input_text', ['label' => __('label.card_holder_name'), 'value' => $company->company_payment_detail->cardholder_name ?? '', 'name' => 'card_holder_name', 'required' => 1])@endcomponent
         @component('backend._components.input_text', ['label' => __('label.card_brand'), 'value' => $company->company_payment_detail->card_brand ?? '', 'name' => 'card_brand', 'required' => 1])@endcomponent
-        @component('backend._components.input_select_date', ['label' => __('label.expiry_month'), 'options' => $months, 'name' => 'card_month_expire_at', 'required' => 1, 'value' => !empty($company_month_expire) ? $company_month_expire : '']) @endcomponent
-        @component('backend._components.input_select_date', ['label' => __('label.expiry_year'), 'options' => $years, 'name' => 'card_year_expire_at', 'required' => 1, 'value' => !empty($company_year_expire) ? $company_year_expire : '']) @endcomponent
+        @component('backend._components.input_select_date', ['label' => __('label.expiry_month'), 'options' => $months, 'name' => 'card_month_expire_at', 'required' => 1, 'value' => !empty($company_month_expire) ? $company_month_expire : '', 'method' => 'getMonthExpiryCard']) @endcomponent
+        @component('backend._components.input_select_date', ['label' => __('label.expiry_year'), 'options' => $years, 'name' => 'card_year_expire_at', 'required' => 1, 'value' => !empty($company_year_expire) ? $company_year_expire : '', 'method' => 'getYearExpiryCard']) @endcomponent
         @component('backend._components.text_label', ['label' => __('label.expiry_date_subscription'), 'name' => 'subscription_expires_at', 'value' => $company->company_payment_detail->subscription_expires_at ?? '', 'required' => 0]) @endcomponent
+        <input type="hidden" name="card_expiry_at" :value="cardExpiry">
         <div class="card-footer text-center">
             <button type="submit" class="btn btn-secondary" id="input-submit">
                 <i class="fas fa-save"></i> @lang('label.register_details')
@@ -108,7 +109,10 @@
                 // Form result set here
                 // ----------------------------------------------------------
                 items: {
-                    cost_point: null
+                    cost_point: null,
+                    month_card: null,
+                    year_card: null,
+                    card_expiry_at: null
                 },
                 // ----------------------------------------------------------
             };
@@ -128,6 +132,8 @@
         mounted: function(){
             let selected_point_charge = document.getElementsByName("point_charge")[0].value;
             this.items.cost_point = selected_point_charge + '円';
+            this.items.month_card = @json($company_month_expire);
+            this.items.year_card = @json($company_year_expire);
         },
 
         created: function(){
@@ -142,6 +148,13 @@
         computed: {
             cost_point: function(){
                 return this.items.cost_point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
+            cardExpiry: function(){
+                // let day = '01';
+                let month = this.items.month_card;
+                let year = this.items.year_card;
+                let fullDate = year + '-' + month;
+                return fullDate;
             }
         },
 
@@ -173,6 +186,14 @@
             getSelectedPointCharge: function(event){
                 console.log("point charge => ", event.target.value);
                 this.items.cost_point = event.target.value + '円';
+            },
+            getMonthExpiryCard: function(event){
+                console.log(event.target.value);
+                this.items.month_card = event.target.value;
+            },
+            getYearExpiryCard: function(event){
+                console.log(event.target.value);
+                this.items.year_card = event.target.value;
             }
             // --------------------------------------------------------------
         }
