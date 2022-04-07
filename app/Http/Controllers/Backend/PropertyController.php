@@ -347,11 +347,12 @@ class PropertyController extends Controller
                 'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
             ]);
         }
-        $previous_period = PropertyPublicationStatusPeriod::where('property_id', $propertyId)->where('is_current_status', 1)->latest()->first();
+        $previous_period = PropertyPublicationStatusPeriod::where('property_id', $propertyId)->where('is_current_status', 1)->latest();
 
         if($previous_period->count() > 0){
+            $latest_period = $previous_period->first(); // get latest previous period
 
-            $previous_start_date = Carbon::parse($previous_period->status_start_date);
+            $previous_start_date = Carbon::parse($latest_period->status_start_date);
             $diff = $previous_start_date->diffInDays(Carbon::now()->format("Y-m-d"));
             //3a
             $property_period = new PropertyPublicationStatusPeriod();
@@ -359,12 +360,12 @@ class PropertyController extends Controller
             $property_period->status_start_date = Carbon::now()->format("Y-m-d");
             $property_period->status_end_date = null;
             $property_period->is_current_status = true;
-            $property_period->remaining_publication_days = $previous_period->remaining_publication_days - $diff;
+            $property_period->remaining_publication_days = $latest_period->remaining_publication_days - $diff;
             $property_period->publication_status_id = Property::find($propertyId)->publication_status_id ?? null;
             $property_period->save();
             //4 update previos record status to false
             if($property_period){
-                $previous_period->update([
+                $latest_period->update([
                     'status_end_date' => Carbon::now()->format("Y-m-d"),
                     'is_current_status' => false
                 ]);
