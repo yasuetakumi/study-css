@@ -303,7 +303,7 @@
                 let tsubo = surface_area.match(/\d/g);
                 tsubo = tsubo.join("");
                 tsubo = parseInt(tsubo)
-                console.log(tsubo)
+                //console.log(tsubo)
                 axios.post(root_url + '/api/v1/plans/getEstimationByPlanAndCategory', {
                     plan_id : id_plans,
                     design_category_id : this.items.selected_dc,
@@ -355,7 +355,7 @@
                 if(properties_visited.includes(this.items.property_id)){
                     console.log("already visited");
                 } else {
-                    properties_visited.push(this.items.property_id);
+                    properties_visited.push(this.$store.state.preset.property.id);
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
             },
