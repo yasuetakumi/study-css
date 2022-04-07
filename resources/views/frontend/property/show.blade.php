@@ -166,7 +166,7 @@
                     loading: false,
                     area_selected: null,
                     like_property: [],
-                    property_id: null,
+                    property_id: @json($item->id),
                     visited_property: [],
                     design_category_1: 1,
                     design_category_2: 2,

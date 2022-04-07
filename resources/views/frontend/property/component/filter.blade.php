@@ -80,7 +80,7 @@
                         <select v-model="items.filter.walking_distance" class="form-control" name="walking_distance" @change="getCountProperty">
                             <option :value="null">選択なし</option>
                             @foreach ($walking_distances as $walking)
-                            <option value="{{$walking->value}}">{{$walking->label_jp}}</option>
+                            <option value="{{$walking->id}}">{{$walking->label_jp}}</option>
                             @endforeach
                         </select>
                     </div>
