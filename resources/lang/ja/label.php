@@ -130,6 +130,7 @@ return [
     'search_with_these_search_condition' => 'この条件で新規メールを受け取る',
 
     //D1 Property
+    'plans' => '各坪プランを選ぶ',
     'property' => '物件の一覧',
     'property_list' => '物件の一覧',
     'real_estate_agent_in_charge' => '取引会社の管理者',
