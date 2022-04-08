@@ -267,9 +267,9 @@
             showDesignPlanByCategory: function(event) {
                 this.items.estimation_loading = true;
                 this.items.loading = true;
-                console.log(event.target.value);
                 let designCat = event.target.value;
                 this.items.selected_dc = event.target.value
+                this.items.list_design_style = null;
                 this.getDesignByCategory(designCat);
                 setTimeout(() => {
                     this.estimationIndex();
@@ -277,7 +277,7 @@
                 this.items.loading = false;
             },
             getDesignByCategory: async function(designCat){
-                let response = await axios.get(root_url + '/api/v1/design-styles/getDesignByCategory/' + designCat);
+                let response = await axios.get(root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id);
                 let data = await response.data;
                 this.items.list_design_style = data;
             },

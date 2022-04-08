@@ -52,6 +52,7 @@ Route::prefix('v1')->group(function () {
     Route::post('property/getPropertiesCount', 'API\ApiPropertyController@getPropertyByFilter');
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'API\ApiDesignStyleController@getDesignByCategory');
+    Route::get('/design-styles/getDesignByCategoryFrontentProperty/{category_id}/{property_id}', 'API\ApiDesignStyleController@getDesignByCategoryFrontentProperty');
 
     //Plan
     Route::get('/plans/getPlansByCategory/{category_id}', 'API\ApiPlanController@getPlanByCategory');

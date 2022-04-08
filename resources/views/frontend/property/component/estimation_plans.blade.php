@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!-- show all data if there is data for design styles-->
-            <div class="col-12" v-if="designStyles.length > 0">
+            <div class="col-12" v-if="designStyles && designStyles.length>0">
                 <div id="form-group--plans" class="row form-group">
 
                     @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
