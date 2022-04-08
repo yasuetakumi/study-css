@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command(SendEmailOfNewPublishedProperty::class)->dailyAt('19:00');
+        //$schedule->command(CheckRemainingPublishDayAndBillClient::class)->dailyAt('18:55');
     }
 
     /**
