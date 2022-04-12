@@ -3,6 +3,9 @@
 @section('content')
 <div class="row">
     <div class="col-md-4">
+        {{-- search history --}}
+        @include('frontend.property.component.search-history')
+        
         {{-- filter form --}}
         @include('frontend.property.component.filter')
 
@@ -13,8 +16,6 @@
         @include('frontend.property.component.visited-property')
 
         <search-condition-list @getindex="getCurrentIndexSearch"></search-condition-list>
-
-
     </div>
 
     <div class="col-md-8">
