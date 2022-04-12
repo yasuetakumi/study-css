@@ -9,7 +9,7 @@ pipelines:
           script:
             - apt-get update
             - apt-get -qq install git-ftp
-            - git ftp catchup --force --user $FTP_USERNAME_TEST --passwd $FTP_PASSWORD_TEST $FTP_HOST_PATH_TEST -s deploy_test_to_xserver
+            - git ftp push --force --user $FTP_USERNAME_TEST --passwd $FTP_PASSWORD_TEST $FTP_HOST_PATH_TEST -s deploy_test_to_xserver
     # release/test_deploy_init: #please create this branch first time before start test_deploy.
     #   - step:
     #       caches:
