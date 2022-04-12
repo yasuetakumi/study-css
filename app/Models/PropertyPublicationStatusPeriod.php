@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PropertyPublicationStatusPeriod extends Model
 {
+    const STATUS_TRUE = 1;
+    const STATUS_FALSE = 0;
+
     use SoftDeletes;
     protected $fillable = [
         'property_id',
