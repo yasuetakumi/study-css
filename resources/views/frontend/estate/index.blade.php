@@ -609,6 +609,7 @@
                 valid       = form.validate();
 
                 // ----------------------------------------------------------
+                checkSelect2Class();
                 if(valid !== false && $('.parsley-errors-list.filled').length == 0){
                     form.whenValidate({
                     }).done(function() {

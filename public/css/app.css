@@ -11209,3 +11209,8 @@ a.contact-button:hover {
   }
 }
 
+.form-control.is-invalid {
+  background-image: none;
+  padding-right: inherit;
+}
+

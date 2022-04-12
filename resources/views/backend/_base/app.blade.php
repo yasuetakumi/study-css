@@ -46,6 +46,9 @@
         .modal-backdrop {
             z-index : 0;
         }
+        .select2-is-invalid{
+            border-color: red !important;
+        }
     </style>
     @stack('css')
 </head>
@@ -227,13 +230,13 @@
         if(value== "" || value== undefined){
             value = "mb-4";
         }
-        $('.clearfix').each(function(){
+        $('.select2-container').each(function(){
             if($(this).find(".parsley-errors-list").html() !== "" && $(this).find(".parsley-errors-list").html() !== undefined){
                 $(this).addClass(value);
-                $(this).find(".select2-selection").addClass('select2-is-invalid');
+                $(this).find('.select2-container--default').find(".select2-selection--single").addClass('select2-is-invalid');
             }else{
                 $(this).removeClass(value);
-                $(this).find(".select2-selection").removeClass('select2-is-invalid');
+                $(this).find('.select2-container--default').find(".select2-selection--single").removeClass('select2-is-invalid');
             }
 
         });
