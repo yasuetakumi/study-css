@@ -231,7 +231,7 @@
                 return this.items.estimation_loading;
             },
             pathToImage: function(){
-                let pathUploads = @json(asset('uploads'));
+                let pathUploads = @json(asset('uploads/design-styles'));
                 return pathUploads + '/';
             },
         },

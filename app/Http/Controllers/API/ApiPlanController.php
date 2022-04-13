@@ -22,7 +22,7 @@ class ApiPlanController extends Controller
     {
         $area_group_id = AreaGroup::where('minimum', '<=', (int)$surface)->where('maximum', '>=', (int) $surface)->first();
 
-        $plan = Plan::select('display_name','id', 'area_group_id')->where('design_category_id', $category_id)->where('area_group_id',$area_group_id->id)->get();
+        $plan = Plan::select('display_name','id', 'area_group_id', 'thumbnail_image')->where('design_category_id', $category_id)->where('area_group_id',$area_group_id->id)->get();
         if(!$plan->isEmpty()){
             return response()->json([
                 'data' => $plan,
