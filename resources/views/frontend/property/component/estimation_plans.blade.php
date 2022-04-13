@@ -33,7 +33,7 @@
                             <div v-else class="row">
                                 <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
                                     <div style="position: relative;">
-                                        <img :src="pathToImage + dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
+                                        <img :src="pathToImage + dc.id +'/'+ dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
                                     </div>
                                     <div class="my-2">
                                         <p>Design @{{dc.display_name}}</p>
