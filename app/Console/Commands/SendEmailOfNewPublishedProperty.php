@@ -87,11 +87,11 @@ class SendEmailOfNewPublishedProperty extends Command {
             if (count($search->property_types)) $request->merge(['property_type' => $search->property_types->pluck('id')->toArray()]);
             if (count($search->property_preferences)) $request->merge(['property_preference' => $search->property_preferences->pluck('id')->toArray()]);
             if ($search->freetext) $request->merge(['name' => $search->freetext]);
-            // if ($search->walking_distance) $request->merge(['walking_distance' => $search->walking_distance]);
-            if ($search->walking_distance) {
-                $walkingDistance = WalkingDistanceFromStationOption::find($search->walking_distance);
-                $request->merge(['walking_distance' => $walkingDistance->value]);
-            };
+            if ($search->walking_distance) $request->merge(['walking_distance' => $search->walking_distance]);
+            // if ($search->walking_distance) {
+            //     $walkingDistance = WalkingDistanceFromStationOption::find($search->walking_distance);
+            //     $request->merge(['walking_distance' => $walkingDistance->value]);
+            // };
             if (count($search->cuisines)) $request->merge(['cuisine' => $search->cuisines->pluck('id')->toArray()]);
             // -----------------------------------------------------------------
 
