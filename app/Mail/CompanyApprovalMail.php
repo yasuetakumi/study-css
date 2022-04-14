@@ -30,7 +30,7 @@ class CompanyApprovalMail extends Mailable
     public function build()
     {
         return $this->view('mail.company-approval')
-                    ->from(env('MAIL_FROM_ADDRESS', 'noreply@mail.com'))
+                    ->from(env('NOREPLY_SITE_EMAIL', 'no-reply@real-estate-media.com'))
                     ->subject('Your application has been approved');
     }
 }

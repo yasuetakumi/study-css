@@ -32,7 +32,7 @@ class NewPropertyPublished extends Mailable {
     // Build the message.
     // -------------------------------------------------------------------------
     public function build() {
-        return $this->from(env('NOREPLY_SITE_EMAIL', 'noreply@realestatemedia'))
+        return $this->from(env('NOREPLY_SITE_EMAIL', 'no-reply@real-estate-media.com'))
             ->subject('New properties matching your saved search')
             ->view('mail.new-property-published');
     }

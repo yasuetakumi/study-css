@@ -9,10 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
 use App\Models\Property;
+use App\Models\PropertyPublicationStatus;
 use App\Models\WalkingDistanceFromStationOption;
-
 // -----------------------------------------------------------------------------
-
 
 // -----------------------------------------------------------------------------
 class ApiPropertyController extends Controller
@@ -156,7 +155,7 @@ class ApiPropertyController extends Controller
         if(isset($filter->contain_date)){
             $yesterday = Carbon::now()->addDay('-1')->format('Y/m/d');
             $today = Carbon::now()->format('Y/m/d');
-            $query->whereDate('publication_date', '>=',$yesterday)->whereDate('publication_date', '<=', $today);
+            $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED)->whereDate('publication_date', '>=',$yesterday)->whereDate('publication_date', '<=', $today);
         }
 
         // Get property
