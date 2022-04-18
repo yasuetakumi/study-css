@@ -43,8 +43,8 @@
                                             </div>
                                         </span>
                                         <span v-else>
-                                            <p>居抜き @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
-                                            <p>スケルトン @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
+                                            <p>スケルトン： @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                            <p>居抜き： @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
                                         </span>
                                     </div>
                                 </div>
