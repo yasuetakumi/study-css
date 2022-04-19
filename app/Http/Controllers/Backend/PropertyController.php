@@ -404,7 +404,7 @@ class PropertyController extends Controller
             $property_period->status_start_date = Carbon::now()->format("Y-m-d");
             $property_period->status_end_date = null;
             $property_period->is_current_status = true;
-            $property_period->remaining_publication_days = $latest_period->remaining_publication_days - $diff;
+            $property_period->remaining_publication_days = $latest_period->property->publication_status_id == PropertyPublicationStatus::ID_PUBLISHED ? $latest_period->remaining_publication_days - $diff : $latest_period->remaining_publication_days ;
             $property_period->publication_status_id = Property::find($propertyId)->publication_status_id ?? null;
             $property_period->save();
             //4 update previos record status to false
