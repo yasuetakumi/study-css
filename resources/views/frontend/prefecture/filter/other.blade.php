@@ -125,8 +125,8 @@
                         @foreach ($property_types as $pt)
                         <div class="col-3">
                             <div class="form-check">
-                                <input v-model="items.filter.types" class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}">
-                                <label class="form-check-label">{{$pt->label_jp}}</label>
+                                <input id="property-type-{{$pt->id}}" v-model="items.filter.types" class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}">
+                                <label for="property-type-{{$pt->id}}" class="form-check-label">{{$pt->label_jp}}</label>
                             </div>
                         </div>
                         @endforeach
@@ -142,14 +142,14 @@
             <div class="row">
                 <div class="col-2">
                     <div class="form-check">
-                        <input v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox">
-                        <label class="form-check-label">スケルトン物件</label>
+                        <input id="skeleton-0" v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox">
+                        <label for="skeleton-0" class="form-check-label">スケルトン物件</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-check">
-                        <input v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox">
-                        <label class="form-check-label">居抜き物件</label>
+                        <input id="skeleton-1" v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox">
+                        <label for="skeleton-1" class="form-check-label">居抜き物件</label>
                     </div>
                 </div>
             </div>
@@ -163,8 +163,8 @@
                 <div class="col-12">
                     @foreach ($property_preferences as $pp)
                     <div class="form-check">
-                        <input v-model="items.filter.preferences" class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}">
-                        <label class="form-check-label">{{$pp->label_jp}}</label>
+                        <input id="property-preference-{{$pp->id}}" v-model="items.filter.preferences" class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}">
+                        <label for="property-preference-{{$pp->id}}" class="form-check-label">{{$pp->label_jp}}</label>
                     </div>
                     @endforeach
                 </div>
