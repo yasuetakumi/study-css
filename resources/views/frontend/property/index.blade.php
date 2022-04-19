@@ -15,7 +15,6 @@
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
 
-        <search-condition-list @getindex="getCurrentIndexSearch"></search-condition-list>
     </div>
 
     <div class="col-md-8">
