@@ -44,7 +44,9 @@
         @component('backend._components.input_postcode', ['name' => 'post_code', 'label' => __('label.post_code'), 'required' => 1, 'value' => $item->post_code, 'isReadOnly' => $isApproval]) @endcomponent
         @component('backend._components.input_text', ['name' => 'address', 'label' => __('label.address'), 'required' => 1, 'value' => $item->address, 'isReadOnly' => $isApproval]) @endcomponent
         @component('backend._components.input_text', ['name' => 'phone', 'label' => __('label.phone'), 'required' => 1, 'value' => $item->phone, 'isReadOnly' => $isApproval]) @endcomponent
-        @component('backend._components.input_radio', ['name' => 'status', 'options' => ['pending', 'active', 'block'], 'label' => __('label.status'), 'required' => 1, 'value' => $item->status, 'isDisabled' => $isApproval]) @endcomponent
+        @if(!Auth::guard('user')->check())
+            @component('backend._components.input_radio', ['name' => 'status', 'options' => ['pending', 'active', 'block'], 'label' => __('label.status'), 'required' => 1, 'value' => $item->status, 'isDisabled' => $isApproval]) @endcomponent
+        @endif
 
         @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
     @endcomponent
