@@ -80,7 +80,7 @@ class CustomerSearchPreferenceController extends Controller
         }
         //get walking distance
         if(isset($data['徒歩'])){
-            $walking_distance = WalkingDistanceFromStationOption::find($data['徒歩']);
+            $walking_distance = WalkingDistanceFromStationOption::where('id', $data['徒歩'])->first();
         }
 
         DB::beginTransaction();
@@ -95,7 +95,7 @@ class CustomerSearchPreferenceController extends Controller
             $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->freetext = isset($data['フリーワード']) ? $data['フリーワード'] : null;
-            $customer->walking_distance = $walking_distance ? $walking_distance->id : null ;
+            $customer->walking_distance = isset($data['徒歩']) ? $walking_distance->id : null ;
             $customer->transfer_price_min = isset($data['譲渡額下限'] ) ? (int) filter_var($data['譲渡額下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->transfer_price_max = isset($data['譲渡額上限']) ? (int) filter_var($data['譲渡額上限'], FILTER_SANITIZE_NUMBER_INT) : '';
 
@@ -104,48 +104,7 @@ class CustomerSearchPreferenceController extends Controller
 
             //save to intermediate table
 
-            if($cities->count() > 0){
-                foreach($cities as $city){
-                    $customer_city = new CustomerSearchPreferenceCity();
-                    $customer_city->customer_search_preference_id = $customer->id;
-                    $customer_city->city_id = $city->id;
-                    $customer_city->save();
-                }
-            }
-            if($property_preferences->count() > 0){
-                foreach($property_preferences as $pp){
-                    $customer_pp = new CustomerSearchPreferencesPropertyPreference();
-                    $customer_pp->customer_search_preference_id = $customer->id;
-                    $customer_pp->property_preference_id = $pp->id;
-                    $customer_pp->save();
-                }
-            }
-            if($property_types->count() > 0){
-                foreach($property_types as $pt){
-                    $customer_pt = new CustomerSearchPreferencesPropertyType();
-                    $customer_pt->customer_search_preference_id = $customer->id;
-                    $customer_pt->property_type_id = $pt->id;
-                    $customer_pt->save();
-                }
-            }
-
-            if($abovegrounds->count() > 0){
-                foreach($abovegrounds as $ab){
-                    $customer_above = new CustomerSearchPreferencesFloorAbove();
-                    $customer_above->customer_search_preference_id = $customer->id;
-                    $customer_above->floor_above_id = $ab->id;
-                    $customer_above->save();
-                }
-            }
-
-            if($undergrounds->count() > 0){
-                foreach($undergrounds as $ud){
-                    $customer_under = new CustomerSearchPreferencesFloorUnder();
-                    $customer_under->customer_search_preference_id = $customer->id;
-                    $customer_under->floor_under_id = $ud->id;
-                    $customer_under->save();
-                }
-            }
+            
 
             //if all inserted successfully then commit the database insert
             DB::commit();
@@ -155,7 +114,7 @@ class CustomerSearchPreferenceController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             $response = 'failed';
-            return response()->json($response);
+            return response()->json($e->getMessage());
         }
         
     }
