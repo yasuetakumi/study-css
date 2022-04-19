@@ -25,9 +25,9 @@
     <div class="row justify-content-center">
         <div class="btn-group border rounded mb-3">
             <button type="button" :class="items.isActiveHistory ? 'btn-primary' : 'btn-default' " class="btn px-4 py-2"
-                @click="switchTab('history')">History</button>
+                @click="switchTab('history')">@lang('label.browsing_history')</button>
             <button type="button" :class="items.isActiveFavorite ? 'btn-primary' : 'btn-default' " class="btn px-4 py-2"
-                @click="switchTab('favorite')">Favorite</button>
+                @click="switchTab('favorite')">@lang('label.favorite_property')</button>
         </div>
     </div>
     <div class="text-right" v-if="items.isActiveHistory">
@@ -43,12 +43,12 @@
         <div class="w-100" v-else-if="!list_favorite && items.isActiveFavorite">
             <p class="text-center">No data</p>
         </div>
-        <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4" v-for="pd in list_favorite" :key="pd.id">
+        <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4 d-flex align-items-stretch" v-for="pd in list_favorite" :key="pd.id">
             <property-list :property="pd">
                 <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
             </property-list>
         </div>
-        <div v-else class="col-md-4" v-for="pd in list_history" :key="pd.id">
+        <div v-else class="col-md-4 d-flex align-items-stretch" v-for="pd in list_history" :key="pd.id">
             <property-list :property="pd">
                 <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
             </property-list>

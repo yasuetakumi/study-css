@@ -108,6 +108,9 @@ return [
 
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
+    'submit'                => '検索',
+    'browsing_history'      => '求人閲覧履歴',
+    'favorite_property'     => 'お気に入り',
 
     //A16
     'company_approval_list' => '会社承認待ち一覧',
@@ -163,6 +166,7 @@ return [
     'interior_transfer_price' => '居抜き譲渡額',
 
     // Customer Inquiry
+    'customer_inquiry' => 'お問い合わせ',
     'property_id' => '物件ID',
     'contact_us_type' => '問い合わせの種別',
     'subject' => '件名',

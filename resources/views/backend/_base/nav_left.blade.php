@@ -309,7 +309,7 @@
                     <li class="nav-item has-treeview" id="tree_customer_inquiries">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-question"></i>
-                            <p> Customer Inquiry <i class="right fas fa-angle-left"></i>
+                            <p> @lang('label.customer_inquiry') <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">

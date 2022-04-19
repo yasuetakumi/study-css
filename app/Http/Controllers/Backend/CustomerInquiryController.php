@@ -55,9 +55,11 @@ class CustomerInquiryController extends Controller {
 
         $dataToCustomer = $data;
         $dataToCustomer['subject'] = $subjectToCustomer;
+        $dataToCustomer['to_admin'] = false;
 
         $dataToAdmin = $data;
         $dataToAdmin['subject'] = $subjectToAdmin;
+        $dataToAdmin['to_admin'] = true;
 
         // Save inquiry
         $inquiry = new CustomerInquiry();
@@ -81,7 +83,7 @@ class CustomerInquiryController extends Controller {
             $model = CustomerInquiry::with(['property', 'contact_us_type'])->whereHas('property', function($query) {
                 $query->where('user_id', Auth::guard('user')->user()->id);
             });
-            return (new DatatablesHelper)->instance($model)
+            return (new DatatablesHelper)->instance($model, false)
                                             ->filterColumn('property.id', function($query, $keyword){
                                                 $query->whereHas('property', function($q) use ($keyword){
                                                     $q->where('id', 'like', '%'.$keyword.'%');

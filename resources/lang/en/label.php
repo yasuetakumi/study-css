@@ -109,6 +109,9 @@ return [
 
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
+    'submit'                => 'Submit',
+    'browsing_history'      => 'History',
+    'favorite_property'     => 'Favorite',
 
     //A16
     'company_approval_list' => 'Company Approval List',
@@ -164,6 +167,7 @@ return [
     'interior_transfer_price' => 'Interior Transfer Price',
 
     // Customer Inquiry
+    'customer_inquiry' => 'Customer Inquiry',
     'property_id' => 'Property ID',
     'contact_us_type' => 'Contact Us Type',
     'subject' => 'Subject',
