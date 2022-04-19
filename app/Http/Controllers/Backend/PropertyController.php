@@ -382,15 +382,6 @@ class PropertyController extends Controller
     {
         $property = Property::find($propertyId);
 
-        if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
-            $property->update([
-                'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
-            ]);
-        } else {
-            $property->update([
-                'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
-            ]);
-        }
         $previous_period = PropertyPublicationStatusPeriod::where('property_id', $propertyId)->where('is_current_status', 1)->latest();
 
         if($previous_period->count() > 0){
@@ -413,7 +404,6 @@ class PropertyController extends Controller
                     'status_end_date' => Carbon::now()->format("Y-m-d"),
                     'is_current_status' => false
                 ]);
-                return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
             }
         } else {
             //create if no property period 3b
@@ -425,10 +415,21 @@ class PropertyController extends Controller
             $property_period->remaining_publication_days = 120;
             $property_period->publication_status_id = Property::find($propertyId)->publication_status_id ?? null;
             $property_period->save();
-            if($property_period){
-                return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
-            }
+
         }
+
+        // finally update property publication_status_id
+        if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
+            $property->update([
+                'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
+            ]);
+        } else {
+            $property->update([
+                'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
+            ]);
+        }
+
+        return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
 
 
