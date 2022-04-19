@@ -11,8 +11,8 @@
                 @foreach ($station_lines as $station)
                     <div class="col-lg-2 col-6">
                         <div class="form-check">
-                            <input class="form-check-input" value="{{$station->id}}" name="station_line" type="radio" @change="changeStationByStationLine">
-                            <label class="form-check-label">{{$station->display_name}}</label>
+                            <input id="station-{{$station->id}}" class="form-check-input" value="{{$station->id}}" name="station_line" type="radio" @change="changeStationByStationLine">
+                            <label for="station-{{$station->id}}" class="form-check-label">{{$station->display_name}}</label>
                         </div>
                     </div>
                 @endforeach
@@ -40,8 +40,8 @@
                 </div>
                 <div v-else class="col-lg-2 col-6" v-for="station in stations" :key="station.id">
                     <div class="form-check">
-                        <input class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations">
-                        <label class="form-check-label">@{{station.display_name}} (@{{ station.properties_count }})</label>
+                        <input :id="'station2-'+station.id" class="form-check-input" :value="station.id" name="station[]" type="checkbox" v-model="items.stations">
+                        <label :for="'station2-'+station.id" class="form-check-label">@{{station.display_name}} (@{{ station.properties_count }})</label>
                     </div>
                 </div>
             </div>

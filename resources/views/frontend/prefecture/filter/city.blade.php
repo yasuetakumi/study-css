@@ -22,8 +22,8 @@
         <div class="row">
             <div v-for="(city, cityIndex) in items.cities" class="col-lg-2 col-6">
                 <div class="form-check">
-                    <input v-model="items.selectedCities" class="form-check-input city-input" :value="city.id" name="city[]" type="checkbox">
-                    <label class="form-check-label">@{{ city.display_name }} (@{{ city.properties_count }})</label>
+                    <input :id="'city-'+city.id" v-model="items.selectedCities" class="form-check-input city-input" :value="city.id" name="city[]" type="checkbox">
+                    <label :for="'city-'+city.id" class="form-check-label">@{{ city.display_name }} (@{{ city.properties_count }})</label>
                 </div>
             </div>
         </div>
