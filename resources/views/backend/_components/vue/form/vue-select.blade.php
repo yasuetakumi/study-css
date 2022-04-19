@@ -21,9 +21,11 @@
                 @if(isset($disabled)) :disabled="{{$disabled}}" @endif
                 data-parsley-trigger="change focusout"
                 @if(isset($function)) @change="{{ $function }}" @else @change="refreshParsley" @endif
+                data-parsley-errors-container = "#errorBlock-{{$name}}"
                 >
             </v-select>
             <input id="input-{{$name}}" type="text" class="d-none" :value="{{$model}}" name="{{$name}}" {{ !empty($required) ? 'required' : '' }}>
+            <div id="errorBlock-{{$name}}" class="errorBlock"></div>
         </div>
     </div>
 </div>
