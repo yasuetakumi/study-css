@@ -109,6 +109,8 @@ return [
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
     'submit'                => '検索',
+    'browsing_history'      => '求人閲覧履歴',
+    'favorite_property'     => 'お気に入り',
 
     //A16
     'company_approval_list' => '会社承認待ち一覧',

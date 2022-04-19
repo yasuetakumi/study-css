@@ -110,6 +110,8 @@ return [
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
     'submit'                => 'Submit',
+    'browsing_history'      => 'History',
+    'favorite_property'     => 'Favorite',
 
     //A16
     'company_approval_list' => 'Company Approval List',

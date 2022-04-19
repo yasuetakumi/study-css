@@ -11,9 +11,9 @@
                 </div>
             </div>
         </a>
-        <div class="card-body p-2">
+        <div class="card-body p-2 d-flex flex-column">
             <a :href="routeToPropertyDetail">
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-5">
                         <div class="position-relative">
                             <img class="w-100" :src="path + property.thumbnail_image_main" v-on:error="handleImageNotFound" alt="thumbnail">
@@ -35,7 +35,9 @@
                     </div>
                 </div>
             </a>
-            <slot></slot>
+            <div class="d-flex mt-auto flex-column align-self-start">
+                <slot></slot>
+            </div>
         </div>
     </div>
 </script>
