@@ -2,6 +2,7 @@
     $disableForm = false;
     $disableSelect2 = false;
     $companyUserId = '';
+    $agencyId = '';
     if ($page_type == 'detail') {
         $disableForm = true;
     }
@@ -13,6 +14,7 @@
     if(Auth::guard('user')->check()){
         $disableSelect2 = true;
         $companyUserId = Auth::id();
+        $agencyId = Auth::guard('user')->user()->belong_company_id;
     }
 
 @endphp
@@ -266,7 +268,9 @@
             }
             if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
+                var companyId = @json($agencyId);
                 this.items.user_id = id;
+                this.items.company_id = companyId;
             }
 
             this.handleSelectCompany();
