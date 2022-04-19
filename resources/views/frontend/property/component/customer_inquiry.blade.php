@@ -1,11 +1,11 @@
 @component('backend._components.form_container', ["action" => $form_action_inquiry, 'id' => 'customer-inquiry',  "page_type" => 'create', "files" => false])
     <input type="hidden" name="property_id" value="{{ request()->id }}">
     <div class="col-12 border-bottom border-primary">
-        <p class="text-center" style="font-size: 22px">Customer Inquiry</p>
+        <p class="text-center" style="font-size: 22px">@lang('label.customer_inquiry')</p>
     </div>
     <div id="form-group--contact_us_type" class="row form-group">
 
-        @include('backend._components._input_header',['label'=>__('Customer Inquiry'), 'required'=> true])
+        @include('backend._components._input_header',['label'=>__('label.customer_inquiry'), 'required'=> true])
 
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
             <select type="text" id="input-contact_us_type" name="contact_us_type_id" class="form-control @error('contact_us_type_id') is-invalid @enderror" value="{{ old('contact_us_type_id') }}" required>
