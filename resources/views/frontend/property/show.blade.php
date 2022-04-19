@@ -88,7 +88,7 @@
         </div>
         <div class="row py-2">
             <div class="col-12" v-if="property_related == null || property_related == ''">
-                <p class="text-center">No Related Property Found</p>
+                <p class="text-center">似た物件は見つかりませんでした</p>
             </div>
             <div v-else class="col-lg-4" v-for="pr in property_related">
                 <property-related-list :property="pr"></property-related-list>
