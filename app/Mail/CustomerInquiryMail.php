@@ -29,6 +29,7 @@ class CustomerInquiryMail extends Mailable
     public function build()
     {
         return $this->view('mail.customer-inquiry')
+                    ->from($this->inquiries['to_admin'] == true ? $this->inquiries['email'] : env('NOREPLY_SITE_EMAIL'))
                     ->subject($this->inquiries['subject']);
     }
 }

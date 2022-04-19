@@ -55,9 +55,11 @@ class CustomerInquiryController extends Controller {
 
         $dataToCustomer = $data;
         $dataToCustomer['subject'] = $subjectToCustomer;
+        $dataToCustomer['to_admin'] = false;
 
         $dataToAdmin = $data;
         $dataToAdmin['subject'] = $subjectToAdmin;
+        $dataToAdmin['to_admin'] = true;
 
         // Save inquiry
         $inquiry = new CustomerInquiry();
