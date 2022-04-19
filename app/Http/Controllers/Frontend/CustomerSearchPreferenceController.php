@@ -80,7 +80,7 @@ class CustomerSearchPreferenceController extends Controller
         }
         //get walking distance
         if(isset($data['徒歩'])){
-            $walking_distance = WalkingDistanceFromStationOption::find($data['徒歩']);
+            $walking_distance = WalkingDistanceFromStationOption::where('id', $data['徒歩'])->first();
         }
 
         DB::beginTransaction();
@@ -95,7 +95,7 @@ class CustomerSearchPreferenceController extends Controller
             $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->freetext = isset($data['フリーワード']) ? $data['フリーワード'] : null;
-            $customer->walking_distance = $walking_distance ? $walking_distance->id : null ;
+            $customer->walking_distance = isset($data['徒歩']) ? $walking_distance->id : null ;
             $customer->transfer_price_min = isset($data['譲渡額下限'] ) ? (int) filter_var($data['譲渡額下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->transfer_price_max = isset($data['譲渡額上限']) ? (int) filter_var($data['譲渡額上限'], FILTER_SANITIZE_NUMBER_INT) : '';
 
@@ -103,7 +103,6 @@ class CustomerSearchPreferenceController extends Controller
             $customer->save();
 
             //save to intermediate table
-
             if($cities->count() > 0){
                 foreach($cities as $city){
                     $customer_city = new CustomerSearchPreferenceCity();
@@ -155,7 +154,7 @@ class CustomerSearchPreferenceController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             $response = 'failed';
-            return response()->json($response);
+            return response()->json($e->getMessage());
         }
         
     }

@@ -132,8 +132,8 @@
                     <div class="col-12">
                         @foreach ($property_preferences as $pp)
                         <div class="form-check">
-                            <input v-model="items.filter.preferences" class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}" @change="getCountProperty">
-                            <label class="form-check-label">{{$pp->label_jp}}</label>
+                            <input id="property-preference-{{$pp->id}}" v-model="items.filter.preferences" class="form-check-input" name="property_preference[]" type="checkbox" value="{{$pp->id}}" @change="getCountProperty">
+                            <label for="property-preference-{{$pp->id}}" class="form-check-label">{{$pp->label_jp}}</label>
                         </div>
                         @endforeach
                     </div>
@@ -147,8 +147,8 @@
                     <div class="col-12">
                         @foreach ($property_types as $pt)
                         <div class="form-check">
-                            <input v-model="items.filter.types" class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}" @change="getCountProperty">
-                            <label class="form-check-label">{{$pt->label_jp}}</label>
+                            <input id="property-type-{{$pt->id}}" v-model="items.filter.types" class="form-check-input" name="property_type[]" type="checkbox" value="{{$pt->id}}" @change="getCountProperty">
+                            <label for="property-type-{{$pt->id}}" class="form-check-label">{{$pt->label_jp}}</label>
                         </div>
                         @endforeach
                     </div>
@@ -161,78 +161,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-check">
-                            <input v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox" @change="getCountProperty">
-                            <label class="form-check-label">スケルトン物件</label>
+                            <input id="skeleton-0" v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox" @change="getCountProperty">
+                            <label for="skeleton-0" class="form-check-label">スケルトン物件</label>
                         </div>
                         <div class="form-check">
-                            <input v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox" @change="getCountProperty">
-                            <label class="form-check-label">居抜き物件</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Cuisine Filter --}}
-            <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#exampleModalCenter" :disabled="disabled">
-                居抜き物件をさらに絞る
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog  modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">居抜き物件をさらに絞る</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                            {{-- Cuisines Filter --}}
-                            <div class="search-cuisines mb-3">
-                                <p class="border-left border-primary pl-2">@lang('label.cuisines')</p>
-                                <hr>
-                                <div class="row">
-                                    @foreach ($cuisines as $cu)
-                                        <div class="col-4">
-                                            <div class="form-check">
-                                                <input v-model="items.filter.cuisines" class="form-check-input" name="cuisine[]" type="checkbox" value="{{$cu->id}}" id="cuisine-{{$cu->id}}" @change="getCountProperty">
-                                                <label for="cuisine-{{$cu->id}}" class="form-check-label">{{$cu->label_jp}}</label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            {{-- Transfer Price Option --}}
-                            <div class="search-walking-distance mb-3">
-                                <p class="border-left border-primary pl-2">@lang('label.transfer_price_option')</p>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <select v-model="items.filter.transfer_price_min" class="form-control" name="transfer_price_min" @change="getCountProperty">
-                                            <option :value="null">選択なし</option>
-                                            @foreach ($transfer_price_options as $opt)
-                                            <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <select v-model="items.filter.transfer_price_max" class="form-control" name="transfer_price_max" @change="getCountProperty">
-                                            <option :value="null">選択なし</option>
-                                            @foreach ($transfer_price_options as $opt)
-                                            <option value="{{$opt->value}}">{{$opt->label_jp}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                            <input id="skeleton-1" v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox" @change="getCountProperty">
+                            <label for="skeleton-1" class="form-check-label">居抜き物件</label>
                         </div>
                     </div>
                 </div>
