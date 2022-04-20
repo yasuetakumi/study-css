@@ -10,7 +10,7 @@ class ApiStationController extends Controller
 {
     public function getStationByStationLine($stationLine, $prefectureId)
     {
-        $stations = Station::where('station_line_id', $stationLine)->withCount('properties')->having('prefecture_id', $prefectureId)->get();
+        $stations = Station::where('station_line_id', $stationLine)->where('prefecture_id', $prefectureId)->withCount('properties')->get();
 
         return response()->json($stations);
     }
