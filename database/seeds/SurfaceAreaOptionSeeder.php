@@ -20,8 +20,8 @@ class SurfaceAreaOptionSeeder extends Seeder
             $data->insert([
                 [
                     'value'     => $value,
-                    'label_en'  => $value . ' EN',
-                    'label_jp'  => $value . ' JP'
+                    'label_en'  => $value . ' tsubo',
+                    'label_jp'  => $value . '坪'
                 ],
 
             ]);

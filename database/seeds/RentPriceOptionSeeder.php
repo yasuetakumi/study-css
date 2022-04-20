@@ -21,8 +21,8 @@ class RentPriceOptionSeeder extends Seeder
             $data->insert([
                 [
                     'value'     => $value,
-                    'label_en'  => $value . ' EN',
-                    'label_jp'  => $value . ' JP',
+                    'label_en'  => $value . ' JPY',
+                    'label_jp'  => $value . '万円',
                     'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
                 ],
@@ -33,57 +33,57 @@ class RentPriceOptionSeeder extends Seeder
         $data->insert([
             [
                 'value'     =>  150,
-                'label_en'  =>  '150 EN',
-                'label_jp'  =>  '150 JP',
+                'label_en'  =>  '150 JPY',
+                'label_jp'  =>  '150万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  200,
-                'label_en'  =>  '200 EN',
-                'label_jp'  =>  '200 JP',
+                'label_en'  =>  '200 JPY',
+                'label_jp'  =>  '200万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  250,
-                'label_en'  =>  '250 EN',
-                'label_jp'  =>  '250 JP',
+                'label_en'  =>  '250 JPY',
+                'label_jp'  =>  '250万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  300,
-                'label_en'  =>  '300 EN',
-                'label_jp'  =>  '300 JP',
+                'label_en'  =>  '300 JPY',
+                'label_jp'  =>  '300万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  350,
-                'label_en'  =>  '350 EN',
-                'label_jp'  =>  '350 JP',
+                'label_en'  =>  '350 JPY',
+                'label_jp'  =>  '350万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  400,
-                'label_en'  =>  '400 EN',
-                'label_jp'  =>  '400 JP',
+                'label_en'  =>  '400 JPY',
+                'label_jp'  =>  '400万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  450,
-                'label_en'  =>  '450 EN',
-                'label_jp'  =>  '450 JP',
+                'label_en'  =>  '450 JPY',
+                'label_jp'  =>  '450万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'     =>  500,
-                'label_en'  =>  '500 EN',
-                'label_jp'  =>  '500 JP',
+                'label_en'  =>  '500 JPY',
+                'label_jp'  =>  '500万円',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
