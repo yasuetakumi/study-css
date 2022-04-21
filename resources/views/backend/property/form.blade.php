@@ -42,7 +42,7 @@
         @if($page_type == 'edit')
             @component('backend._components.input_button_anchor', [
                 'label' => isset($item) && $item->publication_status_id == 1 ? '保存して掲載する' : '保存して非掲載にする',
-                'value' => isset($item) ? $item->publication_status->label_jp : null,
+                'value' => isset($item) && $item->publication_status_id == 1 ? '掲載にする' : '非掲載にする',
                 'required' => 0,
                 'route' => isset($item) ? route('admin.publication.status', $item->id) : null
             ])@endcomponent
