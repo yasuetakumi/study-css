@@ -33,7 +33,7 @@ class CompanyApprovalController extends Controller
         $id = $param;
         $data['item']           = Company::with('admin')->where('companies.id', $id)->first();
 
-        $data['page_title']     = __('label.edit') . __('label.company_approval_list');
+        $data['page_title']     = __('label.company_approval_list'). __('label.edit') ;
         $data['form_action']    = route('admin.approval.update', $id);
         $data['page_type']      = 'edit';
 
