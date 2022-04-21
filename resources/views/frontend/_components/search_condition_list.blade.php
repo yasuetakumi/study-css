@@ -2,7 +2,7 @@
     <div>
 
         <!-- if its used on navbar then show navlink -->
-        <a href="" v-if="isbutton=='false'" class="nav-link text-light" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">@{{label}}</a>
+        <a href="" v-if="isbutton=='false'" class="nav-link text-light" id="btnOpenModal" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">@{{label}}</a>
 
         <div class="modal fade" id="modalAlert" tabindex="-1" aria-labelledby="modalAlertLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -22,7 +22,7 @@
                             <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
                             <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
                         </div>
-                        <a role="button" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
+                        <a role="button" id="btnCloseModal" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
                             <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
                         </a>
                       </div>
@@ -132,7 +132,8 @@
                 items: {
                     controlTextArea: false,
                     comment: null,
-                    search_condition: null,
+                    search_condition: [],
+                    active_modal_state: null,
                 }
             }
             return data;
@@ -149,11 +150,12 @@
             });
         },
         updated: function(){
-            if(this.items.search_condition && this.items.search_condition.length > 0)
+            if(this.items.search_condition && this.items.search_condition.length > 0){
                 for(let i=0; i < this.items.search_condition.length; i++){
                     this.titleEditOrSave(i);
                     // this.showCancelButton(i);
                 }
+            }
         },
 
         // Computed properties
@@ -166,10 +168,12 @@
                 }
             },
             activeModal: function(){
-                if(this.items.search_condition != null){
-                    return '#modalSearchCondition';
+                if(this.items.search_condition && this.items.search_condition.length === 0){
+                    this.active_modal_state = '#modalAlert';
+                    return this.active_modal_state;
                 } else {
-                    return '#modalAlert';
+                    this.active_modal_state = '#modalSearchCondition';
+                    return this.active_modal_state;
                 }
             }
         },
@@ -205,10 +209,9 @@
             },
             getLocalStorage: function(){
                 let local = localStorage.getItem("searchCondition");
-                let localArr = JSON.parse(local) || []; // parse to array
-                if(localArr.length > 0){ //check if array null
-                    this.items.search_condition = localArr;
-                }
+                console.log("local", JSON.parse(local));
+                let localArr = local != null ? JSON.parse(local) : [] ; // parse to array
+                this.items.search_condition = localArr;
             },
             deleteSearchCondition: function(index){
                 console.log(index);
@@ -224,6 +227,19 @@
                         type: 'success'
                     });
                 }
+                this.getLocalStorage();
+
+                if(this.items.search_condition.length === 0){
+                    let close = document.getElementById("btnCloseModal");
+                    let open = document.getElementById("btnOpenModal");
+                    close.click();
+                    // console.log(this.items.search_condition);
+                    this.active_modal_state = '#modalAlert';
+                    setTimeout(() => {
+                        open.click();
+                    }, 500);
+                }
+
                 this.getLocalStorage();
             },
             titleEditOrSave: function(index){
@@ -246,9 +262,7 @@
                     // return true;
                 }
             },
-            getIndexSearchPref: function(sc){
-                this.$emit("getindex", sc)
-            },
+
             handleTextArea: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
                 let local = localStorage.getItem('searchCondition');
