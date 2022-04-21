@@ -162,11 +162,11 @@
                     <div class="col-12">
                         <div class="form-check">
                             <input id="skeleton-0" v-model="items.filter.skeleton" class="form-check-input" ref="skeleton" name="skeleton" value="0" type="checkbox" @change="getCountProperty">
-                            <label for="skeleton-0" class="form-check-label">スケルトン物件</label>
+                            <label for="skeleton-0" class="form-check-label">居抜き物件</label>
                         </div>
                         <div class="form-check">
                             <input id="skeleton-1" v-model="items.filter.furnished" class="form-check-input" ref="furnished" name="furnished" value="1" type="checkbox" @change="getCountProperty">
-                            <label for="skeleton-1" class="form-check-label">居抜き物件</label>
+                            <label for="skeleton-1" class="form-check-label">スケルトン物件</label>
                         </div>
                     </div>
                 </div>
