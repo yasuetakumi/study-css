@@ -5,6 +5,7 @@
 use Carbon\Carbon;
 use App\Models\City;
 use App\Models\Cuisine;
+use App\Models\Prefecture;
 use App\Models\PropertyType;
 use Faker\Generator as Faker;
 use App\Models\RentPriceOption;
@@ -12,7 +13,7 @@ use App\Models\SurfaceAreaOption;
 
 $factory->define(\App\Models\Property::class, function (Faker $faker) {
     $deposit_amount = [100,200,300,400,500,600,700,800,900,1000];
-    $prefecture_id = rand(1,20);
+    $prefecture_id = Prefecture::all()->pluck('id')->random();
 
     return [
         'user_id' => rand(1,10),
