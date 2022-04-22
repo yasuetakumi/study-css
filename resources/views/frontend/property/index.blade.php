@@ -201,6 +201,21 @@
                     Vue.delete(searchCondition, 'number_of_match_property');
                     Vue.delete(searchCondition, 'url');
                     Vue.delete(searchCondition, 'created_at');
+
+                    Vue.set(searchCondition, '面積下限', searchCondition.surfaceMin);
+                    Vue.set(searchCondition, '面積上限', searchCondition.surfaceMax);
+                    Vue.delete(searchCondition, 'surfaceMin');
+                    Vue.delete(searchCondition, 'surfaceMax');
+
+                    Vue.set(searchCondition, '賃料下限', searchCondition.rentAmountMin);
+                    Vue.set(searchCondition, '賃料上限', searchCondition.rentAmountMax);
+                    Vue.delete(searchCondition, 'rentAmountMin');
+                    Vue.delete(searchCondition, 'rentAmountMax');
+
+                    Vue.set(searchCondition, '譲渡額下限', searchCondition.transferPriceMin);
+                    Vue.set(searchCondition, '譲渡額上限', searchCondition.transferPriceMax);
+                    Vue.delete(searchCondition, 'transferPriceMin');
+                    Vue.delete(searchCondition, 'transferPriceMax');
                 }
 
                 return searchCondition;
