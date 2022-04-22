@@ -120,6 +120,7 @@
                     current_search_preference: null,
                     email_search_preference: null,
                     selectedIdFavorite: null,
+                    walking_distance: null,
                 },
                 // -------------------------------------------------------------
             };
@@ -313,6 +314,7 @@
                 }
                 if(getWalkingDistanceQs != null){
                     this.items.filter.walking_distance = getWalkingDistanceQs;
+                    this.items.walking_distance = getWalkingDistanceQs;
                 }
                 if(getFurnishedQs != null){
                     this.items.filter.furnished = getFurnishedQs;
@@ -403,18 +405,33 @@
             },
             // -----------------------------------------------------------------
             getLikeProperty: function() {
-                let local = localStorage.getItem('favoritePropertyId');
-                this.items.like_property = JSON.parse(local) || [];
+                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                let filterId = [];
+                if(local.length > 0){
+                    for(let i= 0; i < local.length; i++){
+                        // console.log(id);
+                        filterId.push(local[i].id);
+                    }
+                    console.log(filterId);
+                    if(filterId.length > 0){
+                        this.items.like_property = filterId;
+                    } else {
+                        this.items.like_property = [];
+                    }
+
+                }
             },
             // -----------------------------------------------------------------
             setLikeProperty: function (id) {
                 let propertyID = id;
                 this.items.selectedIdFavorite = id;
                 var properties_like = [];
+                var filterArr = [];
                 let local = localStorage.getItem('favoritePropertyId');
                 properties_like = JSON.parse(local) || [];
-                if(properties_like.length > 0 && properties_like.includes(propertyID)){
-                    let index = properties_like.indexOf(propertyID);
+                filterArr = properties_like.filter(x => {return x.id == propertyID});
+                if(filterArr.length > 0){
+                    let index = properties_like.findIndex(object => {return object.id == propertyID});
                     // console.log("index", index);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
@@ -423,7 +440,11 @@
                         type: 'success'
                     });
                 } else {
-                    properties_like.push(propertyID);
+                    var objectFavorite = {
+                        'id': propertyID,
+                        'distance': this.items.walking_distance
+                    };
+                    properties_like.push(objectFavorite);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                     let msg = 'お気に入り登録しました'; //add like
                     this.$toasted.show( msg, {

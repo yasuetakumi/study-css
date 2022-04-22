@@ -50,8 +50,8 @@
         // Aavailable properties
         props: {
             property: { required: true, default: null },
+            distance: { required: false, default: null},
         },
-
         // Computed properties
         computed: {
             path: function(){
@@ -70,6 +70,15 @@
             },
             distanceMinutes: function(){
                 if(this.property.property_stations[0] != null){
+                    const walkingOver16Minutes = 6;
+                    let walking = this.distance != null ? parseInt(this.distance) : null;
+                    if(walking != null && walking == walkingOver16Minutes){
+                        const property_stations = this.property.property_stations;
+                        const wd = property_stations.filter((element)=> {
+                            return element.distance_from_station == walking;
+                        });
+                        return wd[0].walking_distance.value + '分';
+                    }
                     return this.property.property_stations[0].walking_distance.value + '分';
                 } else {
                     return '';
