@@ -68,7 +68,7 @@ class PropertyController extends Controller {
             $query->select('id', 'display_name', 'design_category_id');
         }])->find($id);
         // return $data['item'];
-        $data['page_title'] = 'Property Detail';
+        $data['page_title'] = __('label.property_detail');
         $categories =  [
             [
                 'value' => Cuisine::IZAKAYA,

@@ -142,8 +142,6 @@
             this.getCountProperty();
             this.getHistoryProperty();
             this.searchCondition = @json($searchCondition);
-            this.items.loading = false;
-
         },
         // ---------------------------------------------------------------------
 
@@ -380,6 +378,7 @@
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
                         this.items.property_data = result.data.data.result;
+                        this.items.loading = false;
                     }).catch((err) => {
                         console.log(err);
                 });

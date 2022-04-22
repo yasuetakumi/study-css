@@ -37,11 +37,18 @@
     </div>
     <hr>
     <div class="row">
-        <div class="w-100" v-if="!list_history && items.isActiveHistory">
-            <p class="text-center">No data</p>
+        <div class="w-100" v-if="loading">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div class="w-100" v-else-if="!list_history && items.isActiveHistory">
+            <p class="text-center">物件が見つかりません</p>
         </div>
         <div class="w-100" v-else-if="!list_favorite && items.isActiveFavorite">
-            <p class="text-center">No data</p>
+            <p class="text-center">物件が見つかりません</p>
         </div>
         <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4 d-flex align-items-stretch" v-for="pd in list_favorite" :key="pd.id">
             <property-list :property="pd" :distance="isWalkingDistanceSet(pd.id)">
@@ -123,6 +130,7 @@
                         confirmDelete: false,
                         selectedIdFavorite: null,
                         localStorageFavorite: [],
+                        loading: false,
                     },
                     // ----------------------------------------------------------
                 };
@@ -175,6 +183,9 @@
                         return false;
                     }
                 },
+                loading: function(){
+                    return this.items.loading;
+                }
             },
 
             /*
@@ -203,6 +214,7 @@
                     }, 400);
                 },
                 getListHistoryOrFavoriteProperty: async function(localKey) {
+                    this.items.loading = true;
                     let local = localStorage.getItem(localKey);
                     let propertyID = JSON.parse(local) || [];
                     console.log(propertyID);
@@ -221,6 +233,7 @@
                         let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyID);
                         this.items.list_properties_history = data.data;
                     }
+                    this.items.loading = false;
                 },
                 getLikeProperty: function() {
                     let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
