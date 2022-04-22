@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-12">
         <div class="row justify-content-center mt-4">
-            
+
             <div class="col-12">
                 <div id="form-group--plans" class="row form-group">
 
-                    @include('backend._components._input_header',['label'=>'Design Categories', 'required'=>true])
+                    @include('backend._components._input_header',['label'=>__('label.design_categories'), 'required'=>true])
 
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                         <div class="field-group clearfix">
@@ -23,7 +23,7 @@
             <div class="col-12" v-if="designStyles && designStyles.length>0">
                 <div id="form-group--plans" class="row form-group">
 
-                    @include('backend._components._input_header',['label'=>'Design Styles', 'required'=>true])
+                    @include('backend._components._input_header',['label'=>__('label.desgin_styles'), 'required'=>true])
 
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                         <div class="field-group clearfix">
@@ -36,7 +36,7 @@
                                         <img :src="pathToImage + dc.id +'/'+ dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
                                     </div>
                                     <div class="my-2">
-                                        <p>Design @{{dc.display_name}}</p>
+                                        <p>@{{dc.display_name}}</p>
                                         <span v-if="estimationLoading">
                                             <div class="spinner-border text-primary" role="status">
                                                 <span class="sr-only">Loading...</span>

@@ -45,8 +45,8 @@
     @component('frontend._components.text_label', ['label' => __('label.business_terms'), 'required' => 0, 'value' => $item->business_terms_id ?  $item->business_term->label_jp : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.comments'), 'required' => 0, 'value' => $item->comment ?? ''])@endcomponent
     @component('frontend._components.text_label', [
-        'label' => __('label.skeleton'), 'required' => 0,
-        'value' => $item->skeleton_id == $skeleton ? 'Furnished' : 'Updated by the Scraping Process'
+        'label' => __('label.is_skeleton'), 'required' => 0,
+        'value' => $item->skeleton_id == $skeleton ? __('label.skeleton') : __('label.furnished')
     ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.restaurant_cuisine'), 'required' => 0, 'value' => $item->cuisine_id ? $item->cuisine->label_jp : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.interior_transfer_price'), 'required' => 0, 'value' => $item->interior_transfer_price ?? '' ])@endcomponent
@@ -314,7 +314,7 @@
                         this.items.list_estimation = response.data;
                     }).catch((err) => {
                         console.log(err);
-                    }).then(() => { 
+                    }).then(() => {
                         //set estimation loading complete
                         this.items.estimation_loading = false;
                     });
