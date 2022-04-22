@@ -44,12 +44,12 @@
             <p class="text-center">No data</p>
         </div>
         <div v-else-if="list_favorite && items.isActiveFavorite" class="col-md-4 d-flex align-items-stretch" v-for="pd in list_favorite" :key="pd.id">
-            <property-list :property="pd">
+            <property-list :property="pd" :distance="isWalkingDistanceSet(pd.id)">
                 <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
             </property-list>
         </div>
         <div v-else class="col-md-4 d-flex align-items-stretch" v-for="pd in list_history" :key="pd.id">
-            <property-list :property="pd">
+            <property-list :property="pd" :distance="isWalkingDistanceSet(pd.id)">
                 <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
             </property-list>
         </div>
@@ -122,6 +122,7 @@
                         isActiveFavorite: false,
                         confirmDelete: false,
                         selectedIdFavorite: null,
+                        localStorageFavorite: [],
                     },
                     // ----------------------------------------------------------
                 };
@@ -139,10 +140,6 @@
             ## ------------------------------------------------------------------
             */
             mounted: function() {
-                this.getLikeProperty();
-            },
-
-            created: function() {
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
                 const favorite = queries.get("favorite");
@@ -151,6 +148,10 @@
                     state = 'favorite';
                 }
                 this.switchTab(state);
+            },
+
+            created: function() {
+                this.getLikeProperty();
             },
 
             /*
@@ -173,7 +174,7 @@
                     } else {
                         return false;
                     }
-                }
+                },
             },
 
             /*
@@ -204,18 +205,40 @@
                 getListHistoryOrFavoriteProperty: async function(localKey) {
                     let local = localStorage.getItem(localKey);
                     let propertyID = JSON.parse(local) || [];
-                    let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite',
-                        propertyID);
-                    if (localKey == 'visitedPropertyId') {
+                    console.log(propertyID);
+                    let filterId = [];
+                    if(localKey == 'favoritePropertyId'){
+                        this.items.localStorageFavorite = propertyID;
+                        if(propertyID.length > 0){
+                            for(let i= 0; i < propertyID.length; i++){
+                                filterId.push(propertyID[i].id);
+                            }
+                            let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', filterId);
+                            this.items.list_properties_favorite = data.data
+                        }
+                    }
+                    else {
+                        let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyID);
                         this.items.list_properties_history = data.data;
-                    } else {
-                        this.items.list_properties_favorite = data.data
                     }
                 },
                 getLikeProperty: function() {
-                    let localLikeProperty = localStorage.getItem('favoritePropertyId');
-                    let likePropertyID = JSON.parse(localLikeProperty) || [];
-                    this.items.like_property = likePropertyID;
+                    let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                    this.items.localStorageFavorite = local;
+                    let filterId = [];
+                    if(local.length > 0){
+                        for(let i= 0; i < local.length; i++){
+                            // console.log(id);
+                            filterId.push(local[i].id);
+                        }
+                        console.log(filterId);
+                        if(filterId.length > 0){
+                            this.items.like_property = filterId;
+                        } else {
+                            this.items.like_property = [];
+                        }
+
+                    }
                 },
                 switchTab: function(state) {
                     const localKeyHistory = 'visitedPropertyId';
@@ -234,14 +257,15 @@
                     let propertyID = id;
                     this.items.selectedIdFavorite = id;
                     var properties_like = [];
+                    var filterArr = [];
                     let local = localStorage.getItem('favoritePropertyId');
                     properties_like = JSON.parse(local) || [];
-
+                    filterArr = properties_like.filter(x => {return x.id == propertyID});
                     if(this.items.isActiveFavorite == true){
                         this.items.confirmDelete = true;
                     } else {
-                        if (properties_like.length > 0 && properties_like.includes(propertyID)) {
-                            let index = properties_like.indexOf(propertyID);
+                        if (filterArr.length > 0) {
+                            let index = properties_like.findIndex(object => {return object.id == propertyID});
                             console.log("index", index);
                             properties_like.splice(index, 1);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
@@ -250,7 +274,11 @@
                                 type: 'success'
                             });
                         } else {
-                            properties_like.push(propertyID);
+                            var objectFavorite = {
+                                'id': propertyID,
+                                'distance': null
+                            };
+                            properties_like.push(objectFavorite);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                             let msg = 'お気に入り登録しました'; //add like
                             this.$toasted.show( msg, {
@@ -265,11 +293,13 @@
                 deleteFavorite: function(confirm) {
                     let propertyID = this.items.selectedIdFavorite;
                     var properties_like = [];
+                    var filterArr = [];
                     let local = localStorage.getItem('favoritePropertyId');
                     properties_like = JSON.parse(local) || [];
+                    filterArr = properties_like.filter(x => {return x.id == propertyID});
                     if (confirm == true) {
-                        if (properties_like.length > 0 && properties_like.includes(propertyID)) {
-                            let index = properties_like.indexOf(propertyID);
+                        if (filterArr.length > 0) {
+                            let index = properties_like.findIndex(object => {return object.id == propertyID});
                             console.log("index", index);
                             properties_like.splice(index, 1);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
@@ -288,6 +318,17 @@
                     if(confirm('物件閲覧履歴を消去してよろしいですか？')){
                         localStorage.removeItem('visitedPropertyId');
                         this.items.list_properties_history = '';
+                    }
+                },
+                isWalkingDistanceSet: function(id){
+                    if(this.items.localStorageFavorite.length > 0){
+                        for(let i=0; i < this.items.localStorageFavorite.length; i++){
+                        if(this.items.localStorageFavorite[i].id == id){
+                            return this.items.localStorageFavorite[i].distance;
+                        }
+                    }
+                    } else {
+                        return null;
                     }
                 }
                 // --------------------------------------------------------------
