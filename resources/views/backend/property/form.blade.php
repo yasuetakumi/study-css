@@ -349,7 +349,7 @@
                 return this.$store.state.preset.property_related;
             },
             pathToImage: function(){
-                let pathUploads = @json(asset('uploads/design-styles'));
+                let pathUploads = @json(asset('uploads/plans'));
                 return pathUploads + '/';
             },
             plans_design_category_1: function(){
