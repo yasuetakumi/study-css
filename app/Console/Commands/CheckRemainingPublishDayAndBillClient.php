@@ -100,17 +100,17 @@ class CheckRemainingPublishDayAndBillClient extends Command
                     print "companies " . $property->user->belong_company_id . " points is : ".$companyPoint."\n";
                     \Log::info("companies " . $property->user->belong_company_id . " points is : ".$companyPoint);
 
-                    //Condition A. If that company has points >= $cost_to_publish: 
+                    //Condition A. If that company has points >= $cost_to_publish:
                     if($companyPoint>=$publishCost){
                         print "companies has enough point, spend those point to pay the bill \n";
                         \Log::info("companies has enough point, spend those point to pay the bill ");
 
                         //Spend those points and update the property status periods log
-                        //i. Reduce companies.remaining_points by  $cost_to_publish 
+                        //i. Reduce companies.remaining_points by  $cost_to_publish
                         $companyPointRemaining = $companyPoint - $publishCost;
 
                         //ii. Add new property status period: proeprty_publication_status_period.remaining_days = 30, status = PUBLISHED, status_start_date= current date:
-                        //iii. Disable old property status period: set status_end_date to current time. Set is_current_status to FALSE/0 
+                        //iii. Disable old property status period: set status_end_date to current time. Set is_current_status to FALSE/0
                         $updateCompanyPublish = $this->updateCompanyPublish($property->id, 30, PropertyPublicationStatus::ID_PUBLISHED);
 
                         //update remainig points in table if success
@@ -128,11 +128,11 @@ class CheckRemainingPublishDayAndBillClient extends Command
                         }
                     }
 
-                    //Condition B. If that company has points < $cost_to_publish: try to automatically charge the company by credit card: use the details in the payment_details table to charge to customer 
+                    //Condition B. If that company has points < $cost_to_publish: try to automatically charge the company by credit card: use the details in the payment_details table to charge to customer
                     else{
                         //get minus point value first
                         $topUpAmount = $publishCost - $companyPoint;
-                        
+
                         print "companies doesnt have enough point, try to bill company first, billed amount: (".$publishCost."-".$companyPoint.") = ".$topUpAmount." \n";
                         \Log::info("companies doesnt have enough point, try to bill company first, billed amount: (".$publishCost."-".$companyPoint.") = ".$topUpAmount);
 
@@ -155,6 +155,7 @@ class CheckRemainingPublishDayAndBillClient extends Command
                                 $continue = $this->createStripeToken($findCompany->id);
                             }
 
+                            $findCompany = Company::where('id', $property->user->belong_company_id)->first();
                             //if all set then bill the company using Stripe
                             if($continue){
                                 $companyPaymentUpdated = CompanyPaymentDetail::where('company_id', $findCompany->id)->first();
@@ -178,16 +179,16 @@ class CheckRemainingPublishDayAndBillClient extends Command
                             $isSuccess = false;
                         }
 
-                        //If payment IS successful, then points should be updated by 150: 
+                        //If payment IS successful, then points should be updated by 150:
                         if($isSuccess){
                             print "Payment Complete, charge company and update companies point \n";
                             \Log::info("Payment Complete, charge company and update companies point");
                             //Spend those points and update the property status periods log
-                            //i. Reduce companies.remaining_points by  $cost_to_publish 
+                            //i. Reduce companies.remaining_points by  $cost_to_publish
                             $companyPointRemaining = ($companyPoint + $topUpAmount) - $publishCost;
 
                             //ii. Add new property status period: proeprty_publication_status_period.remaining_days = 30, status = PUBLISHED, status_start_date= current date:
-                            //iii. Disable old property status period: set status_end_date to current time. Set is_current_status to FALSE/0 
+                            //iii. Disable old property status period: set status_end_date to current time. Set is_current_status to FALSE/0
                             $updateCompanyPublish = $this->updateCompanyPublish($property->id, 30, PropertyPublicationStatus::ID_PUBLISHED);
 
                             //update remainig points in table if success
@@ -209,7 +210,7 @@ class CheckRemainingPublishDayAndBillClient extends Command
                             print "Payment Failed, company point not updated \n";
                             \Log::info("Payment Failed, company point not updated");
 
-                            // then set the property to NOT_PUBLISHED and update the property status periods log:  
+                            // then set the property to NOT_PUBLISHED and update the property status periods log:
                             $this->updateCompanyPublish($property->id, 0, PropertyPublicationStatus::ID_NOT_PUBLISHED);
                         }
                     }
@@ -235,7 +236,7 @@ class CheckRemainingPublishDayAndBillClient extends Command
                     print "Email send success! \n";
                 }
 
-                //5. IF the remaining days is greater than 1: skip that property. 
+                //5. IF the remaining days is greater than 1: skip that property.
                 else{
                     //logging----------------
                     print "skip properties " . $property->id . " remaining days is greater than 1 \n";
@@ -257,15 +258,15 @@ class CheckRemainingPublishDayAndBillClient extends Command
         try{
             \DB::beginTransaction();
             $property = Property::find($propertyId);
-    
+
             //update property publication_status_id based on condition
             $property->update([
                 'publication_status_id' => $publicationStatusId,
             ]);
-            
+
             //get previous value in PropertyPublicationStatusPeriod table
             $previous_period = PropertyPublicationStatusPeriod::where('property_id', $propertyId)->where('is_current_status', 1)->first();
-    
+
             //ii. Add new property status period: proeprty_publication_status_period.remaining_days = 30, status = PUBLISHED, status_start_date= current date:
             $property_period = new PropertyPublicationStatusPeriod();
             $property_period->property_id = $propertyId;
@@ -275,10 +276,10 @@ class CheckRemainingPublishDayAndBillClient extends Command
             $property_period->remaining_publication_days = $remainingPublicationDay;
             $property_period->publication_status_id = $publicationStatusId;
             $property_period->save();
-            
+
             //if there is previous value on PropertyPublicationStatusPeriod table then set it status to false
             if($previous_period){
-                //iii. Disable old property status period: set status_end_date to current time. Set is_current_status to FALSE/0 
+                //iii. Disable old property status period: set status_end_date to current time. Set is_current_status to FALSE/0
                 if($property_period){
                     $previous_period->update([
                         'status_end_date' => Carbon::now()->format("Y-m-d"),
@@ -294,7 +295,7 @@ class CheckRemainingPublishDayAndBillClient extends Command
             $stat = $publicationStatusId==1 ? 'UNPUBLISHED': 'PUBLISHED';
             print "udpated companies publish remaining : ".$remainingPublicationDay." publication day and status become ".$stat.", and disabled old status period \n";
             \Log::info("udpated companies publish remaining  : ".$remainingPublicationDay." publication day and status become ".$stat.", and disabled old status period");
-            
+
             //return the result
             return true;
         } catch (\Exception $e) {
