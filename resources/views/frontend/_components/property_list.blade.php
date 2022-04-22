@@ -70,7 +70,7 @@
                         const wd = property_stations.filter((element)=> {
                             return element.distance_from_station == walking;
                         });
-                        return wd[0].station.display_name + '分';
+                        return wd[0].station.display_name;
                     }
                     return this.property.property_stations[0].station.display_name;
                 } else {
@@ -109,7 +109,7 @@
                         const wd = property_stations.filter((element)=> {
                             return element.distance_from_station == walking;
                         });
-                        return wd[0].station.station_line.display_name + '分';
+                        return wd[0].station.station_line.display_name;
                     }
                     return this.property.property_stations[0].station.station_line.display_name;
                 } else {
