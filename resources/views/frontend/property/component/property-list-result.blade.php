@@ -1,9 +1,11 @@
 <div v-if="loading">
-    <p>Loading data...</p>
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
 </div>
 
 <div v-else-if="!property_data">
-    <p>No data</p>
+    <p>現在の条件では物件が見つかりません。検索条件を広げてください</p>
 </div>
 
 <div v-else v-for="pd in property_data" :key=pd.id>

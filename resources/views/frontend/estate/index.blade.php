@@ -19,15 +19,15 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.name"
-                                id="input-name" 
+                                id="input-name"
                                 name="name"
                                 data-parsley-trigger                = "change focusout"
                                 required
                                 data-parsley-required-message       = "会社名を入力してください"
-                                data-parsley-fullwidthkanji
-                                data-parsley-fullwidthkanji-message = "漢字テキストを入力してください"
+                                data-parsley-maxlength              = "50"
+                                data-parsley-maxlength-message      = "最大50文字のみ入力してください"
                                 data-parsley-errors-container       = "#errorBlock-name"
                                 class="form-control @error('name') is-invalid @enderror"
                             />
@@ -42,9 +42,9 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.name_kana"
-                                id="input-name_kana" 
+                                id="input-name_kana"
                                 name="name_kana"
                                 required
                                 data-parsley-trigger                = "change focusout"
@@ -65,9 +65,9 @@
                         </div>
                         <!--agent_license_name -->
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.agent_license_name"
-                                id="input-agent_license_name" 
+                                id="input-agent_license_name"
                                 name="agent_license_name"
                                 data-parsley-trigger                = "change focusout"
                                 data-parsley-fullwidthjpntext
@@ -83,9 +83,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="font-size:0.7rem">(</span>
                                 </div>
-                                <input type="text" 
+                                <input type="text"
                                     v-model="companies.agent_license_renewals"
-                                    id="input-agent_license_renewals" 
+                                    id="input-agent_license_renewals"
                                     name="agent_license_renewals"
                                     data-parsley-trigger                = "change focusout"
                                     data-parsley-type                   = "digits"
@@ -107,9 +107,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="font-size:0.7rem">第</span>
                                 </div>
-                                <input type="text" 
+                                <input type="text"
                                     v-model="companies.agent_license_number"
-                                    id="input-agent_license_number" 
+                                    id="input-agent_license_number"
                                     name="agent_license_number"
                                     data-parsley-trigger                = "change focusout"
                                     data-parsley-type                   = "digits"
@@ -134,9 +134,9 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="users.display_name"
-                                id="input-display_name" 
+                                id="input-display_name"
                                 name="display_name"
                                 required
                                 data-parsley-trigger                = "change focusout"
@@ -154,14 +154,14 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" id="input-postcode" name="postcode" 
+                            <input type="text" id="input-postcode" name="postcode"
                                 v-model="companies.post_code"
                                 required
                                 data-parsley-trigger                = "change focusout"
                                 data-parsley-required-message       = "担当者名を入力してください"
                                 data-parsley-errors-container       = "#errorBlock-postcode"
-                                style                               = "width:50%;display:inline-block;vertical-align: middle;" 
-                                class                               = "form-control @error('postcode') is-invalid @enderror" 
+                                style                               = "width:50%;display:inline-block;vertical-align: middle;"
+                                class                               = "form-control @error('postcode') is-invalid @enderror"
                             />
                             <button type="button" @click="searchPostCode" class="btn btn-primary postcode-button" style="line-height:normal;" :disabled="isLoading">
                                 <span class="innerset">
@@ -171,7 +171,7 @@
                                     </span>
                                 </span>
                             </button>
-                            
+
                             <div id="errorBlock-postcode" class="errorBlock"></div>
                         </div>
                     </div>
@@ -183,14 +183,14 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content select2-container">
-                            <select id="input-prefecture" name="prefecture" class="select2 form-control @error('prefecture') is-invalid @enderror" 
+                            <select id="input-prefecture" name="prefecture" class="select2 form-control @error('prefecture') is-invalid @enderror"
                                 v-model                         = "companies.prefecture"
                                 required
                                 data-parsley-required-message   = "都道府県を入力してください"
                                 data-parsley-trigger            = "change focusout"
                                 data-parsley-errors-container   = "#errorBlock-prefecture"
                             >
-                                    <option value="" selected>@lang('label.empty_value')</option>    
+                                    <option value="" selected>@lang('label.empty_value')</option>
                                 @foreach($prefecture_options as $id => $label)
                                     <option value="{{ $id }}" id="input-prefecture-{{ $id }}">{{ $label }}</option>
                                 @endforeach
@@ -206,7 +206,7 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.city"
                                 name="city"
                                 id="input-city"
@@ -229,7 +229,7 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.area_number"
                                 name="area_number"
                                 id="input-area_number"
@@ -251,7 +251,7 @@
                             <strong class="h5">ビル・マンション</strong>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.name_building"
                                 name="name_building"
                                 id="input-name_building"
@@ -272,7 +272,7 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.phone"
                                 name="phone"
                                 id="input-phone"
@@ -287,14 +287,14 @@
                             <div id="errorBlock-phone" class="errorBlock"></div>
                         </div>
                     </div>
-                    
+
                     <!-- FAX -->
                     <div id="form-group--fax" class="row form-group">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
                             <strong class="h5">FAX</strong>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.fax"
                                 name="fax"
                                 id="input-fax"
@@ -305,7 +305,7 @@
                             <div id="errorBlock-fax" class="errorBlock"></div>
                         </div>
                     </div>
-                    
+
                     <!-- Email -->
                     <div id="form-group--email" class="row form-group">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
@@ -313,7 +313,7 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.email"
                                 name="email"
                                 id="input-email"
@@ -337,7 +337,7 @@
                             <strong class="h5">ホームページアドレス</strong>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            <input type="text" 
+                            <input type="text"
                                 v-model="companies.url"
                                 name="url"
                                 id="input-url"
@@ -358,7 +358,7 @@
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content select2-container">
-                            <select id="input-reason" name="reason" class="form-control @error('reason') is-invalid @enderror" 
+                            <select id="input-reason" name="reason" class="form-control @error('reason') is-invalid @enderror"
                                 v-model                         = "companies.reason"
                                 required
                                 data-parsley-required-message   = "利用動機を入力してください"
@@ -589,7 +589,7 @@
 
                         $("#input-prefecture").val(data.prefecture).trigger('change');
                     }
-                    
+
                     vm.$store.commit( 'setLoading', false );
                 }).catch((err) => {
                     console.log(err);
@@ -621,7 +621,7 @@
                 //set loading state
                 vm.$store.commit( 'setLoading', false );
             },
-            
+
             // -----------------------------------------------------------------
         }
         // ---------------------------------------------------------------------

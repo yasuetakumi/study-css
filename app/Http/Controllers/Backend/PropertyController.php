@@ -125,7 +125,7 @@ class PropertyController extends Controller
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
         $data['page_title'] = 'Property Create';
-        $data['is_skeleton'] = [Property::FURNISHED => 'Furnished', Property::SKELETON => 'Updated by the Scraping Process'];
+        $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
         // options for vue select 2 options

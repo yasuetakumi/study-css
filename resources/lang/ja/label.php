@@ -109,7 +109,7 @@ return [
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
     'submit'                => '検索',
-    'browsing_history'      => '求人閲覧履歴',
+    'browsing_history'      => '物件閲覧履歴',
     'favorite_property'     => 'お気に入り',
 
     //A16
@@ -161,7 +161,7 @@ return [
     'moving_fee' => '造作譲渡料',
     'business_terms' => '取引態様',
     'comments' => '備考',
-    'skeleton' => 'スケルトン物件・居抜き物件',
+    'is_skeleton' => 'スケルトン物件・居抜き物件',
     'restaurant_cuisine' => '業態',
     'interior_transfer_price' => '居抜き譲渡額',
 
@@ -222,5 +222,15 @@ return [
     'thumbnail_image_main' => 'サムネイル（主）',
     'thumbnail_image' => 'サムネイル',
     'image' => '画像',
-    'image_360' => '360画像'
+    'image_360' => '360画像',
+    'skeleton' => 'スケルトン',
+    'furnished' => '居抜き',
+    'design_categories' => 'デザイン種別',
+    'desgin_styles' => 'ベースデザイン',
+    'send_inquiry' => 'お問い合わせを送信',
+    'property_detail' => '物件詳細',
+
+    //C6
+    'property_history' => '物件閲覧履歴・お気に入り',
+
 ];

@@ -20,7 +20,7 @@
     @component('backend._components.input_textarea', ['name' => 'text', 'label' => __('label.comments'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
     <div class="row justify-content-center mt-4">
         <div class="col-12 text-left mt-4">
-            <button id="inquiry" class="btn btn-primary"> Send Inquiry </button>
+            <button id="inquiry" class="btn btn-primary">@lang('label.send_inquiry')</button>
         </div>
     </div>
 @endcomponent

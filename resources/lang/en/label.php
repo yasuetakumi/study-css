@@ -162,7 +162,7 @@ return [
     'moving_fee' => 'Moving Fee',
     'business_terms' => 'Business Terms',
     'comments' => 'Comments',
-    'skeleton' => 'Skeleton/Furnished',
+    'is_skeleton' => 'Skeleton/Furnished',
     'restaurant_cuisine' => 'Restaurant Cuisine',
     'interior_transfer_price' => 'Interior Transfer Price',
 
@@ -223,6 +223,15 @@ return [
     'thumbnail_image_main' => 'Thumbnail Image Main',
     'thumbnail_image' => 'Thumbnail Image',
     'image' => 'Image',
-    'image_360' => 'Image 360'
+    'image_360' => 'Image 360',
+    'skeleton' => 'Skeleton',
+    'furnished' => 'Furnished',
+    'design_categories' => 'Design Categories',
+    'desgin_styles' => 'Design Styles',
+    'send_inquiry' => 'Send Inquiry',
+    'property_detail' => 'Property Detail',
+
+    //C6
+    'property_history' => '物件閲覧履歴・お気に入り',
 
 ];

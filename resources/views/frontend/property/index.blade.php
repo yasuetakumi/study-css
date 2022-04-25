@@ -142,8 +142,6 @@
             this.getCountProperty();
             this.getHistoryProperty();
             this.searchCondition = @json($searchCondition);
-            this.items.loading = false;
-
         },
         // ---------------------------------------------------------------------
 
@@ -202,10 +200,40 @@
                     Vue.delete(searchCondition, 'number_of_match_property');
                     Vue.delete(searchCondition, 'url');
                     Vue.delete(searchCondition, 'created_at');
+
+                    if(this.containsKey(searchCondition, '面積下限')){
+                        Vue.set(searchCondition, '面積下限', searchCondition.surfaceMin);
+                        Vue.delete(searchCondition, 'surfaceMin');
+                    }
+
+                    if(this.containsKey(searchCondition, '面積上限')){
+                        Vue.set(searchCondition, '面積上限', searchCondition.surfaceMax);
+                        Vue.delete(searchCondition, 'surfaceMax');
+                    }
+
+                    if(this.containsKey(searchCondition, '賃料下限')){
+                        Vue.set(searchCondition, '賃料下限', searchCondition.rentAmountMin);
+                        Vue.delete(searchCondition, 'rentAmountMin');
+                    }
+
+                    if(this.containsKey(searchCondition, '賃料上限')){
+                        Vue.set(searchCondition, '賃料上限', searchCondition.rentAmountMax);
+                        Vue.delete(searchCondition, 'rentAmountMax');
+                    }
+
+                    if(this.containsKey(searchCondition, '譲渡額下限')){
+                        Vue.set(searchCondition, '譲渡額下限', searchCondition.transferPriceMin);
+                        Vue.delete(searchCondition, 'transferPriceMin');
+                    }
+
+                    if(this.containsKey(searchCondition, '譲渡額上限')){
+                        Vue.set(searchCondition, '譲渡額上限', searchCondition.transferPriceMax);
+                        Vue.delete(searchCondition, 'transferPriceMax');
+                    }
                 }
 
                 return searchCondition;
-            }
+            },
             // -----------------------------------------------------------------
         },
         // ---------------------------------------------------------------------
@@ -222,6 +250,9 @@
         // function associated with the vue instance
         // ---------------------------------------------------------------------
         methods: {
+            containsKey(obj, key ) {
+                return Object.keys(obj).includes(key);
+            },
             // -----------------------------------------------------------------
             refreshParsley: function() {
                 setTimeout(() => {
@@ -347,6 +378,7 @@
                 axios.post(root_url + '/api/v1/property/getProperties', data)
                     .then((result) => {
                         this.items.property_data = result.data.data.result;
+                        this.items.loading = false;
                     }).catch((err) => {
                         console.log(err);
                 });

@@ -68,7 +68,7 @@ class PropertyController extends Controller {
             $query->select('id', 'display_name', 'design_category_id');
         }])->find($id);
         // return $data['item'];
-        $data['page_title'] = 'Property Detail';
+        $data['page_title'] = __('label.property_detail');
         $categories =  [
             [
                 'value' => Cuisine::IZAKAYA,
@@ -208,26 +208,32 @@ class PropertyController extends Controller {
         // Compile filter data
         if(!empty($filter['surface_min'])){
             $surfaceMin = fromTsubo($filter['surface_min']);
+            $result['surfaceMin'] = "{$filter['surface_min']}坪";
             $result['面積下限'] = "{$surfaceMin}坪";
         }
         if(!empty($filter['surface_max'])){
             $surfaceMax = fromTsubo($filter['surface_max']);
+            $result['surfaceMax'] = "{$filter['surface_max']}坪";
             $result['面積上限'] = "{$surfaceMax}坪";
         }
         if(!empty($filter['rent_amount_min'])){
             $rentAmountMin = fromMan($filter['rent_amount_min']);
+            $result['rentAmountMin'] = "{$filter['rent_amount_min']}万円";
             $result['賃料下限'] = "{$rentAmountMin}万円";
         }
         if(!empty($filter['rent_amount_max'])){
             $rentAmountMax = fromMan($filter['rent_amount_max']);
+            $result['rentAmountMax'] = "{$filter['rent_amount_max']}万円";
             $result['賃料上限'] = "{$rentAmountMax}万円";
         }
         if(!empty($filter['transfer_price_min'])){
             $transferPriceMin = fromMan($filter['transfer_price_min']);
+            $result['transferPriceMin'] = "{$filter['transfer_price_min']}万円";
             $result['譲渡額下限'] = "{$transferPriceMin}万円";
         }
         if(!empty($filter['transfer_price_max'])){
             $transferPriceMax = fromMan($filter['transfer_price_max']);
+            $result['transferPriceMax'] = "{$filter['transfer_price_max']}万円";
             $result['譲渡額上限'] = "{$transferPriceMax}万円";
         }
         if(isset($filter['name'])){
