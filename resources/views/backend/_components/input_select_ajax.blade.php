@@ -9,12 +9,13 @@
                 $value      = old($name);
             }
         @endphp
-        <select value="{{ !empty($value) ? $value : old($name) }}" data-url="{{ $url }}" type="text" id="input-{{ $name }}" name="{{ $name }}" class="select2ajax form-control @error($name) is-invalid @enderror" {{ !empty($required) ? 'required' : '' }} {{isset($isDisabled) && $isDisabled == true ? 'disabled' : '' }}>
+        <select value="{{ !empty($value) ? $value : old($name) }}" data-url="{{ $url }}" type="text" id="input-{{ $name }}" name="{{ $name }}" class="select2ajax form-control @error($name) is-invalid @enderror" {{ !empty($required) ? 'required' : '' }} {{isset($isDisabled) && $isDisabled == true ? 'disabled' : '' }} data-parsley-errors-container = "#errorBlock-{{$name}}">
             @foreach($options as $id => $label)
                 <option value="{{ $value }}" id="input-{{ $name }}-{{ $id }}" {{ $value == $id ? "selected" : "" }}>{{ $label }}</option>
             @endforeach
         </select>
         <input type="hidden" name="{{ $name }}_label" id="input-{{ $name }}-selected-label" class="selected-label" />
+        <div id="errorBlock-{{$name}}" class="errorBlock"></div>
     </div>
 </div>
 

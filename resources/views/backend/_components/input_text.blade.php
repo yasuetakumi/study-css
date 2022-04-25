@@ -6,6 +6,7 @@
             class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
             {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }}
             {{isset($onlyjapanese) && $onlyjapanese == true ? 'data-parsley-fullwidthjpntext' : null }}
+            {{isset($onlyjapanese) && $onlyjapanese == true ? 'data-parsley-fullwidthjpntext-message = "漢字テキストを入力してください" ' : null }}
             {{isset($nospace) && $nospace == true ? 'data-parsley-nospace' : null}}/>
     </div>
 </div>
