@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Mail\WarningCompanyFailToPayToRenewProperty;
+use App\Mail\WarningPropertyWillUnpublished1day;
 // -----------------------------------------------------------------------------
 use Stripe\Charge;
 use Stripe\Stripe;
@@ -212,6 +213,23 @@ class CheckRemainingPublishDayAndBillClient extends Command
 
                             // then set the property to NOT_PUBLISHED and update the property status periods log:
                             $this->updateCompanyPublish($property->id, 0, PropertyPublicationStatus::ID_NOT_PUBLISHED);
+
+
+                            print "Sending Email to customer: " . $property->user->email . "\n";
+                            print "Please wait ....... \n";
+                            \Log::info("Sending Email to customer: " . $property->user->email );
+
+                            //Send a warning email to the customer.
+                            $content = new \stdClass();
+                            $content->user_name                 = $property->user->display_name;
+                            $content->property_detail_page      = route('company.property.edit', $property->id);
+                            $content->payment_page              = route('company.payment.edit');
+
+                            $developerEmail = env('BCC_PROPERTY_INQUIRY');
+                            $developerEmail ?
+                                    Mail::to($property->user->email)->bcc($developerEmail)->send(new WarningCompanyFailToPayToRenewProperty($content))
+                                    : Mail::to($property->user->email)->send(new WarningCompanyFailToPayToRenewProperty($content));
+                            print "Email send success! \n";
                         }
                     }
                 }
@@ -231,8 +249,8 @@ class CheckRemainingPublishDayAndBillClient extends Command
 
                     $developerEmail = env('BCC_PROPERTY_INQUIRY');
                     $developerEmail ?
-                            Mail::to($property->user->email)->bcc($developerEmail)->send(new WarningCompanyFailToPayToRenewProperty($content))
-                            : Mail::to($property->user->email)->send(new WarningCompanyFailToPayToRenewProperty($content));
+                            Mail::to($property->user->email)->bcc($developerEmail)->send(new WarningPropertyWillUnpublished1day($content))
+                            : Mail::to($property->user->email)->send(new WarningPropertyWillUnpublished1day($content));
                     print "Email send success! \n";
                 }
 
