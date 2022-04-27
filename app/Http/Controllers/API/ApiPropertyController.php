@@ -109,15 +109,14 @@ class ApiPropertyController extends Controller
         if(!empty($filter->walking_distance)){
             $walkingDistance = WalkingDistanceFromStationOption::find($filter->walking_distance);
             if($walkingDistance->id == WalkingDistanceFromStationOption::ID_16MINUTEORMORE){
-                $query->whereHas('property_stations', function($q) use($walkingDistance) {
-                    $q->where('distance_from_station', '>=', $walkingDistance->id);
+                $query->whereDoesntHave('property_stations', function ($q) {
+                    $q->whereIn('distance_from_station', [1,2,3,4,5]);
                 });
             } else {
                 $query->whereHas('property_stations', function($q) use($walkingDistance) {
                     $q->where('distance_from_station', '<=', $walkingDistance->id);
                 });
             }
-
         }
 
         // Filter property type
