@@ -26,11 +26,11 @@
     @component('frontend._components.text_label', ['label' => __('label.prefecture'), 'required' => 0, 'value' => $item->prefecture_id ? $item->prefecture->display_name : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.cities'), 'required' => 0, 'value' => $item->city_id ? $item->city->display_name : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.location'), 'required' => 0, 'value' => $item->location ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'required' => 0, 'value' => $item->surface_area ? toTsubo($item->surface_area) : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'required' => 0, 'value' => $item->surface_area ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'required' => 0, 'value' => $item->rent_amount ? toMan($item->rent_amount) : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'required' => 0, 'value' => $item->rent_amount ? manPerTsubo($item->rent_amount, $item->surface_area) : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'required' => 0, 'value' => $item->rent_amount ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'required' => 0, 'value' => $item->surface_area ? toTsubo($item->surface_area) . '坪' : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'required' => 0, 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'required' => 0, 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'required' => 0, 'value' => $item->rent_amount ? '坪単価：'.manPerTsubo($item->rent_amount, $item->surface_area) . '万円' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'required' => 0, 'value' => $item->rent_amount ? number_format($item->rent_amount) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'required' => 0, 'value' => $item->number_of_floors_under_ground ?? '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'required' => 0, 'value' => $item->number_of_floors_above_ground ?? '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.restaurant_type'), 'required' => 0, 'value' => $item->property_type_id ? $item->property_type->label_jp : '' ])@endcomponent
@@ -46,7 +46,7 @@
     @component('frontend._components.text_label', ['label' => __('label.comments'), 'required' => 0, 'value' => $item->comment ?? ''])@endcomponent
     @component('frontend._components.text_label', [
         'label' => __('label.is_skeleton'), 'required' => 0,
-        'value' => $item->skeleton_id == $skeleton ? __('label.skeleton') : __('label.furnished')
+        'value' => $item->is_skeleton == $skeleton ? __('label.skeleton') : __('label.furnished')
     ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.restaurant_cuisine'), 'required' => 0, 'value' => $item->cuisine_id ? $item->cuisine->label_jp : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.interior_transfer_price'), 'required' => 0, 'value' => $item->interior_transfer_price ?? '' ])@endcomponent
