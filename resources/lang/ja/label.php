@@ -115,6 +115,9 @@ return [
     //A16
     'company_approval_list' => '会社承認待ち一覧',
 
+    //A17
+    'approve_company' => '企業を承認する',
+
     //C1
     'walking_distance_from_station' => '徒歩',
     'property_preference' => 'こだわり条件',

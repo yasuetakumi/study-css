@@ -116,6 +116,9 @@ return [
     //A16
     'company_approval_list' => 'Company Approval List',
 
+    //A17
+    'approve_company' => 'Approve this company',
+
     //C1
     'walking_distance_from_station' => 'Walking Distance From Station',
     'property_preference' => 'Property Preference',
