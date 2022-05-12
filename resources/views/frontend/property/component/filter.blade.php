@@ -176,7 +176,14 @@
             <div class="result-total mt-3">
                 <div class="row">
                     <div class="col-12">
-                        <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">@{{property_count}} <span style="font-size: 16px; color: black"> 件の該当物件</span> </h3>
+                        <div v-if="loadingCount">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">@{{property_count}} <span style="font-size: 16px; color: black"> 件の該当物件</span> </h3>
+                        </div>
                         <button type="submit" name="search_button" class="btn btn-primary px-4 py-2 d-block w-100 mt-3">
                             <span>
                                 <i class="fas fa-search"></i>

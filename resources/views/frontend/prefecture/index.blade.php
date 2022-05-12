@@ -36,9 +36,16 @@
                         <div class="result-total">
                             <div class="row">
                                 <div class="col-3">
-                                    <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">
-                                        @{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span>
-                                    </h3>
+                                    <div v-if="loadingCount">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <h3 class="font-weight-bold" style="color: #f34e05; font-size: 22px;">
+                                            @{{ items.number_of_property }} <span style="font-size: 16px; color: black"> 件の該当物件</span>
+                                        </h3>
+                                    </div>
                                 </div>
 
                                 <div class="col-9 text-right">
@@ -148,6 +155,7 @@
                 // -------------------------------------------------------------
                 // Form result set here
                 // -------------------------------------------------------------
+                loadingCount: false,
                 items: {
                     activeTab: 'city',
                     floorType: 0, // aboveground
@@ -300,6 +308,7 @@
             },
             // -----------------------------------------------------------------
             getNumberOfProperty: function(filter) {
+                this.loadingCount = true;
                 let isPrefecture = document.getElementById("from-prefecture").value;
                 let prefecture = {from_prefecture : isPrefecture};
                 let finalFilter = Object.assign(filter, prefecture);
@@ -307,6 +316,7 @@
                 let request = axios.post(root_url + '/api/v1/property/getPropertiesCount', finalFilter);
                 request.then((result) => {
                     this.items.number_of_property = result.data.data.count ?? 0;
+                    this.loadingCount = false;
                 });
                 request.catch((err) => {
                     console.log(err);

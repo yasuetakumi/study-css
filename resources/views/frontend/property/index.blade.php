@@ -94,6 +94,7 @@
                     property_data: null,
                     disable: true,
                     loading: false,
+                    loadingCount: false,
                     like_property: [],
                     list_history_property: [],
                     filter: {
@@ -174,6 +175,10 @@
             // -----------------------------------------------------------------
             loading: function() {
                 return this.items.loading;
+            },
+            // -----------------------------------------------------------------
+            loadingCount: function() {
+                return this.items.loadingCount;
             },
             // -----------------------------------------------------------------
             filterCity: function(){
@@ -385,6 +390,7 @@
             },
             // -----------------------------------------------------------------
             getCountProperty: function(event) {
+                this.items.loadingCount = true;
                 if(this.$refs.skeleton.checked == true && this.$refs.furnished.checked == true){
                     this.items.filter.cuisines = [];
                     this.items.filter.transfer_price_min = null;
@@ -398,6 +404,7 @@
                 axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
                     .then((result) => {
                         this.items.property_count = result.data.data.count;
+                        this.items.loadingCount = false;
                     }).catch((err) => {
                         console.log(err);
                 });
