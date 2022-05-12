@@ -45,9 +45,17 @@
         @component('backend._components.input_text', ['name' => 'address', 'label' => __('label.address'), 'required' => 1, 'value' => $item->address, 'isReadOnly' => $isApproval]) @endcomponent
         @component('backend._components.input_text', ['name' => 'phone', 'label' => __('label.phone'), 'required' => 1, 'value' => $item->phone, 'isReadOnly' => $isApproval]) @endcomponent
         @if(!Auth::guard('user')->check())
-            @component('backend._components.input_radio', ['name' => 'status', 'options' => ['pending', 'active', 'block'], 'label' => __('label.status'), 'required' => 1, 'value' => $item->status]) @endcomponent
+            @component('backend._components.input_radio', ['name' => 'status', 'options' => ['pending', 'active', 'block'], 'label' => __('label.status'), 'required' => 1, 'value' => $item->status, 'isDisabled' => $isApproval]) @endcomponent
+        @endif
+        @if($isApproval)
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-secondary" id="input-submit">
+                    <i class="fas fa-save"></i> @lang('label.approve_company')
+                </button>
+            </div>
+        @else
+            @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
         @endif
 
-        @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
     @endcomponent
 @endsection
