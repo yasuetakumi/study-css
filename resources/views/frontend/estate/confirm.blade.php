@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.name"
                                 name="name"
                             />
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name_kana}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.name_kana"
                                 name="name_kana"
                             />
@@ -48,15 +48,15 @@
                         <!--agent_license_name -->
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.agent_license_name}}</span> (<span>@{{companies.agent_license_renewals}}</span>) 第<span>@{{companies.agent_license_number}}</span>号
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.agent_license_name"
                                 name="agent_license_name"
                             />
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.agent_license_renewals"
                                 name="agent_license_renewals"
                             />
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.agent_license_number"
                                 name="agent_license_number"
                             />
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{users.display_name}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="users.display_name"
                                 name="display_name"
                             />
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.post_code}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.post_code"
                                 name="postcode"
                             />
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content select2-container">
                             <span>@{{companies.prefecture}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.prefecture"
                                 name="prefecture"
                             />
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.city}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.city"
                                 name="city"
                             />
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.area_number}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.area_number"
                                 name="area_number"
                             />
@@ -140,7 +140,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name_building}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.name_building"
                                 name="name_building"
                             />
@@ -154,13 +154,13 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.phone}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.phone"
                                 name="phone"
                             />
                         </div>
                     </div>
-                    
+
                     <!-- FAX -->
                     <div id="form-group--fax" class="row form-group">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
@@ -168,13 +168,13 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.fax}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.fax"
                                 name="fax"
                             />
                         </div>
                     </div>
-                    
+
                     <!-- Email -->
                     <div id="form-group--email" class="row form-group">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
@@ -182,7 +182,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.email}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.email"
                                 name="email"
                             />
@@ -196,7 +196,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.url}}</span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.url"
                                 name="url"
                             />
@@ -213,7 +213,7 @@
                             <span v-else-if="companies.reason == 2">客付け物件を閲覧したい</span>
                             <span v-else-if="companies.reason == 3">その他</span>
                             <span v-else></span>
-                            <input type="hidden" 
+                            <input type="hidden"
                                 v-model="companies.reason"
                                 name="reason"
                             />
@@ -250,6 +250,8 @@
                                     </span>
                                 </span>
                             </button>
+                            <a href="{{route('thanks.page')}}" id="redirectToThanksPage" class="d-none">
+                            </a>
                         </div>
                     </div>
 
@@ -436,7 +438,7 @@
             },
             register: function(){
                 // ----------------------------------------------------------
-                let vm = this; 
+                let vm = this;
                 // ----------------------------------------------------------
                 //set loading state
                 vm.$store.commit( 'setLoading', true );
@@ -446,25 +448,26 @@
                 var formData    = new FormData();
                 var url         = state.preset.api.store;
 
-                //append all companies data 
+                //append all companies data
                 for (let key of Object.keys(vm.companies)) {
                     formData.append(`companies[${key}]`, vm.companies[key]);
                 }
 
-                //append all users data 
+                //append all users data
                 for (let key of Object.keys(vm.users)) {
                     formData.append(`users[${key}]`, vm.users[key]);
                 }
 
                 //sent axios post with form data
                 var options = { headers: { 'Content-Type': 'multipart/form-data' }};
-                axios.post( url, formData, options )
+                var result = axios.post( url, formData, options )
                 .then((response) => {
                     if( response.data ){
                         if( response.data.status == "success"){
                             var message = '私は入力したものを保存しました、メールをご確認ください';
                             vm.$toasted.show( message, { type: 'success' });
                             vm.$store.commit( 'setLoading', false );
+                            this.redirectPage();
                         }else{
                             //validation failed
                             var message = 'メールの送信に失敗しました';
@@ -477,8 +480,14 @@
                     vm.$toasted.show( message, { type: 'error' });
                     vm.$store.commit( 'setLoading', false );
                 })
+
             },
-            
+            redirectPage: function(){
+                let btn = document.getElementById("redirectToThanksPage");
+                console.log(btn);
+                btn.click();
+            }
+
             // -----------------------------------------------------------------
         }
         // ---------------------------------------------------------------------
