@@ -3,25 +3,26 @@
 namespace App\Http\Controllers\Frontend;
 
 use stdClass;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\Helpers\Select2AjaxHelper;
-use App\Traits\CommonToolsTraits;
+use Exception;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Company;
+use App\Models\Postcode;
+use App\Models\UserRole;
 use Illuminate\Support\Str;
 
 //use for email
-use App\Mail\CompanyRegistrationToAdminMail;
-use App\Mail\CompanyRegistrationToClientMail;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+use App\Traits\CommonToolsTraits;
+use App\Helpers\Select2AjaxHelper;
 
 //models used
-use App\Models\Postcode;
-use App\Models\Company;
-use App\Models\User;
-use App\Models\UserRole;
-use App\Models\Admin;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use App\Mail\CompanyRegistrationToAdminMail;
+use App\Mail\CompanyRegistrationToClientMail;
 
 class EstateController extends Controller
 {
@@ -42,7 +43,7 @@ class EstateController extends Controller
     //Confirmation Page C16
     public function confirm(Request $request){
         $data = $request->all();
-        
+
         $data['page_title']     = '登録申し込みー内容の確認';
         $data['form_action']    = route('company.store');
 
@@ -56,7 +57,7 @@ class EstateController extends Controller
     public function store(Request $request){
         $data = $request->all();
         $response = new \stdClass;
-        
+
         try {
             //insert into companies table
             $Company = new Company();
@@ -92,7 +93,7 @@ class EstateController extends Controller
 
             //send email To all admin 3-1
             $adminEmailList = Admin::pluck('email')->toArray();
-            
+
             //send with bcc if BCC_PROPERTY_INQUIRY is provided in ENV
             if(env('BCC_PROPERTY_INQUIRY')){
                 $bccEmail = env('BCC_PROPERTY_INQUIRY');
@@ -115,7 +116,7 @@ class EstateController extends Controller
              if (Mail::failures()) {
                 // return failed mails
                 $response->status = "false";
-                return response()->json($response, 201); 
+                return response()->json($response, 201);
             }
             //END SEND EMAIL TO ADMIN 3-1
             //-----------------------------------------
@@ -136,10 +137,16 @@ class EstateController extends Controller
     public function check_email(Request $request){
         $response = "success";
         $check = User::where('email', '=', $request->email)->whereNull('deleted_at')->exists();
-        
+
         if($check){
             return response()->json($response, 405);
         }
-        return response()->json($response, 200);   
+        return response()->json($response, 200);
+    }
+
+    public function thanks_page()
+    {
+        $data['page_title'] = 'ありがとうございます。';
+        return view('frontend.thanks.index', $data);
     }
 }
