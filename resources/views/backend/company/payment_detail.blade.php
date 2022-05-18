@@ -1,8 +1,21 @@
+@php
+    $isAdminLogin = false;
+    $isCompanyLogin = false;
+    if(Auth::guard('user')->check()){
+        $isCompanyLogin = true;
+    } else if(Auth::check()) {
+        $isAdminLogin = true;
+    }
+@endphp
 @extends('backend._base.content_form')
 
 @section('breadcrumbs')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{route('dashboard')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.dashboard')</a></li>
+        @if($isAdminLogin)
+            <li class="breadcrumb-item"><a href="{{route('admin.property.index')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.dashboard')</a></li>
+        @else
+            <li class="breadcrumb-item"><a href="{{route('company.property.index')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.dashboard')</a></li>
+        @endif
         <li class="breadcrumb-item active">{{ $page_title }}</li>
     </ol>
 @endsection
