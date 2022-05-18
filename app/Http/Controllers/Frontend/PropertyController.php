@@ -52,12 +52,18 @@ class PropertyController extends Controller {
 
         // Default value for search condition
         $searchCondition = [];
+
         // If this function was called by clicking search button on C2 Page
         // The search condition will contain at least created at, number of match property and url
         if ($request->session()->has('searchCondition')) {
             $searchCondition = session()->get('searchCondition');
+            // $data['searchCondition'] = $searchCondition;
+        } else {
+            // this search condition from C-Common6 or copy paste link on browser
+            $searchCondition = $this->compileFilter($request, true);
         }
         $data['searchCondition'] = $searchCondition;
+        // dd($data);
 
         return view('frontend.property.index', $data);
     }
@@ -112,7 +118,6 @@ class PropertyController extends Controller {
     public function filter(Request $request, $toJson = false) {
         // Filter data
         $queryString = $request->all();
-
         // Default data
         $withQuery = array();
         $filter = collect([]);
@@ -146,19 +151,37 @@ class PropertyController extends Controller {
             $withQuery['walking_distance'] = $queryString['walking_distance'];
         }
         if(isset($queryString['floor_under'])){
-            $stringFloorUnder = implode(",", $queryString['floor_under']);
+            if(is_array($queryString['floor_under'])){
+                $stringFloorUnder = implode(",", $queryString['floor_under']);
+            } else {
+                $stringFloorUnder = $queryString['floor_under'];
+            }
             $withQuery['underground'] = $stringFloorUnder;
         }
         if(isset($queryString['floor_above'])){
-            $stringFloorAbove = implode(",", $queryString['floor_above']);
+            if(is_array($queryString['floor_above'])){
+                $stringFloorAbove = implode(",", $queryString['floor_above']);
+            } else {
+                $stringFloorAbove = $queryString['floor_above'];
+            }
             $withQuery['aboveground'] = $stringFloorAbove;
         }
         if(isset($queryString['property_preference'])){
-            $stringPropertyPref = implode(",", $queryString['property_preference']);
+            if(is_array($queryString['property_preference'])){
+                $stringPropertyPref = implode(",", $queryString['property_preference']);
+            } else {
+                $stringPropertyPref = $queryString['property_preference'];
+            }
+
             $withQuery['preference'] = $stringPropertyPref;
         }
         if(isset($queryString['property_type'])){
-            $stringPropertyType = implode(",", $queryString['property_type']);
+            if(is_array($queryString['property_type'])){
+                $stringPropertyType = implode(",", $queryString['property_type']);
+            } else {
+                $stringPropertyType = $queryString['property_type'];
+            }
+
             $withQuery['type'] = $stringPropertyType;
         }
         if(isset($queryString['skeleton'])){
@@ -168,15 +191,30 @@ class PropertyController extends Controller {
             $withQuery['furnished'] = true;
         }
         if(isset($queryString['cuisine'])){
-            $stringCuisine = implode(",", $queryString['cuisine']);
+            if(is_array($queryString['cuisine'])){
+                $stringCuisine = implode(",", $queryString['cuisine']);
+            } else {
+                $stringCuisine = $queryString['cuisine'];
+            }
             $withQuery['cuisine'] = $stringCuisine;
         }
         if(!empty($queryString['city'])){
-            $stringCity= implode(",", $queryString['city']);
+            if(is_array($queryString['city'])){
+                // if array accepted, return string
+                $stringCity = implode(",", $queryString['city']);
+            } else {
+                $stringCity = $queryString['city'];
+            }
             $withQuery['city'] = $stringCity;
         }
         if(!empty($queryString['station'])){
-            $stringStation= implode(",", $queryString['station']);
+            if(is_array($queryString['city'])){
+                // if array accepted, return string
+                $stringStation= implode(",", $queryString['station']);
+            } else {
+                $stringStation = $queryString['city'];
+            }
+
             $withQuery['station'] = $stringStation;
         }
 
@@ -193,17 +231,21 @@ class PropertyController extends Controller {
             return redirect()->route('property.index', $withQuery)->with(['searchCondition' => $filter]);
         }
         // This function was called from C5
-        else return redirect()->route('property.index', $withQuery);
+        else{
+            $filter = $this->compileFilter($request);
+            return redirect()->route('property.index', $withQuery)->with(['searchCondition' => $filter]);
+        }
     }
     // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
     // Compile filter data
     // -------------------------------------------------------------------------
-    public function compileFilter(Request $request) {
+    public function compileFilter(Request $request, $link = false) {
         // FIlter and result data
         $filter = $request->all();
         $result = [];
+        // dd($filter);
 
         // Compile filter data
         if(!empty($filter['surface_min'])){
@@ -240,23 +282,39 @@ class PropertyController extends Controller {
             $result['フリーワード'] = $filter['name'];
         }
         if(!empty($filter['walking_distance'])){
-            $walkingDistance = WalkingDistanceFromStationOption::find($filter['walking_distance']);
+            $walkingDistance = WalkingDistanceFromStationOption::find((int) $filter['walking_distance']);
             $result['徒歩'] = $walkingDistance->label_jp;
         }
         if(isset($filter['floor_under'])){
-            $underGrounds = NumberOfFloorsUnderGround::whereIn('value', $filter['floor_under'])->pluck('label_jp')->join(', ');
+            $arrUnders = $filter['floor_under'];
+            if(!is_array($filter['floor_under'])){
+                $arrUnders = explode(",", (int) $filter['floor_under']);
+            }
+            $underGrounds = NumberOfFloorsUnderGround::whereIn('value', $arrUnders)->pluck('label_jp')->join(', ');
             $result['階数_地上'] = $underGrounds;
         }
         if(isset($filter['floor_above'])){
-            $aboveGrounds = NumberOfFloorsAboveGround::whereIn('value', $filter['floor_above'])->pluck('label_jp')->join(', ');
+            $arrAboves = $filter['floor_above'];
+            if(!is_array($filter['floor_above'])){
+                $arrAboves = explode(",", (int) $filter['floor_above']);
+            }
+            $aboveGrounds = NumberOfFloorsAboveGround::whereIn('value', $arrAboves)->pluck('label_jp')->join(', ');
             $result['階数_地下'] = $aboveGrounds;
         }
         if(isset($filter['property_preference'])){
-            $preferences = PropertyPreference::find($filter['property_preference'])->pluck('label_jp')->join(', ');
+            $arrPreferences = $filter['property_preference'];
+            if(!is_array($filter['property_preference'])){
+                $arrPreferences = explode(",", $filter['property_preference']);
+            }
+            $preferences = PropertyPreference::find($arrPreferences)->pluck('label_jp')->join(', ');
             $result['こだわり条件'] = $preferences;
         }
         if(isset($filter['property_type'])){
-            $types = PropertyType::find($filter['property_type'])->pluck('label_jp')->join(', ');
+            $arrPropertyTypes = $filter['property_type'];
+            if(!is_array($filter['property_type'])){
+                $arrPropertyTypes = explode(",", $filter['property_type']);
+            }
+            $types = PropertyType::find($arrPropertyTypes)->pluck('label_jp')->join(', ');
             $result['飲食店の種類'] = $types;
         }
 
@@ -272,15 +330,27 @@ class PropertyController extends Controller {
         }
 
         if(isset($filter['cuisine'])){
-            $cuisines = Cuisine::find($filter['cuisine'])->pluck('label_jp')->join(', ');
+            $arrCuisines = $filter['cuisine'];
+            if(!is_array($filter['cuisine'])){
+                $arrCuisines = explode(",", $filter['cuisine']);
+            }
+            $cuisines = Cuisine::find($arrCuisines)->pluck('label_jp')->join(', ');
             $result['料理'] = $cuisines;
         }
         if(!empty($filter['city'])){
-            $citiesName = City::find($filter['city'])->pluck('display_name')->join(', ');
+            $arrCities = $filter['city'];
+            if(!is_array($filter['city'])){
+                $arrCities = explode(",", $filter['city']);
+            }
+            $citiesName = City::find($arrCities)->pluck('display_name')->join(', ');
             $result['市区町村'] = $citiesName;
         }
         if(!empty($filter['station'])){
-            $stationsName = Station::find($filter['station'])->pluck('display_name')->join(', ');
+            $arrStations = $filter['station'];
+            if(!is_array($filter['station'])){
+                $arrStations = explode(",", $filter['station']);
+            }
+            $stationsName = Station::find($arrStations)->pluck('display_name')->join(', ');
             $result['駅'] = $stationsName;
         }
 
@@ -299,6 +369,8 @@ class PropertyController extends Controller {
         // Return result
         // This function was called from filter function (search button on C2 was clicked)
         if (!$request->has('toJson')) return $result;
+        // this function was called by Common 6 or copy paste on browser
+        else if ($link) return $result;
         // This function was called from axios (current condition on form filter)
         else return response()->json($result);
     }

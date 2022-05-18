@@ -39,7 +39,12 @@ class ApiPropertyController extends Controller
 
         // Filter city
         if(!empty($filter->city)){
-            foreach($filter->city as $value){
+            $arrCity = $filter->city;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->city)){
+                $arrCity = explode(",", $filter->city);
+            }
+            foreach($arrCity as $value){
                 array_push($selectedCities, (int) $value);
             }
             $query->whereIn('city_id', $selectedCities);
@@ -47,7 +52,12 @@ class ApiPropertyController extends Controller
 
         // Filter station
         if(!empty($filter->station)){
-            foreach($filter->station as $value){
+            $arrStations = $filter->station;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->station)){
+                $arrStations = explode(",", $filter->station);
+            }
+            foreach($arrStations as $value){
                 array_push($selectedStations, (int)$value);
             }
             $query->whereHas('property_stations', function($q) use ($selectedStations){
@@ -83,31 +93,46 @@ class ApiPropertyController extends Controller
 
         // Filter floor under
         if(isset($filter->floor_under)){
-            foreach($filter->floor_under as $key => $value){
-                array_push($selectedUnderground, $filter->floor_under[$key]);
+            $arrUnders = $filter->floor_under;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->floor_under)){
+                $arrUnders = explode(",", $filter->floor_under);
+            }
+            foreach($arrUnders as $value){
+                array_push($selectedUnderground, (int) $value);
             }
             $query->whereIn('number_of_floors_under_ground', $selectedUnderground);
         }
 
         // Filter floor above
         if(isset($filter->floor_above)){
-            foreach($filter->floor_above as $key => $value){
-                array_push($selectedAboveground, $filter->floor_above[$key]);
+            $arrAboves = $filter->floor_above;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->floor_above)){
+                $arrAboves = explode(",", $filter->floor_above);
+            }
+            foreach($arrAboves as $value){
+                array_push($selectedAboveground, (int) $value);
             }
             $query->whereIn('number_of_floors_above_ground', $selectedAboveground);
         }
 
         // Filter cuisine
         if(isset($filter->cuisine)){
-            foreach($filter->cuisine as $key => $value){
-                array_push($selectedCuisines, $filter->cuisine[$key]);
+            $arrCuisines = $filter->cuisine;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->cuisine)){
+                $arrCuisines = explode(",", $filter->cuisine);
+            }
+            foreach($arrCuisines as $value){
+                array_push($selectedCuisines, (int) $value);
             }
             $query->whereIn('cuisine_id', $selectedCuisines);
         }
 
         // Filter walking distance
         if(!empty($filter->walking_distance)){
-            $walkingDistance = WalkingDistanceFromStationOption::find($filter->walking_distance);
+            $walkingDistance = WalkingDistanceFromStationOption::find((int) $filter->walking_distance);
             if($walkingDistance->id == WalkingDistanceFromStationOption::ID_16MINUTEORMORE){
                 $query->has('property_stations')->whereDoesntHave('property_stations', function ($q) {
                     $q->whereIn('distance_from_station', [1,2,3,4,5]);
@@ -121,16 +146,26 @@ class ApiPropertyController extends Controller
 
         // Filter property type
         if(isset($filter->property_type)){
-            foreach($filter->property_type as $key => $value){
-                array_push($selectedPropertyType, $filter->property_type[$key]);
+            $arrTypes = $filter->property_type;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->property_type)){
+                $arrTypes = explode(",", $filter->property_type);
+            }
+            foreach($arrTypes as $value){
+                array_push($selectedPropertyType, (int) $value);
             }
             $query->whereIn('property_type_id', $selectedPropertyType);
         }
 
         // Filter property preference
         if(isset($filter->property_preference)){
-            foreach($filter->property_preference as $key => $value){
-                array_push($selectedPropertyPreference, $filter->property_preference[$key]);
+            $arrPreferences = $filter->property_type;
+            // check if request is not array, then convert to array
+            if(!is_array($filter->property_type)){
+                $arrPreferences = explode(",", $filter->property_type);
+            }
+            foreach($arrPreferences as $value){
+                array_push($selectedPropertyPreference, (int) $value);
             }
             $query->whereHas('properties_property_preferences', function($q) use($selectedPropertyPreference) {
                 $q->whereIn('property_preferences_id', $selectedPropertyPreference);
