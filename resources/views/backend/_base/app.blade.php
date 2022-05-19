@@ -119,6 +119,10 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #446eb8;">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                {{-- Top Page --}}
+                <li class="nav-item border-right">
+                    <a class="nav-link text-light" href="{{ route('home') }}">@lang('label.top_page')</a>
+                </li>
                 <!-- C-1-1 -->
                 <li class="nav-item border-right">
                     <a class="nav-link text-light" href="{{ route('property.index') }}"><span class="fas fa-search"> 店舗物件を探す</span></a>
