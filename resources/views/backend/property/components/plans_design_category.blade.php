@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div v-else>
-                            <p>このカテゴリーの表面積の計画はありません : @{{items.surface_area + '坪'}}</p>
+                            <p>設定された坪数にマッチするプランが存在しません : @{{items.surface_area + '坪'}}</p>
                         </div>
                         <hr>
                         <h4>カフェ</h4>
@@ -44,7 +44,7 @@
                         </div>
 
                         <div v-else>
-                            <p>このカテゴリーの表面積の計画はありません : @{{items.surface_area + '坪'}}</p>
+                            <p>設定された坪数にマッチするプランが存在しません : @{{items.surface_area + '坪'}}</p>
                         </div>
                         <hr>
                         <h4>バー</h4>
@@ -61,7 +61,7 @@
                         </div>
 
                         <div v-else>
-                            <p>このカテゴリーの表面積の計画はありません : @{{items.surface_area + '坪'}}</p>
+                            <p>設定された坪数にマッチするプランが存在しません : @{{items.surface_area + '坪'}}</p>
                         </div>
                         <hr>
                         <h4>ラーメン</h4>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div v-else>
-                            <p>このカテゴリーの表面積の計画はありません : @{{items.surface_area + '坪'}}</p>
+                            <p>設定された坪数にマッチするプランが存在しません : @{{items.surface_area + '坪'}}</p>
                         </div>
                         <hr>
                     </div>

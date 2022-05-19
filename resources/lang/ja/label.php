@@ -225,7 +225,7 @@ return [
     'thumbnail_image_main' => 'サムネイル（主）',
     'thumbnail_image' => 'サムネイル',
     'image' => '画像',
-    'image_360' => '360画像',
+    'image_360' => '360度画像',
     'skeleton' => 'スケルトン',
     'furnished' => '居抜き',
     'design_categories' => 'デザイン種別',
