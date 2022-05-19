@@ -30,7 +30,8 @@ class CompanyPaymentController extends Controller
             'card_brand'                 => 'required',
             'card_year_expire_at'        => 'required',
             'card_month_expire_at'       => 'required',
-            'card_expiry_at'             => 'after_or_equal:' . now()->format('Y-m')
+            'card_expiry_at'             => 'after_or_equal:' . now()->format('Y-m'),
+            'point_charge'               => 'required',
         ]);
     }
     /**
@@ -144,7 +145,7 @@ class CompanyPaymentController extends Controller
             ));
         }
         $points = array();
-        for($k = 0; $k <= 1000; $k = $k+50){
+        for($k = 100; $k <= 1000; $k = $k+50){
             array_push($points, array(
                 'label' => $k,
                 'value' => $k
