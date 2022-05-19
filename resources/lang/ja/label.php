@@ -212,7 +212,7 @@ return [
     'time_of_updating' => '購入情報更新時刻',
     'points_to_charge' => '追加したいポイント',
     'costs_of_points' => 'コスト',
-    'buy_points' => 'ポイントを使います',
+    'buy_points' => 'ポイント購入',
     'charge_points' => 'ポイントをチャージする',
 
     // C5

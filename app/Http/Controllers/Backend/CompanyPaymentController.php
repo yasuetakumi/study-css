@@ -23,7 +23,7 @@ class CompanyPaymentController extends Controller
 {
     protected function validator( array $data, $type ){
         return Validator::make($data, [
-            'subscription_plan_id'       => 'required',
+            // 'subscription_plan_id'       => 'required',
             'card_number'                => 'required|between:12,19',
             'card_security_number'       => 'required|between:3,7',
             'card_holder_name'           => 'required',
@@ -31,7 +31,7 @@ class CompanyPaymentController extends Controller
             'card_year_expire_at'        => 'required',
             'card_month_expire_at'       => 'required',
             'card_expiry_at'             => 'after_or_equal:' . now()->format('Y-m'),
-            'point_charge'               => 'required',
+            'point_charge'               => $type == 'update' ? 'nullable' : 'required',
         ]);
     }
     /**
@@ -72,25 +72,30 @@ class CompanyPaymentController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        $idCompany = Auth::guard('user')->user()->belong_company_id;
-        $companyPayment = CompanyPaymentDetail::where('company_id', $idCompany)->first();
-        $companyUser = Company::find($idCompany);
-        $stripe = new StripeClient(env('STRIPE_SECRET'));
-        $data = $stripe->paymentIntents->create([
-            "customer" => $companyUser['stripe_customer_id'],
-            "amount" => $request->point_charge,
-            "currency" => "jpy",
-            "payment_method" => $companyPayment->stripe_checkout_token,
-            // "payment_method_types " => ['card'],
-            // "description" => "Test Remaining Points from real estate media"
-        ]);
-        $company = Company::find($idCompany);
-        $company->update([
-            'remaining_points' => $company->remaining_points + $request->point_charge
-        ]);
-        // return response()->json($data);
+        if($request->has('submit_points')){
+            $request->validate([
+                'point_charge' => 'required'
+            ]);
+            $idCompany = Auth::guard('user')->user()->belong_company_id;
+            $companyPayment = CompanyPaymentDetail::where('company_id', $idCompany)->first();
+            $companyUser = Company::find($idCompany);
+            $stripe = new StripeClient(env('STRIPE_SECRET'));
+            $data = $stripe->paymentIntents->create([
+                "customer" => $companyUser['stripe_customer_id'],
+                "amount" => $request->point_charge,
+                "currency" => "jpy",
+                "payment_method" => $companyPayment->stripe_checkout_token,
+                // "payment_method_types " => ['card'],
+                // "description" => "Test Remaining Points from real estate media"
+            ]);
+            $company = Company::find($idCompany);
+            $company->update([
+                'remaining_points' => $company->remaining_points + $request->point_charge
+            ]);
+            // return response()->json($data);
 
-        return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+        }
     }
 
     /**
@@ -123,7 +128,6 @@ class CompanyPaymentController extends Controller
         $data['page_type_charge'] = 'create';
         $data['form_action_charge'] = route('company.payment.store');
 
-        $data['subscription_plan'] = SubscriptionPlan::all()->pluck('label_jp', 'id');
         $data['company_month_expire'] = isset($data['company']->company_payment_detail->card_expires_at) ? $data['company']->company_payment_detail->card_expires_at->format('m') : '';
         $data['company_year_expire'] = isset($data['company']->company_payment_detail->card_expires_at) ? $data['company']->company_payment_detail->card_expires_at->format('Y') : '';
 
@@ -222,7 +226,7 @@ class CompanyPaymentController extends Controller
             $company = CompanyPaymentDetail::updateOrCreate([
                 'company_id' => $idCompany
             ],[
-                'subscription_plan_id' => $data['subscription_plan_id'],
+                // 'subscription_plan_id' => $data['subscription_plan_id'],
                 'card_number' => $data['card_number'],
                 'card_security_number' => $data['card_security_number'],
                 'cardholder_name' => $data['card_holder_name'],
