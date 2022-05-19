@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Mail;
 class CustomerInquiryController extends Controller {
     // -------------------------------------------------------------------------
     public function index() {
-        $data['page_title'] = 'Customer Inquiry List';
+        $data['page_title'] = __('label.customer_inquiry') . __('label.list');
         return view('backend.customer_inquiry.index', $data);
     }
     // -------------------------------------------------------------------------

@@ -1,5 +1,13 @@
 @extends('backend._base.content_form')
 
+@section('breadcrumbs')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.top_page')</a></li>
+        <li class="breadcrumb-item"><a href="{{route('company.register')}}">会員 （不動産業者） 登録申し込み</a></li>
+        <li class="breadcrumb-item active">{{ $page_title }}</li>
+    </ol>
+@endsection
+
 @section('form_title')
     企業の情報確認
 @endsection

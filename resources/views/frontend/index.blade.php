@@ -1,4 +1,9 @@
 @extends("backend._base.app")
+@section('breadcrumbs-top')
+    <ol class="breadcrumb float-sm-right" style="background-color: transparent">
+        <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.top_page')</a></li>
+    </ol>
+@endsection
 @section('content-wrapper')
 <div class="container">
     <div class="row d-flex justify-content-center">

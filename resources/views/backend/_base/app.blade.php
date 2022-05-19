@@ -156,7 +156,11 @@
     @endif
 @endauth
     <!-- Content Wrapper. Contains page content -->
+
     <div class="content-wrapper {{ Request::is('admin/*') || Request::is('company/*') ? '' : 'ml-0' }}">
+        <div class="d-flex justify-content-end text-sm">
+            @yield('breadcrumbs-top')
+        </div>
         @yield('content-wrapper')
     </div>
     <!-- /.content-wrapper -->
