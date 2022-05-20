@@ -27,7 +27,6 @@
 @section('content')
     @component('backend._components.form_container', ["action" => "", 'id' => 'company-payment', "page_type" => $page_type_detail, "files" => false])
         @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => number_format($company->remaining_points), 'required' => 0]) @endcomponent
-        @component('backend._components.input_select',['label' => __('label.subscription_plan'), 'options' => $subscription_plan, 'name' => 'subscription_plan_id', 'value' => $company->company_payment_detail->subscription_plan_id ?? '', 'required' => 1])@endcomponent
         @component('backend._components.input_number', ['label' => __('label.card_number'), 'value' => $company->company_payment_detail->card_number ?? '', 'name' => 'card_number', 'required' => 1])@endcomponent
         @component('backend._components.input_number', ['label' => __('label.security_number'), 'value' => $company->company_payment_detail->card_security_number ?? '', 'name' => 'card_security_number', 'required' => 0])@endcomponent
         @component('backend._components.input_text', ['label' => __('label.card_holder_name'), 'value' => $company->company_payment_detail->cardholder_name ?? '', 'name' => 'card_holder_name', 'required' => 1])@endcomponent
@@ -37,7 +36,7 @@
         @component('backend._components.text_label', ['label' => __('label.expiry_date_subscription'), 'name' => 'subscription_expires_at', 'value' => $company->company_payment_detail->subscription_expires_at ?? '', 'required' => 0]) @endcomponent
         <input type="hidden" name="card_expiry_at" :value="cardExpiry">
         <div class="card-footer text-center">
-            <button type="submit" class="btn btn-secondary" id="input-submit">
+            <button type="submit" class="btn btn-secondary" id="input-submit" name="update_payment_info">
                 <i class="fas fa-save"></i> @lang('label.register_details')
             </button>
         </div>
@@ -56,7 +55,7 @@
         @component('backend._components.input_label', ['label' => __('label.costs_of_points'), 'name' => 'items.cost_point', 'required' => 0]) @endcomponent
 
         <div class="card-footer text-center">
-            <button type="submit" class="btn btn-secondary" id="input-submit">
+            <button type="submit" class="btn btn-secondary" id="input-submit" name="submit_points">
                 <i class="fas fa-save"></i> @lang('label.buy_points')
             </button>
         </div>
