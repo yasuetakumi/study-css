@@ -24,10 +24,11 @@ class ApiDesignStyleController extends Controller
             ->where('design_category_id',$category_id)
             ->orderBy('display_name','ASC')
             ->get();
+            return response()->json($designstyle, 200);
         }else{
             $designstyle = null;
+            return response()->json($designstyle, 400);
         }
 
-        return response()->json($designstyle);
     }
 }

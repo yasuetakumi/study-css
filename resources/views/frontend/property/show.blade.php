@@ -175,6 +175,7 @@
                     design_category_3: 3,
                     design_category_4: 4,
                     estimation_loading: true,
+                    designNotFound: false,
                 },
                 // ----------------------------------------------------------
             };
@@ -278,10 +279,14 @@
                 }, 2000);
                 this.items.loading = false;
             },
-            getDesignByCategory: async function(designCat){
-                let response = await axios.get(root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id);
-                let data = await response.data;
-                this.items.list_design_style = data;
+            getDesignByCategory: function(designCat){
+                axios.get(root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id)
+                .then((result) => {
+                    this.items.list_design_style = result.data;
+                    this.items.designNotFound = false;
+                }).catch((err) => {
+                    this.items.designNotFound = true;
+                });
             },
 
             estimationIndex: function(){
