@@ -53,8 +53,9 @@
                     </div>
                 </div>
             </div>
+
             <!-- if no data on design styles then show contact us-->
-            <div class="col-12" v-else>
+            <div class="col-12" v-else-if="items.designNotFound == true">
                 <div id="form-group--plans" class="row form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-content" style="border:2px solid #2462A2">
                         <div class="row no-gutters list-plans clearfix">
@@ -77,7 +78,11 @@
                     </div>
                 </div>
             </div>
-
+            <div v-else>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
