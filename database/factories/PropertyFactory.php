@@ -38,7 +38,7 @@ $factory->define(\App\Models\Property::class, function (Faker $faker) {
         'comment' => $faker->paragraph,
         'is_skeleton' => rand(0,1),
         'cuisine_id' => Cuisine::all()->pluck('id')->random(),
-        'interior_transfer_price' => array_rand($deposit_amount),
+        'interior_transfer_price' => rand(10000, 400000),
         'thumbnail_image_main' => $faker->numerify('Thumbnail Image Main ###'),
         'thumbnail_image_1' => $faker->numerify('thumbnail_image_1 ###'),
         'thumbnail_image_2' => $faker->numerify('thumbnail_image_2 ###'),
