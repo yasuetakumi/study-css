@@ -145,7 +145,7 @@ return [
     'postcode' => 'Postcode',
     'prefecture' => 'Prefecture',
     'cities' => 'Cities',
-    'location' => 'Location',
+    'location' => 'Location(remaining parts of the address)',
     'surface_area' => 'Surface Area',
     'surface_area_meter' => 'Surface Area(Meters)',
     'surface_area_tsubo' => 'Surface Area(Tsubo)',
