@@ -592,7 +592,7 @@
                         toastr.error(data.message);
                     }else{
                         vm.companies.prefecture = data.prefecture;
-                        vm.companies.city       = data.city;
+                        vm.companies.city       = data.city + data.local;
 
                         $("#input-prefecture").val(data.prefecture).trigger('change');
                     }
