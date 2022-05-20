@@ -118,9 +118,9 @@
             },
             cuisineOrTransfer: function(){
                 if(this.property.is_skeleton == 0){
-                    return this.property.cuisine.label_jp;
+                    return this.property.cuisine.label_jp + "／" + this.convertToMan(this.property.interior_transfer_price);
                 } else {
-                    return this.property.interior_transfer_price;
+                    return "／" + this.convertToMan(this.property.interior_transfer_price);
                 }
             },
             closestStationDistance: function(){
@@ -139,13 +139,18 @@
                 let routeBase = @json(url('/'));
                 let routeWithParam = routeBase + '/properties/' + this.property.id
                 return routeWithParam;
-            }
+            },
         },
         methods: {
             handleImageNotFound: function(event){
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
             },
+            convertToMan(value){
+                let man = 10000;
+                let result = Math.round(value/man);
+                return result + '万円'
+            }
         },
 
     });
