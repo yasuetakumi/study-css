@@ -52,7 +52,7 @@
     </div>
     @component('backend._components.form_container', ["action" => $form_action_charge, 'id' => 'company-charge', "page_type" => $page_type_charge, "files" => false])
         @component('backend._components.text_label', ['label' => __('label.remaining_points'), 'name' => 'remaining_points', 'value' => number_format($company->remaining_points), 'required' => 0]) @endcomponent
-        @component('backend._components.input_select_date', ['label' => __('label.points_to_charge'), 'options' => $points, 'name' => 'point_charge', 'required' => 1, 'value' => '',  'method' => 'getSelectedPointCharge']) @endcomponent
+        @component('backend._components.input_select_date', ['label' => __('label.points_to_charge'), 'defaultSelect' => 'Select Points', 'options' => $points, 'name' => 'point_charge', 'required' => 1, 'value' => '',  'method' => 'getSelectedPointCharge']) @endcomponent
         @component('backend._components.input_label', ['label' => __('label.costs_of_points'), 'name' => 'items.cost_point', 'required' => 0]) @endcomponent
 
         <div class="card-footer text-center">
