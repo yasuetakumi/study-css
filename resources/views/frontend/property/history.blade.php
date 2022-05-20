@@ -1,5 +1,10 @@
 @extends('backend._base.content_form')
-
+@section('breadcrumbs')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.top_page')</a></li>
+        <li class="breadcrumb-item active">{{ $page_title }}</li>
+    </ol>
+@endsection
 @section('content')
 
     <!-- Modal -->

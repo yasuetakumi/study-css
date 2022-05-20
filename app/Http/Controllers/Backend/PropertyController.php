@@ -101,7 +101,7 @@ class PropertyController extends Controller
     {
         $data['page_title'] = __('label.property_list');
         if(Auth::guard('user')->check()){
-            $data['page_title'] = 'Property Company List';
+            $data['page_title'] = __('label.property') . __('label.company') . __('label.list');
         }
 
         return view('backend.property.index', $data);
@@ -124,7 +124,7 @@ class PropertyController extends Controller
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
-        $data['page_title'] = 'Property Create';
+        $data['page_title'] = __('label.add') . __('label.property');
         $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
@@ -254,7 +254,7 @@ class PropertyController extends Controller
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
-        $data['page_title'] = 'Property Detail';
+        $data['page_title'] = __('label.edit') . __('label.property');
         $data['is_skeleton'] = [Property::FURNISHED => 'Furnished', Property::SKELETON => 'Updated by the Scraping Process'];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 

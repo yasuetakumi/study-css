@@ -182,23 +182,27 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
     // C7
     Route::get('faqs', function() {
-        return 'よくある質問';
+        return 'Pending design of static page';
     });
     // C8
     Route::get('contact', function() {
-        return 'お問い合わせ';
+        return 'Pending design of static page';
     })->name('contact');
     // C9
     Route::get('sitemap', function() {
-        return 'サイトマップ';
+        return 'Pending design of static page';
     });
     // C10
     Route::get('privacy-policy', function() {
-        return 'プライバシーポリシー';
+        return 'Pending design of static page';
     });
     // C12
     Route::get('terms-of-service', function() {
-        return '利用規約';
+        return 'Pending design of static page';
+    });
+    // C13
+    Route::get('overview', function() {
+        return 'pending design of static page';
     });
     // C15 registration of new real estate agency
     Route::get('estate/register', 'Frontend\EstateController@create')->name('company.register');
