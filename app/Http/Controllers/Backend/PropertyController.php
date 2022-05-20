@@ -50,7 +50,7 @@ class PropertyController extends Controller
             'surface_area'  => 'required',
             'rent_amount'   => 'required',
             'is_skeleton'   => 'required',
-            'location'      => 'required|regex:/^[ぁ-んァ-ン一-龥]/|alpha_dash',
+            'location'      => 'required',
             'plan_id_dc_1'  => isset($data['plan_id_dc_1']) ? 'required' : '',
             'plan_id_dc_2'  => isset($data['plan_id_dc_2']) ? 'required' : '',
             'plan_id_dc_3'  => isset($data['plan_id_dc_3']) ? 'required' : '',
