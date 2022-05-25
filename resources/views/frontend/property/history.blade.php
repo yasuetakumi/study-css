@@ -232,6 +232,8 @@
                             }
                             let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', filterId);
                             this.items.list_properties_favorite = data.data
+                        } else {
+                            this.items.list_properties_favorite = []
                         }
                     }
                     else {
@@ -252,10 +254,10 @@
                         console.log(filterId);
                         if(filterId.length > 0){
                             this.items.like_property = filterId;
-                        } else {
-                            this.items.like_property = [];
                         }
-
+                    }
+                    else {
+                        this.items.like_property = [];
                     }
                 },
                 switchTab: function(state) {
@@ -270,6 +272,7 @@
                         this.items.isActiveFavorite = true;
                         this.getListHistoryOrFavoriteProperty(localKeyFavorite);
                     }
+                    this.getLikeProperty();
                 },
                 setLikeProperty: function(id) {
                     let propertyID = id;
