@@ -397,24 +397,24 @@
             vm.page_title = @json($page_title);
             vm.form_action = @json($form_action);
 
-            vm.companies.name = @json($name ?? null);
-            vm.companies.name_kana = @json($name_kana ?? null);
-            vm.companies.agent_license_name = @json($agent_license_name ?? null);
-            vm.companies.agent_license_renewals = @json($agent_license_renewals ?? null);
-            vm.companies.agent_license_number = @json($agent_license_number ?? null);
-            vm.companies.reason = @json($reason ?? null);
+            vm.companies.name = @json($name ?? '');
+            vm.companies.name_kana = @json($name_kana ?? '');
+            vm.companies.agent_license_name = @json($agent_license_name ?? '');
+            vm.companies.agent_license_renewals = @json($agent_license_renewals ?? '');
+            vm.companies.agent_license_number = @json($agent_license_number ?? '');
+            vm.companies.reason = @json($reason ?? '');
 
-            vm.users.display_name = @json($display_name ?? null);
+            vm.users.display_name = @json($display_name ?? '');
 
-            vm.companies.post_code = @json($postcode ?? null);
-            vm.companies.prefecture = @json($prefecture ?? null);
-            vm.companies.city = @json($city ?? null);
-            vm.companies.area_number = @json($area_number ?? null);
-            vm.companies.name_building = @json($name_building ?? null);
-            vm.companies.phone = @json($phone ?? null);
-            vm.companies.fax = @json($fax ?? null);
-            vm.companies.email = @json($email ?? null);
-            vm.companies.url = @json($url ?? null);
+            vm.companies.post_code = @json($postcode ?? '');
+            vm.companies.prefecture = @json($prefecture ?? '');
+            vm.companies.city = @json($city ?? '');
+            vm.companies.area_number = @json($area_number ?? '');
+            vm.companies.name_building = @json($name_building ?? '');
+            vm.companies.phone = @json($phone ?? '');
+            vm.companies.fax = @json($fax ?? '');
+            vm.companies.email = @json($email ?? '');
+            vm.companies.url = @json($url ?? '');
         },
         // ---------------------------------------------------------------------
 
