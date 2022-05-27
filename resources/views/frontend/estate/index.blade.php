@@ -508,7 +508,7 @@
                     phone : null,
                     fax : null,
                     email : null,
-                    url : "https://",
+                    url : null,
                 },
                 // -------------------------------------------------------------
             };
@@ -550,7 +550,7 @@
             vm.companies.phone = @json($phone ?? null);
             vm.companies.fax = @json($fax ?? null);
             vm.companies.email = @json($email ?? null);
-            vm.companies.url = @json($url ?? "https://");
+            vm.companies.url = @json($url ?? "");
         },
         // ---------------------------------------------------------------------
 
