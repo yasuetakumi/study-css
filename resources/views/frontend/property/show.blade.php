@@ -1,6 +1,6 @@
 @php
-    $skeleton = 0;
-    $furnished = 1;
+    $skeleton = 1;
+    $furnished = 0;
 @endphp
 @extends('backend._base.content_form')
 @section('breadcrumbs')
