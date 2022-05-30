@@ -29,7 +29,7 @@
     {{--custom css--}}
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{AssetHelper::version('css/backend/backend-custom.css')}}">
-
+    <link rel="stylesheet" href="{{asset('css/frontend/app.css')}}">
     <style>
         .parsley-errors-list{
             list-style-type: none;

@@ -8,8 +8,8 @@
 @section('content')
 
     <!-- Modal -->
-    <div v-if="items.confirmDelete">
-        <div style="position: fixed; z-index: 10; top: 0; left: 0; width:100%; height: 100%; overflow:hidden; padding-top:10px; background-color: rgba(0,0,0,0.4);">
+    <div ref="confirmDelete" style="display: none">
+        <div class="dialog-confirm-delete">
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 col-12">
                     <div class="card p-3 bg-dark">
@@ -132,7 +132,6 @@
                         like_property: [],
                         isActiveHistory: false,
                         isActiveFavorite: false,
-                        confirmDelete: false,
                         selectedIdFavorite: null,
                         localStorageFavorite: [],
                         loading: false,
@@ -283,7 +282,7 @@
                     properties_like = JSON.parse(local) || [];
                     filterArr = properties_like.filter(x => {return x.id == propertyID});
                     if(this.items.isActiveFavorite == true){
-                        this.items.confirmDelete = true;
+                        this.$refs.confirmDelete.style.display = 'block';
                     } else {
                         if (filterArr.length > 0) {
                             let index = properties_like.findIndex(object => {return object.id == propertyID});
@@ -306,10 +305,9 @@
                                 type: 'success'
                             });
                         }
+                        this.getListHistoryOrFavoriteProperty('favoritePropertyId');
+                        this.getLikeProperty();
                     }
-
-                    this.getListHistoryOrFavoriteProperty('favoritePropertyId');
-                    this.getLikeProperty();
                 },
                 deleteFavorite: function(confirm) {
                     let propertyID = this.items.selectedIdFavorite;
@@ -330,7 +328,7 @@
                             });
                         }
                     }
-                    this.items.confirmDelete = false;
+                    this.$refs.confirmDelete.style.display = 'none';
                     this.items.selectedIdFavorite = '';
                     this.getListHistoryOrFavoriteProperty('favoritePropertyId');
                     this.getLikeProperty();
