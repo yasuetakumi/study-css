@@ -97,7 +97,7 @@
                 items: {
                     user_id: null,
                     property_count: null,
-                    property_data: null,
+                    property_data: [],
                     disable: true,
                     loading: false,
                     loadingCount: false,
@@ -392,6 +392,7 @@
                         this.items.loading = false;
                     }).catch((err) => {
                         console.log(err);
+                        this.items.loading = false;
                 });
             },
             // -----------------------------------------------------------------
@@ -412,6 +413,7 @@
                         this.items.property_count = result.data.data.count;
                         this.items.loadingCount = false;
                     }).catch((err) => {
+                        this.items.loadingCount = false;
                         console.log(err);
                 });
             },

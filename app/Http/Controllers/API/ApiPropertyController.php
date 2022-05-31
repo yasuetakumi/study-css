@@ -159,10 +159,10 @@ class ApiPropertyController extends Controller
 
         // Filter property preference
         if(isset($filter->property_preference)){
-            $arrPreferences = $filter->property_type;
+            $arrPreferences = $filter->property_preference;
             // check if request is not array, then convert to array
-            if(!is_array($filter->property_type)){
-                $arrPreferences = explode(",", $filter->property_type);
+            if(!is_array($filter->property_preference)){
+                $arrPreferences = explode(",", $filter->property_preference);
             }
             foreach($arrPreferences as $value){
                 array_push($selectedPropertyPreference, (int) $value);
