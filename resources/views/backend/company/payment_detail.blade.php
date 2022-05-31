@@ -142,7 +142,7 @@
         ## ------------------------------------------------------------------
         */
         mounted: function(){
-            let selected_point_charge = document.getElementsByName("point_charge")[0].value;
+            let selected_point_charge = document.getElementsByName("point_charge")[0].value　? document.getElementsByName("point_charge")[0].value : '0';
             this.items.cost_point = selected_point_charge + '円';
             this.items.month_card = @json($company_month_expire);
             this.items.year_card = @json($company_year_expire);
