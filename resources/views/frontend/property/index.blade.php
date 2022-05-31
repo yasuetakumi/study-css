@@ -546,6 +546,10 @@
             getCurrentIndexSearch: function(value){
                 this.items.current_search_preference = value;
                 console.log(this.items.current_search_preference);
+            },
+            resetFilterQueryParams: function(){
+                this.searchCondition = [];
+                window.location.href = '/result';
             }
             // -----------------------------------------------------------------
         }
