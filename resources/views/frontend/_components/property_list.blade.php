@@ -118,11 +118,12 @@
             },
             cuisineOrTransfer: function(){
                 let interiorPrice = this.property.interior_transfer_price !== 0 && this.property.interior_transfer_price !== null ? this.convertToMan(this.property.interior_transfer_price) : '';
-                if(this.property.is_skeleton == 0){
-                    return this.property.cuisine.label_jp + "／" + interiorPrice;
-                }
-                else {
-                    return "／" + interiorPrice;
+                let labelCuisine = this.property.cuisine !== null ? this.property.cuisine.label_jp : "";
+                //no slash if both fields cuisine and transfer are empty, else return both fields with slash between them
+                if (labelCuisine == "" && (interiorPrice == 0 || interiorPrice == "")) {
+                    return ""
+                } else {
+                    return labelCuisine + "／" + interiorPrice;
                 }
             },
             closestStationDistance: function(){
