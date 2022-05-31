@@ -156,7 +156,7 @@ class PropertyController extends Controller {
             } else {
                 $stringFloorUnder = $queryString['floor_under'];
             }
-            $withQuery['underground'] = $stringFloorUnder;
+            $withQuery['floor_under'] = $stringFloorUnder;
         }
         if(isset($queryString['floor_above'])){
             if(is_array($queryString['floor_above'])){
@@ -164,7 +164,7 @@ class PropertyController extends Controller {
             } else {
                 $stringFloorAbove = $queryString['floor_above'];
             }
-            $withQuery['aboveground'] = $stringFloorAbove;
+            $withQuery['floor_above'] = $stringFloorAbove;
         }
         if(isset($queryString['property_preference'])){
             if(is_array($queryString['property_preference'])){
@@ -173,7 +173,7 @@ class PropertyController extends Controller {
                 $stringPropertyPref = $queryString['property_preference'];
             }
 
-            $withQuery['preference'] = $stringPropertyPref;
+            $withQuery['property_preference'] = $stringPropertyPref;
         }
         if(isset($queryString['property_type'])){
             if(is_array($queryString['property_type'])){
@@ -182,7 +182,7 @@ class PropertyController extends Controller {
                 $stringPropertyType = $queryString['property_type'];
             }
 
-            $withQuery['type'] = $stringPropertyType;
+            $withQuery['property_type'] = $stringPropertyType;
         }
         if(isset($queryString['skeleton'])){
             $withQuery['skeleton'] = true;

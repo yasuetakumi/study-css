@@ -16,7 +16,7 @@
         <!-- End - Search Condition -->
 
         <!-- Start - Clear Search Condition -->
-        <button @click="searchCondition = []" :disabled="!Object.keys(searchCondition).length"
+        <button @click="resetFilterQueryParams" :disabled="!Object.keys(searchCondition).length"
             class="btn btn-dark px-4 py-2 w-100">
             条件クリア
         </button>
