@@ -33,7 +33,6 @@
         @component('backend._components.input_text', ['label' => __('label.card_brand'), 'value' => $company->company_payment_detail->card_brand ?? '', 'name' => 'card_brand', 'required' => 1])@endcomponent
         @component('backend._components.input_select_date', ['label' => __('label.expiry_month'), 'options' => $months, 'name' => 'card_month_expire_at', 'required' => 1, 'value' => !empty($company_month_expire) ? $company_month_expire : '', 'method' => 'getMonthExpiryCard']) @endcomponent
         @component('backend._components.input_select_date', ['label' => __('label.expiry_year'), 'options' => $years, 'name' => 'card_year_expire_at', 'required' => 1, 'value' => !empty($company_year_expire) ? $company_year_expire : '', 'method' => 'getYearExpiryCard']) @endcomponent
-        @component('backend._components.text_label', ['label' => __('label.expiry_date_subscription'), 'name' => 'subscription_expires_at', 'value' => $company->company_payment_detail->subscription_expires_at ?? '', 'required' => 0]) @endcomponent
         <input type="hidden" name="card_expiry_at" :value="cardExpiry">
         <div class="card-footer text-center">
             <button type="submit" class="btn btn-secondary" id="input-submit" name="update_payment_info">
