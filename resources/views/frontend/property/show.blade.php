@@ -221,8 +221,13 @@
                 return this.$store.state.preset.property;
             },
             isLiked: function () {
-                if(this.items.like_property && this.items.like_property.length > 0 && this.items.like_property.includes(this.items.property_id)){
-                    return true;
+                if(this.items.like_property && this.items.like_property.length > 0){
+                    let isPropertyLiked = this.items.like_property.find(x => {return x.id == this.items.property_id});
+                    if(isPropertyLiked){
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
@@ -333,11 +338,13 @@
             setLikeProperty: function () {
                 //this.items.like_property.push(this.items.property_id)
                 var properties_like = [];
+                var filterArr = [];
                 let local = localStorage.getItem('favoritePropertyId');
                 properties_like = JSON.parse(local) || [];
-                if(properties_like.length > 0 && properties_like.includes(this.items.property_id)){
-                    let index = properties_like.indexOf(this.items.property_id);
-                    console.log("index", index);
+                filterArr = properties_like.filter(x => {return x.id == this.items.property_id});
+                if(filterArr.length > 0){
+                    let index = properties_like.findIndex(object => {return object.id == this.items.property_id});
+                    // console.log("index", index);
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                     let msg = '気に入り物件から削除しました。'; //remove like
@@ -345,7 +352,11 @@
                         type: 'success'
                     });
                 } else {
-                    properties_like.push(this.items.property_id);
+                    var objectFavorite = {
+                        'id': this.items.property_id,
+                        'distance': null
+                    };
+                    properties_like.push(objectFavorite);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                     let msg = 'お気に入り登録しました'; //add like
                     this.$toasted.show( msg, {
