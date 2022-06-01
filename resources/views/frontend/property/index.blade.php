@@ -279,10 +279,10 @@
                 const url = new URL(window.location.href);
                 const queries = new URLSearchParams(url.search);
                 const fromPrefecture = queries.get('from_prefecture');
-                const getUndergroundQs = queries.getAll('underground'); //filter for floor underground
-                const getUAbovegroundQs = queries.getAll('aboveground'); //filter for floor aboveground
-                const getPreferenceQs = queries.getAll('preference'); //filter for property preference
-                const getTypesQs = queries.getAll('type'); //filter for property types
+                const getUndergroundQs = queries.getAll('floor_under'); //filter for floor underground
+                const getUAbovegroundQs = queries.getAll('floor_above'); //filter for floor aboveground
+                const getPreferenceQs = queries.getAll('property_preference'); //filter for property preference
+                const getTypesQs = queries.getAll('property_type'); //filter for property types
                 const getCuisineQs = queries.getAll('cuisine');
                 const getSurfaceMinQs = queries.get('surface_min');
                 const getSurfaceMaxQs = queries.get('surface_max');
