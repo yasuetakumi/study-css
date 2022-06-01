@@ -433,6 +433,8 @@
                         this.items.like_property = [];
                     }
 
+                } else {
+                    this.items.like_property = [];
                 }
             },
             // -----------------------------------------------------------------
