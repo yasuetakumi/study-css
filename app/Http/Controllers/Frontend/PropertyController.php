@@ -208,11 +208,11 @@ class PropertyController extends Controller {
             $withQuery['city'] = $stringCity;
         }
         if(!empty($queryString['station'])){
-            if(is_array($queryString['city'])){
+            if(is_array($queryString['station'])){
                 // if array accepted, return string
                 $stringStation= implode(",", $queryString['station']);
             } else {
-                $stringStation = $queryString['city'];
+                $stringStation = $queryString['station'];
             }
 
             $withQuery['station'] = $stringStation;
