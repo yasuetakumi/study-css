@@ -29,6 +29,9 @@
     </div>
     {{-- Modal Dialog Email Search Preference--}}
     <email-search-preference @register="registerEmailSearchPreference" v-model="items.email_search_preference"></email-search-preference>
+
+    {{-- Modal Saved Conditions --}}
+    <save-conditions></save-conditions>
 </div>
 @endsection
 
@@ -43,6 +46,7 @@
 @include('frontend._components.button_favorite')
 @include('frontend._components.property_related_list')
 @include('frontend._components.email_search_preference')
+@include('frontend._components.save_conditions')
 <script>
     // -------------------------------------------------------------------------
     // Vuex store - Centralized data

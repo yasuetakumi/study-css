@@ -29,7 +29,7 @@
 
             <!-- Start - Add Search Condition to Local Storage -->
             <div class="col-5">
-                <button @click="registerSearchCondition(searchCondition)" :disabled="!Object.keys(searchCondition).length"
+                <button data-toggle="modal" data-target="#saveConditions" @click="registerSearchCondition(searchCondition)" :disabled="!Object.keys(searchCondition).length"
                     class="btn btn-dark py-2 px-4">
                     <span class="fa fa-list-alt"></span>
                     保存する
