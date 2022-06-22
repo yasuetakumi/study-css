@@ -33,10 +33,10 @@
         },
         methods: {
             displaySavedConditions: function() {
-                let open = document.getElementById("btnOpenModal");
+                let modalSearchCondition = document.getElementById("btnOpenModal");
                 setTimeout(() => {
-                    open.dataset.target = "#modalSearchCondition";
-                    open.click();
+                    // modalSearchCondition.dataset.target = "#modalSearchCondition";
+                    modalSearchCondition.click();
                     this.$refs.close.click();
                 }, 100);
             }
