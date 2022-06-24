@@ -368,13 +368,26 @@
             },
             setVisitedProperty: function () {
                 var properties_visited = [];
+                var propertyVisitedDate = [];
                 let localVisisted = localStorage.getItem('visitedPropertyId');
+                let localVisitedDate = localStorage.getItem('visitedPropertyDate');
+
+                const now = new Date();
+                const dd = now.getDate();
+                const mm = now.getMonth();
+                const yyyy = now.getFullYear();
+                const dateNow = `${yyyy}/${mm}/${dd}`;
+
                 properties_visited = JSON.parse(localVisisted) || [];
+                propertyVisitedDate = JSON.parse(localVisitedDate) || [];
                 if(properties_visited.includes(this.items.property_id)){
                     console.log("already visited");
                 } else {
                     properties_visited.push(this.$store.state.preset.property.id);
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
+                    
+                    propertyVisitedDate.push(dateNow)
+                    localStorage.setItem('visitedPropertyDate', JSON.stringify(propertyVisitedDate));
                 }
             },
             has_kitchen: function(id, kitchen){
