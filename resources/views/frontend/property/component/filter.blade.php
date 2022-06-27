@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-center">
         <h3 class="card-title mb-0">
-            条件で絞る
+            検索条件
         </h3>
     </div>
 
