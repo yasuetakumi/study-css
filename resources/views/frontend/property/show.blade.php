@@ -368,9 +368,8 @@
             },
             setVisitedProperty: function () {
                 var properties_visited = [];
-                var propertyVisitedDate = [];
+                var propertyIdsVisited = [];
                 let localVisisted = localStorage.getItem('visitedPropertyId');
-                let localVisitedDate = localStorage.getItem('visitedPropertyDate');
 
                 const now = new Date();
                 const dd = now.getDate();
@@ -379,15 +378,18 @@
                 const dateNow = `${yyyy}/${mm}/${dd}`;
 
                 properties_visited = JSON.parse(localVisisted) || [];
-                propertyVisitedDate = JSON.parse(localVisitedDate) || [];
-                if(properties_visited.includes(this.items.property_id)){
+                for (const key in properties_visited) {
+                    propertyIdsVisited.push(properties_visited[key].id)
+                }
+
+                if(propertyIdsVisited.includes(this.items.property_id)){
                     console.log("already visited");
                 } else {
-                    properties_visited.push(this.$store.state.preset.property.id);
+                    properties_visited.push({
+                        id: this.$store.state.preset.property.id,
+                        date: dateNow
+                    });
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
-                    
-                    propertyVisitedDate.push(dateNow)
-                    localStorage.setItem('visitedPropertyDate', JSON.stringify(propertyVisitedDate));
                 }
             },
             has_kitchen: function(id, kitchen){

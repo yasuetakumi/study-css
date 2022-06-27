@@ -474,7 +474,12 @@
             getHistoryProperty: function() {
                 let local = localStorage.getItem("visitedPropertyId");
                 let propertyID = JSON.parse(local) || [];
-                axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyID)
+                let propertyIDs = [];
+                for (const key in JSON.parse(local)) {
+                    propertyIDs.push(propertyID[key].id)
+                }
+
+                axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyIDs)
                     .then((result) => {
                             //get only last 3 data
                             for(let i= 0; i < 3; i++){
