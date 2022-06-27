@@ -21,6 +21,9 @@
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
 
+        {{-- favorite property --}}
+        @include('frontend.property.component.favorite-property')
+
     </div>
 
     <div class="col-md-8">
@@ -201,6 +204,10 @@
                 } else {
                     return false;
                 }
+            },
+            // -----------------------------------------------------------------
+            favoriteProperty: function(){
+
             },
             // -----------------------------------------------------------------
             displayedSearchCondition: function() {
@@ -456,9 +463,16 @@
                         type: 'success'
                     });
                 } else {
+                    const now = new Date();
+                    const dd = now.getDate();
+                    const mm = now.getMonth();
+                    const yyyy = now.getFullYear();
+                    const dateNow = `${yyyy}/${mm}/${dd}`;
+
                     var objectFavorite = {
                         'id': propertyID,
-                        'distance': this.items.walking_distance
+                        'distance': this.items.walking_distance,
+                        'date_added': dateNow
                     };
                     properties_like.push(objectFavorite);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
@@ -491,6 +505,10 @@
                         }).catch((err) => {
                             console.log(err);
                     });
+            },
+            // -----------------------------------------------------------------
+            getFavoriteProperty: function() {
+                //let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', [1]);
             },
             // -----------------------------------------------------------------
             registerSearchCondition: function(searchCondition, byPassCondition = false) {

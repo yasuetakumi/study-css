@@ -1,9 +1,9 @@
-<div class="px-1"  v-if="historyProperty" >
+<div class="px-1" v-if="getLikeProperty" >
 
     <h5 class="mb-3">
-        最近の閲覧履歴
+        最近お気に入りに追加した物件
     </h5>
-    <div v-for="pd in historyProperty" :key="pd.id">
+    <div v-for="pd in getLikeProperty" :key="pd.id">
         <property-list :property="pd">
             <button-favorite :likes="items.like_property" :idproperty="pd.id" @click="setLikeProperty(pd.id)"></button-favorite>
         </property-list>

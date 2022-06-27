@@ -299,9 +299,16 @@
                                 type: 'success'
                             });
                         } else {
+                            const now = new Date();
+                            const dd = now.getDate();
+                            const mm = now.getMonth();
+                            const yyyy = now.getFullYear();
+                            const dateNow = `${yyyy}/${mm}/${dd}`;
+
                             var objectFavorite = {
                                 'id': propertyID,
-                                'distance': null
+                                'distance': null,
+                                'date_added': dateNow,
                             };
                             properties_like.push(objectFavorite);
                             localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
