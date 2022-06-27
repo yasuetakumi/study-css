@@ -551,10 +551,16 @@
 
                 if(propertyIdsVisited.includes(this.items.property_id)){
                     console.log("already visited");
+                    const index = properties_visited.findIndex(item => item.id === this.items.property_id);
+                    properties_visited[index] = {
+                        id: this.$store.state.preset.property.id,
+                        date_browsed: dateNow
+                    };
+                    localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 } else {
                     properties_visited.push({
                         id: this.$store.state.preset.property.id,
-                        date: dateNow
+                        date_browsed: dateNow
                     });
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
