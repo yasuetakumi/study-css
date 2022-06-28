@@ -598,7 +598,6 @@
                         
                         // Run re-validation
                         checkSelect2Class();
-                        $("#input-city").parsley().reset();
                     }
 
                     vm.$store.commit( 'setLoading', false );
