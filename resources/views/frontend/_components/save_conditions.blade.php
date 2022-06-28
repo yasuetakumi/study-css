@@ -33,12 +33,18 @@
         },
         methods: {
             displaySavedConditions: function() {
-                let modalSearchCondition = document.getElementById("btnOpenModal");
+                const element = document.getElementById("modalAlert");
+                element.classList.remove("fade");
+
+                const modalSearchCondition = document.getElementById("btnOpenModal");
+                const closeModalSearchCondition = document.getElementById("btnCloseModal");
+                this.$refs.close.click();
                 setTimeout(() => {
                     // modalSearchCondition.dataset.target = "#modalSearchCondition";
                     modalSearchCondition.click();
-                    this.$refs.close.click();
+                    closeModalSearchCondition.close();
                 }, 100);
+                modalSearchCondition.click();
             }
         }
 
