@@ -371,11 +371,7 @@
                 var propertyIdsVisited = [];
                 let localVisisted = localStorage.getItem('visitedPropertyId');
 
-                const now = new Date();
-                const dd = now.getDate();
-                const mm = now.getMonth();
-                const yyyy = now.getFullYear();
-                const dateNow = `${yyyy}/${mm}/${dd}`;
+                const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
 
                 properties_visited = JSON.parse(localVisisted) || [];
                 for (const key in properties_visited) {
@@ -387,13 +383,13 @@
                     const index = properties_visited.findIndex(item => item.id === this.items.property_id);
                     properties_visited[index] = {
                         id: this.$store.state.preset.property.id,
-                        date_browsed: dateNow
+                        date_browsed: dateTime
                     };
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 } else {
                     properties_visited.push({
                         id: this.$store.state.preset.property.id,
-                        date_browsed: dateNow
+                        date_browsed: dateTime
                     });
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
