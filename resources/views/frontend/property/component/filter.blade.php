@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-center">
         <h3 class="card-title mb-0">
-            条件で絞る
+            検索条件
         </h3>
     </div>
 
@@ -193,6 +193,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Start - Clear Search Condition -->
+            <button @click="resetFilterQueryParams" :disabled="!Object.keys(searchCondition).length"
+                class="btn btn-dark px-4 py-2 w-100 mt-2">
+                条件クリア
+            </button>
+            <!-- End - Clear Search Condition -->
 
         </div>
 
