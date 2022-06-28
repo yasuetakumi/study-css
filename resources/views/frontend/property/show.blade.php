@@ -352,16 +352,11 @@
                         type: 'success'
                     });
                 } else {
-                    const now = new Date();
-                    const dd = now.getDate();
-                    const mm = now.getMonth();
-                    const yyyy = now.getFullYear();
-                    const dateNow = `${yyyy}/${mm}/${dd}`;
-
+                    const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
                     var objectFavorite = {
                         'id': this.items.property_id,
                         'distance': null,
-                        'date_added': dateNow
+                        'date_added': dateTime
                     };
                     properties_like.push(objectFavorite);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
