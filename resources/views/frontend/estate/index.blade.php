@@ -165,7 +165,7 @@
                                 v-model="companies.post_code"
                                 required
                                 data-parsley-trigger                = "change focusout"
-                                data-parsley-required-message       = "担当者名を入力してください"
+                                data-parsley-required-message       = "郵便番号を入力してください"
                                 data-parsley-errors-container       = "#errorBlock-postcode"
                                 style                               = "width:50%;display:inline-block;vertical-align: middle;"
                                 class                               = "form-control @error('postcode') is-invalid @enderror"
@@ -595,6 +595,10 @@
                         vm.companies.city       = data.city + data.local;
 
                         $("#input-prefecture").val(data.prefecture).trigger('change');
+                        
+                        // Run re-validation
+                        checkSelect2Class();
+                        $("#input-city").parsley().reset();
                     }
 
                     vm.$store.commit( 'setLoading', false );
