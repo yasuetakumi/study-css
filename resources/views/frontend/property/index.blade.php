@@ -21,6 +21,9 @@
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
 
+        {{-- favorite property --}}
+        @include('frontend.property.component.favorite-property')
+
     </div>
 
     <div class="col-md-8">
@@ -107,6 +110,7 @@
                     loadingCount: false,
                     like_property: [],
                     list_history_property: [],
+                    list_properties_favorite: [],
                     filter: {
                         from_prefecture: null,
                         surface_min: null,
@@ -152,6 +156,7 @@
             this.getLikeProperty();
             this.getCountProperty();
             this.getHistoryProperty();
+            this.getFavoriteProperty();
             this.searchCondition = @json($searchCondition);
         },
         // ---------------------------------------------------------------------
@@ -202,6 +207,14 @@
             historyProperty: function(){
                 if(this.items.list_history_property && this.items.list_history_property.length > 0){
                     return this.items.list_history_property;
+                } else {
+                    return false;
+                }
+            },
+            // -----------------------------------------------------------------
+            list_favorite: function() {
+                if (this.items.list_properties_favorite && this.items.list_properties_favorite.length > 0) {
+                    return this.items.list_properties_favorite;
                 } else {
                     return false;
                 }
@@ -423,6 +436,7 @@
             },
             // -----------------------------------------------------------------
             getLikeProperty: function() {
+                this.updateLocalLikeProperty();
                 let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
                 let filterId = [];
                 if(local.length > 0){
@@ -460,9 +474,12 @@
                         type: 'success'
                     });
                 } else {
+                    const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
+
                     var objectFavorite = {
                         'id': propertyID,
-                        'distance': this.items.walking_distance
+                        'distance': this.items.walking_distance,
+                        'date_added': dateTime
                     };
                     properties_like.push(objectFavorite);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
@@ -473,6 +490,21 @@
                 }
 
                 this.getLikeProperty();
+            },
+            // -----------------------------------------------------------------
+            updateLocalLikeProperty: function() {
+                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                if (local.length > 0) {
+                    // remove data if the date added is undefined
+                    const updateLocal = [];
+                    for (let i = 0; i < local.length; i++) {
+                        if (typeof local[i].date_added !== 'undefined') {
+                            updateLocal.push(local[i]);
+                        }
+                    }
+                    local = localStorage.getItem('favoritePropertyId');
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(updateLocal));
+                }
             },
             // -----------------------------------------------------------------
             getHistoryProperty: function() {
@@ -492,6 +524,20 @@
                                 }
                             }
                             // this.items.list_history_property = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                    });
+            },
+            // -----------------------------------------------------------------
+            getFavoriteProperty: function() {
+                axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', this.items.like_property)
+                    .then((result) => {
+                            //get only recently 3 data
+                            for(let i= 0; i < 3; i++){
+                                if(result.data[i] != null){
+                                    this.items.list_properties_favorite.push(result.data[i]);
+                                }
+                            }
                         }).catch((err) => {
                             console.log(err);
                     });
