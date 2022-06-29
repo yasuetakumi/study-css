@@ -221,13 +221,18 @@
                     this.items.loading = true;
                     let local = localStorage.getItem(localKey);
                     let propertyID = JSON.parse(local) || [];
-                    console.log(propertyID);
+                    let propertyIDs = [];
+                    
+                    for (const key in JSON.parse(local)) {
+                        propertyIDs.push(propertyID[key].id)
+                    }
+
                     let filterId = [];
                     if(localKey == 'favoritePropertyId'){
-                        this.items.localStorageFavorite = propertyID;
-                        if(propertyID.length > 0){
-                            for(let i= 0; i < propertyID.length; i++){
-                                filterId.push(propertyID[i].id);
+                        this.items.localStorageFavorite = propertyIDs;
+                        if(propertyIDs.length > 0){
+                            for(let i= 0; i < propertyIDs.length; i++){
+                                filterId.push(propertyIDs[i]);
                             }
                             let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', filterId);
                             this.items.list_properties_favorite = data.data
@@ -236,7 +241,7 @@
                         }
                     }
                     else {
-                        let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyID);
+                        let data = await axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyIDs);
                         this.items.list_properties_history = data.data;
                     }
                     this.items.loading = false;

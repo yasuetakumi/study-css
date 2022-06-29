@@ -368,12 +368,29 @@
             },
             setVisitedProperty: function () {
                 var properties_visited = [];
+                var propertyIdsVisited = [];
                 let localVisisted = localStorage.getItem('visitedPropertyId');
+
+                const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
+
                 properties_visited = JSON.parse(localVisisted) || [];
-                if(properties_visited.includes(this.items.property_id)){
+                for (const key in properties_visited) {
+                    propertyIdsVisited.push(properties_visited[key].id)
+                }
+
+                if(propertyIdsVisited.includes(this.items.property_id)){
                     console.log("already visited");
+                    const index = properties_visited.findIndex(item => item.id === this.items.property_id);
+                    properties_visited[index] = {
+                        id: this.$store.state.preset.property.id,
+                        date_browsed: dateTime
+                    };
+                    localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 } else {
-                    properties_visited.push(this.$store.state.preset.property.id);
+                    properties_visited.push({
+                        id: this.$store.state.preset.property.id,
+                        date_browsed: dateTime
+                    });
                     localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
                 }
             },
