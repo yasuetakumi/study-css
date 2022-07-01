@@ -8,7 +8,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <p class="text-center">No Search Condition Saved</p>
+                        <p class="text-center">@lang('label.no_condition_saved')</p>
                     </div>
                 </div>
             </div>

@@ -142,6 +142,9 @@
                         </li>-->
                         <!-- C-1-4 -->
                         <li class="nav-item border-right">
+                            <a class="nav-link text-light" href="{{ route('property.history') }}">閲覧履歴</a>
+                        </li>
+                        <li class="nav-item border-right">
                             <a class="nav-link text-light" href="{{ route('property.history', ['favorite' => true ]) }}">お気に入り</a>
                         </li>
                     </ul>

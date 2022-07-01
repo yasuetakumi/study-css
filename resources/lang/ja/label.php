@@ -236,4 +236,7 @@ return [
     //C6
     'property_history' => '物件閲覧履歴・お気に入り',
 
+    //C-Common-6
+    'no_condition_saved' => '検索条件は現在１つも保存されていません',
+
 ];
