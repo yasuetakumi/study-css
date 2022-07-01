@@ -222,7 +222,7 @@ return [
     'postcode_notfound'     => '郵便番号が見つかりません',
 
     //C4
-    'thumbnail_image_main' => 'サムネイル（主）',
+    'thumbnail_image_main' => 'サムネイル (メイン)',
     'thumbnail_image' => 'サムネイル',
     'image' => '画像',
     'image_360' => '360度画像',
