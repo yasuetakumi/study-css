@@ -30,7 +30,7 @@
     @component('frontend._components.text_label', ['label' => __('label.location'), 'required' => 0, 'value' => $item->location ?? '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'required' => 0, 'value' => $item->surface_area ? toTsubo($item->surface_area) . '坪' : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'required' => 0, 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'required' => 0, 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent
+    {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'required' => 0, 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
     @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'required' => 0, 'value' => $item->rent_amount ? '坪単価：'.manPerTsubo($item->rent_amount, $item->surface_area) . '万円' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'required' => 0, 'value' => $item->rent_amount ? number_format($item->rent_amount) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'required' => 0, 'value' => $item->number_of_floors_under_ground ?? '' ])@endcomponent
