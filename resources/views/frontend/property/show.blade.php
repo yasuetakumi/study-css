@@ -22,61 +22,61 @@
     @endif
 @endsection
 @section('content')
-    @component('frontend._components.text_label', ['label' => __('label.real_estate_agent_in_charge'), 'required' => 0, 'value' => $item->user_id ? $item->user->display_name : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.real_estate_agency'), 'required' => 0, 'value' => $item->user_id ? $item->user->company->company_name : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.postcode'), 'required' => 0, 'value' => $item->postcode_id ? $item->postcode->postcode : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.prefecture'), 'required' => 0, 'value' => $item->prefecture_id ? $item->prefecture->display_name : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.cities'), 'required' => 0, 'value' => $item->city_id ? $item->city->display_name : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.location'), 'required' => 0, 'value' => $item->location ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'required' => 0, 'value' => $item->surface_area ? toTsubo($item->surface_area) . '坪' : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'required' => 0, 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'required' => 0, 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'required' => 0, 'value' => $item->rent_amount ? '坪単価：'.manPerTsubo($item->rent_amount, $item->surface_area) . '万円' : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'required' => 0, 'value' => $item->rent_amount ? number_format($item->rent_amount) : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'required' => 0, 'value' => $item->number_of_floors_under_ground ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'required' => 0, 'value' => $item->number_of_floors_above_ground ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.restaurant_type'), 'required' => 0, 'value' => $item->property_type_id ? $item->property_type->label_jp : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.structure'), 'required' => 0, 'value' => $item->structure_id ? $item->structure->label_jp : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.deposit'), 'required' => 0, 'value' => $item->deposit_amount ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.monthly_maintaner'), 'required' => 0, 'value' => $item->monthly_maintenance_fee ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.repayment_conditions'), 'required' => 0, 'value' => $item->repayment_conditions ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.year_built'), 'required' => 0, 'value' => $item->date_built ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.renewal_fee'), 'required' => 0, 'value' => $item->renewal_fee ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.contract_length'), 'required' => 0, 'value' => $item->contract_length_in_months  ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.moving_fee'), 'required' => 0, 'value' => $item->special_moving_fee ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.business_terms'), 'required' => 0, 'value' => $item->business_terms_id ?  $item->business_term->label_jp : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.comments'), 'required' => 0, 'value' => $item->comment ?? ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.real_estate_agent_in_charge'), 'value' => $item->user_id ? $item->user->display_name : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.real_estate_agency'), 'value' => $item->user_id ? $item->user->company->company_name : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.postcode'), 'value' => $item->postcode_id ? $item->postcode->postcode : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.prefecture'), 'value' => $item->prefecture_id ? $item->prefecture->display_name : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.cities'), 'value' => $item->city_id ? $item->city->display_name : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.location'), 'value' => $item->location ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area) . '坪' : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
+    {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
+    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? '坪単価：'.manPerTsubo($item->rent_amount, $item->surface_area) . '万円' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'value' => $item->rent_amount ? number_format($item->rent_amount) : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.restaurant_type'), 'value' => $item->property_type_id ? $item->property_type->label_jp : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.structure'), 'value' => $item->structure_id ? $item->structure->label_jp : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.deposit'), 'value' => $item->deposit_amount ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.monthly_maintaner'), 'value' => $item->monthly_maintenance_fee ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.repayment_conditions'), 'value' => $item->repayment_conditions ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.year_built'), 'value' => $item->date_built ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.renewal_fee'), 'value' => $item->renewal_fee ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.contract_length'), 'value' => $item->contract_length_in_months  ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.moving_fee'), 'value' => $item->special_moving_fee ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.business_terms'), 'value' => $item->business_terms_id ?  $item->business_term->label_jp : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.comments'), 'value' => $item->comment ?? ''])@endcomponent
     @component('frontend._components.text_label', [
-        'label' => __('label.is_skeleton'), 'required' => 0,
+        'label' => __('label.is_skeleton'),
         'value' => $item->is_skeleton == $skeleton ? __('label.skeleton') : __('label.furnished')
     ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.restaurant_cuisine'), 'required' => 0, 'value' => $item->cuisine_id ? $item->cuisine->label_jp : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.interior_transfer_price'), 'required' => 0, 'value' => $item->interior_transfer_price ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.restaurant_cuisine'), 'value' => $item->cuisine_id ? $item->cuisine->label_jp : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.interior_transfer_price'), 'value' => $item->interior_transfer_price ?? '' ])@endcomponent
 
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image_main'), 'required' => null, 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 1', 'required' => null, 'value' => $item->thumbnail_image_1 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 2', 'required' => null, 'value' => $item->thumbnail_image_2 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 3', 'required' => null, 'value' => $item->thumbnail_image_3 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 4', 'required' => null, 'value' => $item->thumbnail_image_4 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 5', 'required' => null, 'value' => $item->thumbnail_image_5 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 6', 'required' => null, 'value' => $item->thumbnail_image_6 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image_main'), 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 1', 'value' => $item->thumbnail_image_1 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 2', 'value' => $item->thumbnail_image_2 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 3', 'value' => $item->thumbnail_image_3 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 4', 'value' => $item->thumbnail_image_4 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 5', 'value' => $item->thumbnail_image_5 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 6', 'value' => $item->thumbnail_image_6 ?? '']) @endcomponent
 
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 1', 'required' => null, 'value' => $item->image_1 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 2', 'required' => null, 'value' => $item->image_2 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 3', 'required' => null, 'value' => $item->image_3 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 4', 'required' => null, 'value' => $item->image_4 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 5', 'required' => null, 'value' => $item->image_5 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 6', 'required' => null, 'value' => $item->image_6 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 7', 'required' => null, 'value' => $item->image_7 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 8', 'required' => null, 'value' => $item->image_8 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 9', 'required' => null, 'value' => $item->image_9 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image') . ' 10', 'required' => null, 'value' => $item->image_10 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 1', 'value' => $item->image_1 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 2', 'value' => $item->image_2 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 3', 'value' => $item->image_3 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 4', 'value' => $item->image_4 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 5', 'value' => $item->image_5 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 6', 'value' => $item->image_6 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 7', 'value' => $item->image_7 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 8', 'value' => $item->image_8 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 9', 'value' => $item->image_9 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image') . ' 10', 'value' => $item->image_10 ?? '']) @endcomponent
 
-    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 1', 'required' => null, 'value' => $item->image_360_1 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 2', 'required' => null, 'value' => $item->image_360_2 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 3', 'required' => null, 'value' => $item->image_360_3 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 4', 'required' => null, 'value' => $item->image_360_4 ?? '']) @endcomponent
-    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 5', 'required' => null, 'value' => $item->image_360_5 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 1', 'value' => $item->image_360_1 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 2', 'value' => $item->image_360_2 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 3', 'value' => $item->image_360_3 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 4', 'value' => $item->image_360_4 ?? '']) @endcomponent
+    @component('frontend._components.display_image', ['label' => __('label.image_360') . ' 5', 'value' => $item->image_360_5 ?? '']) @endcomponent
 
 
     @include('frontend.property.component.estimation_plans')
