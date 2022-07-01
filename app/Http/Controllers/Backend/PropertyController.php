@@ -293,6 +293,7 @@ class PropertyController extends Controller
     public function update( Request $request, $id)
     {
         $data = $request->all();
+        // dd($data);
         // return $data;
         $this->validator($data, 'update')->validate();
         $properties_plans = array();
@@ -316,29 +317,29 @@ class PropertyController extends Controller
 
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
 
-        $data['thumbnail_image_1']  = ImageHelper::update( $request->file('thumbnail_image_1'), $edit->thumbnail_image_1);
-        $data['thumbnail_image_2']  = ImageHelper::update( $request->file('thumbnail_image_2'), $edit->thumbnail_image_2);
-        $data['thumbnail_image_3']  = ImageHelper::update( $request->file('thumbnail_image_3'), $edit->thumbnail_image_3);
-        $data['thumbnail_image_4']  = ImageHelper::update( $request->file('thumbnail_image_4'), $edit->thumbnail_image_4);
-        $data['thumbnail_image_5']  = ImageHelper::update( $request->file('thumbnail_image_5'), $edit->thumbnail_image_5);
-        $data['thumbnail_image_6']  = ImageHelper::update( $request->file('thumbnail_image_6'), $edit->thumbnail_image_6);
+        $data['thumbnail_image_1']  = ImageHelper::update( $request->file('thumbnail_image_1'), $edit->thumbnail_image_1, $data['removable_image']['thumbnail_image_1']);
+        $data['thumbnail_image_2']  = ImageHelper::update( $request->file('thumbnail_image_2'), $edit->thumbnail_image_2, $data['removable_image']['thumbnail_image_2']);
+        $data['thumbnail_image_3']  = ImageHelper::update( $request->file('thumbnail_image_3'), $edit->thumbnail_image_3, $data['removable_image']['thumbnail_image_3']);
+        $data['thumbnail_image_4']  = ImageHelper::update( $request->file('thumbnail_image_4'), $edit->thumbnail_image_4, $data['removable_image']['thumbnail_image_4']);
+        $data['thumbnail_image_5']  = ImageHelper::update( $request->file('thumbnail_image_5'), $edit->thumbnail_image_5, $data['removable_image']['thumbnail_image_5']);
+        $data['thumbnail_image_6']  = ImageHelper::update( $request->file('thumbnail_image_6'), $edit->thumbnail_image_6, $data['removable_image']['thumbnail_image_6']);
 
-        $data['image_1']     = ImageHelper::update( $request->file('image_1'), $edit->image_1);
-        $data['image_2']     = ImageHelper::update( $request->file('image_2'), $edit->image_2);
-        $data['image_3']     = ImageHelper::update( $request->file('image_3'), $edit->image_3);
-        $data['image_4']     = ImageHelper::update( $request->file('image_4'), $edit->image_4);
-        $data['image_5']     = ImageHelper::update( $request->file('image_5'), $edit->image_5);
-        $data['image_6']     = ImageHelper::update( $request->file('image_6'), $edit->image_6);
-        $data['image_7']     = ImageHelper::update( $request->file('image_7'), $edit->image_7);
-        $data['image_8']     = ImageHelper::update( $request->file('image_8'), $edit->image_8);
-        $data['image_9']     = ImageHelper::update( $request->file('image_9'), $edit->image_9);
-        $data['image_10']    = ImageHelper::update( $request->file('image_10'), $edit->image_10);
+        $data['image_1']     = ImageHelper::update( $request->file('image_1'), $edit->image_1, $data['removable_image']['image_1']);
+        $data['image_2']     = ImageHelper::update( $request->file('image_2'), $edit->image_2, $data['removable_image']['image_2']);
+        $data['image_3']     = ImageHelper::update( $request->file('image_3'), $edit->image_3, $data['removable_image']['image_3']);
+        $data['image_4']     = ImageHelper::update( $request->file('image_4'), $edit->image_4, $data['removable_image']['image_4']);
+        $data['image_5']     = ImageHelper::update( $request->file('image_5'), $edit->image_5, $data['removable_image']['image_5']);
+        $data['image_6']     = ImageHelper::update( $request->file('image_6'), $edit->image_6, $data['removable_image']['image_6']);
+        $data['image_7']     = ImageHelper::update( $request->file('image_7'), $edit->image_7, $data['removable_image']['image_7']);
+        $data['image_8']     = ImageHelper::update( $request->file('image_8'), $edit->image_8, $data['removable_image']['image_8']);
+        $data['image_9']     = ImageHelper::update( $request->file('image_9'), $edit->image_9, $data['removable_image']['image_9']);
+        $data['image_10']    = ImageHelper::update( $request->file('image_10'), $edit->image_1, $data['removable_image']['image_10']);
 
-        $data['image_360_1']     = ImageHelper::update( $request->file('image_360_1'), $edit->image_360_1);
-        $data['image_360_2']     = ImageHelper::update( $request->file('image_360_2'), $edit->image_360_2);
-        $data['image_360_3']     = ImageHelper::update( $request->file('image_360_3'), $edit->image_360_3);
-        $data['image_360_4']     = ImageHelper::update( $request->file('image_360_4'), $edit->image_360_4);
-        $data['image_360_5']     = ImageHelper::update( $request->file('image_360_5'), $edit->image_360_5);
+        $data['image_360_1']     = ImageHelper::update( $request->file('image_360_1'), $edit->image_360_1, $data['removable_image']['image_360_1']);
+        $data['image_360_2']     = ImageHelper::update( $request->file('image_360_2'), $edit->image_360_2, $data['removable_image']['image_360_2']);
+        $data['image_360_3']     = ImageHelper::update( $request->file('image_360_3'), $edit->image_360_3, $data['removable_image']['image_360_3']);
+        $data['image_360_4']     = ImageHelper::update( $request->file('image_360_4'), $edit->image_360_4, $data['removable_image']['image_360_4']);
+        $data['image_360_5']     = ImageHelper::update( $request->file('image_360_5'), $edit->image_360_5, $data['removable_image']['image_360_5']);
 
         // change to meter and yen before update
         $data['surface_area'] = fromTsubo($data['surface_area']);
