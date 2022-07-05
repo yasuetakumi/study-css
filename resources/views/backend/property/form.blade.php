@@ -146,11 +146,11 @@
         @component('backend._components.input_image', ['name' => 'image_9', 'label' => __('label.image') . ' 9', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_9 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'image_10', 'label' => __('label.image') . ' 10', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_10 ?? '']) @endcomponent
 
-        @component('backend._components.input_image', ['name' => 'image_360_1', 'label' => __('label.image_360') . ' 1', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_1 ?? '']) @endcomponent
-        @component('backend._components.input_image', ['name' => 'image_360_2', 'label' => __('label.image_360') . ' 2', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_2 ?? '']) @endcomponent
-        @component('backend._components.input_image', ['name' => 'image_360_3', 'label' => __('label.image_360') . ' 3', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_3 ?? '']) @endcomponent
-        @component('backend._components.input_image', ['name' => 'image_360_4', 'label' => __('label.image_360') . ' 4', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
-        @component('backend._components.input_image', ['name' => 'image_360_5', 'label' => __('label.image_360') . ' 5', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
+        @component('backend._components.input_image360', ['name' => 'image_360_1', 'label' => __('label.image_360') . ' 1', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_1 ?? '']) @endcomponent
+        @component('backend._components.input_image360', ['name' => 'image_360_2', 'label' => __('label.image_360') . ' 2', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_2 ?? '']) @endcomponent
+        @component('backend._components.input_image360', ['name' => 'image_360_3', 'label' => __('label.image_360') . ' 3', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_3 ?? '']) @endcomponent
+        @component('backend._components.input_image360', ['name' => 'image_360_4', 'label' => __('label.image_360') . ' 4', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
+        @component('backend._components.input_image360', ['name' => 'image_360_5', 'label' => __('label.image_360') . ' 5', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
         @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
     @endcomponent
@@ -159,6 +159,7 @@
 
 @push('scripts')
     <script type="text/javascript"> var root_url = "{{ url('/') }}";</script>
+    <script type="text/javascript"> var pannelum_asset = "{{ asset('js/pannellum/pannellum.htm') }}";</script>
 @endpush
 
 @push('vue-scripts')

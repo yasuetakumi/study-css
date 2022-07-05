@@ -79,8 +79,8 @@
 
             $(".select2").change(function() {
                 $(this).parsley().validate();
-            }); 
-            
+            });
+
             // init: show tooltip on hover
             $('[data-toggle="tooltip"]').tooltip({
                 container: 'body'
@@ -182,6 +182,33 @@
                     input_remove.val('false');
                 }
             });
+            // this is for image 360 upload
+            $("body").on('change', '.input-image-360', function() {
+                input = this;
+
+                var img = $(input).closest('.field-group').find('img');
+                var input_remove = $(input).closest('.field-group').find('.input-remove-image');
+                var image_360 = $(input).closest('.field-group').find('.panorama-image');
+                var loading_spinner = $(input).closest('.field-group').find('.spinner-border');
+                // add loading spinner while mount 360 viewer
+                loading_spinner.removeClass('d-none');
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        image_360.removeClass('d-none'); // show image 360 viewer wrapper if hidden
+                        img.attr('src', e.target.result);
+                        image_360.html('<iframe width="400" height="200" allowfullscreen style="border-style:none;" src="' + pannelum_asset + '#panorama=' + e.target.result + '"></iframe>');
+                        setTimeout(() => {
+                            loading_spinner.addClass('d-none');
+                        }, 200);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    img.attr('src', img.data('default'));
+                    input_remove.val('false');
+                }
+            });
 
             $("body").on('change', '.input-video', function() {
                 input = this;
@@ -212,6 +239,22 @@
                 }
 
                 img.attr('src', img.data('empty'));
+            })
+            // this is for remove image 360
+            $('body').on('click', '.remove-image-360', function(){
+                var img = $(this).closest('.field-group').find('img');
+                var img360wrapper = $(this).closest('.field-group').find('.panorama-image-edit')
+
+                $(this).closest('.field-group').find('.input-image-360').val('');
+                $(this).closest('.image-preview').find('.input-remove-image-360').val( 'true' );
+
+                if(this.id == 'remove-image-360-image1') {
+                    $("#input-image1").prop('required',true);
+                }
+
+                img.attr('src', img.data('empty'));
+                // hidden image 360 on delete image
+                img360wrapper.addClass('d-none');
             })
 
             $('body').on('click', '.remove-video', function(){

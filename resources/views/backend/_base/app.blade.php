@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{AssetHelper::version('css/backend/backend-custom.css')}}">
     <link rel="stylesheet" href="{{asset('css/frontend/app.css')}}">
+    {{-- Panelum 360 --}}
+    <link rel="stylesheet" href="{{asset('js/pannellum/pannellum.css')}}">
     <style>
         .parsley-errors-list{
             list-style-type: none;
@@ -212,7 +214,8 @@
 <script src="{{asset('js/backend/adminlte/adminlte.min.js')}}"></script>
 <!-- custom backend -->
 <script src="{{AssetHelper::version('js/backend/backend.js')}}"></script>
-
+{{-- 360 Panelum js --}}
+<script src="{{asset('js/pannellum/pannellum.js')}}"></script>
 {{--custom js--}}
 @stack('scripts')
 <script>
