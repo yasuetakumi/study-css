@@ -31,10 +31,6 @@ class PropertyPreferenceSeeder extends Seeder
                 'label_en'       => 'Latest property (registered property within 48 hours)',
                 'label_jp'      => ' 最新の物件（48時間以内の登録物件）',
             ],
-            [
-                'label_en'       => 'Drawings can be printed (premium service only)',
-                'label_jp'      => '図面印刷可能（プレミアムサービス専用）',
-            ],
 
         ]);
     }
