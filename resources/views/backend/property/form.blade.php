@@ -159,6 +159,7 @@
 
 @push('scripts')
     <script type="text/javascript"> var root_url = "{{ url('/') }}";</script>
+    <script type="text/javascript"> var pannelum_asset = "{{ asset('js/pannellum/pannellum.htm') }}";</script>
 @endpush
 
 @push('vue-scripts')
