@@ -129,7 +129,7 @@ return [
     'surface_area_tsubo' => '面積（坪）',
     'rent_amount' => '賃料',
     'cost_of_rent' => '坪単価(万／坪)',
-    'rent_amount_man' => '家賃（万）',
+    'rent_amount_man' => '賃料（万）',
     'number_of_floor_underground' => '階数(地下)',
     'number_of_floor_aboveground' => '階数(地上)',
     'restaurant_type' => '飲食店の種類',
