@@ -12,7 +12,7 @@ use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 
 $factory->define(\App\Models\Property::class, function (Faker $faker) {
-    $deposit_amount = [100,200,300,400,500,600,700,800,900,1000];
+    $deposit_amount = [100,200,300,400,500,600,700,800,900,1000]; // man
     $prefecture_id = Prefecture::all()->pluck('id')->random();
 
     return [
@@ -27,18 +27,18 @@ $factory->define(\App\Models\Property::class, function (Faker $faker) {
         'number_of_floors_above_ground' => rand(0,7),
         'property_type_id' => rand(1,3),
         'structure_id' => rand(1,5),
-        'deposit_amount' => array_rand($deposit_amount, 1),
-        'monthly_maintainance_fee' => array_rand($deposit_amount, 1),
+        'deposit_amount' => fromMan(array_rand($deposit_amount, 1)),
+        'monthly_maintainance_fee' => fromMan(array_rand($deposit_amount, 1)),
         'repayment' => $faker->numerify('Repayment ###'),
         'date_built' => Carbon::now()->subMonths(rand(1,3))->subDays(rand(1,30)),
-        'renewal_fee' => $faker->sentence,
+        'renewal_fee' => rand(100000,1000000),
         'contract_length_in_months' => rand(1,12),
-        'special_moving_fee' => array_rand($deposit_amount),
+        'special_moving_fee' => fromMan(array_rand($deposit_amount)),
         'business_terms_id' => rand(1,3),
         'comment' => $faker->paragraph,
         'is_skeleton' => rand(0,1),
         'cuisine_id' => Cuisine::all()->pluck('id')->random(),
-        'interior_transfer_price' => rand(10000, 400000),
+        'interior_transfer_price' => fromMan(array_rand($deposit_amount, 1)),
         'thumbnail_image_main' => 'image1.jpg',
         'thumbnail_image_1' => 'image1.jpg',
         'thumbnail_image_2' => 'image2.jpg',
