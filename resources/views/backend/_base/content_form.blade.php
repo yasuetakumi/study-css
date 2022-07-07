@@ -189,6 +189,7 @@
                 var img = $(input).closest('.field-group').find('img');
                 var input_remove = $(input).closest('.field-group').find('.input-remove-image');
                 var image_360 = $(input).closest('.field-group').find('.panorama-image');
+                var imgage_360_edit = $(this).closest('.field-group').find('.panorama-image-edit')
                 var loading_spinner = $(input).closest('.field-group').find('.spinner-border');
                 // add loading spinner while mount 360 viewer
                 loading_spinner.removeClass('d-none');
@@ -197,8 +198,9 @@
 
                     reader.onload = function(e) {
                         image_360.removeClass('d-none'); // show image 360 viewer wrapper if hidden
+                        imgage_360_edit.addClass('d-none'); // hide image preview on edit if change image
                         img.attr('src', e.target.result);
-                        image_360.html('<iframe width="400" height="200" allowfullscreen style="border-style:none;" src="' + pannelum_asset + '#panorama=' + e.target.result + '"></iframe>');
+                        image_360.html('<iframe width="400" height="200" allowfullscreen style="border-style:none;" src="' + pannelum_asset + '#panorama=' + e.target.result + '&amp;autoLoad=true"></iframe>');
                         setTimeout(() => {
                             loading_spinner.addClass('d-none');
                         }, 200);

@@ -1,16 +1,17 @@
 <?php
 
-use App\Models\Property;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
-
 use Carbon\Carbon;
 use App\Models\City;
 use App\Models\Cuisine;
+
+use App\Models\Property;
 use App\Models\PropertyType;
 use Faker\Generator as Faker;
 use App\Models\RentPriceOption;
+use Illuminate\Database\Seeder;
 use App\Models\SurfaceAreaOption;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class PropertySeeder extends Seeder
 {
@@ -28,6 +29,16 @@ class PropertySeeder extends Seeder
         $deposit_amount = [100,200,300,400,500,600,700,800,900,1000];
         $prefecture_id = rand(1,20);
         $surfaceArea = [48,51,55];
+        // copy example image to uploads directory
+        for($i = 1; $i <= 5; $i++){
+            if(!Storage::disk('public')->exists('uploads/example_image360_' . $i . '.jpg')){
+                Storage::disk('public')->copy('img/example_image360_' . $i . '.jpg', 'uploads/example_image360_' . $i . '.jpg');
+
+            }
+            if(!Storage::disk('public')->exists('uploads/image' . $i . '.jpg')){
+                Storage::disk('public')->copy('img/image' . $i . '.jpg', 'uploads/image' . $i . '.jpg');
+            }
+        }
         //added dummy data to properties table for testing related properties on detail page
         $data = new Property();
         for ($i = 0; $i < 5; $i++) {
@@ -56,16 +67,28 @@ class PropertySeeder extends Seeder
                     'is_skeleton' => rand(0,1),
                     'cuisine_id' => Cuisine::all()->pluck('id')->random(),
                     'interior_transfer_price' => rand(10000, 400000),
-                    'thumbnail_image_main' => $faker->numerify('Thumbnail Image Main ###'),
-                    'thumbnail_image_1' => $faker->numerify('thumbnail_image_1 ###'),
-                    'thumbnail_image_2' => $faker->numerify('thumbnail_image_2 ###'),
-                    'thumbnail_image_3' => $faker->numerify('thumbnail_image_3 ###'),
-                    'thumbnail_image_4' => $faker->numerify('thumbnail_image_4 ###'),
-                    'thumbnail_image_5' => $faker->numerify('thumbnail_image_5 ###'),
-                    'thumbnail_image_6' => $faker->numerify('thumbnail_image_6 ###'),
-                    'image_1' => $faker->numerify('image_1 ###'),
-                    'image_2' => $faker->numerify('image_2 ###'),
-                    'image_360_1' => $faker->numerify('image_360_1 ###'),
+                    'thumbnail_image_main' => 'image1.jpg',
+                    'thumbnail_image_1' => 'image1.jpg',
+                    'thumbnail_image_2' => 'image2.jpg',
+                    'thumbnail_image_3' => 'image3.jpg',
+                    'thumbnail_image_4' => 'image4.jpg',
+                    'thumbnail_image_5' => 'image5.jpg',
+                    'thumbnail_image_6' => 'image1.jpg',
+                    'image_1' => 'image1.jpg',
+                    'image_2' => 'image2.jpg',
+                    'image_3' => 'image3.jpg',
+                    'image_4' => 'image4.jpg',
+                    'image_5' => 'image5.jpg',
+                    'image_6' => 'image1.jpg',
+                    'image_7' => 'image2.jpg',
+                    'image_8' => 'image3.jpg',
+                    'image_9' => 'image4.jpg',
+                    'image_10' => 'image5.jpg',
+                    'image_360_1' => 'example_image360_1.jpg',
+                    'image_360_2' => 'example_image360_2.jpg',
+                    'image_360_3' => 'example_image360_3.jpg',
+                    'image_360_4' => 'example_image360_4.jpg',
+                    'image_360_5' => 'example_image360_5.jpg',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ],
