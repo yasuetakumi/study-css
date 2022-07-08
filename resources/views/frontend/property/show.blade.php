@@ -28,22 +28,22 @@
     @component('frontend._components.text_label', ['label' => __('label.prefecture'), 'value' => $item->prefecture_id ? $item->prefecture->display_name : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.cities'), 'value' => $item->city_id ? $item->city->display_name : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.location'), 'value' => $item->location ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area) . '坪' : ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area, true): ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
     {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
-    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? '坪単価：'.manPerTsubo($item->rent_amount, $item->surface_area) . '万円' : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'value' => $item->rent_amount ? number_format($item->rent_amount) : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? manPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'value' => $item->rent_amount ? number_format($item->rent_amount) . '円' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ? '地下' . $item->number_of_floors_under_ground . '階' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ? '地上' . $item->number_of_floors_above_ground . '階' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.restaurant_type'), 'value' => $item->property_type_id ? $item->property_type->label_jp : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.structure'), 'value' => $item->structure_id ? $item->structure->label_jp : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.deposit'), 'value' => $item->deposit_amount ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.monthly_maintaner'), 'value' => $item->monthly_maintenance_fee ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.deposit'), 'value' => $item->deposit_amount ? toMan($item->deposit_amount, true) : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.monthly_maintaner'), 'value' => $item->monthly_maintenance_fee ? toMan($item->monthly_maintenance_fee, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.repayment_conditions'), 'value' => $item->repayment_conditions ?? '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.year_built'), 'value' => $item->date_built ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.renewal_fee'), 'value' => $item->renewal_fee ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.contract_length'), 'value' => $item->contract_length_in_months  ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.moving_fee'), 'value' => $item->special_moving_fee ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.renewal_fee'), 'value' => $item->renewal_fee ? number_format($item->renewal_fee) . '円': '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.contract_length'), 'value' => $item->contract_length_in_months  ? $item->contract_length_in_months . 'ヵ月' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.moving_fee'), 'value' => $item->special_moving_fee ? toMan($item->special_moving_fee, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.business_terms'), 'value' => $item->business_terms_id ?  $item->business_term->label_jp : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.comments'), 'value' => $item->comment ?? ''])@endcomponent
     @component('frontend._components.text_label', [
@@ -51,7 +51,7 @@
         'value' => $item->is_skeleton == $skeleton ? __('label.skeleton') : __('label.furnished')
     ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.restaurant_cuisine'), 'value' => $item->cuisine_id ? $item->cuisine->label_jp : ''])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.interior_transfer_price'), 'value' => $item->interior_transfer_price ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.interior_transfer_price'), 'value' => $item->interior_transfer_price ? toMan($item->interior_transfer_price, true) : '' ])@endcomponent
 
     @component('frontend._components.display_image', ['label' => __('label.thumbnail_image_main'), 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
     @component('frontend._components.display_image', ['label' => __('label.thumbnail_image') . ' 1', 'value' => $item->thumbnail_image_1 ?? '']) @endcomponent
