@@ -33,8 +33,8 @@
     {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
     @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? manPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'value' => $item->rent_amount ? number_format($item->rent_amount) . '円' : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ?? '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ? '地下' . $item->number_of_floors_under_ground . '階' : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ? '地上' . $item->number_of_floors_above_ground . '階' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.restaurant_type'), 'value' => $item->property_type_id ? $item->property_type->label_jp : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.structure'), 'value' => $item->structure_id ? $item->structure->label_jp : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.deposit'), 'value' => $item->deposit_amount ? toMan($item->deposit_amount, true) : '' ])@endcomponent
