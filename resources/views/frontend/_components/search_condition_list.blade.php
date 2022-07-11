@@ -15,9 +15,9 @@
         </div>
         <!-- Modal -->
         <div class="modal fade" id="modalSearchCondition" tabindex="-1" role="dialog" aria-labelledby="modalSearchConditionTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-0" role="document" v-for="(sc, index) in items.search_condition" :key="index">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header" v-if="index == 0">
+            <div class="modal-dialog modal-lg mt-0 modal-dialog-scrollable" role="document">
+                <div class="modal-content rounded-0" style="background-color: transparent">
+                    <div class="modal-header bg-white">
                         <div class="d-flex flex-grow-1 justify-content-between">
                             <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
                             <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
@@ -26,8 +26,8 @@
                             <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>
                         </a>
                       </div>
-                    <div class="modal-body">
-                        <div class="position-relative bg-white">
+                    <div class="modal-body p-0">
+                        <div class="position-relative border p-3 mb-3 bg-white" v-for="(sc, index) in items.search_condition" :key="index">
                             <div class="position-absolute" style="top: 0px; left: 0px;">
                                 <div class="px-2 py-1 bg-primary rounded-sm">
                                     <span>@{{index + 1}}</span>
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer bg-white">
                         <button type="button" id="btn-close" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
                     </div>
                 </div>
