@@ -73,7 +73,7 @@ return [
     'post_code'              => '郵便番号',
     'address'                => '住所',
     'phone'                  => '電話番号',
-    'company_name'           => '会社名',
+    'company_name'           => '不動産会社名',
     'company_info'           => '会社情報',
     /** =================================== */
     'created_at'             => '作成日',
@@ -139,8 +139,8 @@ return [
     'plans' => '各坪プランを選ぶ',
     'property' => '物件の一覧',
     'property_list' => '物件の一覧',
-    'real_estate_agent_in_charge' => '取引会社の管理者',
-    'real_estate_agency' => '取引会社',
+    'real_estate_agent_in_charge' => '不動産会社の管理者',
+    'real_estate_agency' => '不動産会社',
     'postcode' => '郵便番号',
     'prefecture' => '都道府県',
     'cities' => '市町村区',
@@ -180,7 +180,7 @@ return [
     'is_finish' => '返答済',
     'person_in_charge' => '管理者',
     'note' => 'メモ',
-    'company_name' => '会社名',
+    'company_name' => '不動産会社名',
     'content_inquiry' => 'お問い合わせ内容',
     'inquiry_button' => 'お問い合わせボタン',
     'inquiry_type' => 'お問い合わせ種別',
@@ -235,8 +235,5 @@ return [
 
     //C6
     'property_history' => '物件閲覧履歴・お気に入り',
-
-    //C-Common-6
-    'no_condition_saved' => '検索条件は現在１つも保存されていません',
 
 ];

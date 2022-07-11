@@ -3,7 +3,7 @@
 @section('breadcrumbs')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.top_page')</a></li>
-        <li class="breadcrumb-item"><a href="{{route('company.register')}}">会員 （不動産業者） 登録申し込み</a></li>
+        <li class="breadcrumb-item"><a href="{{route('company.register')}}">会員 （不動産会社） 登録申し込み</a></li>
         <li class="breadcrumb-item active">{{ $page_title }}</li>
     </ol>
 @endsection
@@ -23,7 +23,7 @@
                     <!-- Company Name -->
                     <div id="form-group--name" class="row form-group">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
-                            <strong class="h5">会社名</strong>
+                            <strong class="h5">不動産会社名</strong>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                             <span>@{{companies.name}}</span>
