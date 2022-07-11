@@ -10,6 +10,7 @@ use App\Models\Cuisine;
 use App\Models\Station;
 // -----------------------------------------------------------------------------
 use App\Models\Property;
+use App\Models\Prefecture;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use App\Models\ContactUsType;
@@ -49,6 +50,8 @@ class PropertyController extends Controller {
         $data['cuisines'] = Cuisine::select('id', 'label_jp')->orderBy('id')->get();
         $data['transfer_price_options'] = TransferPriceOption::select('id', 'value', 'label_jp')->orderBy('id')->get();
         $data['page_title'] = __('物件一覧');
+
+        $data['prefectures'] = Prefecture::all();
 
         // Default value for search condition
         $searchCondition = [];

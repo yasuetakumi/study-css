@@ -9,8 +9,8 @@
 @section('content')
 <div class="row">
     <div class="col-md-4">
-        {{-- search history --}}
-        @include('frontend.property.component.search-history')
+        {{-- region --}}
+        @include('frontend.property.component.region')
 
         {{-- filter form --}}
         @include('frontend.property.component.filter')
@@ -35,6 +35,12 @@
 
     {{-- Modal Saved Conditions --}}
     <save-conditions></save-conditions>
+    {{-- Modal Region --}}
+    <prefecture-modal @click="handleOpenStationCity" :prefectures="items.prefectures"></prefecture-modal>
+
+    {{-- Modal Station City --}}
+    <station-city-modal v-if="items.prefectureSelected" :filters="items.filter" :prefecture="items.prefectureSelected"></station-city-modal>
+
 </div>
 @endsection
 
@@ -50,6 +56,8 @@
 @include('frontend._components.property_related_list')
 @include('frontend._components.email_search_preference')
 @include('frontend._components.save_conditions')
+@include('frontend._components.prefecture_modal')
+@include('frontend._components.station_city_modal')
 <script>
     // -------------------------------------------------------------------------
     // Vuex store - Centralized data
@@ -102,6 +110,8 @@
                 // Form result set here
                 // -------------------------------------------------------------
                 items: {
+                    prefectures: @json($prefectures),
+                    prefectureSelected: null,
                     user_id: null,
                     property_count: null,
                     property_data: [],
@@ -262,6 +272,9 @@
 
                 return searchCondition;
             },
+            prefectureSelected(){
+                return this.items.prefectureSelected;
+            }
             // -----------------------------------------------------------------
         },
         // ---------------------------------------------------------------------
@@ -607,7 +620,10 @@
             resetFilterQueryParams: function(){
                 this.searchCondition = [];
                 window.location.href = '/result';
-            }
+            },
+            handleOpenStationCity(id){
+                this.items.prefectureSelected = id;
+            },
             // -----------------------------------------------------------------
         }
         // ---------------------------------------------------------------------
