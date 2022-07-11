@@ -11,7 +11,7 @@
                             <div class="card-body">
                                 <ul class="list-multi-columns">
                                     <li v-for="prefecture in prefectures" :key="prefecture.id">
-                                        <a role="button" @click="openStationCity(prefecture.name)" type="button" data-toggle="modal" data-target="#stationCityModal" >@{{prefecture.display_name}}</a>
+                                        <a role="button" @click="openStationCity(prefecture.id)" type="button" data-toggle="modal" data-target="#stationCityModal" >@{{prefecture.display_name}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -51,8 +51,8 @@
             routeToPrefectureDetail(prefectureName){
                 return root_url + '/prefecture/' + prefectureName;
             },
-            openStationCity(prefectureName){
-                this.$emit('click', prefectureName);
+            openStationCity(prefectureId){
+                this.$emit('click', prefectureId);
             }
         },
     });

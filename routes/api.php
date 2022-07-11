@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function () {
     Route::get('select2Prefecture', 'API\ApiPrefectureController@seletc2Prefecture')->name('select2.prefecture');
     // City
     Route::get('select2city', 'API\ApiCityController@select2City')->name('select2.city');
+    Route::get('/city/getCityByPrefecture/{prefecture_id}', 'API\ApiCityController@getCityByPrefecture')->name('api.city.by.prefecture');
     // User Company
     Route::get('select2usercompany/{companyId?}', 'API\ApiUserCompanyController@select2UserCompany')->name('select2.usercompany');
     // Get Grand total Estimation
@@ -61,6 +62,8 @@ Route::prefix('v1')->group(function () {
 
     //Station
     Route::get('/station/getStationByStationLine/{station_line}/{prefecture_id}', 'API\ApiStationController@getStationByStationLine');
+    Route::get('/station/getStationByPrefecture/{prefecture_id}', 'API\ApiStationController@getStationByPrefecture')->name('api.station.by.prefecture');
+    Route::get('/station/getStationLineByPrefecture/{prefecture_id}', 'API\ApiStationController@getStationLineByPrefecture')->name('api.station.line.by.prefecture');
 
     //History
     Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');

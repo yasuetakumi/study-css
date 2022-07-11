@@ -13,4 +13,9 @@ class ApiCityController extends Controller
     {
         return Select2AjaxHelper::set(City::query(), 'id', 'display_name');
     }
+    public function getCityByPrefecture($id)
+    {
+        $cities = City::where('prefecture_id', $id)->withCount('properties')->get();
+        return response()->json($cities);
+    }
 }

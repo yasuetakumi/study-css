@@ -39,7 +39,7 @@
     <prefecture-modal @click="handleOpenStationCity" :prefectures="items.prefectures"></prefecture-modal>
 
     {{-- Modal Station City --}}
-    <station-city-modal :prefecture="items.prefectureSelected"></station-city-modal>
+    <station-city-modal v-if="items.prefectureSelected" :filters="items.filter" :prefecture="items.prefectureSelected"></station-city-modal>
 
 </div>
 @endsection
@@ -621,9 +621,9 @@
                 this.searchCondition = [];
                 window.location.href = '/result';
             },
-            handleOpenStationCity(name){
-                this.items.prefectureSelected = name;
-            }
+            handleOpenStationCity(id){
+                this.items.prefectureSelected = id;
+            },
             // -----------------------------------------------------------------
         }
         // ---------------------------------------------------------------------
