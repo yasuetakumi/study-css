@@ -10,13 +10,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column">
+                        <div>
+                            メールを記入してください。<br>
+                            <br>
+                            ご希望にマッチした新規物件物件ございましたらご記入頂いたメーアドレスに送ります。<br>
+                            <br>
+                        </div>
                         <label for="emailPreferences">メールアドレス：</label>
                         <input type="email" :class="validateEmail && value != null ? 'is-invalid' : '' " class="form-control" :value="value" @input="$emit('input', $event.target.value)" id="emailPreferences" placeholder="Enter email" aria-describedby="emailHelp">
-                        <span v-if="validateEmail && value != null" id="emailHelp" class="error invalid-feedback">Please enter valid email address</span>
+                        <span v-if="validateEmail && value != null" id="emailHelp" class="error invalid-feedback">有効なメールアドレスを入力してください</span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click="registerEmail" :disabled="disableButton">Register</button>
+                        <button type="button" class="btn btn-primary" @click="registerEmail" :disabled="disableButton">新着メールを受け取る</button>
                     </div>
                 </div>
             </div>
@@ -59,7 +65,7 @@
                 }
             },
             validateEmail: function() {
-                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
+                if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.value)) {
                     //email invalid
                     return false;
                 } else {
