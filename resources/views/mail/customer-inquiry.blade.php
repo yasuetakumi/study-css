@@ -9,10 +9,12 @@
 <body>
     <h3>Customer Inquiry</h3>
 
-    <p>Property ID : {{ $inquiries['property_id'] }}</p>
-    <p>Name : {{ $inquiries['name'] }}</p>
-    <p>Email Customer : {{ $inquiries['email'] }}</p>
-    <p>Note : {{ $inquiries['text'] }}</p>
+    <p>物件ID : {{ $inquiries['property_id'] }}</p>
+    <p>お問い合わせ種別 : {{$inquiries['contact_us_type_label']}}</p>
+    <p>ご担当者名 : {{ $inquiries['name'] }}</p>
+    <p>メールアドレス : {{ $inquiries['email'] }}</p>
+    <p>電話番号 : {{ $inquiries['phone'] ? $inquiries['phone'] : '-' }}</p>
+    <p>お問い合わせ内容 : {{ $inquiries['text'] }}</p>
 
     Thanks,<br>
     {{ config('app.name') }}

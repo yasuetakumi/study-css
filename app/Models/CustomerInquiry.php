@@ -31,6 +31,7 @@ class CustomerInquiry extends Model
 		'note',
 		'name',
 		'email',
+        'phone',
 		'company_name'
 	];
 

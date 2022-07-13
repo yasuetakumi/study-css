@@ -185,6 +185,7 @@ return [
     'inquiry_button' => 'お問い合わせボタン',
     'inquiry_type' => 'お問い合わせ種別',
     'inquiry_name' => '氏名',
+    'phone_number' => '電話番号',
 
     //B2
     'my_account' => 'マイアカウント',
