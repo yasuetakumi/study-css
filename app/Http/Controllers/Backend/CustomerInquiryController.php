@@ -37,7 +37,8 @@ class CustomerInquiryController extends Controller {
         $request->validate([
             'name'=> 'required|max:45',
             'email'=> 'required|email',
-            'text' => 'required',
+            'text' => 'required|max:2000',
+            'phone' => 'numeric|nullable',
         ]);
 
         // Get necessary data
@@ -52,6 +53,8 @@ class CustomerInquiryController extends Controller {
         // Compile request data
         $data = $request->all();
         $data['company_name'] = $property->user->company->company_name;
+        $data['contact_us_type_label'] = ContactUsType::find($request->contact_us_type_id)->label_jp;
+        $data['subject'] = $subjectToCustomer;
 
         $dataToCustomer = $data;
         $dataToCustomer['subject'] = $subjectToCustomer;

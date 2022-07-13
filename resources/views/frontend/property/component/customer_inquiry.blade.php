@@ -15,9 +15,10 @@
             </select>
         </div>
     </div>
-    @component('backend._components.input_text', ['name' => 'name', 'label' => __('label.name'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-    @component('backend._components.input_email', ['name' => 'email', 'label' => __('label.enterEmailAddress'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
-    @component('backend._components.input_textarea', ['name' => 'text', 'label' => __('label.comments'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
+    @component('backend._components.input_text', ['name' => 'name', 'placeholder' => 'ご担当者名を入力してください', 'label' => __('label.name'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
+    @component('backend._components.input_email', ['name' => 'email', 'placeholder' => 'メールアドレスを入力してください', 'label' => __('label.enterEmailAddress'), 'required' => 1, 'value' => '', 'isReadOnly' => false ]) @endcomponent
+    @component('backend._components.input_number', ['name' => 'phone', 'placeholder' => '電話番号を入力してください', 'label' => __('label.phone_number'), 'required' => 0, 'value' => '', 'isReadOnly' => false ]) @endcomponent
+    @component('backend._components.input_textarea', ['name' => 'text', 'placeholder' => 'お問い合わせ内容を入力してください', 'label' => __('label.comments'), 'required' => 1, 'value' =>'', 'isReadOnly' => false ]) @endcomponent
     <div class="row justify-content-center mt-4">
         <div class="col-12 text-left mt-4">
             <button id="inquiry" class="btn btn-primary">@lang('label.send_inquiry')</button>

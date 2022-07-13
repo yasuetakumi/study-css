@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactUsType extends Model
 {
-    const HOW_TO = 1;
-	const FORGOT_EMAIL = 101;
-	const PROPERTY_INQUIRY = 901;
+    const ASK_PROPERTY_DETAILS = 1;
+	const ASK_PROPERTY_ENVIRONMENT = 2;
+	const ASK_VISIT_PROPERTY = 3;
+    const OTHER = 4;
 
 	protected $table = 'contact_us_types';
 	public $incrementing = false;
