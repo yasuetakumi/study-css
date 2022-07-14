@@ -100,9 +100,9 @@ class PropertyController extends Controller
     public function index()
     {
         $data['page_title'] = __('label.property_list');
-        if(Auth::guard('user')->check()){
-            $data['page_title'] = __('label.property') . __('label.company') . __('label.list');
-        }
+        // if(Auth::guard('user')->check()){
+        //     $data['page_title'] = __('label.property') . __('label.company') . __('label.list');
+        // }
 
         return view('backend.property.index', $data);
     }
