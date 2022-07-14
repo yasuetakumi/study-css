@@ -41,7 +41,7 @@ return [
     'dashboard'              => 'ダッシュボード',
     'superAdmin'             => '特権管理者',
     'admin'                  => '管理者',
-    'company'                => '会社',
+    'company'                => '不動産会社',
     'createNew'              => '新規作成',
     'list'                   => '一覧',
     'add'                    => '新規作成',
