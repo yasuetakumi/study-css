@@ -113,10 +113,10 @@ return [
     'favorite_property'     => 'お気に入り',
 
     //A16
-    'company_approval_list' => '会社承認待ち一覧',
+    'company_approval_list' => '不動産会社承認待ち一覧',
 
     //A17
-    'approve_company' => '企業を承認する',
+    'approve_company' => '不動産会社を承認する',
 
     //C1
     'walking_distance_from_station' => '徒歩',
