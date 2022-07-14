@@ -9,7 +9,7 @@
 @endsection
 
 @section('form_title')
-    企業の情報確認
+    不動産会社の情報確認
 @endsection
 
 @section('content')
