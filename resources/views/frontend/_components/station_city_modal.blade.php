@@ -34,10 +34,13 @@
                                     <input type="hidden" name="name" :value="filterAffected.name">
                                     <input type="hidden" name="walking_distance" :value="filterAffected.walking_distance">
                                     <input type="hidden" name="floor_under[]" :value="filterAffected.undergrounds">
+                                    <input type="hidden" name="floor_above[]" :value="filterAffected.abovegrounds">
                                     <input type="hidden" name="property_preference[]" :value="filterAffected.preferences">
                                     <input type="hidden" name="property_type[]" :value="filterAffected.types">
                                     <input type="hidden" name="skeleton" :value="filterAffected.skeleton">
                                     <input type="hidden" name="furnished" :value="filterAffected.furnished">
+                                    <input type="hidden" name="transfer_price_min" :value="filterAffected.transfer_price_min">
+                                    <input type="hidden" name="transfer_price_max" :value="filterAffected.transfer_price_max">
 
                                     <div v-if="items.activeTab === 'city'">
                                         <template>

@@ -9,8 +9,8 @@
 @section('content')
 <div class="row">
     <div class="col-md-4">
-        {{-- region --}}
-        @include('frontend.property.component.region')
+        {{-- search history --}}
+        @include('frontend.property.component.search-history')
 
         {{-- filter form --}}
         @include('frontend.property.component.filter')
@@ -146,6 +146,8 @@
                     email_search_preference: null,
                     selectedIdFavorite: null,
                     walking_distance: null,
+                    isCitiesFilter: false,
+                    isStationsFilter: false,
                 },
                 // -------------------------------------------------------------
             };
@@ -239,6 +241,22 @@
                     Vue.delete(searchCondition, 'url');
                     Vue.delete(searchCondition, 'created_at');
 
+                    if(this.searchCondition.こだわり条件 === ''){
+                        Vue.delete(searchCondition, 'こだわり条件');
+                    }
+
+                    if(this.searchCondition.階数_地上 === ''){
+                        Vue.delete(searchCondition, '階数_地上');
+                    }
+
+                    if(this.searchCondition.階数_地下 === ''){
+                        Vue.delete(searchCondition, '階数_地下');
+                    }
+
+                    if(this.searchCondition.飲食店の種類 === ''){
+                        Vue.delete(searchCondition, '飲食店の種類');
+                    }
+
                     if(this.containsKey(searchCondition, '面積下限')){
                         Vue.set(searchCondition, '面積下限', searchCondition.surfaceMin);
                         Vue.delete(searchCondition, 'surfaceMin');
@@ -271,6 +289,22 @@
                 }
 
                 return searchCondition;
+            },
+            displayCitiesOrStations(){
+                let citiesOrStations = null;
+                if(this.searchCondition){
+                    if(this.searchCondition.市区町村){
+                        this.items.isCitiesFilter = true;
+                        this.items.isStationsFilter = false;
+                        citiesOrStations = this.searchCondition.市区町村;
+                    }
+                    else if(this.searchCondition.駅){
+                        this.items.isStationsFilter = true;
+                        this.items.isCitiesFilter = false;
+                        citiesOrStations = this.searchCondition.駅;
+                    }
+                }
+                return citiesOrStations;
             },
             prefectureSelected(){
                 return this.items.prefectureSelected;
