@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PropertyPreference extends Model
 {
+    const ROADSIDE = 1;
+    const PARKING = 2;
+    const SIGNBOARD = 3;
+    const LATEST = 4;
+
     protected $fillable = [
         'label_en',
         'label_jp'
