@@ -121,6 +121,7 @@ class PropertyController extends Controller {
     public function filter(Request $request, $toJson = false) {
         // Filter data
         $queryString = $request->all();
+        // dd($queryString);
         // Default data
         $withQuery = array();
         $filter = collect([]);
@@ -155,7 +156,12 @@ class PropertyController extends Controller {
         }
         if(isset($queryString['floor_under'])){
             if(is_array($queryString['floor_under'])){
-                $stringFloorUnder = implode(",", $queryString['floor_under']);
+                if($queryString['floor_under'][0] != '' || $queryString['floor_under'][0] != null){
+                    $stringFloorUnder = implode(",", $queryString['floor_under']);
+                } else {
+                    $stringFloorUnder = null;
+                }
+
             } else {
                 $stringFloorUnder = $queryString['floor_under'];
             }
@@ -163,7 +169,11 @@ class PropertyController extends Controller {
         }
         if(isset($queryString['floor_above'])){
             if(is_array($queryString['floor_above'])){
-                $stringFloorAbove = implode(",", $queryString['floor_above']);
+                if($queryString['floor_above'][0] != '' || $queryString['floor_above'][0] != null){
+                    $stringFloorAbove = implode(",", $queryString['floor_above']);
+                } else {
+                    $stringFloorAbove = null;
+                }
             } else {
                 $stringFloorAbove = $queryString['floor_above'];
             }
@@ -171,7 +181,11 @@ class PropertyController extends Controller {
         }
         if(isset($queryString['property_preference'])){
             if(is_array($queryString['property_preference'])){
-                $stringPropertyPref = implode(",", $queryString['property_preference']);
+                if($queryString['property_preference'][0] != '' || $queryString['property_preference'][0] != null){
+                    $stringPropertyPref = implode(",", $queryString['property_preference']);
+                } else {
+                    $stringPropertyPref = null;
+                }
             } else {
                 $stringPropertyPref = $queryString['property_preference'];
             }
@@ -180,7 +194,12 @@ class PropertyController extends Controller {
         }
         if(isset($queryString['property_type'])){
             if(is_array($queryString['property_type'])){
-                $stringPropertyType = implode(",", $queryString['property_type']);
+                // this check if property type index 0 is empty or not
+                if($queryString['property_type'][0] != '' || $queryString['property_type'][0] != null){
+                    $stringPropertyType = implode(",", $queryString['property_type']);
+                } else {
+                    $stringPropertyType = null;
+                }
             } else {
                 $stringPropertyType = $queryString['property_type'];
             }
@@ -288,7 +307,7 @@ class PropertyController extends Controller {
             $walkingDistance = WalkingDistanceFromStationOption::find((int) $filter['walking_distance']);
             $result['徒歩'] = $walkingDistance->label_jp;
         }
-        if(isset($filter['floor_under'])){
+        if(isset($filter['floor_under']) && !empty($filter['floor_under'])){
             $arrUnders = $filter['floor_under'];
             if(!is_array($filter['floor_under'])){
                 $arrUnders = explode(",", (int) $filter['floor_under']);
@@ -296,7 +315,7 @@ class PropertyController extends Controller {
             $underGrounds = NumberOfFloorsUnderGround::whereIn('value', $arrUnders)->pluck('label_jp')->join(', ');
             $result['階数_地上'] = $underGrounds;
         }
-        if(isset($filter['floor_above'])){
+        if(isset($filter['floor_above']) && !empty($filter['floor_above'])){
             $arrAboves = $filter['floor_above'];
             if(!is_array($filter['floor_above'])){
                 $arrAboves = explode(",", (int) $filter['floor_above']);
@@ -304,7 +323,7 @@ class PropertyController extends Controller {
             $aboveGrounds = NumberOfFloorsAboveGround::whereIn('value', $arrAboves)->pluck('label_jp')->join(', ');
             $result['階数_地下'] = $aboveGrounds;
         }
-        if(isset($filter['property_preference'])){
+        if(isset($filter['property_preference']) && !empty($filter['property_preference'])){
             $arrPreferences = $filter['property_preference'];
             if(!is_array($filter['property_preference'])){
                 $arrPreferences = explode(",", $filter['property_preference']);
@@ -312,7 +331,7 @@ class PropertyController extends Controller {
             $preferences = PropertyPreference::find($arrPreferences)->pluck('label_jp')->join(', ');
             $result['こだわり条件'] = $preferences;
         }
-        if(isset($filter['property_type'])){
+        if(isset($filter['property_type']) && !empty($filter['property_type'])){
             $arrPropertyTypes = $filter['property_type'];
             if(!is_array($filter['property_type'])){
                 $arrPropertyTypes = explode(",", $filter['property_type']);
@@ -322,17 +341,17 @@ class PropertyController extends Controller {
         }
 
         $skeletonOrFurnished = collect();
-        if(isset($filter['skeleton'])){
+        if(isset($filter['skeleton']) && !empty($filter['skeleton'])){
             $skeletonOrFurnished->push(Property::SKELETON_JP_LABEL);
         }
-        if(isset($filter['furnished'])){
+        if(isset($filter['furnished']) && !empty($filter['furnished'])){
             $skeletonOrFurnished->push(Property::FURNISHED_JP_LABEL);
         }
         if (count($skeletonOrFurnished)) {
             $result['スケルトン物件_居抜き物件'] = $skeletonOrFurnished->join(', ');
         }
 
-        if(isset($filter['cuisine'])){
+        if(isset($filter['cuisine']) && !empty($filter['cuisine'])){
             $arrCuisines = $filter['cuisine'];
             if(!is_array($filter['cuisine'])){
                 $arrCuisines = explode(",", $filter['cuisine']);

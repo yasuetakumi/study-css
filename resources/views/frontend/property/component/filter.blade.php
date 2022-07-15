@@ -16,6 +16,25 @@
         <input v-model="items.filter.from_prefecture" type="hidden" name="from_prefecture">
         <div class="card-body clearfix">
 
+             {{-- Region Section --}}
+            <div class="search-all mb-3">
+                <h6 class="border-left border-primary pl-2">地域</h6>
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <button data-toggle="modal" data-target="#prefectureModal" class="btn btn-primary text-right" type="button">地域選択</button>
+                    </div>
+                </div>
+                <ul class="mt-3">
+                    <li v-if="items.isCitiesFilter">
+                        市区町村 : @{{ displayCitiesOrStations }}
+                    </li>
+                    <li v-if="items.isStationsFilter">
+                        駅 : @{{ displayCitiesOrStations }}
+                    </li>
+                </ul>
+            </div>
+            {{-- End Region Section --}}
+
             {{-- Surface Area Filter--}}
             <div class="search-area mb-3">
                 <p class="border-left border-primary pl-2">@lang('label.surface_area')</p>
