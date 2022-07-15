@@ -185,7 +185,8 @@ return [
     'content_inquiry' => 'Content of Inquiry',
     'inquiry_button' => 'Inquiry Button',
     'inquiry_type' => 'Inquiry Type',
-    'inquiry_name' => 'Inquiry Name',
+    'inquiry_name' => 'Name',
+    'phone_number' => 'Phone Number',
 
     //B2
     'my_account' => 'My Account',
