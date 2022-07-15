@@ -1,6 +1,8 @@
 <div id="form-group" class="row form-group">
 
-    @include('backend._components._input_header',['label'=>$label, 'required'=>$required])
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+        <strong class="field-title">{{ $label }}</strong>
+    </div>
 
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-content">
         <div class="field-group clearfix">
