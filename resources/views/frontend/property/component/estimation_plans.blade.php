@@ -5,7 +5,9 @@
             <div class="col-12">
                 <div id="form-group--plans" class="row form-group">
 
-                    @include('backend._components._input_header',['label'=>__('label.design_categories'), 'required'=>true])
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                        <strong class="field-title">@lang('label.design_categories')</strong>
+                    </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                         <div class="field-group clearfix">
@@ -23,7 +25,9 @@
             <div class="col-12" v-if="designStyles && designStyles.length>0">
                 <div id="form-group--plans" class="row form-group">
 
-                    @include('backend._components._input_header',['label'=>__('label.desgin_styles'), 'required'=>true])
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                        <strong class="field-title">@lang('label.desgin_styles')</strong>
+                    </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                         <div class="field-group clearfix">

@@ -72,11 +72,11 @@
     @component('frontend._components.display_image', ['label' => __('label.image') . ' 9', 'value' => $item->image_9 ?? '']) @endcomponent
     @component('frontend._components.display_image', ['label' => __('label.image') . ' 10', 'value' => $item->image_10 ?? '']) @endcomponent
 
-    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 1', 'required' => null, 'value' => $item->image_360_1 ?? '']) @endcomponent
-    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 2', 'required' => null, 'value' => $item->image_360_2 ?? '']) @endcomponent
-    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 3', 'required' => null, 'value' => $item->image_360_3 ?? '']) @endcomponent
-    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 4', 'required' => null, 'value' => $item->image_360_4 ?? '']) @endcomponent
-    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 5', 'required' => null, 'value' => $item->image_360_5 ?? '']) @endcomponent
+    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 1', 'value' => $item->image_360_1 ?? '']) @endcomponent
+    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 2', 'value' => $item->image_360_2 ?? '']) @endcomponent
+    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 3', 'value' => $item->image_360_3 ?? '']) @endcomponent
+    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 4', 'value' => $item->image_360_4 ?? '']) @endcomponent
+    @component('frontend._components.display_image360', ['label' => __('label.image_360') . ' 5', 'value' => $item->image_360_5 ?? '']) @endcomponent
 
 
     @include('frontend.property.component.estimation_plans')
