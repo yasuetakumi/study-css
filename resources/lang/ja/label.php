@@ -184,7 +184,7 @@ return [
     'content_inquiry' => 'お問い合わせ内容',
     'inquiry_button' => 'お問い合わせボタン',
     'inquiry_type' => 'お問い合わせ種別',
-    'inquiry_name' => '氏名',
+    'inquiry_name' => 'ご担当者名',
     'phone_number' => '電話番号',
 
     //B2
