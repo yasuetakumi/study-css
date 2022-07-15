@@ -4,11 +4,12 @@ namespace App\Http\Controllers\API;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-use App\Http\Controllers\Controller;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
-use App\Models\Property;
+use App\Models\PropertyPreference;
+use App\Http\Controllers\Controller;
 use App\Models\PropertyPublicationStatus;
 use App\Models\WalkingDistanceFromStationOption;
 // -----------------------------------------------------------------------------
@@ -159,6 +160,10 @@ class ApiPropertyController extends Controller
 
         // Filter property preference
         if(isset($filter->property_preference)){
+            // now - 48 hour
+            $now = Carbon::now();
+            $now->subHours(48);
+
             $arrPreferences = $filter->property_preference;
             // check if request is not array, then convert to array
             if(!is_array($filter->property_preference)){
@@ -167,9 +172,18 @@ class ApiPropertyController extends Controller
             foreach($arrPreferences as $value){
                 array_push($selectedPropertyPreference, (int) $value);
             }
-            $query->whereHas('properties_property_preferences', function($q) use($selectedPropertyPreference) {
-                $q->whereIn('property_preferences_id', $selectedPropertyPreference);
-            });
+            if(in_array(PropertyPreference::LATEST, $selectedPropertyPreference)){
+                $query->whereHas('properties_property_preferences', function($q) use($selectedPropertyPreference) {
+                    $excludeLatest = array_diff($selectedPropertyPreference, [PropertyPreference::LATEST]);
+                    $q->whereIn('property_preferences_id', $excludeLatest);
+                })->orWhere('created_at', '>=', $now);
+
+            } else {
+                $query->whereHas('properties_property_preferences', function($q) use($selectedPropertyPreference) {
+                    $q->whereIn('property_preferences_id', $selectedPropertyPreference);
+                });
+            }
+
         }
         // return $query->get();
 
