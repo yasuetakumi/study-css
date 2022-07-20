@@ -333,7 +333,7 @@ class PropertyController extends Controller
         $data['image_7']     = ImageHelper::update( $request->file('image_7'), $edit->image_7, $data['removable_image']['image_7']);
         $data['image_8']     = ImageHelper::update( $request->file('image_8'), $edit->image_8, $data['removable_image']['image_8']);
         $data['image_9']     = ImageHelper::update( $request->file('image_9'), $edit->image_9, $data['removable_image']['image_9']);
-        $data['image_10']    = ImageHelper::update( $request->file('image_10'), $edit->image_1, $data['removable_image']['image_10']);
+        $data['image_10']    = ImageHelper::update( $request->file('image_10'), $edit->image_10, $data['removable_image']['image_10']);
 
         $data['image_360_1']     = ImageHelper::update( $request->file('image_360_1'), $edit->image_360_1, $data['removable_image']['image_360_1']);
         $data['image_360_2']     = ImageHelper::update( $request->file('image_360_2'), $edit->image_360_2, $data['removable_image']['image_360_2']);
