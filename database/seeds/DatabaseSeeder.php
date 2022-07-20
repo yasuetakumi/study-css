@@ -12,18 +12,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(){
         /** Clear Uploads Folder **/
-        $path = public_path('uploads');
-        $file = new Filesystem;
-        if (!$file->exists($path)) {
-            $file->makeDirectory($path);
+    //     $path = public_path('uploads');
+    //     $file = new Filesystem;
+    //     if (!$file->exists($path)) {
+    //         $file->makeDirectory($path);
 
-        // $this->call(DesignStylesTableSeeder::class);
-    }
-        $file->cleanDirectory( public_path('uploads') );
+    //     // $this->call(DesignStylesTableSeeder::class);
+    // }
+    //     $file->cleanDirectory( public_path('uploads') );
 
-        /** Clear Storage Files, works on s3 driver **/
-        $storageFiles =   Storage::allFiles();
-        Storage::delete($storageFiles);
+    //     /** Clear Storage Files, works on s3 driver **/
+    //     $storageFiles =   Storage::allFiles();
+    //     Storage::delete($storageFiles);
 
         $this->call(AdminRoleSeeder::class);
         $this->call(AdminSeeder::class);
