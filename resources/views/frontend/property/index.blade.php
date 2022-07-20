@@ -146,8 +146,6 @@
                     email_search_preference: null,
                     selectedIdFavorite: null,
                     walking_distance: null,
-                    isCitiesFilter: false,
-                    isStationsFilter: false,
                 },
                 // -------------------------------------------------------------
             };
@@ -290,21 +288,30 @@
 
                 return searchCondition;
             },
-            displayCitiesOrStations(){
-                let citiesOrStations = null;
+            displayCitiesSelected(){
                 if(this.searchCondition){
                     if(this.searchCondition.市区町村){
-                        this.items.isCitiesFilter = true;
-                        this.items.isStationsFilter = false;
-                        citiesOrStations = this.searchCondition.市区町村;
+                        return this.searchCondition.市区町村;
                     }
-                    else if(this.searchCondition.駅){
-                        this.items.isStationsFilter = true;
-                        this.items.isCitiesFilter = false;
-                        citiesOrStations = this.searchCondition.駅;
+                    else {
+                        return false;
                     }
+                } else {
+                    return false;
                 }
-                return citiesOrStations;
+
+            },
+            displayStationsSelected(){
+                if(this.searchCondition){
+                    if(this.searchCondition.駅){
+                        return this.searchCondition.駅;
+                    }
+                    else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             },
             prefectureSelected(){
                 return this.items.prefectureSelected;

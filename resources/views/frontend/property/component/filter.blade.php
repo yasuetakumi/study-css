@@ -25,11 +25,11 @@
                     </div>
                 </div>
                 <ul class="mt-3">
-                    <li v-if="items.isCitiesFilter">
-                        市区町村 : @{{ displayCitiesOrStations }}
+                    <li v-if="displayCitiesSelected">
+                        市区町村 : @{{ displayCitiesSelected }}
                     </li>
-                    <li v-if="items.isStationsFilter">
-                        駅 : @{{ displayCitiesOrStations }}
+                    <li v-if="displayStationsSelected">
+                        駅 : @{{ displayStationsSelected }}
                     </li>
                 </ul>
             </div>
