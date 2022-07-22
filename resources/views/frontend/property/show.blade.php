@@ -38,10 +38,10 @@
     @component('frontend._components.text_label', ['label' => __('label.restaurant_type'), 'value' => $item->property_type_id ? $item->property_type->label_jp : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.structure'), 'value' => $item->structure_id ? $item->structure->label_jp : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.deposit'), 'value' => $item->deposit_amount ? toMan($item->deposit_amount, true) : '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.monthly_maintaner'), 'value' => $item->monthly_maintenance_fee ? toMan($item->monthly_maintenance_fee, true) : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.monthly_maintaner'), 'value' => $item->monthly_maintainance_fee ? toMan($item->monthly_maintainance_fee, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.repayment_conditions'), 'value' => $item->repayment_conditions ?? '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.year_built'), 'value' => $item->date_built ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.renewal_fee'), 'value' => $item->renewal_fee ? number_format($item->renewal_fee) . '円': '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.renewal_fee'), 'value' => $item->renewal_fee ? toMan($item->renewal_fee, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.contract_length'), 'value' => $item->contract_length_in_months  ? $item->contract_length_in_months . 'ヵ月' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.moving_fee'), 'value' => $item->special_moving_fee ? toMan($item->special_moving_fee, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.business_terms'), 'value' => $item->business_terms_id ?  $item->business_term->label_jp : ''])@endcomponent
