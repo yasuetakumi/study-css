@@ -1,4 +1,4 @@
-<div class="px-1 mt-3 mb-3" v-if="getLikeProperty" >
+<div class="px-1 mt-3 mb-3" v-if="list_favorite" >
 
     <h5 class="mb-3">
         最近お気に入りに追加した物件
