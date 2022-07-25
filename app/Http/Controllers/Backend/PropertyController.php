@@ -220,7 +220,6 @@ class PropertyController extends Controller
         $data['special_moving_fee'] = fromMan($data['special_moving_fee']);
         $data['interior_transfer_price'] = fromMan($data['interior_transfer_price']);
         $data['monthly_maintainance_fee'] = fromMan($data['monthly_maintainance_fee']);
-        $data['renewal_fee'] = fromMan($data['renewal_fee']);
 
 
         $feature = new Property();
@@ -351,6 +350,11 @@ class PropertyController extends Controller
         // change to meter and yen before update
         $data['surface_area'] = fromTsubo($data['surface_area']);
         $data['rent_amount'] = fromMan($data['rent_amount']);
+        // change to yen before save
+        $data['deposit_amount'] = fromMan($data['deposit_amount']);
+        $data['special_moving_fee'] = fromMan($data['special_moving_fee']);
+        $data['interior_transfer_price'] = fromMan($data['interior_transfer_price']);
+        $data['monthly_maintainance_fee'] = fromMan($data['monthly_maintainance_fee']);
 
         $edit->update($data);
 
