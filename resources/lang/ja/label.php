@@ -73,7 +73,7 @@ return [
     'post_code'              => '郵便番号',
     'address'                => '住所',
     'phone'                  => '電話番号',
-    'company_name'           => '不動産会社名',
+    'company_name'           => '会社名',
     'company_id'           => '会社ID',
     'company_info'           => '会社情報',
     'in_charge_name'         => '担当者名',
@@ -148,7 +148,7 @@ return [
     'address' => '住所',// Joineed address. Use this on properrt list
     'prefecture' => '都道府県',
     'cities' => '市町村区',
-    'location' => 'その他住所（町名・番地・ビル）', // "other description for address"
+    'location' => 'その他住所（町名・番地・建物名）', // "other description for address"
     'surface_area' => '面積',
     'surface_area_meter' => '面積（㎡）',
     'surface_area_tsubo' => '面積（坪）',
@@ -187,7 +187,7 @@ return [
     'content_inquiry' => 'お問い合わせ内容',
     'inquiry_button' => 'お問い合わせボタン',
     'inquiry_type' => 'お問い合わせ種別',
-    'inquiry_name' => 'ご担当者名',
+    'inquiry_name' => 'ご氏名',
     'phone_number' => '電話番号',
 
     //B2
@@ -241,5 +241,5 @@ return [
     'property_history' => '物件閲覧履歴・お気に入り',
 
     //C-Common-6
-    'no_condition_saved' => '検索条件は現在１つも保存されていません',
+    'no_condition_saved' => '検索条件は現在1つも保存されていません',
 ];

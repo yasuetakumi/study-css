@@ -20,7 +20,7 @@
                     <div class="modal-header bg-white mb-3">
                         <div class="d-flex flex-grow-1 justify-content-between">
                             <h5 class="mb-0" id="modalSearchConditionTitle">希望物件：マッチングサービス</h5>
-                            <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大１０件</p>
+                            <p class="mb-0"><span class="text-primary">@{{totalSavedSearchCondition}}</span>件の保存条件があります/最大10件</p>
                         </div>
                         <a role="button" id="btnCloseModal" data-dismiss="modal" aria-label="Close" class="ml-3 px-2" style="cursor: pointer;">
                             <span aria-hidden="true"><i class="fas fa-2x fa-times"></i></span>

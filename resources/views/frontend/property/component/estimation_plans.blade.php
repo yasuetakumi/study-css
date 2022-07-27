@@ -25,7 +25,7 @@
             <div class="col-12" v-if="designStyles && designStyles.length>0">
                 <div id="form-group--plans" class="row form-group">
 
-                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header" style="align-self:flex-start;">
                         <strong class="field-title">@lang('label.desgin_styles')</strong>
                     </div>
 

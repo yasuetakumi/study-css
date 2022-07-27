@@ -8,7 +8,7 @@
 @endsection
 
 @section('form_title')
-    入力フォーム
+    会社情報
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
                     <!-- Company Name -->
                     <div id="form-group--name" class="row form-group">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
-                            <strong class="h5">不動産会社名</strong>
+                            <strong class="h5">会社名</strong>
                             <span class="label-attach required">必須</span>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
@@ -595,7 +595,7 @@
                         vm.companies.city       = data.city + data.local;
 
                         $("#input-prefecture").val(data.prefecture).trigger('change');
-                        
+
                         // Run re-validation
                         checkSelect2Class();
                     }
