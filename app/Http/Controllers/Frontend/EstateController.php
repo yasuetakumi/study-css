@@ -31,7 +31,7 @@ class EstateController extends Controller
     //Company User Registration Page C15
     public function create(Request $request){
         $data = $request->all();
-        $data['page_title']     = '会員 （不動産会社） 登録申し込み';
+        $data['page_title']     = '不動産会社 登録申し込み';
         $data['form_action']    = route('company.confirm');
 
         // options for vue select 2 options
