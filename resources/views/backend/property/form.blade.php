@@ -115,7 +115,7 @@
         @component('backend._components.input_date_picker', ['name' => 'date_built', 'label' => __('label.year_built'), 'required' => null, 'value' => $item->date_built ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         {{-- save and display as man --}}
         @component('backend._components.input_text', ['name' => 'renewal_fee', 'label' => __('label.renewal_fee') . '(円)', 'required' => null, 'value' => $item->renewal_fee ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'contract_length_in_months', 'label' => __('label.contract_length') . ' (月)', 'required' => null, 'value' => $item->contract_length_in_months ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        @component('backend._components.input_number', ['name' => 'contract_length_in_months', 'label' => __('label.contract_length') . ' (ヶ月)', 'required' => null, 'value' => $item->contract_length_in_months ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_number', ['name' => 'special_moving_fee', 'label' => __('label.moving_fee') . '(万)', 'required' => null, 'value' => $page_type == 'create' ? '' : toMan($item->special_moving_fee), 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_select', ['name' => 'business_terms_id', 'options' => $business_terms, 'label' => __('label.business_terms'), 'required' => null, 'value' => $item->business_terms_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_text_editor', ['name' => 'comment', 'label' => __('label.comments'), 'required' => null, 'value' => $item->comment ?? '', 'isReadOnly' => $disableForm ]) @endcomponent

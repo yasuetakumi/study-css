@@ -165,7 +165,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview" id="tree_news">
+                {{-- <li class="nav-item has-treeview" id="tree_news">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-newspaper"></i>
                         <p> @lang('label.news') <i class="right fas fa-angle-left"></i>
@@ -206,7 +206,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 @endif
 
