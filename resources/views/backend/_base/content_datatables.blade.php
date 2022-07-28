@@ -224,7 +224,7 @@
                 "dom": 'lrtip', // explain > https://datatables.net/reference/option/dom
                 "ajax": "{{ url()->current() . "/json" }}",
                 "columnDefs": [
-                    {"width": "10px", "targets": 0},
+                    {"width": "60px", "targets": 0},
                 ],
                 "columns": column,
                 @if(App::isLocale('ja'))

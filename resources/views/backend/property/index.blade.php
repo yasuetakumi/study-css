@@ -29,10 +29,10 @@
 @endsection
 
 @section('content')
-    <th data-col="id">ID</th>
-    <th data-col="user.display_name">@if(Request::is('company/*'))@lang('label.administrator') @else @lang('label.name') @endif </th>
+    <th data-col="id">@lang('label.in_charge_id')</th>
+    <th data-col="user.display_name">@if(Request::is('company/*'))@lang('label.administrator') @else @lang('label.in_charge_name') @endif </th>
     <th data-col="postcode.postcode">@lang('label.postcode')</th>
-    <th data-col="location">@lang('label.location')</th>
+    <th data-col="prefecture_city_location">@lang('label.address')</th>
     <th data-col="man">@lang('label.rent_amount')</th>
     <th data-col="tsubo">@lang('label.surface_area')</th>
     <th data-col="updated_at">@lang('label.last_update')</th>
