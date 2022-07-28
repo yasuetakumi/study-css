@@ -188,6 +188,7 @@ class PropertyController extends Controller
         }
 
         //return $data;
+        $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
         $data['thumbnail_image_main']   = FileHelper::upload( $request->file('thumbnail_image_main'));
 
         $data['thumbnail_image_1']  = ImageHelper::upload( $request->file('thumbnail_image_1'));
@@ -323,7 +324,7 @@ class PropertyController extends Controller
         }
 
         $edit = Property::find($id);
-
+        $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
 
         $data['thumbnail_image_1']  = ImageHelper::update( $request->file('thumbnail_image_1'), $edit->thumbnail_image_1, $data['removable_image']['thumbnail_image_1']);
