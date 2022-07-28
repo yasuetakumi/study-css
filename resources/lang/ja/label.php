@@ -219,6 +219,10 @@ return [
     'buy_points' => 'ポイント購入',
     'charge_points' => 'ポイントをチャージする',
 
+    // B21
+    'in_charge_id' => '担当者ID',
+    'in_charge_name' => '担当者名',
+
     // C5
     'underground' => '地下',
 

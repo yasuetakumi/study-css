@@ -89,6 +89,9 @@ class PropertyController extends Controller
                                                     $q->where('postcode', 'like', '%'.$keyword.'%');
                                                 });
                                             })
+                                            ->addColumn('prefecture_city_location', function(Property $property){
+                                                return $property->prefecture->display_name.' '.$property->city->display_name. ' '.$property->location;
+                                            })
                                             ->toJson();
 
         }

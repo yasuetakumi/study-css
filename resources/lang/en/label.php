@@ -217,6 +217,10 @@ return [
     'buy_points' => 'Buy Points',
     'charge_points' => 'Charge Points',
 
+    // B21
+    'in_charge_id' => 'In Charge ID',
+    'in_charge_name' => 'In Charge Name',
+
     // C5
     'underground' => 'Underground',
 
