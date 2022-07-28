@@ -15,6 +15,7 @@ use App\Models\Station;
 use App\Models\Structure;
 use App\Models\SurfaceAreaOption;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use TsuboHelper;
@@ -164,6 +165,14 @@ class Property extends Model
     public function publication_status_period()
     {
         return $this->hasMany(PropertyPublicationStatusPeriod::class, 'property_id');
+    }
+
+    public function getDateBuiltYearAttribute()
+    {
+        if($this->date_built) {
+            return Carbon::parse($this->date_built)->format('Y');
+        }
+        return null;
     }
 
     public function scopeRangeArea($query, $min, $max, $column){

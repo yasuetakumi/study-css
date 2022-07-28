@@ -20,6 +20,12 @@
         $agencyId = Auth::guard('user')->user()->belong_company_id;
         $isCompanyLogin = true;
     }
+    $year100ago = date('Y') - 100;
+    $year100later = date('Y') + 100;
+    $optionsYears = array();
+    for($i = $year100ago; $i <= $year100later; $i++){
+        $optionsYears[$i] = $i;
+    }
 
 @endphp
 @extends('backend._base.content_form')
@@ -112,7 +118,8 @@
         @component('backend._components.input_number', ['name' => 'deposit_amount', 'label' => __('label.deposit') . '(万)', 'required' => null, 'value' => $page_type == 'create' ? '' : toMan($item->deposit_amount), 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_number', ['name' => 'monthly_maintainance_fee', 'label' => __('label.monthly_maintaner') . '(万)', 'required' => null, 'value' => $page_type == 'create' ? '' : toMan($item->monthly_maintainance_fee), 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_text', ['name' => 'repayment', 'label' => __('label.repayment_conditions'), 'required' => null, 'value' => $item->repayment ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        @component('backend._components.input_date_picker', ['name' => 'date_built', 'label' => __('label.year_built'), 'required' => null, 'value' => $item->date_built ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        {{-- @component('backend._components.input_date_picker', ['name' => 'date_built', 'label' => __('label.year_built'), 'required' => null, 'value' => $item->date_built ?? '', 'isReadOnly' => $disableForm ]) @endcomponent --}}
+        @component('backend._components.input_select', ['name' => 'date_built', 'label' => __('label.year_built'), 'required' => null, 'options' => $optionsYears, 'value' => $item->date_built_year ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         {{-- save and display as man --}}
         @component('backend._components.input_text', ['name' => 'renewal_fee', 'label' => __('label.renewal_fee') . '(円)', 'required' => null, 'value' => $item->renewal_fee ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend._components.input_number', ['name' => 'contract_length_in_months', 'label' => __('label.contract_length') . ' (ヶ月)', 'required' => null, 'value' => $item->contract_length_in_months ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
