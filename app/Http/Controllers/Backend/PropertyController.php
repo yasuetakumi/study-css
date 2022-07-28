@@ -127,7 +127,7 @@ class PropertyController extends Controller
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
-        $data['page_title'] = __('label.add') . __('label.property');
+        $data['page_title'] = __('label.new_property_create');
         $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
@@ -263,7 +263,7 @@ class PropertyController extends Controller
         $data['property_types'] = PropertyType::pluck('label_jp', 'id')->all();
         $data['structures'] = Structure::pluck('label_jp', 'id')->all();
         $data['business_terms'] = BusinessTerm::pluck('label_jp', 'id')->all();
-        $data['page_title'] = __('label.edit') . __('label.property');
+        $data['page_title'] = __('label.property_editing');
         $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
 
