@@ -36,7 +36,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     // })->middleware('guest');
 
     Route::get('/auth-check', function(){
-        dd(Auth::guard("web")->check());
+        dd(Auth::guard("user")->check());
         //dd(Auth::guard("user")->user()->toArray());
     });
 
@@ -157,6 +157,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
             Route::get('payment', 'Backend\CompanyPaymentController@edit')->name('company.payment.edit');
             Route::put('payment', 'Backend\CompanyPaymentController@update')->name('company.payment.update');
             Route::post('payment', 'Backend\CompanyPaymentController@store')->name('company.payment.store');
+            Route::get('update-status/{propertyId}', 'Backend\PropertyController@updatePublicationStatus')->name('company.publication.status');
         });
     });
 
