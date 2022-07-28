@@ -115,6 +115,11 @@ return [
     'browsing_history'      => '物件閲覧履歴',
     'favorite_property'     => 'お気に入り',
 
+    // A13 / A14 Property Form
+    'property_editing' => '物件編集',
+    'new_property_create' => '物件の新規作成',
+
+
     //A16
     'company_approval_list' => '不動産会社承認待ち一覧',
 
@@ -140,7 +145,7 @@ return [
 
     //D1 Property
     'plans' => 'ジャンルごとの坪プラン設定',
-    'property' => '物件一覧',
+    'property' => '物件',
     'property_list' => '物件一覧',
     'real_estate_agent_in_charge' => '物件管理者',
     'real_estate_agency' => '物件管理会社',

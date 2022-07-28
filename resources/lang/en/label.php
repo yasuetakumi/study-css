@@ -113,6 +113,10 @@ return [
     'browsing_history'      => 'History',
     'favorite_property'     => 'Favorite',
 
+    // A13 / A14 Property Form
+    'property_editing' => 'Property Editing',
+    'new_property_create' => 'New Property Create',
+
     //A16
     'company_approval_list' => 'Company Approval List',
 
