@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\BusinessTerm;
+use TsuboHelper;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Cuisine;
-use App\Models\NumberOfFloorsAboveGround;
-use App\Models\NumberOfFloorsUnderGround;
+use App\Models\Station;
 use App\Models\Postcode;
+use App\Models\Structure;
 use App\Models\Prefecture;
-use App\Models\PropertyPreference;
+use App\Models\BusinessTerm;
 use App\Models\PropertyType;
 use App\Models\RentPriceOption;
-use App\Models\Station;
-use App\Models\Structure;
 use App\Models\SurfaceAreaOption;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Models\PropertyPreference;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\NumberOfFloorsAboveGround;
+use App\Models\NumberOfFloorsUnderGround;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use TsuboHelper;
 
 class Property extends Model
 {
@@ -81,6 +82,16 @@ class Property extends Model
         'image_360_4',
         'image_360_5'
     ];
+
+    // Defaultly return property has publication_status_id = 2 (Published)
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('publication_status', function (Builder $builder) {
+            $builder->where('publication_status_id',  PropertyPublicationStatus::ID_PUBLISHED);
+        });
+    }
 
     public function postcode()
     {
