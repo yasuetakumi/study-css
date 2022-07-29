@@ -76,6 +76,10 @@ class PropertyController extends Controller {
         $data['item']       = Property::with(['city', 'postcode', 'user.company', 'prefecture', 'property_type', 'structure', 'business_term', 'cuisine', 'property_plans.plan' => function($query){
             $query->select('id', 'display_name', 'design_category_id');
         }])->find($id);
+        // if property not found or publication status is not published, redirect to 404 page
+        if(empty($data['item'])){
+            abort(404);
+        }
         // return $data['item'];
         $data['page_title'] = __('label.property_detail');
         $categories =  [

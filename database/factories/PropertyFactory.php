@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\City;
 use App\Models\Cuisine;
 use App\Models\Prefecture;
+use App\Models\PropertyPublicationStatus;
 use App\Models\PropertyType;
 use Faker\Generator as Faker;
 use App\Models\RentPriceOption;
@@ -21,6 +22,7 @@ $factory->define(\App\Models\Property::class, function (Faker $faker) {
         'prefecture_id' => $prefecture_id,
         'city_id' => City::where('prefecture_id', $prefecture_id)->pluck('id')->random(),
         'location' => $faker->city,
+        'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
         'surface_area'=> fromTsubo(rand(15,29)), //base on plan.design_category_id 1,2,3,4 has area tsubo 15 - 29, for matching between property.surface_area and property_plans.plan_id
         'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
         'number_of_floors_under_ground' => rand(0,7),

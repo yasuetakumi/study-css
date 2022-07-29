@@ -12,6 +12,7 @@ use Illuminate\Database\Seeder;
 use App\Models\SurfaceAreaOption;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use App\Models\PropertyPublicationStatus;
 
 class PropertySeeder extends Seeder
 {
@@ -49,6 +50,7 @@ class PropertySeeder extends Seeder
                     'prefecture_id' => $prefecture_id,
                     'city_id' => 12254,
                     'location' => $faker->city,
+                    'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
                     'surface_area'=> $i==0 ? 50 : $surfaceArea[array_rand($surfaceArea)],
                     'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
                     'number_of_floors_under_ground' => rand(0,7),
