@@ -81,7 +81,8 @@ class PropertyController extends Controller {
             abort(404);
         }
         // return $data['item'];
-        $data['page_title'] = __('label.property_detail');
+        $locationCityTitle = $data['item']->location . 'の店舗物件情報 (' . $data['item']->city->display_name . ')';
+        $data['page_title'] = $locationCityTitle;
         $categories =  [
             [
                 'value' => Cuisine::IZAKAYA,
