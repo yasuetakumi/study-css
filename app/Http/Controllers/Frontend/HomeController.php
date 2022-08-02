@@ -36,7 +36,7 @@ class HomeController extends Controller
 
         // Prefecture and property
         $data['prefecture'] = Prefecture::where('name', $prefecture)->first();
-        $data['properties'] = Property::where('prefecture_id', $data['prefecture']->id)->get();
+        $data['properties'] = Property::where('prefecture_id', $data['prefecture']->id)->published()->get();
 
         // City belongs to prefecture, and count property belongs to city
         $data['cities'] = City::withCount('properties')->where('prefecture_id', $data['prefecture']->id)->get();

@@ -83,15 +83,6 @@ class Property extends Model
         'image_360_5'
     ];
 
-    // Defaultly return property has publication_status_id = 2 (Published)
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope('publication_status', function (Builder $builder) {
-            $builder->where('publication_status_id',  PropertyPublicationStatus::ID_PUBLISHED);
-        });
-    }
 
     public function postcode()
     {
@@ -184,6 +175,11 @@ class Property extends Model
             return Carbon::parse($this->date_built)->format('Y');
         }
         return null;
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED);
     }
 
     public function scopeRangeArea($query, $min, $max, $column){

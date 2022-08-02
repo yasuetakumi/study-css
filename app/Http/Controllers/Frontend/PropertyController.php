@@ -75,7 +75,7 @@ class PropertyController extends Controller {
     {
         $data['item']       = Property::with(['city', 'postcode', 'user.company', 'prefecture', 'property_type', 'structure', 'business_term', 'cuisine', 'property_plans.plan' => function($query){
             $query->select('id', 'display_name', 'design_category_id');
-        }])->find($id);
+        }])->published()->find($id);
         // if property not found or publication status is not published, redirect to 404 page
         if(empty($data['item'])){
             abort(404);
@@ -110,6 +110,7 @@ class PropertyController extends Controller {
         $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
         $data['form_action_inquiry'] = route('enduser.inquiry.store');
         $data['property_related'] = Property::with(['city', 'property_stations.station'])
+                ->published()
                 ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
                 ->where('city_id', $data['item']->city_id)
                 ->where('id', '!=', $data['item']->id)
