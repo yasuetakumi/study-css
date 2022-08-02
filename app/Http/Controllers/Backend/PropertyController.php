@@ -438,6 +438,7 @@ class PropertyController extends Controller
         if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
             $property->update([
                 'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
+                'publication_date' => Carbon::now(),
             ]);
         } else {
             $property->update([
