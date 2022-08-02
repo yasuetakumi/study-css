@@ -15,6 +15,7 @@ class ApiPropertyHistoryController extends Controller
             $data = Property::with(['city','cuisine','property_stations.station.station_line', 'property_stations' => function($q){
                 $q->orderBy('distance_from_station', 'ASC');
             }])
+            ->published()
             ->whereIn('id', $property_id)
             ->orderByRaw('FIELD (id, ' . implode(', ', array_filter($property_id)) . ') DESC')
             ->get();
