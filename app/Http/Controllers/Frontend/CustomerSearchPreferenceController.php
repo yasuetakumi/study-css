@@ -88,10 +88,10 @@ class CustomerSearchPreferenceController extends Controller
         try {
             $customer = new CustomerSearchPreference();
             $customer->customer_email = $data['customer_email'];
-            $customer->is_email_enabled = CustomerSearchPreference::DISABLE_EMAIL;
+            $customer->is_email_enabled = CustomerSearchPreference::ENABLE_EMAIL;
 
-            $customer->surface_min = isset($data['面積下限']) ? (int) filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT) : '';
-            $customer->surface_max = isset($data['面積上限']) ? (int) filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT) : '';
+            $customer->surface_min = isset($data['面積下限']) ? (int) toTsubo(filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT)) : '';
+            $customer->surface_max = isset($data['面積上限']) ? (int) toTsubo(filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT)) : '';
             $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : '';
             $customer->freetext = isset($data['フリーワード']) ? $data['フリーワード'] : null;
@@ -156,6 +156,6 @@ class CustomerSearchPreferenceController extends Controller
             $response = 'failed';
             return response()->json($e->getMessage());
         }
-        
+
     }
 }
