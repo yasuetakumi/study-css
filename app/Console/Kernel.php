@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendEmailOfNewPublishedProperty;
+use App\Console\Commands\CheckRemainingPublishDayAndBillClient;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +28,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command(SendEmailOfNewPublishedProperty::class)->dailyAt('19:00');
+        $schedule->command(CheckRemainingPublishDayAndBillClient::class)->dailyAt('18:55');
     }
 
     /**

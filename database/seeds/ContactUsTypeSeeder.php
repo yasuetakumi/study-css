@@ -21,22 +21,29 @@ class ContactUsTypeSeeder extends Seeder
         $ContactUsType->insert([
             [
                 'id'        =>  1,
-                'label_en'  => 'How to use',
-			    'label_jp'  =>  '使い方に関して',
+                'label_en'  =>  'Ask Property Detail',
+			    'label_jp'  =>  '詳細条件について',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'id'        =>  101,
-                'label_en'  => 'If you forget your email address ',
-			    'label_jp'  =>  'メールアドレスを忘れた場合',
+                'id'        =>  2,
+                'label_en'  =>  'Ask Property Environment',
+			    'label_jp'  =>  '物件周囲の環境について',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'id'        =>  901,
-                'label_en'  => 'Property inquiry ',
-			    'label_jp'  =>  '物件問い合わせ',
+                'id'        =>  3,
+                'label_en'  =>  'Ask Visit Property',
+			    'label_jp'  =>  '内見希望',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id'        =>  4,
+                'label_en'  =>  'Other',
+			    'label_jp'  =>  'その他',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]

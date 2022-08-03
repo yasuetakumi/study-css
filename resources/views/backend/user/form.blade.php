@@ -2,9 +2,12 @@
 
 @section('breadcrumbs')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{route('dashboard')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.dashboard')</a></li>
-        <li class="breadcrumb-item"><a href="{{route('admin.company.index')}}">@lang('label.company')</a></li>
-        <li class="breadcrumb-item"><a href="{{route('admin.company.user.index', $parent_company_id)}}">@lang('label.user')</a></li>
+        @if(Auth::user()->admin_role_id == \App\Models\AdminRole::ROLE_SUPER_ADMIN)
+            <li class="breadcrumb-item"><a href="{{route('admin.property.index')}}"><i class="fas fa-tachometer-alt"></i> @lang('label.dashboard')</a></li>
+            <li class="breadcrumb-item"><a href="{{route('admin.company.index')}}">@lang('label.company')</a></li>
+        @else
+            <li class="breadcrumb-item"><a href="{{route('admin.company.user.index', $parent_company_id)}}">@lang('label.list')</a></li>
+        @endif
         <li class="breadcrumb-item active">{{ $page_title }}</li>
     </ol>
 @endsection

@@ -26,7 +26,7 @@ class Station extends Model
 
     public function properties()
     {
-        return $this->belongsToMany(Property::class, 'properties_stations', 'station_id');
+        return $this->belongsToMany(Property::class, 'properties_stations');
     }
 
 

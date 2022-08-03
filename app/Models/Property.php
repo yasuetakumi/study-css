@@ -2,26 +2,33 @@
 
 namespace App\Models;
 
-use App\Models\BusinessTerm;
+use TsuboHelper;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Cuisine;
-use App\Models\NumberOfFloorsAboveGround;
-use App\Models\NumberOfFloorsUnderGround;
+use App\Models\Station;
 use App\Models\Postcode;
+use App\Models\Structure;
 use App\Models\Prefecture;
-use App\Models\PropertyPreference;
+use App\Models\BusinessTerm;
 use App\Models\PropertyType;
 use App\Models\RentPriceOption;
-use App\Models\Station;
-use App\Models\Structure;
 use App\Models\SurfaceAreaOption;
-use App\Models\User;
+use App\Models\PropertyPreference;
 use Illuminate\Database\Eloquent\Model;
-use TsuboHelper;
+use App\Models\NumberOfFloorsAboveGround;
+use App\Models\NumberOfFloorsUnderGround;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
+    use SoftDeletes;
     const FURNISHED = 0;
     const SKELETON = 1;
+
+    const FURNISHED_JP_LABEL = 'スケルトン物件';
+    const SKELETON_JP_LABEL = '居抜き物件';
 
     protected $appends = [
         'tsubo', 'man', 'man_per_tsubo'
@@ -30,7 +37,10 @@ class Property extends Model
         'user_id',
         'postcode_id',
         'prefecture_id',
+        'city_id',
         'location',
+        'publication_status_id',
+        'publication_date',
         'surface_area',
         'rent_amount',
         'number_of_floors_under_ground',
@@ -73,6 +83,7 @@ class Property extends Model
         'image_360_5'
     ];
 
+
     public function postcode()
     {
         return $this->belongsTo(Postcode::class);
@@ -83,9 +94,9 @@ class Property extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function prefectures()
+    public function prefecture()
     {
-        return $this->belongsTo(Prefecture::class);
+        return $this->belongsTo(Prefecture::class, 'prefecture_id');
     }
 
     public function property_type()
@@ -100,7 +111,7 @@ class Property extends Model
 
     public function business_term()
     {
-        return $this->belongsTo(BusinessTerm::class);
+        return $this->belongsTo(BusinessTerm::class, 'business_terms_id');
     }
 
     public function cuisine()
@@ -138,6 +149,39 @@ class Property extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function plans()
+    {
+        return $this->belongsToMany(Plan::class, 'properties_plans');
+    }
+
+    public function property_plans()
+    {
+        return $this->hasMany(PropertyPlan::class, 'property_id');
+    }
+
+    public function publication_status()
+    {
+        return $this->belongsTo(PropertyPublicationStatus::class, 'publication_status_id');
+    }
+
+    public function publication_status_period()
+    {
+        return $this->hasMany(PropertyPublicationStatusPeriod::class, 'property_id');
+    }
+
+    public function getDateBuiltYearAttribute()
+    {
+        if($this->date_built) {
+            return Carbon::parse($this->date_built)->format('Y');
+        }
+        return null;
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED);
+    }
+
     public function scopeRangeArea($query, $min, $max, $column){
          // ------------------------------------------------------------------
         // Minimum property
@@ -165,22 +209,32 @@ class Property extends Model
     }
     public function getTsuboAttribute()
     {
-        $tsubo = new TsuboHelper();
-        $result = $tsubo->toTsubo($this->surface_area);
-        return $result;
+        if($this->surface_area !=null){
+            $result = toTsubo($this->surface_area);
+            return $result . '坪';
+        } else {
+            return 0;
+        }
     }
 
     public function getManAttribute()
     {
-        $tsubo = new TsuboHelper();
-        $result = $tsubo->toMan($this->rent_amount);
-        return $result;
+        if($this->rent_amount != null){
+            $result = toMan($this->rent_amount);
+            return $result . '万円';
+        } else {
+            return 0;
+        }
     }
 
     public function getManPerTsuboAttribute()
     {
-        $tsubo = new TsuboHelper();
-        $result = round($tsubo->toMan($this->rent_amount) / $tsubo->toTsubo($this->surface_area));
-        return $result;
+        if($this->rent_amount != null && $this->surface_area != null){
+            $result = round(toMan($this->rent_amount) / toTsubo($this->surface_area));
+            return $result;
+        } else {
+            return 0;
+        }
+
     }
 }

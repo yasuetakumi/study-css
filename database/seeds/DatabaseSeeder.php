@@ -12,18 +12,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(){
         /** Clear Uploads Folder **/
-        $path = public_path('uploads');
-        $file = new Filesystem;
-        if (!$file->exists($path)) {
-            $file->makeDirectory($path);
+    //     $path = public_path('uploads');
+    //     $file = new Filesystem;
+    //     if (!$file->exists($path)) {
+    //         $file->makeDirectory($path);
 
-        $this->call(DesignStylesTableSeeder::class);
-    }
-        $file->cleanDirectory( public_path('uploads') );
+    //     // $this->call(DesignStylesTableSeeder::class);
+    // }
+    //     $file->cleanDirectory( public_path('uploads') );
 
-        /** Clear Storage Files, works on s3 driver **/
-        $storageFiles =   Storage::allFiles();
-        Storage::delete($storageFiles);
+    //     /** Clear Storage Files, works on s3 driver **/
+    //     $storageFiles =   Storage::allFiles();
+    //     Storage::delete($storageFiles);
 
         $this->call(AdminRoleSeeder::class);
         $this->call(AdminSeeder::class);
@@ -45,11 +45,14 @@ class DatabaseSeeder extends Seeder
         $this->call(CitySeeder::class);
         $this->call(StationsLineSeeder::class);
         $this->call(StationSeeder::class);
+        $this->call(PropertyPublicationStatusesSeeder::class);
         $this->call(PropertySeeder::class);
         $this->call(ContactUsTypeSeeder::class);
         $this->call(CustomerInquirySeeder::class);
+        $this->call(PropertyPublicationStatusPeriodSeeder::class);
 
         //estimation index
+        $this->call(AreaGroupSeeder::class);
         $this->call(DesignPlanStatusSeeder::class);
         $this->call(TagArchitectureSeeder::class);
         $this->call(TagColorSeeder::class);
@@ -69,6 +72,24 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertiesPropertyPreferenceSeeder::class);
         $this->call(PropertyStationSeeder::class);
 
+        $this->call(PropertyPlanSeeder::class);
+
+        //Customer Search Preference
+        $this->call(CustomerSkeletonPreferenceSeeder::class);
+        $this->call(CustomerSearchPreferenceSeeder::class);
+        $this->call(CustomerSearchPreferenceCitySeeder::class);
+        $this->call(CustomerSearchPreferencesPropertyPreferenceSeeder::class);
+        $this->call(CustomerSearchPreferencesPropertyTypeSeeder::class);
+        $this->call(CustomerSearchPreferencesFloorAboveSeeder::class);
+        $this->call(CustomerSearchPreferencesFloorUnderSeeder::class);
+        $this->call(CustomerSearchPreferenceStationSeeder::class);
+        $this->call(CustomerSearchPreferenceCuisineSeeder::class);
+
+        //Payment Detail
+        $this->call(SubscriptionPlanSeeder::class);
+        $this->call(CompanyPaymentDetailSeeder::class);
+        $this->call(PointTypeSeeder::class);
+        $this->call(CompanyPointSeeder::class);
 
     }
 }

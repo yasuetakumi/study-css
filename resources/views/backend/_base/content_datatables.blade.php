@@ -39,9 +39,9 @@
                                 <div class="col-sm-12">
                                     <table id="datatable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info" style="width:100%">
                                         <thead>
-                                        <tr>
-                                            @yield('content')
-                                        </tr>
+                                            <tr>
+                                                @yield('content')
+                                            </tr>
                                         </thead>
                                     </table>
                                 </div>
@@ -63,10 +63,46 @@
     <script src="{{asset('plugins/moment/locale/ja.js')}}"></script>
     <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
     <script>
+        // add custom function to make filter min and max rent amount
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var min = parseInt( $('#input-min-man').val(), 10 );
+                var max = parseInt( $('#input-max-man').val(), 10 );
+                var rent = parseFloat( data[4] ) || 0;
+                //console.log("rent", rent);
 
+                if ( ( isNaN( min ) && isNaN( max ) ) ||
+                    ( isNaN( min ) && rent <= max ) ||
+                    ( min <= rent   && isNaN( max )) ||
+                    ( min <= rent   && rent <= max ))
+                {
+                    return true;
+                }
+                return false;
+            }
+        );
+        // add custom function to make filter min and max surface area
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var min = parseInt( $('#input-min-tsubo').val(), 10 );
+                var max = parseInt( $('#input-max-tsubo').val(), 10 );
+                var surface = parseFloat( data[5] ) || 0;
+                //console.log("surface", surface);
+
+                if ( ( isNaN( min ) && isNaN( max ) ) ||
+                    ( isNaN( min ) && surface <= max ) ||
+                    ( min <= surface   && isNaN( max )) ||
+                    ( min <= surface   && surface <= max ))
+                {
+                    return true;
+                }
+                return false;
+            }
+        );
         $(function() {
             // enable or disabled filtering server side
-            var serverSide = true;
+            // for filter range (min and max value) set serverSide to false, filter min and max doesnt work on serverSide=true
+            var serverSide = false;
             @hasSection( 'extend-datatable' )
                 @yield( 'extend-datatable' )
             @endif
@@ -137,7 +173,24 @@
                             table.column(i).order('desc').search(this.value).draw();
                         }
                     });
-                }else{
+                }else if(id == 'man' || id == 'tsubo'){ //create 2 input min and max to rent amount (man) and surface area(tsubo) column
+                    $(this).html('<div class="d-flex"><input id="input-min-'+id+'" class="form-control input-min-'+i+'" type="number" placeholder="min" /> <input id="input-max-'+id+'" class="form-control input-max-'+i+'" type="number" placeholder="max" /> </div>');
+                    // old filter string
+                    // $('#input-min', this).on('keyup change', function () {
+                    //     console.log("search", table.column(i).search());
+                    //     console.log("min", this.value);
+                    //     if (table.column(i).search() !== this.value) {
+                    //         table.column(i).search(this.value).draw();
+                    //     }
+                    // });
+                    // $('#input-max', this).on('keyup change', function () {
+                    //     //console.log("max", this.value);
+                    //     if (table.column(i).search() !== this.value) {
+                    //         table.column(i).search(this.value).draw();
+                    //     }
+                    // });
+                }
+                else{
                     $(this).html('<input class="form-control input-'+i+'" type="text" placeholder="' + placeholder + '" />');
 
                     $('input', this).on('keyup change', function () {
@@ -171,7 +224,7 @@
                 "dom": 'lrtip', // explain > https://datatables.net/reference/option/dom
                 "ajax": "{{ url()->current() . "/json" }}",
                 "columnDefs": [
-                    {"width": "10px", "targets": 0},
+                    {"width": "60px", "targets": 0},
                 ],
                 "columns": column,
                 @if(App::isLocale('ja'))
@@ -189,6 +242,8 @@
                 table.columns().eq(0).each(function(i){
                     let colSearch = state.columns[i].search;
                     if(colSearch.search){
+                        // $('.input-min-'+i).val(colSearch.search);
+                        // $('.input-max-'+i).val(colSearch.search);
                         $('.input-'+i).val(colSearch.search);
                         $('.select-'+i).val(colSearch.search);
                     }
@@ -196,6 +251,17 @@
 
                 table.draw();
             }
+            // activate filter min and max after document ready
+            $(document).ready(function() {
+                $('#input-max-man, #input-min-man').keyup( function() {
+                    //console.log("finde")
+                    table.draw();
+                });
+                $('#input-max-tsubo, #input-min-tsubo').keyup( function() {
+                    //console.log("finde")
+                    table.draw();
+                });
+            });
 
 
             // DELETE
@@ -211,14 +277,15 @@
                 if (confirm('@lang('label.jsConfirmDeleteData')')) {
                     $.ajax({
                         url: url,
-                        type: 'DELETE',
+                        type: "POST",
                         dataType: 'json',
-                        data: {method: 'DELETE', submit: true}
+                        data: {_method: "DELETE", submit: true}
                     }).always(function (data) {
-                        console.log(data);
+                        console.log(data.status);
                         $('#datatable').DataTable().draw(false);
-                        if (data === 1){
+                        if (data.status == 200){
                           toastr.success('@lang('label.jsInfoDeletedData')');
+                          table.ajax.reload();
                         }
                         else {
                           toastr.error('@lang('label.FAILED_DELETE_SELF_MESSAGE')');

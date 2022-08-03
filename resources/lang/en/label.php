@@ -109,6 +109,19 @@ return [
 
     'empty_value'           => ' ',
     'detail_page'           => '[Draft] Detail Page',
+    'submit'                => 'Submit',
+    'browsing_history'      => 'History',
+    'favorite_property'     => 'Favorite',
+
+    // A13 / A14 Property Form
+    'property_editing' => 'Property Editing',
+    'new_property_create' => 'New Property Create',
+
+    //A16
+    'company_approval_list' => 'Company Approval List',
+
+    //A17
+    'approve_company' => 'Approve this company',
 
     //C1
     'walking_distance_from_station' => 'Walking Distance From Station',
@@ -117,14 +130,26 @@ return [
     'cuisines' => 'Cuisines',
     'transfer_price_option' => 'Transfer Price Option',
 
+    //C2
+    'recently_view_property' => 'Recently Viewed Property',
+    'view_favorite_property' => 'View Favorite Property',
+    'search_condition' => 'Search Conditions',
+    'clear_search_condition' => 'Clear Search Conditions',
+    'with_the_current_search_condition' => 'With the current search conditions',
+    'save_search_history' => 'Save',
+    'register_new_email' => 'Register a new mail',
+    'search_with_these_search_condition' => 'Search with these search conditions',
+
     //D1 PROPERTY
+    'plans' => 'Plans',
     'property' => 'Property',
+    'property_list' => 'Property List',
     'real_estate_agent_in_charge' => 'Real Estate Agent In Charge',
     'real_estate_agency' => 'Real Estate Agency',
     'postcode' => 'Postcode',
     'prefecture' => 'Prefecture',
     'cities' => 'Cities',
-    'location' => 'Location',
+    'location' => 'Location(remaining parts of the address)',
     'surface_area' => 'Surface Area',
     'surface_area_meter' => 'Surface Area(Meters)',
     'surface_area_tsubo' => 'Surface Area(Tsubo)',
@@ -140,23 +165,87 @@ return [
     'repayment_conditions' => 'Repayment Conditions',
     'year_built' => 'Year Built',
     'renewal_fee' => 'Renewal Fee',
-    'contract_length' => 'Contract Lenght in Months',
+    'contract_length' => 'Contract Length in Months',
     'moving_fee' => 'Moving Fee',
     'business_terms' => 'Business Terms',
     'comments' => 'Comments',
-    'skeleton' => 'Skeleton/Furnished',
+    'is_skeleton' => 'Skeleton/Furnished',
     'restaurant_cuisine' => 'Restaurant Cuisine',
     'interior_transfer_price' => 'Interior Transfer Price',
 
     // Customer Inquiry
+    'customer_inquiry' => 'Customer Inquiry',
     'property_id' => 'Property ID',
     'contact_us_type' => 'Contact Us Type',
     'subject' => 'Subject',
     'text' => 'Text',
     'flag' => 'Flag',
+    'name_inquiry' => 'Name',
+    'email_inquiry' => 'Email',
     'is_finish' => 'Is Finish',
     'person_in_charge' => 'Person In Charge',
     'note' => 'Note',
     'company_name' => 'Company Name',
+    'content_inquiry' => 'Content of Inquiry',
+    'inquiry_button' => 'Inquiry Button',
+    'inquiry_type' => 'Inquiry Type',
+    'inquiry_name' => 'Name',
+    'phone_number' => 'Phone Number',
 
+    //B2
+    'my_account' => 'My Account',
+
+    //B3
+    'administrator' => 'Administrator',
+
+    //B7
+    'inquiry_created_at' => 'Created At',
+    'inquiry_updated_at' => 'Updated At',
+
+    //B8
+    'edit_company_payment_details' => 'Edit Company Payment Detail',
+    'remaining_points' => 'Remaining Points',
+    'subscription_plan' => 'Subscription Plan',
+    'card_number' => 'Card Number',
+    'security_number' => 'Security Number',
+    'card_holder_name' => 'Card Holder Name',
+    'card_brand' => 'Card Brand',
+    'expiry_year' => 'Expiry Year',
+    'expiry_month' => 'Expiry Month',
+    'expiry_date_subscription' => 'Expiry date of subscription plan',
+    'register_details' => 'Register Details',
+    'time_of_payment' => 'Time of Payment Detail Registration',
+    'time_of_updating' => 'Time of Updating Registration Details',
+    'points_to_charge' => 'Points to Charge',
+    'costs_of_points' => 'Costs of Points',
+    'buy_points' => 'Buy Points',
+    'charge_points' => 'Charge Points',
+
+    // B21
+    'in_charge_id' => 'In Charge ID',
+    'in_charge_name' => 'In Charge Name',
+
+    // C5
+    'underground' => 'Underground',
+
+    //C15
+    'postcode_notfound'     => 'Zip code not found',
+
+    //C4
+    'thumbnail_image_main' => 'Thumbnail Image Main',
+    'thumbnail_image' => 'Thumbnail Image',
+    'image' => 'Image',
+    'image_360' => 'Image 360',
+    'skeleton' => 'Skeleton',
+    'furnished' => 'Furnished',
+    'design_categories' => 'Design Categories',
+    'desgin_styles' => 'Design Styles',
+    'send_inquiry' => 'Send Inquiry',
+    'property_detail' => 'Property Detail',
+
+    //C6
+    'property_history' => '物件閲覧履歴・お気に入り',
+
+    //C-Common-6
+    'no_condition_saved' => 'No Search Condition Saved',
 ];

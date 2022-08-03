@@ -9,13 +9,24 @@ class Company extends Model
 {
     use SoftDeletes;
 
+    const ACTIVE = 'active';
+    const PENDING = 'pending';
+
     protected $fillable = [
         'company_admin_id',
         'company_name',
+        'company_name_kana',
+        'agent_license_name',
+        'agent_license_renewals',
+        'agent_license_number',
+        'remaining_points',
         'post_code',
         'address',
         'phone',
+        'fax',
+        'url',
         'status',
+        'stripe_customer_id'
     ];
 
     public function admin(){
@@ -23,7 +34,12 @@ class Company extends Model
     }
 
     public function users() {
-        return $this->hasMany('App\Models\Users');
+        return $this->hasMany(User::class, 'belong_company_id');
+    }
+
+    public function company_payment_detail()
+    {
+        return $this->hasOne(CompanyPaymentDetail::class);
     }
 
 }

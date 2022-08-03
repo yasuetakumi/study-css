@@ -17,11 +17,6 @@ class NumberOfFloorAbovegroundSeeder extends Seeder
         $data = new NumberOfFloorsAboveGround();
         $data->insert([
             [
-                'value'         => 0,
-                'label_en'       => 'Ground',
-                'label_jp'      => ' 地上',
-            ],
-            [
                 'value'         => 1,
                 'label_en'       => '1st floor',
                 'label_jp'      => '1階',

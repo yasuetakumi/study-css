@@ -15,4 +15,9 @@ class PropertyType extends Model
     {
         return $this->hasMany(Property::class);
     }
+
+    public function customer_search_preferences()
+    {
+        return $this->belongsToMany(CustomerSearchPreference::class, 'customer_search_preferences_property_types', 'property_type_id');
+    }
 }

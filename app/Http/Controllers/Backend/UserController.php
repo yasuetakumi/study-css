@@ -94,7 +94,7 @@ class UserController extends Controller
 
         $data['item']           = User::find($company_user_id);
 
-        $data['page_title']     = __('label.edit') . __('label.user');
+        $data['page_title']     = __('label.user');
         $data['form_action']    = route('admin.company.user.update', [$parent_company_id, $company_user_id]);
         $data['user_roles']     = UserRole::pluck('label', 'id')->all();
         $data['page_type']      = 'edit';
@@ -140,7 +140,7 @@ class UserController extends Controller
 
         $data['item']           = User::find( $id );
 
-        $data['page_title']     = __('label.edit') . ' ' . __('label.user');
+        $data['page_title']     = __('label.my_account');
         $data['form_action']    = route('userowner-update');
         $data['page_type']      = 'edit';
 

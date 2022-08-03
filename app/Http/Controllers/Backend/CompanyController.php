@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Admin;
+use App\Models\Company;
+use App\Models\AdminRole;
+use Illuminate\Http\Request;
+use App\Traits\LogActivityTrait;
 use App\Helpers\DatatablesHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\AdminRole;
-use App\Models\Company;
-use App\Traits\LogActivityTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
@@ -22,7 +23,7 @@ class CompanyController extends Controller
     protected function validator( array $data, $type ){
         return Validator::make($data, [
             'display_name'  => 'required|string|max:100',
-            'email'         => 'required|email|max:255|unique:admins,email' . ($type == 'update' ? ','.$data['company_admin'] : ''),
+            'email'         => 'required|email|max:255|unique:admins,email' . ($type == 'update' ? ','.$data['company_admin_id'] : ''),
             'password'      => $type == 'create' ? 'required|string|min:8|max:255' : 'string|min:8|max:255',
 
             'company_name'  => 'required|string|max:50',
@@ -114,7 +115,7 @@ class CompanyController extends Controller
         $currentAdmin       = Admin::find($currentCompany->company_admin_id);
         $data['password']   = !empty($data['password']) ? $data['password'] : $currentAdmin['password'];
         $data['company_admin_id']   = $currentAdmin->id;
-
+        // dd($data);
         $this->validator($data, 'update')->validate();
 
         if(Hash::needsRehash($data['password'])){
@@ -134,5 +135,35 @@ class CompanyController extends Controller
         $this->saveLog('Delete Company', 'Delete Company, Name : ' . $item->company_name . '', Auth::user()->id);
 
         return 1;
+    }
+
+    public function editAsCompanyOwner()
+    {
+        $id             = Auth::guard('user')->user()->belong_company_id;
+        $query          = Company::with(['users']);
+        $query          = $query->whereHas('users', function($q) use ($id){
+            $q->where('belong_company_id', $id);
+        });
+        $data['item'] = $query->first();
+
+        $data['page_title']     = __('label.edit') . ' ' . __('label.company');
+        $data['form_action']    = route('companyowner-update');
+        $data['page_type']      = 'edit';
+        //return $data;
+
+        return view('backend.company.form', $data);
+    }
+
+    public function updateAsCompanyOwner(Request $request)
+    {
+        $id    = Auth::guard('user')->user()->id;
+        $query = Company::with(['users']);
+        $query = $query->whereHas('users', function($q) use ($id){
+            $q->where('belong_company_id', $id);
+        });
+        $data = $query->first();
+        $company = Company::find($data->id);
+        $company->update($request->all());
+        return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
 }

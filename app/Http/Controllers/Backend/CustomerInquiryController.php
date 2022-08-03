@@ -1,58 +1,92 @@
 <?php
-
+// -----------------------------------------------------------------------------
 namespace App\Http\Controllers\Backend;
 
+// -----------------------------------------------------------------------------
+use App\Models\Admin;
+use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Models\ContactUsType;
 use App\Models\CustomerInquiry;
+// -----------------------------------------------------------------------------
 use App\Helpers\DatatablesHelper;
+use App\Mail\CustomerInquiryMail;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+// -----------------------------------------------------------------------------
 
-class CustomerInquiryController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $data['page_title'] = 'Customer Inquiry List';
+// -----------------------------------------------------------------------------
+class CustomerInquiryController extends Controller {
+    // -------------------------------------------------------------------------
+    public function index() {
+        $data['page_title'] = __('label.customer_inquiry') . __('label.list');
         return view('backend.customer_inquiry.index', $data);
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    // -------------------------------------------------------------------------
+    public function create() {
         //
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    // -------------------------------------------------------------------------
+    public function store(Request $request) {
+        // Validate the request
+        $request->validate([
+            'name'=> 'required|max:45',
+            'email'=> 'required|email',
+            'text' => 'required|max:2000',
+            'phone' => 'numeric|nullable',
+        ]);
+
+        // Get necessary data
+        $subjectToCustomer  = '[' . config('app.name') . ']' . 'お問い合わせありがとうございます。';
+        $subjectToAdmin = '[' . config('app.name') . ']' . '物件のお問い合わせがありました。';
+        $property = Property::with('user')->find($request->property_id);
+        $company_user_email = $property->user->email;
+        $developerEmail = env('BCC_PROPERTY_INQUIRY');
+        $adminsEmail = $developerEmail ?
+            Admin::pluck('email')->push($developerEmail) : Admin::pluck('email');
+
+        // Compile request data
+        $data = $request->all();
+        $data['company_name'] = $property->user->company->company_name;
+        $data['contact_us_type_label'] = ContactUsType::find($request->contact_us_type_id)->label_jp;
+        $data['subject'] = $subjectToCustomer;
+
+        $dataToCustomer = $data;
+        $dataToCustomer['subject'] = $subjectToCustomer;
+        $dataToCustomer['to_admin'] = false;
+
+        $dataToAdmin = $data;
+        $dataToAdmin['subject'] = $subjectToAdmin;
+        $dataToAdmin['to_admin'] = true;
+
+        // Save inquiry
+        $inquiry = new CustomerInquiry();
+        $inquiry->fill($data)->save();
+
+        // Send email to company user
+        Mail::to($company_user_email)->bcc($adminsEmail->toArray())->send(new CustomerInquiryMail($dataToAdmin));
+        // Send email to customer
+        $developerEmail ?
+            Mail::to($data['email'])->bcc($developerEmail)->send(new CustomerInquiryMail($dataToCustomer))
+            : Mail::to($data['email'])->send(new CustomerInquiryMail($dataToCustomer));
+
+        return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($param)
-    {
+    // -------------------------------------------------------------------------
+    public function show($param) {
         if( $param == 'json' ){
 
-            $model = CustomerInquiry::with(['property', 'contact_us_type']);
-            return (new DatatablesHelper)->instance($model)
+            $model = CustomerInquiry::with(['property', 'contact_us_type'])->whereHas('property', function($query) {
+                $query->where('user_id', Auth::guard('user')->user()->id);
+            });
+            return (new DatatablesHelper)->instance($model, false)
                                             ->filterColumn('property.id', function($query, $keyword){
                                                 $query->whereHas('property', function($q) use ($keyword){
                                                     $q->where('id', 'like', '%'.$keyword.'%');
@@ -68,38 +102,27 @@ class CustomerInquiryController extends Controller
         }
         abort(404);
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    // -------------------------------------------------------------------------
+    public function edit($id) {
         //
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+    // -------------------------------------------------------------------------
+    public function update(Request $request, $id) {
         //
     }
+    // -------------------------------------------------------------------------
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    // -------------------------------------------------------------------------
+    public function destroy($id) {
+        $inquiry = CustomerInquiry::find($id);
+        $inquiry->delete();
+
+        // return redirect()->route('inquiry.index')->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
     }
+    // -------------------------------------------------------------------------
 }
+// -----------------------------------------------------------------------------

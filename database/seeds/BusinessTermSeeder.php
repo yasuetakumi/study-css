@@ -17,15 +17,15 @@ class BusinessTermSeeder extends Seeder
         $admin->insert([
             [
                 'label_en'       => 'General',
-                'label_jp'      => ' 一般 ',
+                'label_jp'      => ' 一般媒介',
             ],
             [
                 'label_en'       => 'Full-time',
-                'label_jp'      => '専任',
+                'label_jp'      => '専任媒介',
             ],
             [
                 'label_en'       => 'Exclusive full-time',
-                'label_jp'      => '専属専任',
+                'label_jp'      => '専任媒介（専属専任）',
             ],
 
         ]);

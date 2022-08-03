@@ -1,8 +1,8 @@
 image: atlassian/default-image:latest
-
+ 
 pipelines:
   branches:
-    release/test_deploy:
+    develop:
       - step:
           caches:
             - composer

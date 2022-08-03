@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Area;
+use App\Models\AreaGroup;
 use App\Models\Cuisine;
 use App\Models\DesignPlanStatus;
-use App\Models\SurfaceAreaOption;
 use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
@@ -44,7 +43,7 @@ class Plan extends Model
 
     public function area_group()
     {
-        return $this->belongsTo(SurfaceAreaOption::class, 'area_group_id');
+        return $this->belongsTo(AreaGroup::class, 'area_group_id');
     }
 
     public function design_plan_status()
@@ -55,5 +54,15 @@ class Plan extends Model
     public function design_category()
     {
         return $this->belongsTo(Cuisine::class);
+    }
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'properties_plans');
+    }
+
+    public function property_plans()
+    {
+        return $this->hasMany(PropertyPlan::class, 'plan_id');
     }
 }
