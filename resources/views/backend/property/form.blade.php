@@ -327,8 +327,8 @@
                     this.items.prefecture_id = item.property_stations_closest.station.prefecture_id;
                     this.items.station_line_id = item.property_stations_closest.station.station_line.id;
                     this.items.select_nearest_station = item.property_stations_closest.station.id;
-                    this.handleSelectPrefecture();
-                    this.handleSelectStationLine();
+                    this.getStationByStationLine(this.items.prefecture_id, this.items.station_line_id);
+                    this.getStationLineByPrefecture(this.items.prefecture_id);
                 }
 
 
@@ -371,6 +371,8 @@
                     return this.items.list_station_lines.find(function(item){
                         return item.id == this.items.station_line_id;
                     }.bind(this));
+                } else {
+                    return nu;
                 }
             },
             getSelectedStations: function(){
@@ -687,33 +689,44 @@
                 }
             },
             handleSelectPrefecture: function(){
+                this.items.station_line_id = null;
+                this.items.list_station_lines = [];
+                this.items.list_stations = [];
+                this.items.selected_stations = [];
+                this.items.select_nearest_station = null;
                 if(this.items.prefecture_id !== null){
-                    // this.station_line_id = null;
-                    // this.items.list_station_lines = [];
+                    this.getStationLineByPrefecture(this.items.prefecture_id);
+                }
+            },
+            handleSelectStationLine: function(){
+                this.items.list_stations = [];
+                this.items.selected_stations = [];
+                this.items.select_nearest_station = null;
+                if(this.items.station_line_id !== null && this.items.prefecture_id !== null){
                     // this.items.list_stations = [];
                     // this.items.selected_stations = [];
-                    axios.get(root_url + '/api/v1/select2stationline/' + this.items.prefecture_id)
+                    this.getStationByStationLine(this.items.prefecture_id, this.items.station_line_id);
+                }
+            },
+            getStationLineByPrefecture: function(prefectureId){
+                axios.get(root_url + '/api/v1/select2stationline/' + prefectureId)
                         .then((result) => {
                             this.items.list_station_lines = result.data;
                         }).catch((err) => {
                             console.log(err);
                         });
-                }
             },
-            handleSelectStationLine: function(){
-                if(this.items.station_line_id !== null && this.items.prefecture_id !== null){
-                    // this.items.list_stations = [];
-                    // this.items.selected_stations = [];
-                    axios.get(root_url + '/api/v1/station/getStationByStationLine/' + this.items.station_line_id + '/' + this.items.prefecture_id)
-                        .then((result) => {
-                            this.items.list_stations = result.data;
-                        }).catch((err) => {
-                            console.log(err);
-                        });
-                }
+            getStationByStationLine: function(prefectureId, stationLineId){
+                axios.get(root_url + '/api/v1/station/getStationByStationLine/' + stationLineId + '/' + prefectureId)
+                    .then((result) => {
+                        this.items.list_stations = result.data;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
             },
             clearAll: function(){
                 this.items.selected_stations = [];
+                this.items.select_nearest_station = null;
             }
             // --------------------------------------------------------------
         }

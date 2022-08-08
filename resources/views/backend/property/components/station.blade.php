@@ -72,7 +72,7 @@
                                     <p class="mb-0">@lang('label.selected_stations')</p>
                                 </div>
                                 <div class="col-12 d-flex" v-if="getSelectedStations.length > 0">
-                                    <p class="mb-0">@{{getSelectedStationLine.text}}: <span v-for="station in getSelectedStations">@{{ station.display_name }}, </span></p>
+                                    <p class="mb-0">@{{getSelectedStationLine ? getSelectedStationLine.text + ' : ' : '' }} <span v-for="station in getSelectedStations">@{{ station.display_name }}, </span></p>
                                 </div>
                             </div>
                         </div>
