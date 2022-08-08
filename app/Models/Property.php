@@ -139,6 +139,11 @@ class Property extends Model
         return $this->hasMany(PropertiesStations::class, 'property_id');
     }
 
+    public function property_stations_closest()
+    {
+        return $this->hasOne(PropertiesStations::class, 'property_id')->where('is_closest', 1)->orderBy('distance_from_station', 'asc');
+    }
+
     public function properties_property_preferences()
     {
         return $this->hasMany(PropertiesPropertyPreference::class, 'properties_id');

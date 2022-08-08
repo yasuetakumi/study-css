@@ -116,6 +116,14 @@ return [
     // A13 / A14 Property Form
     'property_editing' => 'Property Editing',
     'new_property_create' => 'New Property Create',
+    'nearest_station' => 'Nearest Station',
+    'select_station' => 'Select Station',
+    'station_line' => 'Station Line',
+    'stations_belong_to_station_line' => 'Stations Belong to Station Line',
+    'selected_stations' => 'Selected Stations',
+    'clear_btn' => 'Clear',
+    'close_btn' => 'Close',
+    'walk_from_nearest_station' => 'Walking Distance from Nearest Station',
 
     //A16
     'company_approval_list' => 'Company Approval List',
