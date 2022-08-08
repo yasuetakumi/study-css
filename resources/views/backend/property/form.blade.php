@@ -119,6 +119,21 @@
         @endcomponent
 
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
+        @component('backend.property.components.station')@endcomponent
+        <div v-if="getSelectedStations.length > 0">
+            @component('backend._components.vue.form.vue-select', [
+                'name'          => 'nearest_station_id',
+                'label'         => __('label.nearest_station'),
+                'label_select'  => 'display_name',
+                'required'      => 'false',
+                'options'       => 'getSelectedStations',
+                'model'         => 'items.select_nearest_station',
+                'disabled'      => 'false',
+            ])@endcomponent
+        </div>
+        <div v-if="items.select_nearest_station">
+            @component('backend._components.input_select', ['name' => 'walking_distance_id', 'options' => $walking_distances, 'label' => __('label.walk_from_nearest_station'), 'required' => false, 'value' => $item->property_stations_closest->distance_from_station ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        </div>
         @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
 
         @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toMan($item->rent_amount), 'isReadOnly' => $disableForm]) @endcomponent
@@ -208,6 +223,7 @@
                     companies_options: @json($companies_options),
                     property: @json($item),
                     property_related: @json($property_related),
+                    prefectures: @json($prefectures),
                 },
                 // ----------------------------------------------------------
             };
@@ -270,6 +286,14 @@
                     design_category_3: 3,
                     design_category_4: 4,
                     surface_area: null,
+
+                    //stations
+                    prefecture_id: null,
+                    station_line_id: null,
+                    list_station_lines: [],
+                    list_stations: [],
+                    selected_stations: [],
+                    select_nearest_station: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -294,6 +318,21 @@
                 this.items.user_id = item.user_id;
                 this.items.property_id = item.id;
                 this.setVisitedProperty();
+
+                var property_stations = item.property_stations ?? [];
+                if(property_stations.length > 0 ){
+                    property_stations.forEach(function(item){
+                        this.items.selected_stations.push(item.station_id);
+                    }.bind(this));
+                    this.items.prefecture_id = item.property_stations_closest.station.prefecture_id;
+                    this.items.station_line_id = item.property_stations_closest.station.station_line.id;
+                    this.items.select_nearest_station = item.property_stations_closest.station.id;
+                    this.handleSelectPrefecture();
+                    this.handleSelectStationLine();
+                }
+
+
+
             }
             if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
@@ -306,7 +345,6 @@
             if(@json($page_type) != 'detail'){
                 this.changePlanBySurfaceArea();
             }
-
 
 
         },
@@ -324,6 +362,28 @@
         computed: {
             companies_options: function(){
                 return this.$store.state.preset.companies_options;
+            },
+            prefectures: function(){
+                return this.$store.state.preset.prefectures;
+            },
+            getSelectedStationLine: function(){
+                if(this.items.station_line_id != null){
+                    return this.items.list_station_lines.find(function(item){
+                        return item.id == this.items.station_line_id;
+                    }.bind(this));
+                }
+            },
+            getSelectedStations: function(){
+                if(this.items.selected_stations.length > 0){
+                    const selectedStation = this.items.selected_stations;
+                    // filter out the selected stations
+                    const stations = this.items.list_stations.filter(station => {
+                        return selectedStation.includes(station.id);
+                    });
+                    return stations;
+                } else {
+                    return [];
+                }
             },
             users_options: function(){
                 if(this.items.list_user != null){
@@ -420,7 +480,23 @@
         ## vue reactive data watch
         ## ------------------------------------------------------------------
         */
-        watch: {},
+        watch: {
+            // watch for changes in the prefecture_id
+            'items.prefecture_id': function(){
+                // this.items.station_line_id = null;
+                // this.items.list_station_lines = [];
+                // this.items.list_stations = [];
+                // this.items.selected_stations = [];
+                // console.log('prefecture_id changed');
+                // this.handleSelectPrefecture();
+            },
+            'items.station_line_id': function(){
+                // this.items.list_stations = [];
+                // this.items.selected_stations = [];
+                // console.log('station_line_id changed');
+                // this.handleSelectStationLine();
+            }
+        },
 
         /*
         ## ------------------------------------------------------------------
@@ -610,6 +686,35 @@
                         });
                 }
             },
+            handleSelectPrefecture: function(){
+                if(this.items.prefecture_id !== null){
+                    // this.station_line_id = null;
+                    // this.items.list_station_lines = [];
+                    // this.items.list_stations = [];
+                    // this.items.selected_stations = [];
+                    axios.get(root_url + '/api/v1/select2stationline/' + this.items.prefecture_id)
+                        .then((result) => {
+                            this.items.list_station_lines = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                }
+            },
+            handleSelectStationLine: function(){
+                if(this.items.station_line_id !== null && this.items.prefecture_id !== null){
+                    // this.items.list_stations = [];
+                    // this.items.selected_stations = [];
+                    axios.get(root_url + '/api/v1/station/getStationByStationLine/' + this.items.station_line_id + '/' + this.items.prefecture_id)
+                        .then((result) => {
+                            this.items.list_stations = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                }
+            },
+            clearAll: function(){
+                this.items.selected_stations = [];
+            }
             // --------------------------------------------------------------
         }
     }

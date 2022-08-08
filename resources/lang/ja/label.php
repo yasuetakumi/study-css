@@ -118,6 +118,15 @@ return [
     // A13 / A14 Property Form
     'property_editing' => '物件編集',
     'new_property_create' => '物件の新規作成',
+    'nearest_station' => '最寄り駅',
+    'select_station' => '駅を選択する',
+    'station_line' => '路線',
+    'stations_belong_to_station_line' => '選択した路線に属している駅',
+    'selected_stations' => '選択した駅',
+    'clear_btn' => 'クリア',
+    'close_btn' => '閉じる',
+    'walk_from_nearest_station' => '最寄り駅からの徒歩',
+
 
 
     //A16

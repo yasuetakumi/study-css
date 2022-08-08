@@ -12,6 +12,7 @@ class PropertiesStations extends Model
         'station_id',
         'property_id',
         'distance_from_station',
+        'is_closest',
     ];
 
     public function station(){

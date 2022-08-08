@@ -64,6 +64,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/station/getStationByStationLine/{station_line}/{prefecture_id}', 'API\ApiStationController@getStationByStationLine');
     Route::get('/station/getStationByPrefecture/{prefecture_id}', 'API\ApiStationController@getStationByPrefecture')->name('api.station.by.prefecture');
     Route::get('/station/getStationLineByPrefecture/{prefecture_id}', 'API\ApiStationController@getStationLineByPrefecture')->name('api.station.line.by.prefecture');
+    Route::get('/select2stationline/{prefecture_id}', 'API\ApiStationController@select2StationLineByPrefecture')->name('select2.stationline');
+    // Route::get('/select2station/{station_line_id}', 'API\ApiStationController@select2StationByStationLine')->name('select2.station');
 
     //History
     Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');

@@ -30,11 +30,14 @@ use App\Helpers\DatatablesHelper;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Helpers\Select2AjaxHelper;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\PropertyPublicationStatus;
+use App\Models\PropertiesStations;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PropertyPublicationStatus;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PropertyPublicationStatusPeriod;
+use App\Models\WalkingDistanceFromStationOption;
 
 class PropertyController extends Controller
 {
@@ -157,6 +160,10 @@ class PropertyController extends Controller
             ],
 
         ];
+        $prefectures = collect(Prefecture::pluck('display_name', 'id')->all());
+        $data['prefectures'] = $this->initSelect2Options($prefectures);
+        $data['walking_distances'] = WalkingDistanceFromStationOption::pluck('label_jp', 'id')->all();
+
         $data['design_categories'] = collect($categories)->all();
 
         return view('backend.property.form', $data);
@@ -166,7 +173,6 @@ class PropertyController extends Controller
     {
         $data = $request->all();
         $this->validator($data, 'create')->validate();
-        // dd($data);
 
         $properties_plans = array();
         if(isset($data['plan_id_dc_1'])){
@@ -186,6 +192,12 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
+
+        // handle properties stations
+        $properties_stations = $data['select_stations'] ?? [];
+        $closest_station_id = $data['nearest_station_id'] ?? null;
+        $distance_closest_station = $data['walking_distance_id'] ?? null;
+
 
         //return $data;
         $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
@@ -225,16 +237,35 @@ class PropertyController extends Controller
         $data['interior_transfer_price'] = fromMan($data['interior_transfer_price']);
         $data['monthly_maintainance_fee'] = fromMan($data['monthly_maintainance_fee']);
 
+        DB::beginTransaction();
+        try {
+            $feature = new Property();
+            $feature->fill($data)->save();
 
-        $feature = new Property();
-        $feature->fill($data)->save();
+            foreach($properties_plans as $pp){
+                PropertyPlan::create([
+                    'plan_id' => $pp,
+                    'property_id' => $feature->id,
+                ]);
+            }
 
-        foreach($properties_plans as $pp){
-            PropertyPlan::create([
-                'plan_id' => $pp,
-                'property_id' => $feature->id,
-            ]);
+            // handle properties stations
+            foreach($properties_stations as $ps){
+                PropertiesStations::create([
+                    'station_id' => $ps,
+                    'property_id' => $feature->id,
+                    'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
+                    'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
+                ]);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.property.index')->with('success', 'Property created successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('admin.property.create')->with('error', 'Property created unsuccessfully');
         }
+
 
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
@@ -245,7 +276,7 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = Property::with(['property_plans.plan', 'postcode', 'prefecture', 'city', 'user.company'])->find($id);
+        $data['item'] = Property::with(['property_plans.plan', 'postcode', 'prefecture', 'city', 'user.company', 'property_stations', 'property_stations_closest.station.station_line'])->find($id);
         // return $data;
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -297,6 +328,9 @@ class PropertyController extends Controller
         ];
         $data['design_categories'] = collect($categories)->all();
         $data['dc_id'] = Plan::select('design_category_id')->find($data['item']->plan_id);
+        $prefectures = collect(Prefecture::pluck('display_name', 'id')->all());
+        $data['prefectures'] = $this->initSelect2Options($prefectures);
+        $data['walking_distances'] = WalkingDistanceFromStationOption::pluck('label_jp', 'id')->all();
         return view('backend.property.form', $data);
     }
 
@@ -322,6 +356,11 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
+
+        // handle properties stations
+        $properties_stations = $data['select_stations'] ?? [];
+        $closest_station_id = $data['nearest_station_id'] ?? null;
+        $distance_closest_station = $data['walking_distance_id'] ?? null;
 
         $edit = Property::find($id);
         $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
@@ -373,6 +412,23 @@ class PropertyController extends Controller
             $edit->plans()->attach($properties_plans);
         }
 
+        $property_stations_old = array();
+        foreach($edit->property_stations as $ps){
+            array_push($property_stations_old, $ps->station_id);
+        }
+        $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
+        if($shouldUpdatePropertyStations){
+            $edit->property_stations()->detach();
+            // handle properties stations
+            foreach($properties_stations as $ps){
+                PropertiesStations::create([
+                    'station_id' => $ps,
+                    'property_id' => $edit->id,
+                    'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
+                    'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
+                ]);
+            }
+        }
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {
