@@ -18,9 +18,12 @@ class MemberController extends Controller
                                                 $count = $model->socialAccounts->count();
                                                 $social_accounts = $model->socialAccounts;
                                                 $social_accounts_html = '';
-                                                foreach($social_accounts as $key => $social_account){
+                                                $social_accounts->unique('provider_name')->each(function($social_account, $key) use(&$social_accounts_html, $count){
                                                     $social_accounts_html .= $key === $count - 1 ? strtoupper($social_account->provider_name) : strtoupper($social_account->provider_name) . ', ';
-                                                }
+                                                });
+                                                // foreach($social_accounts as $key => $social_account){
+                                                //     $social_accounts_html .= $key === $count - 1 ? strtoupper($social_account->provider_name) : strtoupper($social_account->provider_name) . ', ';
+                                                // }
                                                 return '<p class="text-left my-0">' . $social_accounts_html . '</p>';
                                             })
                                             ->rawColumns(['social_accounts', 'action'])
