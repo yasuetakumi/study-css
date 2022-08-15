@@ -115,6 +115,12 @@ return [
     'browsing_history'      => '物件閲覧履歴',
     'favorite_property'     => 'お気に入り',
 
+    // A2
+    'members' => 'メンバー',
+    'member_name' => '会員名',
+    'line_id' => 'ＬＩＮＥ ＩＤ',
+    'social_login' => 'ログインが可能なＳＮＳ',
+
     // A13 / A14 Property Form
     'property_editing' => '物件編集',
     'new_property_create' => '物件の新規作成',

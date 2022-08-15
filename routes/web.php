@@ -102,6 +102,7 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
                     Route::resource('approval', 'CompanyApprovalController');
                     Route::get('update-status/{propertyId}', 'PropertyController@updatePublicationStatus')->name('publication.status');
                 });
+                Route::resource('member', 'MemberController')->except('detail');
 
                 // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
             });
