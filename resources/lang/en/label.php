@@ -113,6 +113,12 @@ return [
     'browsing_history'      => 'History',
     'favorite_property'     => 'Favorite',
 
+    // A2
+    'members' => 'Members',
+    'member_name' => 'Name',
+    'line_id' => 'Line ID',
+    'social_login' => 'Social Login',
+
     // A13 / A14 Property Form
     'property_editing' => 'Property Editing',
     'new_property_create' => 'New Property Create',
