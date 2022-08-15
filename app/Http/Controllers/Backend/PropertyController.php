@@ -298,6 +298,7 @@ class PropertyController extends Controller
         $data['page_title'] = __('label.property_editing');
         $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
+        $data['publication_statuses'] = PropertyPublicationStatus::pluck('label_jp', 'id')->all();
 
         // options for vue select 2 options
         $companies                     = collect(Company::pluck('company_name', 'id')->all());
@@ -363,6 +364,8 @@ class PropertyController extends Controller
         $distance_closest_station = $data['walking_distance_id'] ?? null;
 
         $edit = Property::find($id);
+        $publicationStatusBeforeUpdate = $edit->publication_status_id;
+
         $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
 
@@ -401,6 +404,11 @@ class PropertyController extends Controller
 
         $edit->update($data);
 
+        // update publication status period if it is changed
+        if($data['publication_status_id'] != $publicationStatusBeforeUpdate){
+            $this->updatePublicationStatus($edit->id);
+        }
+
         $property_plans_old = array();
         foreach($edit->plans as $plan){
             array_push($property_plans_old, $plan->pivot->plan_id);
@@ -418,7 +426,7 @@ class PropertyController extends Controller
         }
         $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
         if($shouldUpdatePropertyStations){
-            $edit->property_stations()->detach();
+            $edit->property_stations()->delete();
             // handle properties stations
             foreach($properties_stations as $ps){
                 PropertiesStations::create([

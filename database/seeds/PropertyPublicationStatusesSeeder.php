@@ -2,6 +2,7 @@
 
 use App\Models\PropertyPublicationStatus;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class PropertyPublicationStatusesSeeder extends Seeder {
     /**
@@ -10,7 +11,10 @@ class PropertyPublicationStatusesSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        PropertyPublicationStatus::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        PropertyPublicationStatus::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $data = new PropertyPublicationStatus();
         $data->insert([
             [
@@ -20,6 +24,10 @@ class PropertyPublicationStatusesSeeder extends Seeder {
             [
                 'label_en' => PropertyPublicationStatus::PUBLISHED_LABEL_EN,
                 'label_jp' => PropertyPublicationStatus::PUBLISHED_LABEL_JP,
+            ],
+            [
+                'label_en' => PropertyPublicationStatus::LIMITED_PUBLISHED_LABEL_EN,
+                'label_jp' => PropertyPublicationStatus::LIMITED_PUBLISHED_LABEL_JP,
             ],
         ]);
     }

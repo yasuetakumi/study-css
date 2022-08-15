@@ -132,6 +132,7 @@ return [
     'clear_btn' => 'クリア',
     'close_btn' => '閉じる',
     'walk_from_nearest_station' => '最寄り駅からの徒歩',
+    'publication_status' => '公開状況',
 
 
 

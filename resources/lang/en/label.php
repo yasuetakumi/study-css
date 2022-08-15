@@ -130,6 +130,7 @@ return [
     'clear_btn' => 'Clear',
     'close_btn' => 'Close',
     'walk_from_nearest_station' => 'Walking Distance from Nearest Station',
+    'publication_status' => 'Publication Status',
 
     //A16
     'company_approval_list' => 'Company Approval List',
