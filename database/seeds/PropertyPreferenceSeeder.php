@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\PropertyPreference;
 use Illuminate\Database\Seeder;
+use App\Models\PropertyPreference;
+use Illuminate\Support\Facades\Schema;
 
 class PropertyPreferenceSeeder extends Seeder
 {
@@ -12,12 +13,15 @@ class PropertyPreferenceSeeder extends Seeder
      */
     public function run()
     {
-        PropertyPreference::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        PropertyPreference::truncate();
+        Schema::enableForeignKeyConstraints();
+        // PropertyPreference::query()->delete();
         $data = new PropertyPreference();
         $data->insert([
             [
                 'label_en'       => 'Roadside',
-                'label_jp'      => ' ロードサイド',
+                'label_jp'      => 'ロードサイド',
             ],
             [
                 'label_en'       => 'Parking Lot',
@@ -29,7 +33,7 @@ class PropertyPreferenceSeeder extends Seeder
             ],
             [
                 'label_en'       => 'Latest property (registered property within 48 hours)',
-                'label_jp'      => ' 最新の物件（48時間以内の登録物件）',
+                'label_jp'      => '最新の物件（48時間以内の登録物件）',
             ],
 
         ]);
