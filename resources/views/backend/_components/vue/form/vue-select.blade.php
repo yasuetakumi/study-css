@@ -24,7 +24,7 @@
                 data-parsley-errors-container = "#errorBlock-{{$name}}"
                 >
             </v-select>
-            <input id="input-{{$name}}" type="text" class="d-none" :value="{{$model}}" name="{{$name}}" {{ !empty($required) ? 'required' : '' }}>
+            <input id="input-{{$name}}" type="text" class="d-none" :value="{{$model}}" name="{{$name}}" {{ !empty($required) && $required != 'false' ? 'required' : '' }}>
             <div id="errorBlock-{{$name}}" class="errorBlock"></div>
         </div>
     </div>

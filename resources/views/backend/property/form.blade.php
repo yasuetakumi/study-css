@@ -54,24 +54,20 @@
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, 'id' => 'property-form',  "page_type" => $page_type, "files" => true])
         {{-- publish button for admin --}}
-        @if($page_type == 'edit' && auth()->guard('web')->check())
-            @component('backend._components.input_button_anchor', [
-                'label' => isset($item) && $item->publication_status_id == 1 ? '保存して掲載する' : '保存して非掲載にする',
-                'value' => isset($item) && $item->publication_status_id == 1 ? '掲載にする' : '非掲載にする',
-                'required' => 0,
-                'route' => isset($item) ? route('admin.publication.status', $item->id) : null
-            ])@endcomponent
+        @if($page_type == 'edit')
+            @component('backend._components.input_radio', ['is_indexed_value' => true, 'options' => $publication_statuses, 'name' => 'publication_status_id', 'label' => __('label.publication_status'), 'value' => $item->publication_status_id, 'required' => false])
+            @endcomponent
         @endif
 
         {{-- publish button for company user --}}
-        @if($page_type == 'edit' && auth()->guard('user')->check())
+        {{-- @if($page_type == 'edit' && auth()->guard('user')->check())
             @component('backend._components.input_button_anchor', [
                 'label' => isset($item) && $item->publication_status_id == 1 ? '保存して掲載する' : '保存して非掲載にする',
                 'value' => isset($item) && $item->publication_status_id == 1 ? '掲載にする' : '非掲載にする',
                 'required' => 0,
                 'route' => isset($item) ? route('company.publication.status', $item->id) : null
             ])@endcomponent
-        @endif
+        @endif --}}
 
         @component('backend._components.vue.form.vue-select', [
             'name'          => 'company_id',
