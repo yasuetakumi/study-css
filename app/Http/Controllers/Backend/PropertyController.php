@@ -30,9 +30,10 @@ use App\Helpers\DatatablesHelper;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Helpers\Select2AjaxHelper;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Models\PropertiesStations;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PropertyPublicationStatus;
 use Illuminate\Support\Facades\Validator;
@@ -402,6 +403,14 @@ class PropertyController extends Controller
         $data['interior_transfer_price'] = fromMan($data['interior_transfer_price']);
         $data['monthly_maintainance_fee'] = fromMan($data['monthly_maintainance_fee']);
 
+        // check publication status id need update
+        $publicationId = (int) $data['publication_status_id'];
+        if(($publicationId == PropertyPublicationStatus::ID_PUBLISHED ||
+            $publicationId == PropertyPublicationStatus::ID_LIMITED_PUBLISHED)
+            && $publicationStatusBeforeUpdate != $publicationId){
+            $data['publication_date'] = Carbon::now();
+        }
+
         $edit->update($data);
 
         // update publication status period if it is changed
@@ -426,6 +435,7 @@ class PropertyController extends Controller
         }
         $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
         if($shouldUpdatePropertyStations){
+            Log::info("message: should update property stations");
             $edit->property_stations()->delete();
             // handle properties stations
             foreach($properties_stations as $ps){
@@ -460,6 +470,7 @@ class PropertyController extends Controller
 
     public function updatePublicationStatus($propertyId)
     {
+        Log::info("message: propertyId");
         $property = Property::find($propertyId);
 
         $previous_period = PropertyPublicationStatusPeriod::where('property_id', $propertyId)->where('is_current_status', 1)->latest();
@@ -499,16 +510,16 @@ class PropertyController extends Controller
         }
 
         // finally update property publication_status_id
-        if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
-            $property->update([
-                'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
-                'publication_date' => Carbon::now(),
-            ]);
-        } else {
-            $property->update([
-                'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
-            ]);
-        }
+        // if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
+        //     $property->update([
+        //         'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
+        //         'publication_date' => Carbon::now(),
+        //     ]);
+        // } else {
+        //     $property->update([
+        //         'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
+        //     ]);
+        // }
 
         return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
