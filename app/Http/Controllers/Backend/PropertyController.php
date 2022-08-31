@@ -75,7 +75,7 @@ class PropertyController extends Controller
 
         if( $param == 'json' ){
 
-            $model = Property::with(['user', 'postcode']);
+            $model = Property::with(['user.company', 'postcode']);
             if(Auth::guard('user')->check()){
                 $model = Property::with(['user', 'postcode']);
                 $model->whereHas('user', function($q){
@@ -91,6 +91,20 @@ class PropertyController extends Controller
                                             ->filterColumn('postcode.postcode', function($query, $keyword){
                                                 $query->whereHas('postcode', function($q) use ($keyword){
                                                     $q->where('postcode', 'like', '%'.$keyword.'%');
+                                                });
+                                            })
+                                            ->filterColumn('user.company.id', function($query, $keyword){
+                                                $query->whereHas('user', function($q) use ($keyword){
+                                                    $q->whereHas('company', function($q) use ($keyword){
+                                                        $q->where('id', 'like', '%'.$keyword.'%');
+                                                    });
+                                                });
+                                            })
+                                            ->filterColumn('user.company.company_name', function($query, $keyword){
+                                                $query->whereHas('user', function($q) use ($keyword){
+                                                    $q->whereHas('company', function($q) use ($keyword){
+                                                        $q->where('company_name', 'like', '%'.$keyword.'%');
+                                                    });
                                                 });
                                             })
                                             ->addColumn('prefecture_city_location', function(Property $property){
