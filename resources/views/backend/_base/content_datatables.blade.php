@@ -207,10 +207,20 @@
             if( $("[data-col=action]").length ){
                 column.push({data: 'action', name: 'action', orderable: false, searchable: false});
             }
-
+            @if (Route::is('admin.property.index'))
+                //  initial order property id (column index 2) for property list
+                var initialOrder = [
+                    [2, 'desc']
+                ];
+            @else
+                var initialOrder = [
+                    [0, 'desc']
+                ];
+            @endif
+            console.log(initialOrder);
             // DATATABLE SETUP
             let table = $('#datatable').DataTable({
-                "order": [[0, "desc"]],
+                "order": initialOrder,
                 "orderCellsTop": true,
                 "fixedHeader": true,
                 "paging": true,

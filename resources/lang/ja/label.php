@@ -125,6 +125,8 @@ return [
 
     // A6
     'last_update_datetime' => '作成日時',
+    'company_id' => '企業ID',
+    'company_name' => '企業名',
 
     // A13 / A14 Property Form
     'property_editing' => '物件編集',

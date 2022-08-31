@@ -123,6 +123,8 @@ return [
 
     // A6
     'last_update_datetime' => 'Last Update',
+    'company_id' => 'Company ID',
+    'company_name' => 'Company Name',
 
     // A13 / A14 Property Form
     'property_editing' => 'Property Editing',

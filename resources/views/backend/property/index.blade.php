@@ -29,6 +29,8 @@
 @endsection
 
 @section('content')
+    <th data-col="user.company.id">@lang('label.company_id')</th>
+    <th data-col="user.company.company_name">@lang('label.company_name')</th>
     <th data-col="id">@lang('label.in_charge_id')</th>
     <th data-col="user.display_name">@if(Request::is('company/*'))@lang('label.administrator') @else @lang('label.in_charge_name') @endif </th>
     <th data-col="postcode.postcode">@lang('label.postcode')</th>
