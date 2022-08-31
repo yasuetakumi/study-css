@@ -20,7 +20,7 @@
     <th data-col="company.company_name">@lang('label.company_name')</th>
     <th data-col="user_role.label" data-select='{!! str_replace("'","`", json_encode($filter_select_columns['user_roles'])) !!}'>@lang('label.user_role')</th>
     <th data-col="email">@lang('label.email')</th>
-    <th data-col="updated_at">@lang('label.last_update')</th>
-    <th data-col="created_at">@lang('label.created_at')</th>
+    <th data-col="updated_at" class="no-sort" data-filter="false">@lang('label.updated_at_datetime')</th>
+    <th data-col="created_at" class="no-sort" data-filter="false">@lang('label.created_at_datetime')</th>
     <th data-col="action">@lang('label.action')</th>
 @endsection

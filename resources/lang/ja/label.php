@@ -81,6 +81,8 @@ return [
     /** =================================== */
     'created_at'             => '作成日',
     'update_at'              => '更新日',
+    'created_at_datetime'    => '作成日時',
+    'updated_at_datetime'    => '更新日時',
     'action'                 => '編集',
     /** Login History====================== */
     'historyLog'             => '管理者ログイン履歴',

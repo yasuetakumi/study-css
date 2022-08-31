@@ -35,8 +35,8 @@
     <th data-col="prefecture_city_location">@lang('label.address')</th>
     <th data-col="man">@lang('label.rent_amount')</th>
     <th data-col="tsubo">@lang('label.surface_area')</th>
-    <th data-col="updated_at">@lang('label.last_update')</th>
-    <th data-col="created_at">@lang('label.created_at')</th>
+    <th data-col="updated_at" class="no-sort" data-filter="false">@lang('label.updated_at_datetime')</th>
+    <th data-col="created_at" class="no-sort" data-filter="false">@lang('label.created_at_datetime')</th>
     <th data-col="action">@lang('label.action')</th>
 @endsection
 
