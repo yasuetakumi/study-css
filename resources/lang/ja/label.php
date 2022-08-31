@@ -188,7 +188,7 @@ return [
     'deposit' => '保証金または敷金',
     'monthly_maintaner' => '権利金または礼金',
     'repayment_conditions' => '解約時の償却情報',
-    'year_built' => '建築日',
+    'year_built' => '築年',
     'renewal_fee' => '更新料',
     'contract_length' => '契約期間',
     'moving_fee' => '造作譲渡料',
