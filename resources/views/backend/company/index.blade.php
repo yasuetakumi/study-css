@@ -30,10 +30,10 @@
 @section('content')
     <th data-col="id">ID</th>
     <th data-col="company_name">@lang('label.company_name')</th>
-    <th data-col="status" data-select='{!! str_replace("'","`", json_encode($filter_select_columns['status'])) !!}'>@lang('label.status')</th>
+    <th data-col="status" width="100" data-select='{!! str_replace("'","`", json_encode($filter_select_columns['status'])) !!}'>@lang('label.status')</th>
     <th data-col="post_code">@lang('label.post_code')</th>
     <th data-col="address">@lang('label.address')</th>
     <th data-col="phone">@lang('label.phone')</th>
-    <th data-col="updated_at">@lang('label.last_update')</th>
+    <th class="no-sort" data-col="updated_at" data-filter="false">@lang('label.last_update_datetime')</th>
     <th data-col="action" width="150">@lang('label.action')</th>
 @endsection

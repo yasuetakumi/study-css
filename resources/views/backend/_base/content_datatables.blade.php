@@ -108,6 +108,8 @@
             @endif
 
             $("[data-col=action]").attr("rowspan", 2).addClass("text-center align-middle actionDatatables");
+            // disable filter on data-filter=false column
+            $("[data-filter=false]").attr("rowspan", 2).addClass("text-center align-middle actionDatatables");
             var column = [];
             // COLUMN SEARCH
             $('#datatable thead tr').clone(true).appendTo('#datatable thead');
@@ -127,6 +129,8 @@
                 var attr = $(this).attr('rowspan');
                 var select = $(this).data('select');
                 var datePicker = $(this).data('datepicker');
+                var filter = $(this).data('filter');
+
                 if (typeof attr !== typeof undefined && attr !== false) {
                     $(this).remove();
                 }
@@ -211,7 +215,7 @@
                 "fixedHeader": true,
                 "paging": true,
                 "lengthChange": true,
-                "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "@lang('label.all')"]],
+                "lengthMenu": [[100, 300, 500, -1], [100, 300, 500, "@lang('label.all')"]],
                 "searching": true,
                 "ordering": true,
                 "info": true,
@@ -225,6 +229,7 @@
                 "ajax": "{{ url()->current() . "/json" }}",
                 "columnDefs": [
                     {"width": "60px", "targets": 0},
+                    {"orderable": false, "targets": 'no-sort'},
                 ],
                 "columns": column,
                 @if(App::isLocale('ja'))

@@ -121,6 +121,9 @@ return [
     'line_id' => 'ＬＩＮＥ ＩＤ',
     'social_login' => 'ログインが可能なＳＮＳ',
 
+    // A6
+    'last_update_datetime' => '作成日時',
+
     // A13 / A14 Property Form
     'property_editing' => '物件編集',
     'new_property_create' => '物件の新規作成',
