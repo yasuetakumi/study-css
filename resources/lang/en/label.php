@@ -78,6 +78,8 @@ return [
     /** =================================== */
     'created_at'             => 'Created at',
     'update_at'              => 'Updated at',
+    'created_at_datetime'    => 'Created at',
+    'updated_at_datetime'    => 'Updated at',
     'action'                 => 'Action',
     /** Login History====================== */
     'historyLog'             => 'Log Activity',
