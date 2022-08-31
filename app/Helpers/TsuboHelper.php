@@ -1,7 +1,7 @@
 <?php
 if(!function_exists('toTsubo')){
-    function toTsubo($value, $sign = false){
-        $result = round($value / 3.30579 );
+    function toTsubo($value, $sign = false, $precision = 0){
+        $result = round($value / 3.30579, $precision);
         if($sign){
             $result = $result . '坪';
         }
@@ -17,8 +17,8 @@ if(!function_exists('fromTsubo')){
 }
 
 if(!function_exists('toMan')){
-    function toMan($value, $sign = false){
-        $result = round($value / 10000);
+    function toMan($value, $sign = false, $precision = 0){
+        $result = round($value / 10000, $precision);
         if($sign){
             $result = $result . '万円';
         }

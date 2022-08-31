@@ -28,7 +28,7 @@
     @component('frontend._components.text_label', ['label' => __('label.prefecture'), 'value' => $item->prefecture_id ? $item->prefecture->display_name : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.cities'), 'value' => $item->city_id ? $item->city->display_name : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.location'), 'value' => $item->location ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area, true): ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area, true, 2): ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
     {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
     @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? manPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
