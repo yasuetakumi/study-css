@@ -119,6 +119,9 @@ return [
     'line_id' => 'Line ID',
     'social_login' => 'Social Login',
 
+    // A6
+    'last_update_datetime' => 'Last Update',
+
     // A13 / A14 Property Form
     'property_editing' => 'Property Editing',
     'new_property_create' => 'New Property Create',
