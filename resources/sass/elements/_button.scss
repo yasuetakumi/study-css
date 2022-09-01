@@ -1,0 +1,1007 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Buttons
+// --------------------------------------------------------------------------
+
+.btn {
+    outline: 0; height: 3rem;
+    background-color: #fff;
+    font-size: 1rem;
+    padding: .75rem 1.25rem;
+    font-weight: bold;
+    border-radius: 2px;
+    overflow: hidden;
+
+    @include inline-block-children;
+
+    @include not-disabled {
+        @include hover-active-focus {
+            outline: 0;
+            background-color: #fff;
+            @include box-shadow( none );
+        }
+    }
+
+    & > .icon + span {
+        margin-left: .375rem;
+    }
+
+    & > .caption {
+        display: block;
+        position: relative;
+        margin-top: 1px;
+        @include inline-block-children;
+        @include transition( transform .6s $easeOutExpo );
+
+        .loader {
+            width: 1.25rem;
+            height: 1.25rem;
+            position: relative;
+
+            & + span { margin-left: .125rem }
+        }
+
+        & ~ .caption-loading {
+            margin-top: 1.5rem;
+        }
+    }
+
+    &.loading {
+        & > .caption {
+            @include translateY( -3.125rem );
+        }
+    }
+}
+
+.btn-navbar {
+    $color: #C8151C;
+
+    width: 10rem;
+    height: 2.625rem;
+    border-radius: 2px;
+    padding: .5625rem 1rem;
+    white-space: nowrap;
+    font-weight: normal;
+
+    .icon {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        @include translate3d( 0, 0, 0 );
+        @include transition( transform .2s $easeOutCubic );
+    }
+
+    @include not-disabled {
+        @include hover-focus {
+            .icon {
+                @include scale3d( 1.2, 1.2, 1 );
+            }
+        }
+    }
+}
+
+.btn-single {
+    height: 2rem;
+    padding: .1875rem .125rem;
+    font-size: .875rem;
+    line-height: 1.5rem;
+    font-weight: normal;
+    border-radius: 0 .75rem .75rem 0;
+}
+
+.btn-sm {
+    height: 1.75rem;
+    font-size: .75rem;
+    line-height: 1.375rem;
+    padding: 0 .625rem;
+
+    .icon {
+        height: .75rem;
+        margin-top: 0;
+        line-height: .9375rem;
+    }
+
+    span + .icon { margin-left: .5rem }
+}
+
+.btn-sm-wide{
+    font-size: 1rem;
+    height: auto;
+    line-height: 1;
+    font-weight: 300;
+    padding: .5rem 2rem;
+    text-align: center;
+}
+@include breakpoint-down(md){
+    .btn-sm-wide{
+        width: 100%;
+    }
+}
+
+.btn-sm-ongoing{
+    padding: 0.625rem 2rem 0.875rem;
+}
+
+.btn-extra-wide{
+    width: 26.25rem;
+    max-width: 100%;
+    @include breakpoint-down( md ){
+        width: 100%;
+    }
+}
+.btn-wide {
+    width: 21.875rem;
+    max-width: 100%;
+    @include breakpoint-down( md ){
+        width: 100%;
+    }
+}
+
+.btn-normal {
+    width: 14.0625rem;
+    max-width: 100%;
+    @include breakpoint-down( md ){
+        width: 100%;
+    }
+}
+
+
+.btn-compact {
+    width: auto;
+    min-width: 10rem;
+    @include breakpoint-down( xs ){
+        min-width: 7.5rem;
+    }
+}
+
+.btn-lg {
+    height: 3.125rem;
+    min-width: 8.75rem;
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+    padding: .5rem 1.25rem;
+}
+
+
+.btn-square {
+    border-radius: 0;
+}
+
+.btn-rounded {
+    border-radius: .5rem;
+}
+
+.btn-primary {
+    $color: #DE8E17;
+
+    color: #fff;
+    background-color: $color;
+    position: relative;
+    padding: 1rem 0;
+    height: auto;
+    font-weight: normal;
+    box-shadow: (0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12));
+    border: 1px solid transparent;
+
+    &.caret{
+        &:after{
+            position: absolute;
+            right: 1rem;
+            top:50%;
+            content: '\63';
+            @include app-icon;
+            @include translateY( -50% );
+            @include transition( right .5s $easeOutExpo );
+        }
+    }
+    span{
+        vertical-align: top;
+    }
+
+    &:focus{
+        outline: none;
+    }
+
+    &:hover{
+        border:1px solid $color;
+        background: #fff;
+        color: $color;
+        box-shadow:0px 6px 5px 0px #00000029 !important;
+
+        &.caret{
+            &:after{
+                right: .625rem;
+            }
+        }
+    }
+}
+
+.btn-contruction{
+    $color: #BBA75C;
+
+    color: #fff;
+    background-color: $color;
+    position: relative;
+    padding: 1rem 0;
+    height: auto;
+    font-weight: normal;
+    box-shadow: (0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12));
+    border: 1px solid transparent;
+
+    &.caret{
+        &:after{
+            position: absolute;
+            right: 1rem;
+            top:50%;
+            content: '\63';
+            @include app-icon;
+            @include translateY( -50% );
+            @include transition( right .5s $easeOutExpo );
+        }
+    }
+    span{
+        vertical-align: top;
+    }
+
+    &:focus{
+        outline: none;
+    }
+
+    &:hover{
+        border:1px solid $color;
+        background: #fff;
+        color: $color;
+        box-shadow:0px 6px 5px 0px #00000029 !important;
+
+        &.caret{
+            &:after{
+                right: .625rem;
+            }
+        }
+    }
+}
+
+.btn-secondary {
+    $color: #AACF52;
+
+    border: 0;
+    color: #fff;
+    background-color: $color;
+    @include not-disabled {
+        @include hover-focus {
+            background-color: lighten( $color, 5% );
+        }
+        @include active {
+            background-color: lighten( $color, 10% );
+        }
+    }
+}
+
+.btn-accent {
+    $color: #C8B572;
+
+    border: 0;
+    color: #fff;
+    font-weight: 400;
+    border-radius: .125rem;
+    background-color: $color;
+
+    @include not-disabled {
+        @include hover-focus {
+            color: #fff;
+            background-color: lighten( $color, 5% );
+        }
+        @include active {
+            color: #fff;
+            background-color: lighten( $color, 10% );
+        }
+    }
+}
+
+.btn-outline {
+    &.btn-primary {
+        $color: #C8151C;
+        color: $color;
+        border: 1px solid $color;
+        background-color: transparent;
+        @include not-disabled {
+            @include hover-active-focus {
+                background-color: transparent;
+            }
+            @include hover-focus {
+                color: lighten( $color, 8% );
+                border-color: lighten( $color, 8% );
+            }
+            @include active {
+                color: lighten( $color, 12% );
+                border-color: lighten( $color, 12% );
+            }
+        }
+    }
+    &.btn-secondary {
+        $color: #C8151C;
+        color: $color;
+        border: 1px solid $color;
+        background-color: transparent;
+        @include not-disabled {
+            @include hover-active-focus {
+                background-color: transparent;
+            }
+            @include hover-focus {
+                color: lighten( $color, 8% );
+                border-color: lighten( $color, 8% );
+            }
+            @include active {
+                color: lighten( $color, 12% );
+                border-color: lighten( $color, 12% );
+            }
+        }
+    }
+    &.btn-solid {
+        background-color: #fff;
+        @include not-disabled {
+            @include hover-active-focus {
+                background-color: #fff;
+            }
+        }
+    }
+    &.btn-green {
+        $color: #73BD59;
+        color: $color;
+        border: 1px solid $color;
+        background-color: transparent;
+        @include not-disabled {
+            @include hover-active-focus {
+                background-color: transparent;
+            }
+            @include hover-focus {
+                color: lighten( $color, 8% );
+                border-color: lighten( $color, 8% );
+            }
+            @include active {
+                color: lighten( $color, 12% );
+                border-color: lighten( $color, 12% );
+            }
+        }
+    }
+}
+
+.btn-contact {
+    height: 3.25rem;
+}
+
+.btn-loadmore {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: .5rem 1.25rem .625rem;
+    @include transition( all .4s $easeOutExpo );
+
+    &.btn-primary {
+        $border: #C8151C;
+        @include not-disabled {
+            @include hover-active-focus {
+                @include box-shadow( inset 0 0 0 1px $border !important );
+            }
+        }
+    }
+    &.btn-secondary {
+        $border: #FE7032;
+        @include not-disabled {
+            @include hover-active-focus {
+                @include box-shadow( inset 0 0 0 1px $border !important );
+            }
+        }
+    }
+}
+
+.btn-filter {
+    height: 2rem;
+    min-width: 6rem;
+    font-size: .75rem;
+    padding: .375rem .625rem;
+}
+
+.btn-arrow-right{
+    background: transparent;
+    color:#666;
+    border:1px solid #666;
+    border-radius: 0;
+    height: auto;
+    padding: 0.9375rem 0;
+    position: relative;
+    @include transition(.4s all $easeOutExpo!important);
+
+    &.btn-white{
+        color:#fff;
+        border:1px solid #fff;
+    }
+    &.btn-bg-white{
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    &:after{
+        position: absolute;
+        top:50%;
+        right: 1.5rem;
+        font-size: 0.625rem;
+        content:'\e801';
+        @include arrow-icon;
+        @include translateY( -50% );
+        @include transition( right .8s $easeOutExpo );
+
+    }
+
+    .fa-external-link-alt{
+        font-size: 0.875rem;
+        vertical-align: top;
+        padding: 0 1rem;
+    }
+
+    @include not-disabled {
+        @include hover-focus {
+            color: #fff;
+            background: #C8B572;
+            border:1px solid #C8B572;
+            @include transition(.4s all $easeOutExpo);
+
+            &:after{
+                right: 1rem;
+            }
+        }
+    }
+
+    span{
+        font-weight: 300;
+        font-size: 1rem;
+    }
+}
+.btn-arrow-left{
+    background: transparent;
+    color:#666;
+    border:1px solid #666;
+    border-radius: 0;
+    height: auto;
+    padding: 0.9375rem 0;
+    position: relative;
+    @include transition(.4s all $easeOutExpo!important);
+
+    &.btn-white{
+        color:#fff;
+        border:1px solid #fff;
+    }
+    &.btn-bg-white{
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    &:after{
+        position: absolute;
+        top:50%;
+        left: 1.5rem;
+        font-size: 0.625rem;
+        content:'\e800';
+        @include arrow-icon;
+        @include translateY( -50% );
+        @include transition( left .8s $easeOutExpo );
+
+    }
+
+    .fa-external-link-alt{
+        font-size: 0.875rem;
+        vertical-align: top;
+        padding: 0 1rem;
+    }
+
+    @include not-disabled {
+        @include hover-focus {
+            color: #fff;
+            background: #C8B572;
+            border:1px solid #C8B572;
+            @include transition(.4s all $easeOutExpo);
+
+            &:after{
+                left: 1rem;
+            }
+        }
+    }
+
+    span{
+        font-weight: 300;
+        font-size: 1rem;
+    }
+}
+
+.btn-list{
+    background: transparent;
+    color:#666;
+    border:1px solid #666;
+    border-radius: 0;
+    padding: 0.9375rem 0;
+    height: auto;
+    position: relative;
+    @include transition(.2s all $easeOutExpo!important);
+
+    .fa-external-link-alt{
+        font-size: 0.875rem;
+        vertical-align: top;
+        padding: 0 1rem;
+    }
+
+    .arrow-right{
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        @include translateY(-50%);
+        @include transition(600ms all $easeOutExpo);
+    }
+    .arrow-right-hover{
+        position: absolute;
+        right:1.5rem;
+        top: 50%;
+        @include translateY(-50%);
+        opacity: 0;
+        @include transition(600ms all $easeOutExpo);
+    }
+
+    .arrow-left{
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        @include translateY(-50%);
+        @include transition(600ms all $easeOutExpo);
+    }
+    .arrow-left-hover{
+        position: absolute;
+        left:1.5rem;
+        top: 50%;
+        @include translateY(-50%);
+        opacity: 0;
+        @include transition(600ms all $easeOutExpo);
+    }
+
+    @include not-disabled {
+        @include hover-focus {
+            color: #fff;
+            background: #C8B572;
+            border:1px solid #C8B572;
+            @include transition(600ms all $easeOutExpo);
+
+            .arrow-right{
+                opacity: 0;
+            }
+            .arrow-right-hover{
+                right: 0.9375rem;
+                opacity: 1;
+            }
+            .arrow-left{
+                opacity: 0;
+            }
+            .arrow-left-hover{
+                left: 0.9375rem;
+                opacity: 1;
+            }
+        }
+    }
+
+    span{
+        font-weight: 300;
+        vertical-align: -webkit-baseline-middle;
+    }
+}
+.btn-group-toggle {
+
+    & > .btn-group, & > .btn {
+        &:not(:first-child) { margin-left: 0 }
+    }
+
+    .btn-toggle {
+        $bg-default: #ECE9E6;
+        $bg-active: #C8151C;
+
+        border: 0;
+        font-weight: normal;
+        background-color: $bg-default;
+        @include not-disabled {
+            @include hover-focus {
+                background-color: darken( $bg-default, 10% );
+            }
+        }
+
+        &.active {
+            color: #fff;
+            background-color: $bg-active;
+
+            @include not-disabled {
+                @include hover-focus {
+                    background-color: darken( $bg-active, 10% );
+                }
+            }
+        }
+    }
+
+    &.separator {
+        padding: 0;
+        .btn-toggle + .btn-toggle {
+            &:before {
+                z-index: 90;
+                position: absolute;
+                width: .125rem; content: '';
+                background-color: #F7F7F7;
+                left: -1px; top: .25rem; bottom: .25rem;
+            }
+        }
+    }
+}
+// --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
+
+// Button Link page
+// --------------------------------------------------------------------------
+.btn-link-page{
+
+    .link-row:hover a .btn-content .image-cover img{
+        @include transform(scale(1.05));
+    }
+
+    a{
+        display: block;
+        .btn-content{
+            position: relative;
+            @include flexbox;
+            .image-cover{
+                min-width: 7.6875rem;
+                min-height: 7.8125rem;
+                max-height: 8.75rem;
+                position: relative;
+                overflow: hidden;
+
+
+                img{
+                    width: 100%;
+                    max-width: 7.6875rem;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                    @include transition(transform .35s ease);
+                }
+
+
+
+                @include breakpoint-down(md){
+                    img{
+                        height: 100%;
+                        max-width: 12.5rem;
+                    }
+                }
+            }
+            @include breakpoint-down(md){
+                .image-cover{
+                    min-width: 6.25rem;
+                    min-height: 7.5rem;
+                    max-height: 7.5rem;
+                }
+            }
+            .box-text{
+                padding: 1.5rem 2rem;
+                width: 100%;
+                @media screen and (max-width: 1100px){
+                    padding: 1.5rem 1rem;
+                }
+                .dates{
+                    font-size: .875rem;
+                    color: #606060;
+                    line-height: 1.5;
+                    margin-bottom: 0;
+                }
+                .title-name{
+                    position: relative;
+                    @include flexbox;
+                    margin: .5rem 0;
+                    .jp{
+                        font-size: 1.125rem;
+                        line-height: 1.5;
+                        color: #606060;
+                        font-weight: 600;
+                        @media screen and (min-width:768px) and (max-width: 1200px){
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            max-width: 5.9375rem;
+                        }
+                    }
+                    .en{
+                        @include flex;
+                        font-size: .75rem;
+                        line-height: 1.5;
+                        color: #0C8A3E;
+                        position: relative;
+                        top: 0.3125rem;
+                        vertical-align: middle;
+                        padding-left: .5rem;
+                        @media screen and (min-width:768px) and (max-width: 1200px){
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            max-width: 5.9375rem;
+                        }
+                        @media screen and (max-width: 420px){
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            max-width: 5.9375rem;
+                        }
+                    }
+                }
+                .position{
+                    color: #606060;
+                    line-height: 1.5;
+                }
+            }
+            @include breakpoint-down(md){
+                .box-text{
+                    padding: 1.5rem 0.5rem 0;
+                }
+            }
+            @media screen and (max-width: 500px){
+                .box-text{
+                    padding: 1rem 1rem 0;
+                }
+            }
+        }
+    }
+    .link-row{
+        box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1), 0 0px 4px rgba(0, 0, 0, 0.1);
+        .arrow-left{
+            background: #C8B572;
+            min-width: 2.5rem;
+            @include breakpoint-down(md){
+                min-width: 1.5rem;
+            }
+            @media screen and (max-width: 340px){
+                min-width: 2rem;
+            }
+            &:after{
+                content:'\62';
+                position: absolute;
+                text-align: center;
+                color: #fff;
+                padding: 0 .625rem;
+                top:50%;
+                font-size: 1.25rem;
+                @include app-icon;
+                @include translateY( -50% );
+                @include transition( transform .4s $easeOutExpo );
+
+                @include breakpoint-down(md){
+                    padding: 0 .125rem;
+                }
+                @media screen and (max-width: 340px){
+                    padding: 0 0.3125rem;
+                }
+            }
+        }
+        .arrow-right{
+            background: #C8B572;
+            min-width: 2.5rem;
+            @include breakpoint-down(md){
+                min-width: 1.5rem;
+            }
+            @media screen and (max-width: 340px){
+                min-width: 2rem;
+            }
+            &:after{
+                content:'\63';
+                position: absolute;
+                text-align: center;
+                color: #fff;
+                padding: 0 .625rem;
+                top:50%;
+                font-size: 1.25rem;
+                @include app-icon;
+                @include translateY( -50% );
+                @include transition( transform .4s $easeOutExpo );
+
+                @include breakpoint-down(md){
+                    padding: 0 .125rem;
+                }
+
+                @media screen and (max-width: 340px){
+                    padding: 0 0.3125rem;
+                }
+            }
+        }
+    }
+}
+
+.btn-form-control{
+    transition: 600ms all ease;
+
+    &:hover{
+        background: #C8151C!important;
+        color: #fff!important;
+    }
+}
+
+.btn-top-nav{
+    font-weight: bold;
+    background: transparent;
+    border: 1px solid #FFFFFF;
+    width: 17.5rem;
+    padding: .875rem 1rem;
+    line-height: 1;
+    color: #FFFFFF;
+    border-radius: 0px;
+    box-shadow: inset 0 0 0 0 #24B2BE;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -mz-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+
+    &:hover{
+        background: transparent!important;
+        border: 1px solid #FFFFFF;
+        color: #FFFFFF;
+        box-shadow: inset 17.5rem 0 0 0 #24B2BE!important;
+    }
+}
+
+.btn-download{
+    background: #3098A8;
+    border-radius: 3.125rem;
+    font-size: 1.5rem;
+    border-radius: 3.125rem;
+    color: #FFFFFF;
+    padding: 1.5rem 1rem;
+    width: 28.125rem;
+    height: 5rem;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -mz-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    @include breakpoint-down(sm){
+        width: 100%;
+        height: auto;
+        font-size: 1.125rem;
+    }
+
+    &:hover, &:focus{
+        outline: none;
+        background: #3098A8!important;
+        opacity: 0.8;
+        color: #FFFFFF;
+    }
+}
+
+.btn-main{
+    font-weight: bold;
+    background: transparent;
+    border: 1px solid #333;
+    font-size: 1.125rem;
+    width: 28.125rem;
+    height: 5rem;
+    border-radius: 0px;
+    padding: 1.5rem 1rem;
+    position: relative;
+    box-shadow: inset 0 0 0 0 #000000;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -mz-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    @include breakpoint-down(xs){
+        width: 100%;
+    }
+
+    &::before{
+        content: "";
+        border-right: 1px solid;
+        position: absolute;
+        height: 4rem;
+        left: .5rem;
+        top: .4375rem;
+    }
+
+    &::after{
+        content: "";
+        border-right: 1px solid;
+        position: absolute;
+        height: 4rem;
+        right: .5rem;
+        top: .4375rem;
+    }
+
+    &:hover{
+        color: #FFFFFF;
+        box-shadow: inset 28.125rem 0 0 0 #000000!important;
+        @include breakpoint-down(sm){
+            color: #000000;
+            box-shadow: none!important;
+        }
+
+        svg{
+            fill: #FFFFFF!important;
+
+            path{
+                stroke: #FFFFFF!important;
+                @include breakpoint-down(sm){
+                    stroke: #000000!important;
+                }
+            }
+        }
+    }
+
+    .wrap-icon{
+        padding-left: 1.5rem;
+        @include breakpoint-down(xs){
+            padding: 0;
+        }
+
+        svg, .img-icon{
+            position: relative;
+            top: -.25rem;
+        }
+    }
+}
+
+.btn-sub-main{
+    font-weight: bold;
+    background: #3098A8;
+    border: 1px solid #3098A8;
+    font-size: 1rem;
+    color: #FFFFFF;
+    width: 8.125rem;
+    height: 2.5rem;
+    border-radius: 0px;
+    padding: .4rem;
+    border-radius: .25rem;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -mz-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+
+    &:hover{
+        background: #24B2BE!important;
+        border-color: #24B2BE!important;
+        color: #FFFFFF;
+    }
+}
+.btn-to-contact{
+    position: relative;
+    display: block;
+    font-weight: bold;
+    background: #ff7701;
+    width: 28.125rem;
+    padding: .875rem 1rem;
+    line-height: 1;
+    color: #FFFFFF;
+    border-radius: 0px;
+    @include transition(.4s);
+    opacity: 1;
+
+    @include breakpoint-down(md){
+        width: 100%;
+    }
+
+    &:hover, &:focus, &:active{
+        opacity: .8;
+        background: #ff7701!important;
+        color: #FFFFFF!important;
+    }
+
+    .wrap-icon{
+        position: relative;
+        padding-left: 1.5rem;
+        top: -4px;
+
+        svg{
+            fill: #FFFFFF!important;
+
+            path{
+                stroke: #FFFFFF!important;
+            }
+        }
+    }
+}

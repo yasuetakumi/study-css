@@ -1,0 +1,165 @@
+/*
+Author: Grune Technologi Indonesia
+Author URI: https://grune.co.jp/
+Description: Grune Css Template footers css
+*/
+
+/* footer01 */
+#footer01 {
+	background-color: #000000;
+	color: #fff;
+	font-family: 'Hiragino Kaku Gothic Pro W3';
+}
+#footer01 .col-logo {
+	margin-top: 24px;
+}
+#footer01 .nav-footer-left {
+	font-size: 13px;
+	float: left;
+}
+#footer01 .nav-footer-right {
+	font-size: 12px;
+	float: right;
+}
+#footer01 .nav-footer-left .nav-link {
+	padding-left: 0;
+}
+#footer01 .nav-footer-right .nav-link{
+	padding-right: 0;
+}
+#footer01 .nav-link {
+	color: #fff;
+}
+#footer01 .nav-link:hover {
+	color: #ccc;
+}
+#footer01 .col-footer-menu {
+	margin-top: 2px;
+}
+#footer01 .text-cp {
+	padding-bottom: 2px;
+}
+@media screen and (max-width: 768px) {
+	#footer01 .text-cp, #footer01 .col-footer-menu {
+		/* text-align: center; */
+		margin: 0 auto;
+		display: block;
+	}
+	#footer01 .nav-footer-right, #footer01 .nav-footer-left {
+		display: inline-flex;
+		float: none;
+	}
+	#footer01 .nav-footer-right .nav-link, #footer01 .nav-footer-left .nav-link {
+		padding: .5rem 1rem;
+	}
+	#footer01 .container {
+		max-width: 100% !important;
+	}
+}
+@media screen and (max-width: 545px) {
+	#footer01 .nav-footer-left {
+		display: block;
+	}
+}
+/* .footer01 */
+
+
+/* footer02 */
+#footer02 {
+	background: url('http://ichinokura.gruneasia.info/static/img/bg.png');
+	color: #333;
+	font-family: 'Hiragino Kaku Gothic Pro W3';
+	font-size: 14px;
+}
+#footer02 .list-menu{
+	-moz-column-count:3;
+	-webkit-column-count:3;
+	column-count:3;
+}
+#footer02 .footer-content{
+	padding: 90px 0 100px 0;
+}
+#footer02 .col-footer-menu li a{
+	color: currentcolor;
+	text-decoration: none;
+	position: relative;
+	-webkit-transition: 0.3s linear 0s;
+	-moz-transition: 0.3s linear 0s;
+	-ms-transition: 0.3s linear 0s;
+	-o-transition: 0.3s linear 0s;
+	transition: 0.3s linear 0s;
+	padding: 5px 0;
+	display: block;
+}
+#footer02 .col-footer-menu li a:before{
+	content: url(../../imgs/components/headers/grey-small-logo.png);
+	padding-right: 8px;
+	bottom: -5px;
+	position: relative;
+	transition: all 0.3s linear 0s;
+}
+#footer02 .col-footer-menu li a:hover:before{
+	content: url(../../imgs/components/headers/red-small-logo.png);
+}
+
+#footer02 .col-footer-menu li a:hover{
+	color: #ee0000;
+}
+#footer02  a{
+	display: block;
+}
+#footer02 .nav-footer-left {
+	font-size: 13px;
+	float: left;
+}
+#footer02 .nav-footer-right {
+	font-size: 12px;
+	float: right;
+}
+#footer02 .nav-footer-left .nav-link {
+	padding-left: 0;
+}
+#footer02 .nav-footer-right .nav-link{
+	padding-right: 0;
+}
+#footer02 .nav-link {
+	color: #fff;
+}
+#footer02 .col-logo{
+	margin-bottom: 24px;
+}
+#footer02 .col-logo .address{
+	margin: 5px 0;
+}
+#footer02 .nav-link:hover {
+	color: #ccc;
+}
+#footer02 .copyright{
+	font-family: "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
+	font-size: 10px;
+	padding-bottom: 16px;
+}
+@media screen and (max-width: 768px) {
+	#footer02 .col-footer-menu{
+		text-align: left;
+	}
+	#footer02 .footer-content {
+		padding: 50px 0;
+	}
+}
+@media screen and (max-width: 545px) {
+	#footer02 .list-menu{
+		-moz-column-count:2;
+		-webkit-column-count:2;
+		column-count:2;
+	}
+	#footer02 .footer-content {
+		padding: 50px 0;
+	}
+}
+@media screen and (max-width: 410px) {
+	#footer02{
+		font-size: 12px;
+	}
+}
+/* .footer02 */

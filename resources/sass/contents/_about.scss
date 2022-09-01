@@ -1,0 +1,115 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// About page
+// --------------------------------------------------------------------------
+.about-content{
+    .desc-switches{
+        margin: 0 0 4rem;
+        @include breakpoint-down(sm){
+            margin: 0 0 3rem;
+        }
+    }
+
+    .image-switches{
+        margin: 0!important;
+    }
+
+    .table-contract{
+        margin-bottom: 0;
+        @include breakpoint-down(sm){
+            display: none;
+        }
+
+        tr, th{
+            height: 0!important;
+        }
+
+        tr, td, th{
+            height: 5.3125rem;
+            vertical-align: middle;
+            border-top: 0;
+            border-bottom: 0;
+        }
+
+        tbody tr:nth-of-type(odd){
+            background-color: #EFFEFF;
+        }
+    }
+
+    .contract-list-mobile{
+        display: none;
+        @include breakpoint-down(sm){
+            display: block;
+        }
+
+        .list-content{
+            margin-bottom: 2rem;
+
+            .list-title{
+                font-weight: bold;
+                margin-bottom: .5rem;
+            }
+
+            ul{
+                display: flex;
+                background-color: #EFFEFF;
+                width: 100%;
+                margin-bottom: .5rem;
+
+                li{
+                    padding: 1rem;
+                }
+
+                li.h-title{
+                    width: 30%;
+                    font-weight: bold;
+                    text-align: left;
+                }
+
+                li.h-desc{
+                    width: 70%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    .innerset-auto{
+        margin-bottom: 0!important;
+        @include breakpoint-down(sm){
+            margin-bottom: 2rem!important;
+        }
+    }
+
+    .benefit-content, .innerset-auto{
+        margin-bottom: 3rem;
+
+        .b-header{
+            height: 4rem;
+            background-color: #EFFEFF;
+
+            .title{
+                font-size: 1.125rem;
+                font-weight: bold;
+                padding: 1.125rem 0;
+            }
+        }
+
+        .b-image{
+            margin: 2rem 0 1.5rem;
+
+            .img-block{
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        .b-text{
+            text-align: left;
+        }
+    }
+}
