@@ -97,7 +97,7 @@
             'url'               => route('select2.postcode'),
             'value'             => $item->postcode_id ?? ''])
         @endcomponent
-        @component('backend._components.input_select_ajax',[
+        {{-- @component('backend._components.input_select_ajax',[
             'name'              => 'prefecture_id',
             'options'           => [empty($item->prefecture->display_name) ? '' : $item->prefecture->display_name],
             'label'             => __('label.prefecture'),
@@ -112,7 +112,27 @@
             'required'          => 1,
             'url'               => route('select2.city'),
             'value'             => $item->city_id ?? ''])
-        @endcomponent
+        @endcomponent --}}
+        @component('backend._components.vue.form.vue-select', [
+            'name'          => 'prefecture_id',
+            'label'         => __('label.prefecture'),
+            'label_select'  => 'text',
+            'required'      => 'true',
+            'options'       => 'prefectures',
+            'model'         => 'items.prefecture_city_id',
+            'method'        => 'handleSelectPrefectureCity',
+            'disabled'      => 'false',
+        ])@endcomponent
+
+        @component('backend._components.vue.form.vue-select', [
+            'name'          => 'city_id',
+            'label'         => __('label.cities'),
+            'label_select'  => 'text',
+            'required'      => 'true',
+            'options'       => 'items.list_city',
+            'model'         => 'items.city_id',
+            'disabled'      => 'false',
+        ])@endcomponent
 
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
         @component('backend.property.components.station')@endcomponent
@@ -290,6 +310,10 @@
                     list_stations: [],
                     selected_stations: [],
                     select_nearest_station: null,
+
+                    prefecture_city_id: null,
+                    list_city: [],
+                    city_id: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -313,6 +337,8 @@
                 this.items.company_id = item.user.company.id;
                 this.items.user_id = item.user_id;
                 this.items.property_id = item.id;
+                this.items.prefecture_city_id = item.prefecture_id;
+                this.items.city_id = item.city_id;
                 this.setVisitedProperty();
 
                 var property_stations = item.property_stations ?? [];
@@ -327,8 +353,6 @@
                     this.getStationLineByPrefecture(this.items.prefecture_id);
                 }
 
-
-
             }
             if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
@@ -338,6 +362,7 @@
             }
 
             this.handleSelectCompany();
+            this.handleSelectPrefectureCity();
             if(@json($page_type) != 'detail'){
                 this.changePlanBySurfaceArea();
             }
@@ -694,6 +719,9 @@
                     this.getStationLineByPrefecture(this.items.prefecture_id);
                 }
             },
+            handleSelectPrefectureCity: function(){
+                this.getCityByPrefecture();
+            },
             handleSelectStationLine: function(){
                 this.items.list_stations = [];
                 this.items.selected_stations = [];
@@ -719,6 +747,29 @@
                     }).catch((err) => {
                         console.log(err);
                     });
+            },
+            getCityByPrefecture: function(){
+                if(this.items.prefecture_city_id == null){
+                    axios.get(root_url + '/api/v1/city/getCityByPrefectureSelect2')
+                    .then((result) => {
+                        this.items.list_city = result.data;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                } else {
+                    axios.get(root_url + '/api/v1/city/getCityByPrefectureSelect2/' + this.items.prefecture_city_id)
+                    .then((result) => {
+                        this.items.list_city = result.data;
+                        if(this.items.city_id != null){
+                            const filtered = this.items.list_city.filter(el => el.id == this.items.city_id);
+                            if(filtered.length == 0){
+                                this.items.city_id = null;
+                            }
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
             },
             clearAll: function(){
                 this.items.selected_stations = [];
