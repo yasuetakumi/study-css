@@ -293,10 +293,291 @@
                         </div>
                     </div>
 				</div>
+
+                <div class="page-body mt-lg-64 pb-0">
+                    <div class="row mt-5 px-2 px-lg-0">
+                        <div class="col-12 advantage-frame shadow py-5 border-0">
+                            <div class="desc-content">
+                                <h3 class="title-desc ff-base font-weight-bold desc-about d-flex flex-lg-row flex-column align-items-center justify-content-center">
+                                    <img class="mr-1" src="{{asset('assets/img/logo.png')}}" alt="">
+                                    はなぜ掲載料無料なのか？
+                                </h3>
+                                <p class="mt-5 mb-4 text-blue-primary fs-18 font-weight-bold">弊社は内装業を主収益としているので、<br class="d-lg-none"> 掲載料・成約手数料をいただく必要がございません。</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-7 col-12">
+                                        <img class="w-100 px-2" src="{{asset('assets/img/engineer.png')}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+
+                <div class="page-body mt-lg-64 pb-0">
+                    <div class="row justify-content-center">
+                        <div class="position-relative col-md-4 col-12 mb-4 mb-lg-0">
+                            <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
+                            <div class="frame-banner">
+                                <p class="text-banner">掲載料基本<span>無料</span></p>
+                                <p class="text-sub-banner">※登録後、再登録で無料になります。</p>
+                            </div>
+                        </div>
+
+                        <div class="position-relative col-md-4 col-12">
+                            <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
+                            <div class="frame-banner">
+                                <p class="text-banner">成約手数料<span>無料</span></p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7 col-12 mt-5">
+                            <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2">
+                                <img class="align-self-center mx-2 icon-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="">掲載お問合せはコチラ【無料】
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
 			</div>
 		</div>
 	</div>
 </div>
 <!-- End -->
 
+{{-- Member --}}
+<div class="section-wrapper dev-team-content">
+    <div class="content-blue">
+        <div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="row justify-content-center">
+						<div class="col-12 col-lg-8">
+							<div class="page-header">
+								<p class="heading-title text-uppercase">（仮）MEMBERS ONLY</p>
+								<h2 class="sub-title ff-base font-weight-bold">会員限定の未公開物件</h2>
+							</div>
+						</div>
+					</div>
+                    <div class="page-body">
+                        <div class="col-12 bg-white d-flex align-items-center justify-content-center" style="height: 500px">
+                            <p>（仮）内容確定後反映</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FLow -->
+<div class="section-wrapper flow-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="row justify-content-center">
+					<div class="col-12 col-lg-8">
+						<div class="page-header">
+							<p class="heading-title text-uppercase">flow</p>
+							<h2 class="sub-title ff-base font-weight-bold">開発までの流れ</h2>
+						</div>
+					</div>
+				</div>
+
+				<div class="page-body">
+					<div class="row justify-content-between">
+						<div class="col-12 col-md-6 col-lg-4">
+							<div class="flow-list-content line-01">
+								<div class="wrap-box">
+									<img src="{{asset('assets/img/flow-1.png')}}" class="img-cover lozad" alt="Flow 1">
+								</div>
+
+								<div class="wrap-desc">
+									<div class="d-title">
+										<div class="row content-center">
+											<div class="col-12 sect-top">
+												<div class="row">
+													<div class="col-12 col-lg-4">
+														<div class="sect-number">
+															<p class="sn-title">01</p>
+														</div>
+													</div>
+
+													<div class="col-12 col-lg-8 p-0">
+														<div class="sect-heading">
+															<h3 class="ff-base sh-title">掲載お問い合わせ</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="sect-caption">
+										<p class="sc-desc">御社名、所在地などをお知らせください。</p>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="d-none d-lg-block col line-01-02-wrapper px-0">
+                            <div class="line-01-02">
+                            </div>
+                        </div>
+
+						<div class="col-12 col-md-6 col-lg-4">
+							<div class="flow-list-content line-02">
+								<div class="wrap-box">
+									<img src="{{asset('assets/img/flow-2.png')}}" class="img-cover lozad" alt="Flow 2">
+								</div>
+
+								<div class="wrap-desc">
+									<div class="d-title">
+										<div class="row content-center">
+											<div class="col-12 sect-top">
+												<div class="row">
+													<div class="col-12 col-lg-4">
+														<div class="sect-number">
+															<p class="sn-title">02</p>
+														</div>
+													</div>
+
+													<div class="col-12 col-lg-8 p-0">
+														<div class="sect-heading">
+															<h3 class="ff-base sh-title">宅建免許証のコピーをご提出ください。</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="sect-caption">
+										<p class="sc-desc">要件に応じた経験、スキルのメンバーと体制をご提案します。</p>
+                                        <p class="fs-14">※審査結果によってはご掲載いただけないケースもございます。ご了承ください。</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+                    <div class="row justify-content-center d-none d-lg-flex">
+                        <div class="col-6 py-5 position-relative">
+                            <div class="line-02-03 w-100 my-5">
+                            </div>
+                            <div class="label-flow-overlap px-3 py-1">
+                                3-5営業日程度
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4">
+							<div class="flow-list-content line-03">
+								<div class="wrap-box">
+									<img src="{{asset('assets/img/flow-3.png')}}" class="img-cover lozad" alt="Flow 3">
+								</div>
+
+								<div class="wrap-desc">
+									<div class="d-title">
+										<div class="row content-center">
+											<div class="col-7 sect-top">
+												<div class="row">
+													<div class="col-12 col-lg-4">
+														<div class="sect-number">
+															<p class="sn-title">03</p>
+														</div>
+													</div>
+
+													<div class="col-12 col-lg-8 p-0">
+														<div class="sect-heading">
+															<h3 class="ff-base sh-title">システムID送付</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="sect-caption">
+										<p class="sc-desc">ご利用にあたって必要なID/PWをメールします。</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 col-md-6 col-lg-4">
+							<div class="flow-list-content line-04">
+								<div class="wrap-box">
+									<img style="height: 5rem; margin-top: 1.5rem" src="{{asset('assets/img/flow-4.png')}}" class="img-cover lozad" alt="Flow 4">
+								</div>
+
+								<div class="wrap-desc">
+									<div class="d-title">
+										<div class="row content-center">
+											<div class="col-7 col-lg-10 sect-top">
+												<div class="row">
+													<div class="col-12 col-lg-3">
+														<div class="sect-number">
+															<p class="sn-title">04</p>
+														</div>
+													</div>
+
+													<div class="col-12 col-lg-9 p-0">
+														<div class="sect-heading">
+															<h3 class="ff-base sh-title">掲載情報登録</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="sect-caption">
+										<p class="sc-desc">掲載情報をご登録ください。</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 col-md-6 col-lg-4">
+							<div class="flow-list-content last-child line-05">
+								<div class="wrap-box">
+									<img src="{{asset('assets/img/flow-5.png')}}" class="img-cover lozad" alt="Flow 5">
+								</div>
+
+								<div class="wrap-desc">
+									<div class="d-title">
+										<div class="row content-center">
+											<div class="col-7 sect-top">
+												<div class="row">
+													<div class="col-12 col-lg-4">
+														<div class="sect-number">
+															<p class="sn-title">05</p>
+														</div>
+													</div>
+
+													<div class="col-12 col-lg-8 p-0">
+														<div class="sect-heading">
+															<h3 class="ff-base sh-title pr-1 bg-green-primary text-white py-1 text-center">ご掲載開始</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="sect-caption">
+										<p class="sc-desc">物件登録後すぐに物件が公開されます。</p>
+									</div>
+								</div>
+							</div>
+						</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End -->
 @endsection

@@ -145,38 +145,7 @@
             }
         }
 
-        .frame-banner{
-            position: absolute;
-            width: 100%;
-            top: 42%;
-            left: 50%;
-            transform: translate(-50%, -50%);
 
-            .text-banner{
-                font-size: 2rem;
-                font-weight: 700;
-                // @include breakpoint-down(md){
-                //     font-size: 1.5rem;
-                // }
-                // @include breakpoint-down(sm){
-                //     font-size: 1.2rem;
-                // }
-                span{
-                    font-size: 2.5rem;
-                    color: #FF9708;
-                }
-            }
-            .text-sub-banner{
-                font-size: 1rem;
-                font-weight: 700;
-                // @include breakpoint-down(md){
-                //     font-size: 1rem;
-                // }
-                // @include breakpoint-down(sm){
-                //     font-size: .75rem;
-                // }
-            }
-        }
 
         .border-title{
             border-width: 2px;
@@ -242,5 +211,39 @@
                 font-size: 2.375rem;
             }
         }
+    }
+
+}
+
+.frame-banner{
+    position: absolute;
+    width: 100%;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .text-banner{
+        font-size: 2rem;
+        font-weight: 700;
+        // @include breakpoint-down(md){
+        //     font-size: 1.5rem;
+        // }
+        // @include breakpoint-down(sm){
+        //     font-size: 1.2rem;
+        // }
+        span{
+            font-size: 2.5rem;
+            color: #FF9708;
+        }
+    }
+    .text-sub-banner{
+        font-size: 1rem;
+        font-weight: 700;
+        // @include breakpoint-down(md){
+        //     font-size: 1rem;
+        // }
+        // @include breakpoint-down(sm){
+        //     font-size: .75rem;
+        // }
     }
 }
