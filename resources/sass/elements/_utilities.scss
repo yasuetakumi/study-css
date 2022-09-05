@@ -128,7 +128,24 @@
         margin-top: 4rem!important;
         margin-bottom: 4rem!important;
     }
+    .px-lg-64{
+        padding-left: 4rem!important;
+        padding-right: 4rem!important;
+    }
+    .mx-lg-64{
+        margin-left: 4rem!important;
+        margin-right: 4rem!important;
+    }
 }
+.px-64{
+    padding-left: 4rem!important;
+    padding-right: 4rem!important;
+}
+.mx-64{
+    margin-left: 4rem!important;
+    margin-right: 4rem!important;
+}
+
 .pt-64{
     padding-top: 4rem!important;
     @include breakpoint-down(sm){
@@ -268,6 +285,12 @@
         margin-top: 3rem;
     }
 }
+.mb-32{
+    margin-bottom: 2rem;
+}
+.pb-32{
+    padding-bottom: 2rem;
+}
 // --------------------------------------------------------------------------
 
 .fit-cover { object-fit: cover !important }
@@ -284,4 +307,7 @@
 }
 .fs-10{
     font-size: 0.625rem;
+}
+.bg-black{
+    background-color: #000;
 }

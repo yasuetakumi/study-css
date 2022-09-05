@@ -6,6 +6,8 @@
 // --------------------------------------------------------------------------
 $primary-color : #AACF52;
 $secondary-color: #FF9708;
+$text-primary-color: #333333;
+
 
 .text-green-primary{
     color: $primary-color;
@@ -14,8 +16,12 @@ $secondary-color: #FF9708;
     color: $secondary-color;
 }
 .bg-green-primary{
-    background-color: $primary-color;
+    background-color: $primary-color !important;
 }
+.text-primary{
+    color: $text-primary-color;
+}
+
 
 .section-top{
     position: relative;
@@ -199,6 +205,30 @@ $secondary-color: #FF9708;
         font-size: 1.5rem;
     }
 }
+.faq-wrapper{
+    background-color: #E9E9E9;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    color: $text-primary-color;
+}
+.faq-child{
+    padding: 1rem 1rem;
+    border: 1px solid $primary-color;
+    border-radius: 10px;
+    font-size: .875rem;
+    color: $text-primary-color;
+    margin-bottom: 1rem;
+    p {
+        margin-bottom: 1rem;
+    }
+    .list-content-faq > li{
+        list-style: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+        list-style-position: inside;
+    }
+}
 
 .zoom-content,
 .about-content,
@@ -214,6 +244,14 @@ $secondary-color: #FF9708;
 .contact-content,
 .feature-content,
 .product-content{
+    .team-title-header{
+        font-size: 2rem;
+        font-weight: 700;
+        color: $primary-color;
+        @include breakpoint-down(sm){
+            font-size: 1.5rem;
+        }
+    }
     .page-header{
         border-right: 1px solid;
         border-left: 1px solid;
@@ -1594,6 +1632,75 @@ $secondary-color: #FF9708;
 }
 
 .contact-content{
+    .contact-form {
+        .title-form{
+            color: #707070;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        // placeholder color
+        &::-webkit-input-placeholder{
+            color: #707070;
+            font-size: .875rem;
+        }
+        &:-moz-placeholder{
+            color: #707070;
+            font-size: .875rem;
+        }
+        &::-moz-placeholder{
+            color: #707070;
+            font-size: .875rem;
+        }
+        &:-ms-input-placeholder{
+            color: #707070;
+            font-size: .875rem;
+        }
+        .label-contact{
+            font-size: 1rem;
+            font-weight: bold;
+            color: #707070;
+            margin-bottom: 1rem;
+
+        }
+        .label-required{
+            color: white;
+            font-size: 11px;
+            margin-bottom: 1rem;
+            background-color: #F1645C;
+            padding: .25rem .5rem;
+        }
+        .input-contact{
+            border: 1px solid #707070;
+            border-radius: 0;
+            height: 3.5rem;
+            padding: 0 1rem;
+            font-size: .875rem;
+            color: #707070;
+            width: 100%;
+            &:focus{
+                outline: none;
+            }
+            &.error{
+                border-bottom: 3px solid #ED774D;
+            }
+        }
+        //change accent color radio button
+        .custom-control-input:checked ~ .custom-control-label::before{
+            background-color: $primary-color !important;
+            border-color: #000 !important;
+        }
+        .validation-fb{
+            color: #ED774D;
+            font-size: .875rem;
+            margin-top: .25rem;
+        }
+        .policy-link{
+            color: #67A6E6;
+            font-size: .875rem;
+            text-decoration: underline;
+        }
+
+    }
     .contact-body{
         text-align: center;
 
@@ -1929,12 +2036,12 @@ $secondary-color: #FF9708;
                       position: relative;
                       padding-left: 2.25rem;
                       vertical-align:middle;
-                      background: url('/wp-content/themes/offshore-labo-web/assets/images/icon/unchecked.png') left top no-repeat;
+                      background: url('../../../public/assets/img/unchecked.png') left top no-repeat;
                       cursor:pointer;
                     }
 
                     input[type="checkbox"]:checked + span {
-                      background: url('/wp-content/themes/offshore-labo-web/assets/images/icon/checked.png') left top no-repeat;
+                      background: url('../../../public/assets/img/checked.png') left top no-repeat;
                     }
 
                     .text-link{
