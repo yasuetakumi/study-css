@@ -1,0 +1,45 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Feature page
+// --------------------------------------------------------------------------
+.innerset-mb-fg{
+    padding-bottom: 2.75rem!important;
+    @include breakpoint-down(sm){
+        padding-bottom: 2rem!important
+    }
+}
+
+.innerset-mt-fg{
+    padding-top: 2.75rem!important;
+    @include breakpoint-down(sm){
+        padding-top: 2rem!important
+    }
+}
+
+.feature-graphic{
+    padding: 4rem 0;
+
+    .graphic-title{
+        margin-bottom: 2rem;
+
+        .title{
+            font-size: 1.25rem;
+        }
+    }
+
+    .graphic-display{
+        .img-auto{
+            max-width: 100%;
+            height: auto;
+        }
+
+        .graphic-info{
+            margin-top: 1rem;
+            @include breakpoint-down(sm){
+                text-align: left;
+            }
+        }
+    }
+}

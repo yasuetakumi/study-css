@@ -1,0 +1,287 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+// Support Utilities Style
+// --------------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------------
+// Size Padding 120 and Margin 120
+// --------------------------------------------------------------------------
+@include breakpoint-up(lg){
+    .pt-lg-120{
+        padding-top: 7.5rem;
+    }
+    .pb-lg-120{
+        padding-bottom: 7.5rem;
+    }
+    .py-lg-120{
+        padding-top: 7.5rem;
+        padding-bottom: 7.5rem;
+    }
+    .mt-lg-120{
+        margin-top: 7.5rem;
+    }
+    .mb-lg-120{
+        margin-bottom: 7.5rem;
+    }
+    .my-lg-120{
+        margin-top: 7.5rem;
+        margin-bottom: 7.5rem;
+    }
+}
+.pt-120{
+    padding-top: 7.5rem;
+}
+.pb-120{
+    padding-bottom: 7.5rem;
+}
+.py-120{
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+}
+
+.mt-120{
+    margin-top: 7.5rem;
+}
+.mb-120{
+    margin-bottom: 7.5rem;
+}
+.my-120{
+    margin-top: 7.5rem;
+    margin-bottom: 7.5rem;
+}
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Size Padding 80 and Margin 80
+// --------------------------------------------------------------------------
+@include breakpoint-up(lg){
+    .pt-lg-80{
+        padding-top: 5rem;
+    }
+    .pb-lg-80{
+        padding-bottom: 5rem;
+    }
+    .py-lg-80{
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+    .mt-lg-80{
+        margin-top: 5rem;
+    }
+    .mb-lg-80{
+        margin-bottom: 5rem;
+    }
+    .my-lg-80{
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+}
+.pt-80{
+    padding-top: 5rem!important;
+    @include breakpoint-down(sm){
+        padding-top: 3rem!important;
+    }
+}
+.pb-80{
+    padding-bottom: 5rem;
+}
+.py-80{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.mt-80{
+    margin-top: 5rem;
+}
+.mb-80{
+    margin-bottom: 5rem;
+}
+.my-80{
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Size Padding 64 and Margin 64
+// --------------------------------------------------------------------------
+@include breakpoint-up(lg){
+    .pt-lg-64{
+        padding-top: 4rem!important;
+    }
+    .pb-lg-64{
+        padding-bottom: 4rem!important;
+    }
+    .py-lg-64{
+        padding-top: 4rem!important;
+        padding-bottom: 4rem!important;
+    }
+    .mt-lg-64{
+        margin-top: 4rem!important;
+    }
+    .mb-lg-64{
+        margin-bottom: 4rem!important;
+    }
+    .my-lg-64{
+        margin-top: 4rem!important;
+        margin-bottom: 4rem!important;
+    }
+}
+.pt-64{
+    padding-top: 4rem!important;
+    @include breakpoint-down(sm){
+        padding-top: 2rem!important;
+    }
+}
+.pb-64{
+    padding-bottom: 4rem!important;
+    @include breakpoint-down(sm){
+        padding-bottom: 2rem!important;
+    }
+}
+.py-64{
+    padding-top: 4rem!important;
+    padding-bottom: 4rem!important;
+    @include breakpoint-down(sm){
+        padding-top: 2rem!important;
+        padding-bottom: 2rem!important;
+    }
+}
+
+.mt-64{
+    margin-top: 4rem!important;
+}
+.mb-64{
+    margin-bottom: 4rem!important;
+}
+.my-64{
+    margin-top: 4rem!important;
+    margin-bottom: 4rem!important;
+}
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Size Padding 56 and Margin 56
+// --------------------------------------------------------------------------
+@include breakpoint-up(lg){
+    .pt-lg-56{
+        padding-top: 3.5rem;
+    }
+    .pb-lg-56{
+        padding-bottom: 3.5rem;
+    }
+    .py-lg-56{
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+    .mt-lg-56{
+        margin-top: 3.5rem;
+    }
+    .mb-lg-56{
+        margin-bottom: 3.5rem;
+    }
+    .my-lg-56{
+        margin-top: 3.5rem;
+        margin-bottom: 3.5rem;
+    }
+}
+.pt-56{
+    padding-top: 3.5rem;
+}
+.pb-56{
+    padding-bottom: 3.5rem;
+}
+.py-56{
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.mt-56{
+    margin-top: 3.5rem;
+}
+.mb-56{
+    margin-bottom: 3.5rem;
+}
+.my-56{
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+}
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Size Padding 48 and Margin 48
+// --------------------------------------------------------------------------
+@include breakpoint-up(lg){
+    .pt-lg-48{
+        padding-top: 3rem;
+    }
+    .pb-lg-48{
+        padding-bottom: 3rem;
+    }
+    .py-lg-48{
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    .mt-lg-48{
+        margin-top: 3rem;
+    }
+    .mb-lg-48{
+        margin-bottom: 3rem;
+    }
+    .my-lg-48{
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+}
+.pt-48{
+    padding-top: 3rem;
+    @include breakpoint-down(sm){
+        padding-top: 2rem!important;
+    }
+}
+.pb-48{
+    padding-bottom: 3rem;
+}
+.py-48{
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.mt-48{
+    margin-top: 3rem;
+    @include breakpoint-down(sm){
+        margin-top: 2rem;
+    }
+}
+.mb-48{
+    margin-bottom: 3rem;
+}
+.my-48{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.res-mt-48{
+    @include breakpoint-down(md){
+        margin-top: 3rem;
+    }
+}
+// --------------------------------------------------------------------------
+
+.fit-cover { object-fit: cover !important }
+.fit-contain { object-fit: contain !important }
+
+.pointer-events-auto, .pe-auto { pointer-events: auto !important }
+.pointer-events-none, .pe-none { pointer-events: none !important }
+
+.fs-18{
+    font-size: 1.125rem;
+    @include breakpoint-down(sm){
+        font-size: 1rem;
+    }
+}
+.fs-10{
+    font-size: 0.625rem;
+}

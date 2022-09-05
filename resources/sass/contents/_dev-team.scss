@@ -1,0 +1,325 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Development Team page
+// --------------------------------------------------------------------------
+.detail-team-modal{
+    .modal{
+        background: #000000a8;
+        @include breakpoint-down(sm){
+            padding-right: 0!important;
+        }
+    }
+
+    .modal-dialog{
+        overflow-y: initial;
+        margin-top: 6rem!important;
+        @include breakpoint-down(sm){
+            margin-top: .5rem!important;
+        }
+    }
+
+    .modal-content{
+        border-radius: 0;
+        border: 0;
+
+        .modal-header{
+            background: url('/wp-content/themes/offshore-labo-web/assets/images/dev-team/mv-header.png');
+            height: 15.3125rem;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 0;
+            border-radius: 0;
+            position: relative;
+            padding: 1.5rem;
+
+            .close{
+                position: absolute;
+                z-index: 99;
+                right: 1.25rem;
+                outline: none;
+            }
+
+            .overlay-header{
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #0000007a;
+                z-index: 1;
+                backdrop-filter: blur(.25rem);
+                background-blend-mode: normal;
+            }
+
+            .profile-detail{
+                position: relative;
+                z-index: 9;
+                text-align: center;
+
+                .p-image{
+                    width: 8.125rem;
+                    height: 8.125rem;
+                    border-radius: 100%;
+                    overflow: hidden;
+                    display: inline-block;
+                    @include breakpoint-down(sm){
+                        width: 6.75rem;
+                        height: 6.75rem;
+                    }
+
+                    .img-round{
+                        width: 125%;
+                        transform: translate(-20%, -5%);
+                    }
+
+                    .id-luqman,
+                    .id-yoga,
+                    .id-yesi,
+                    .id-yogapratama,
+                    .id-naufal,
+                    .id-aditya,
+                    .id-wiku,
+                    .id-mavin,
+                    .id-eka,
+                    .id-ridwan,
+                    .id-yudis,
+                    .id-abi,
+                    .id-mudana{
+                        width: 105%!important;
+                        transform: translate(-4%, 0%);
+                    }
+
+                    .id-yoga,
+                    .id-aditya,
+                    .id-yudis{
+                        transform: translate(0%, 0%);
+                    }
+
+                    .id-dirga{
+                        width: 120%!important;
+                        transform: translate(-10%, 0%);
+                    }
+
+                    .id-eko{
+                        width: 140% !important;
+                        transform: translate(-28%, -5%);
+                    }
+
+                    .id-lia,
+                    .id-diba{
+                        width: 120% !important;
+                        transform: translate(-10%, 0%);
+                    }
+
+                    .id-wahyu{
+                        width: 115% !important;
+                        transform: translate(-7%, 0%);
+                    }
+
+                    .id-adi{
+                        width: 110% !important;
+                        transform: translate(0%, 0%);
+                    }
+
+                    .id-komang-tri{
+                        transform: translate(-5%, -8%)!important;
+                        width: 110% !important;
+                    }
+    
+                    .id-galih-erlangga{
+                        transform: translate(-5%, -4%)!important;
+                        width: 110% !important;
+                    }
+    
+                    .id-sarisha-paramitha{
+                        transform: translate(-5%, -7%)!important;
+                        width: 110% !important;
+                    }
+    
+                    .id-yogi-nugraha{
+                        transform: translate(-13%, -2%)!important;
+                        width: 145% !important;
+                    }
+                }
+
+                .p-desc{
+                    padding-top: .5rem;
+
+                    .label-name, .label-caption{
+                        color: #FFFFFF;
+                    }
+
+                    .label-name{
+                        font-size: 1.25rem;
+                        margin-bottom: .5rem;
+                    }
+
+                    .label-caption{
+                        font-size: .9375rem;
+                    }
+                }
+            }
+        }
+
+        .modal-body{
+            position: relative;
+            padding: 1rem .5rem;
+            @include breakpoint-down(sm){
+                padding: .5rem .5rem;
+            }
+
+            &:hover{
+                i{
+                    opacity: 0.8;
+                    transition: 0.4s;
+                    -webkit-transition: 0.4s;
+                    -moz-transition: 0.4s;
+                    -ms-transition: 0.4s;
+                    -o-transition: 0.4s;
+                }
+            }
+
+            .wrapper-skill-set{
+                height: 24.6875rem;
+                margin-bottom: 0rem;
+                padding-bottom: 0;
+                overflow-y: auto;
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+                padding: 1rem 1rem 0;
+
+                /* width */
+                &::-webkit-scrollbar {
+                    display: block;
+                	width: .25rem;
+                }
+
+                /* Track */
+                &::-webkit-scrollbar-track {
+                	border-radius: 0;
+                	margin: 0 .625rem;
+                }
+
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                	/* background: #fff;  */
+                	border-radius: .25rem;
+                	width: .25rem;
+                	background: #707070;
+                }
+
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                	background: rgba(0,0,0,0.7);
+                }
+            }
+
+            .wrap-scroll{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                text-align: center;
+                padding: .75rem 0;
+                transition: 0.4s;
+                -webkit-transition: 0.4s;
+                -moz-transition: 0.4s;
+                -ms-transition: 0.4s;
+                -o-transition: 0.4s;
+
+                i{
+                    font-size: 2.75rem;
+                }
+            }
+
+            .mb-4{
+                @include breakpoint-down(sm){
+                    margin-bottom: 2rem!important;
+                }
+            }
+
+            &::-webkit-scrollbar{
+                display: none;
+            }
+
+            .border-left{
+                @include breakpoint-down(md){
+                    border: 0!important;
+                }
+            }
+
+            .detail-expertise{
+                .e-title{
+                    hr{
+                        margin: 1rem 0 0;
+                        max-width: 4.875rem;
+                        border-color: #707070;
+                        border-width: 1px;
+                    }
+                }
+
+                .e-desc{
+                    padding: 0 0 0 1.5rem;
+                    @include breakpoint-down(md){
+                        padding: 1rem 0 0;
+                    }
+
+                    .section-block{
+                        background-color: #EFFEFF;
+                        margin-bottom: 1.5rem;
+                        padding: 1rem 1rem 0;
+                        @include breakpoint-down(sm){
+                            margin-bottom: 2rem;
+                            padding: 2rem 1rem 1rem;
+                        }
+
+                        .table{
+                            margin-bottom: 0;
+                        }
+
+                        th{
+                            width: 12.125rem;
+                            @include breakpoint-down(sm){
+                                width: auto;
+                                display: block;
+                            }
+                        }
+
+                        .res-pt-0{
+                            padding-top: 0!important;
+                        }
+
+                        .res-pt{
+                            @include breakpoint-down(sm){
+                                padding-top: 1rem;
+                            }
+                        }
+
+                        td{
+                            @include breakpoint-down(sm){
+                                padding: 0!important;
+                            }
+                        }
+
+                        tr, th, td{
+                            border: 0;
+                            padding: 0 0 1rem 0;
+                            @include breakpoint-down(sm){
+                                display: block;
+                            }
+                        }
+
+                        .sub-desc-heading{
+                            background-color: #EFFEFF;
+                            font-weight: bold;
+                            padding: 1rem;
+                            margin-bottom: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Breadcrumbs
+// --------------------------------------------------------------------------
+.breadcrumb-wrap{
+    position: relative;
+    margin-bottom: 6rem;
+    @include breakpoint-down(sm){
+        margin-bottom: 2rem;
+    }
+
+    .breadcrumb{
+        background: #EFFEFF;
+        border-radius: 0;
+        margin-bottom: 0;
+
+        li{
+            text-transform: uppercase;
+
+            a{
+                span{
+                    font-family: 'Noto Sans JP', sans-serif;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        li.breadcrumb-item + .breadcrumb-item{
+            &::before{
+                content: ">";
+            }
+
+            &.truncate-item {
+                width: auto;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+
+                @include breakpoint-down(sm){
+                    width: 40%;
+                }
+            }
+        }
+
+        li.active{
+            color: #3098A8;
+        }
+    }
+}

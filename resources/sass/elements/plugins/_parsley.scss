@@ -1,0 +1,28 @@
+// main: ../_main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Parsleyjs validation error styling
+// --------------------------------------------------------------------------
+$error-color: #FF4E00; // #FE7032;
+
+.form-result {
+    .parsley-errors-list {
+        color: $error-color;
+        font-size: .875rem;
+        line-height: 1.6;
+        margin: 0; padding: 0;
+        list-style-type: none;
+    }
+}
+
+.form-control {
+    &.parsley-error {
+        border-color: $error-color;
+        background-color: #fe70320a;
+        &[disabled] {
+            border-color: #4C4C4C;
+        }
+    }
+}
+// --------------------------------------------------------------------------

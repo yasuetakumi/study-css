@@ -1,0 +1,17 @@
+<svg id="ico_01" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <circle id="Ellipse_271" data-name="Ellipse 271" cx="30" cy="30" r="30" fill="#ffc24d"/>
+  <g id="Group_1180" data-name="Group 1180" transform="translate(6.384 6.384)" opacity="0.5">
+    <path id="Path_3279" data-name="Path 3279" d="M280.556,616.36a23.616,23.616,0,1,1,23.616-23.616A23.643,23.643,0,0,1,280.556,616.36Zm0-41.211a17.594,17.594,0,1,0,17.595,17.594A17.614,17.614,0,0,0,280.556,575.15Z" transform="translate(-256.94 -569.128)" fill="#a16c22"/>
+  </g>
+  <g id="Group_1185" data-name="Group 1185" transform="translate(17.129 17.543)" opacity="0.15">
+    <path id="Path_3300" data-name="Path 3300" d="M294.5,628.121v-6.86h-7.087v-3.313H294.5v-2.783h-7.087v-3.313h5.22l-7.544-12.192h8.231l2.895,6.437c.839,1.83,1.334,3.316,1.982,4.955h.037c.686-1.523,1.258-3.239,2.019-4.955l2.972-6.437h8.268l-8.307,12.192h5.335v3.313h-7.087v2.783h7.087v3.313h-7.087v6.86Z" transform="translate(-285.084 -599.66)" fill="#fff"/>
+  </g>
+  <g id="Group_1186" data-name="Group 1186" transform="translate(17.129 17.284)">
+    <path id="Path_3301" data-name="Path 3301" d="M294.5,626.993v-6.859h-7.087v-3.313H294.5v-2.783h-7.087v-3.313h5.22l-7.544-12.193h8.231l2.895,6.438c.839,1.83,1.334,3.317,1.982,4.955h.037c.686-1.523,1.258-3.239,2.019-4.955l2.972-6.437h8.268l-8.307,12.193h5.335v3.313h-7.087v2.783h7.087v3.313h-7.087v6.859Z" transform="translate(-285.084 -598.532)" fill="#c57f13"/>
+  </g>
+  <g id="Group_1187" data-name="Group 1187" transform="translate(4.23 28.45)">
+    <path id="Path_3302" data-name="Path 3302" d="M264.571,625.738a1.55,1.55,0,1,1-1.55-1.55A1.55,1.55,0,0,1,264.571,625.738Z" transform="translate(-261.47 -624.188)" fill="#f0a81e"/>
+    <ellipse id="Ellipse_272" data-name="Ellipse 272" cx="1.55" cy="1.55" rx="1.55" ry="1.55" transform="translate(48.296 0)" fill="#f0a81e"/>
+  </g>
+  <path id="Path_3303" data-name="Path 3303" d="M314.574,618.661a32.78,32.78,0,0,0,22.525-8.777,28.834,28.834,0,0,0,0-42.446,32.78,32.78,0,0,0-22.525-8.777Z" transform="translate(-286.414 -558.661)" fill="#070303" opacity="0.06"/>
+</svg>

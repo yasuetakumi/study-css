@@ -1,0 +1,97 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Contact page
+// --------------------------------------------------------------------------
+.wrapper-thanks{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 9.5rem);
+    @include breakpoint-down(xs){
+        height: calc(100vh - 4rem);
+    }
+}
+
+.thanks-section{
+    padding: 3rem 0 8rem!important;
+    @include breakpoint-down(sm){
+        padding: 2rem 0 4rem!important;
+    }
+}
+
+.thanks-content, .download-content{
+    @include breakpoint-down(sm){
+        text-align: left;
+    }
+
+    .heading-title{
+        color: #3098A8;
+        font-size: 2rem;
+        font-weight: bold;
+        @include breakpoint-down(sm){
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    }
+
+    .sub-title{
+        font-weight: bold;
+        color: #000;
+        padding: 1.5rem 0;
+        @include breakpoint-down(sm){
+            padding: 3rem 0 1.5rem;
+        }
+        font-size: 1.125rem;
+    }
+
+    .desc{
+        color: #000;
+    }
+}
+
+.download-content{
+    padding-bottom: 2rem;
+
+    .heading-title{
+        padding-bottom: 4rem;
+        @include breakpoint-down(sm){
+            padding-bottom: 2rem;
+        }
+    }
+
+    .btn-download{
+        @include flexbox();
+        @include justify-content(center);
+        @include align-items(center);
+        margin: 0 auto;
+    }
+}
+
+.fill-checkbox{
+    .wpcf7-not-valid-tip{
+        display: none!important;
+    }
+}
+
+.wpcf7-not-valid-tip{
+    text-align: left;
+}
+
+.wpcf7-response-output{
+    display: none;
+}
+
+.error-text-checkbox{
+    color: #dc3232;
+}
+
+ul.parsley-errors-list{
+    li.parsley-type{
+        display: none!important;
+    }
+}
+
+.wpcf7-response-output{
+    display: none!important;
+}
