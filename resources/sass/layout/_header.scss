@@ -84,7 +84,19 @@ header{
         }
     }
 }
-
+.bg-nav-scroll{
+    background: rgba(0,0,0,0.7) !important;
+}
+.navbar-logo-mobile{
+    @include breakpoint-down(sm){
+        width: 115px;
+    }
+}
+.menu-btn-sp{
+    @include breakpoint-down(sm){
+        margin-right: -10px;
+    }
+}
 header.navbar-top{
     background: white;
     @include breakpoint-down(xs){

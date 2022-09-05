@@ -10,7 +10,7 @@
 				</div>
 
 				<div class="row justify-content-center">
-					<div class="banner-caption">
+					<div class="banner-caption mt-5">
 						<div class="col-12">
 							<div class="row justify-content-center m-0">
 								<div class="col-12 p-0">
@@ -35,8 +35,8 @@
                                         <div class="position-relative col-md-4 col-12 mb-4 mb-lg-0">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                                             <div class="frame-banner">
-                                                <p class="text-banner">掲載料基本<span>無料</span></p>
-                                                <p class="text-sub-banner">※登録後、再登録で無料になります。</p>
+                                                <p class="text-banner">掲載料<span>無料</span></p>
+                                                {{-- <p class="text-sub-banner">※登録後、再登録で無料になります。</p> --}}
                                             </div>
                                         </div>
 
@@ -213,8 +213,6 @@
                                     <p class="title-advantage">基本掲載料<span>無料</span></p>
                                     <div class="desc-content mt-5 mb-2">
                                         <h3 class="text-center desc-advantage">初期費用も、最低登録物件数の制約も、契約期間の縛りも、成功報酬の請求も一切ございません！
-                                            <br>
-                                            <span class="desc-sub-advantage">※有償ソフトウェアが必要な場合は別途実費精算となります</span>
                                         </h3>
                                     </div>
                                     <div class="row justify-content-center">
@@ -295,7 +293,7 @@
 				</div>
 
                 <div class="page-body mt-lg-64 pb-0">
-                    <div class="row mt-5 px-2 px-lg-0">
+                    <div class="row px-2 px-lg-0">
                         <div class="col-12 advantage-frame shadow py-5 border-0">
                             <div class="desc-content">
                                 <h3 class="title-desc ff-base font-weight-bold desc-about d-flex flex-lg-row flex-column align-items-center justify-content-center">
@@ -579,5 +577,250 @@
 		</div>
 	</div>
 </div>
+
+<!-- Executive -->
+<div class="section-wrapper executive-content">
+	<div class="content-blue">
+		<div class="container-fluid px-lg-64">
+			<div class="row">
+				<div class="col-12">
+					<div class="row justify-content-center mb-5">
+						<div class="col-12 col-lg-8 text-center d-flex flex-column align-items-center">
+                            <h2 class="team-title-header mb-32">心をこめて私たちがみなさまの <br>
+                                物件成約のお手伝いをいたします。</h2>
+                            <div class="bg-green-primary" style="height: 2px; width: 32px"></div>
+						</div>
+					</div>
+                    <div class="row no-gutters align-items-center justify-content-center">
+                        <div class="col-lg-2 col-4">
+                            <img class="w-100" src="{{asset('assets/img/member-1.jpg')}}" alt="">
+                        </div>
+                        <div class="col-lg-2 col-4">
+                            <img class="w-100" src="{{asset('assets/img/member-2.jpg')}}" alt="">
+                        </div>
+                        <div class="col-lg-2 col-4">
+                            <img class="w-100" src="{{asset('assets/img/member-3.jpg')}}" alt="">
+                        </div>
+                        <div class="col-lg-2 col-4">
+                            <img class="w-100" src="{{asset('assets/img/member-4.jpg')}}" alt="">
+                        </div>
+                        <div class="col-lg-2 col-4">
+                            <img class="w-100" src="{{asset('assets/img/member-5.jpg')}}" alt="">
+                        </div>
+                        <div class="col-lg-2 col-4">
+                            <img class="w-100" src="{{asset('assets/img/member-6.jpg')}}" alt="">
+                        </div>
+                    </div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrapper faq-content">
+	<div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="page-header">
+                            <p class="heading-title text-uppercase">faq</p>
+                            <h2 class="sub-title ff-base font-weight-bold">よくあるご質問</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div x-data="{faq1: false}">
+                                {{-- faq 1 --}}
+                                <div class="faq-wrapper d-flex align-items-center mb-3" x-bind:class="faq1 ? 'text-white bg-green-primary' : '' ">
+                                    <div class="mr-3 font-weight-bold">Q1:</div>
+                                    <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
+                                    <div>
+                                        <a x-bind:class="!faq1 ? 'd-block' : 'd-none' "  role="button" x-on:click="faq1 = true">
+                                            <img src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                        </a>
+                                        <a x-bind:class="faq1 ? 'd-block' : 'd-none' " role="button" x-on:click="faq1 = false">
+                                            <img src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="faq-child text-left" x-show="faq1" x-collapse.duration.500ms>
+                                    <p> A:「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
+                                </div>
+                            </div>
+                            <div x-data="{faq2: false}">
+                                {{-- faq 2 --}}
+                                <div class="faq-wrapper d-flex align-items-center mb-3" x-bind:class="faq2 ? 'text-white bg-green-primary' : '' ">
+                                    <div class="mr-3 font-weight-bold">Q2:</div>
+                                    <div class="flex-grow-1 text-left">物件の価格は税込み表記ですか？</div>
+                                    <div>
+                                        <a x-bind:class="!faq2 ? 'd-block' : 'd-none' "  role="button" x-on:click="faq2 = true">
+                                            <img src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                        </a>
+                                        <a x-bind:class="faq2 ? 'd-block' : 'd-none' " role="button" x-on:click="faq2 = false">
+                                            <img src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="faq-child text-left" x-show="faq2" x-collapse>
+                                    <p>A: はい、価格は全て税込み表記となります。</p>
+                                </div>
+                            </div>
+                            <div x-data="{faq3: false}">
+                                {{-- faq 3 --}}
+                                <div class="faq-wrapper d-flex align-items-center mb-3" x-bind:class="faq3 ? 'text-white bg-green-primary' : '' ">
+                                    <div class="mr-3 font-weight-bold">Q3:</div>
+                                    <div class="flex-grow-1 text-left">掲載料・成約手数料無料となっていますが、別でかかる費用はありますか？ </div>
+                                    <div>
+                                        <a x-bind:class="!faq3 ? 'd-block' : 'd-none' "  role="button" x-on:click="faq3 = true">
+                                            <img src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                        </a>
+                                        <a x-bind:class="faq3 ? 'd-block' : 'd-none' " role="button" x-on:click="faq3 = false">
+                                            <img src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="faq-child text-left" x-show="faq3" x-collapse>
+                                    <p>A: 別でかかる費用は一切ございません。</p>
+                                </div>
+                            </div>
+
+                            <div x-data="{faq4: false}">
+                                {{-- faq 4 --}}
+                                <div class="faq-wrapper d-flex align-items-center mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' ">
+                                    <div class="mr-3 font-weight-bold">Q4:</div>
+                                    <div class="flex-grow-1 text-left">運営会社はどこですか？ </div>
+                                    <div>
+                                        <a x-bind:class="!faq4 ? 'd-block' : 'd-none' "  role="button" x-on:click="faq4 = true">
+                                            <img src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                        </a>
+                                        <a x-bind:class="faq4 ? 'd-block' : 'd-none' " role="button" x-on:click="faq4 = false">
+                                            <img src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="faq-child text-left" x-show="faq4" x-collapse>
+                                    <p>A: 株式会社トラストワンが運営しております。トラストワンでは年間100以上の店舗の内装を行う豊富な実績があり、一部上場企業様と多数の取引実績もございます。</p>
+                                </div>
+                            </div>
+
+                            <div x-data="{faq5: false}">
+                                {{-- faq 5 --}}
+                                <div class="faq-wrapper d-flex align-items-center mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' ">
+                                    <div class="mr-3 font-weight-bold">Q5:</div>
+                                    <div class="flex-grow-1 text-left">どんな業態の店舗物件が登録できますか？</div>
+                                    <div>
+                                        <a x-bind:class="!faq5 ? 'd-block' : 'd-none' "  role="button" x-on:click="faq5 = true">
+                                            <img src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                        </a>
+                                        <a x-bind:class="faq5 ? 'd-block' : 'd-none' " role="button" x-on:click="faq5 = false">
+                                            <img src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="faq-child text-left" x-show="faq5" x-collapse>
+                                    <p>A: 重飲食（居酒屋や中華料理屋、焼き肉屋等）または軽飲食（カフェやバー・スナック等）の業態可能な店舗物件が登録できます。また居抜き・スケルトンのどちらも登録可能です。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact -->
+<div class="section-wrapper contact-content pb-0">
+	<div class="content-blue pb-0">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="row justify-content-center">
+						<div class="col-12 col-lg-8">
+							<div class="page-header">
+								<p class="heading-title text-uppercase">REQUEST / CONTACT</p>
+								<h2 class="sub-title ff-base font-weight-bold">掲載希望申請 / お問い合わせ</h2>
+							</div>
+						</div>
+					</div>
+
+					<div class="page-body pb-0 text-left">
+						<div class="row justify-content-center">
+							<div class="col-lg-10 col-12 contact-form">
+								<div class="d-flex">
+                                    <p class="title-form">お問い合わせカテゴリー</p>
+                                    <span class="label-required ml-2">必須</span>
+                                </div>
+                                <form action="#" class="mb-lg-64 mb-32">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
+                                            <label class="custom-control-label label-contact" for="customRadioInline1">掲載希望申請</label>
+                                          </div>
+                                          <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
+                                            <label class="custom-control-label label-contact" for="customRadioInline2">お問い合わせ</label>
+                                          </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="label-contact">企業名
+                                            <span class="label-required ml-2">必須</span>
+                                        </label>
+                                        <input type="text" class="input-contact" placeholder="例）株式会社トラストワン">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="label-contact">担当者名
+                                            <span class="label-required ml-2">必須</span>
+                                        </label>
+                                        <input type="text" class="input-contact" placeholder="例）山田 太郎">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="label-contact">Webサイト
+                                        </label>
+                                        <input type="text" class="input-contact" placeholder="例）https://trust-one.net/">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="label-contact">お電話番号
+                                            <span class="label-required ml-2">必須</span>
+                                        </label>
+                                        <input type="text" class="input-contact" placeholder="例）08000000001" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="label-contact">メールアドレス
+                                            <span class="label-required ml-2">必須</span>
+                                        </label>
+                                        <input type="text" class="input-contact error" placeholder="例）yamada.tarou@yamada.co.jp" required>
+                                        <div class="validation-fb">
+                                            必須項目です。メールアドレスが正しくありません。
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="label-contact">ご要望・ご質問等
+                                        </label>
+                                        <textarea placeholder="こちらにご要望・ご質問等をお書きください" class="input-contact py-3" name="description" id="" cols="30" rows="10" style="height: 240px;"></textarea>
+                                    </div>
+                                    <div class="text-center mt-5">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label label-contact" for="customCheck1"><a href="#" class="policy-link">個人情報保護方針</a> に同意する</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-secondary w-50 px-5">送信する</button>
+                                    </div>
+                                </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End -->
 <!-- End -->
 @endsection
