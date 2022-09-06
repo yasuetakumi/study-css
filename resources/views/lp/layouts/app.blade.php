@@ -44,8 +44,8 @@
                         </a>
                     </div>
                     <div class="d-lg-none d-flex menu-btn-sp">
-                        <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 mr-2 fs-14" href="#">お問い合わせ</a>
-                        <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 fs-14" href="#">
+                        <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 mr-2 fs-14" href="#contact">お問い合わせ</a>
+                        <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 fs-14" href="tel:05058072335">
                             <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
                             050-5807-2335</a>
                         {{-- <a x-show="!mobileNav" role="button"
@@ -60,10 +60,10 @@
                     <div class="collapse navbar-collapse" id="navbarNav0">
                         <ul class="navbar-nav ml-auto align-items-center">
                             <li class="nav-item">
-                                <a class="btn btn-secondary" href="#">お問い合わせ</a>
+                                <a class="btn btn-secondary" href="#contact">お問い合わせ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-secondary d-flex align-items-center" href="#">
+                                <a class="btn btn-secondary d-flex align-items-center" href="tel:05058072335">
                                     <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
                                     050-5807-2335</a>
                             </li>

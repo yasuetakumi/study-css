@@ -2176,6 +2176,23 @@ strong,
   margin-bottom: 7.5rem;
 }
 
+.py-32 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.pt-32 {
+  padding-top: 2rem;
+}
+
+.pt-40 {
+  padding-top: 2.5rem;
+}
+
+.pb-40 {
+  padding-bottom: 2.5rem;
+}
+
 @media (min-width: 992px) {
   .pt-lg-80 {
     padding-top: 5rem;
@@ -2499,6 +2516,10 @@ strong,
 
 .bg-black {
   background-color: #000;
+}
+
+.fw-900 {
+  font-weight: 900;
 }
 
 .title-border-left .border-y {
@@ -3906,20 +3927,20 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 
 .banner-wrapper .wrap-img .img-banner {
   width: 100%;
-  height: 960px;
+  height: 1100px;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
 @media (max-width: 767.98px) {
   .banner-wrapper .wrap-img .img-banner {
-    height: 760px;
+    height: 815px;
   }
 }
 
 @media screen and (max-width: 320px) {
   .banner-wrapper .wrap-img .img-banner {
-    height: 760px;
+    height: 815px;
   }
 }
 
@@ -3980,7 +4001,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 }
 
 .banner-wrapper .banner-caption {
-  padding-top: 64px;
+  padding-top: 40px;
   padding-bottom: 64px;
   background: #000000b0;
   position: absolute;
@@ -4011,7 +4032,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.5;
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
   color: white;
 }
 
@@ -4077,7 +4098,8 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 }
 
 .banner-wrapper .banner-caption .banner-desc {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 @media (max-width: 991.98px) {
@@ -4098,6 +4120,19 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   }
 }
 
+.banner-wrapper .banner-caption .banner-desc .main-heading .sub-main-heading,
+.banner-wrapper .banner-caption .banner-desc .sub-heading .sub-main-heading {
+  color: #FFFFFF;
+  font-size: 9.375rem;
+}
+
+@media (max-width: 767.98px) {
+  .banner-wrapper .banner-caption .banner-desc .main-heading .sub-main-heading,
+  .banner-wrapper .banner-caption .banner-desc .sub-heading .sub-main-heading {
+    font-size: 3.75rem;
+  }
+}
+
 .banner-wrapper .banner-caption .banner-desc .main-heading {
   font-size: 9.375rem;
 }
@@ -4115,6 +4150,22 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 @media (max-width: 767.98px) {
   .banner-wrapper .banner-caption .banner-desc .sub-heading {
     font-size: 2rem;
+  }
+}
+
+.banner-wrapper .banner-caption .wrapper-btn-contact {
+  margin-top: 32px;
+}
+
+.banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
+  font-size: 1.5rem !important;
+  font-weight: 700;
+}
+
+@media (max-width: 767.98px) {
+  .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
+    font-size: 0.875rem !important;
+    padding: 1rem 0.5rem;
   }
 }
 
@@ -4158,7 +4209,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .frame-banner {
   position: absolute;
   width: 100%;
-  top: 42%;
+  top: 45%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -4460,6 +4511,12 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   list-style-position: inside;
 }
 
+.title-flow-image {
+  font-size: 28px;
+  font-weight: 700;
+  padding-bottom: 28px;
+}
+
 .zoom-content .team-title-header,
 .about-content .team-title-header,
 .our-service-content .team-title-header,
@@ -4532,7 +4589,8 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .product-content .page-header .heading-title {
   color: #AACF52;
   font-size: 1.5rem;
-  font-family: "Ostrich Sans", sans-serif;
+  font-weight: 900;
+  letter-spacing: 1.15px;
 }
 
 .zoom-content .page-header .sub-title,

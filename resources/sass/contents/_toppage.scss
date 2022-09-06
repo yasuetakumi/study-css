@@ -229,6 +229,11 @@ $text-primary-color: #333333;
         list-style-position: inside;
     }
 }
+.title-flow-image{
+    font-size: 28px;
+    font-weight: 700;
+    padding-bottom: 28px;
+}
 
 .zoom-content,
 .about-content,
@@ -259,7 +264,8 @@ $text-primary-color: #333333;
         .heading-title{
             color: $primary-color;
             font-size: 1.5rem;
-            font-family: "Ostrich Sans", sans-serif;
+            font-weight: 900;
+            letter-spacing: 1.15px;
         }
 
         .sub-title{

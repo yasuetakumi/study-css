@@ -50,6 +50,19 @@
     margin-top: 7.5rem;
     margin-bottom: 7.5rem;
 }
+.py-32{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.pt-32{
+    padding-top: 2rem;
+}
+.pt-40{
+    padding-top: 2.5rem;
+}
+.pb-40{
+    padding-bottom: 2.5rem;
+}
 // --------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
@@ -310,4 +323,7 @@
 }
 .bg-black{
     background-color: #000;
+}
+.fw-900{
+    font-weight: 900;
 }
