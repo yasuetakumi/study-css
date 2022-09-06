@@ -48,10 +48,10 @@ class LpController extends Controller
         $content['description'] = $request->description ?? '-';
 
         // send email to user
-        Mail::to($request->email)->send(new ContactUsMail($content));
+        Mail::to($request->email)->send(new ContactUsMail($content, 'user'));
 
         // send email to admin
-        Mail::to(config('mail.lp_contact_admin'))->send(new ContactUsMail($content));
+        Mail::to(config('mail.lp_contact_admin'))->send(new ContactUsMail($content, 'admin'));
 
         return redirect()->route('lp.thanks');
     }
