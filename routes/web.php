@@ -217,9 +217,8 @@ Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { //
     Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
 });
 
-Route::get('/lp01', function(){
-    return view('lp.home.index');
-});
+Route::get('/lp01', 'LpController@index')->name('lp.index');
+Route::post('/lp01', 'LpController@contact')->name('lp.contact');
 Route::get('/thanks', function(){
     return view('lp.home.thanks');
-});
+})->name('lp.thanks');
