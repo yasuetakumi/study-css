@@ -346,11 +346,13 @@
                     property_stations.forEach(function(item){
                         this.items.selected_stations.push(item.station_id);
                     }.bind(this));
-                    this.items.prefecture_id = item.property_stations_closest.station.prefecture_id;
-                    this.items.station_line_id = item.property_stations_closest.station.station_line.id;
-                    this.items.select_nearest_station = item.property_stations_closest.station.id;
-                    this.getStationByStationLine(this.items.prefecture_id, this.items.station_line_id);
-                    this.getStationLineByPrefecture(this.items.prefecture_id);
+                    if(item.property_stations_closest != null){
+                        this.items.prefecture_id = item.property_stations_closest.station.prefecture_id;
+                        this.items.station_line_id = item.property_stations_closest.station.station_line.id;
+                        this.items.select_nearest_station = item.property_stations_closest.station.id;
+                        this.getStationByStationLine(this.items.prefecture_id, this.items.station_line_id);
+                        this.getStationLineByPrefecture(this.items.prefecture_id);
+                    }
                 }
 
             }
