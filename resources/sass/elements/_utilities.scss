@@ -51,17 +51,24 @@
     margin-bottom: 7.5rem;
 }
 .py-32{
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
 }
 .pt-32{
-    padding-top: 2rem;
+    padding-top: 2rem !important;
 }
 .pt-40{
-    padding-top: 2.5rem;
+    padding-top: 2.5rem !important;
 }
 .pb-40{
-    padding-bottom: 2.5rem;
+    padding-bottom: 2.5rem !important;
+}
+.mx-40{
+    margin-left: 2.5rem !important;
+    margin-right: 2.5rem !important;
+}
+.mt-40{
+    margin-top: 2.5rem !important;
 }
 // --------------------------------------------------------------------------
 
@@ -299,10 +306,10 @@
     }
 }
 .mb-32{
-    margin-bottom: 2rem;
+    margin-bottom: 2rem !important;
 }
 .pb-32{
-    padding-bottom: 2rem;
+    padding-bottom: 2rem !important;
 }
 // --------------------------------------------------------------------------
 
