@@ -24,6 +24,11 @@
 
     <!-- Alpine Core -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        ul.parsley-errors-list li.parsley-type{
+            display: block !important;
+        }
+    </style>
 
 </head>
 <body>
@@ -84,5 +89,25 @@
     {{-- <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script> --}}
     <!-- Bootstrap 4 -->
     <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]/;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+    </script>
+    @stack('scripts')
 </body>
 </html>

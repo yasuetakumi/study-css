@@ -755,47 +755,60 @@
                                     <p class="title-form">お問い合わせカテゴリー</p>
                                     <span class="label-required ml-2">必須</span>
                                 </div>
-                                <form action="#" class="mb-lg-64 mb-32">
+                                <form method="POST" action="{{route('lp.contact')}}" class="mb-lg-64 mb-32" id="contact-form">
+                                    @csrf
                                     <div class="form-group">
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
-                                            <label class="custom-control-label label-contact" for="customRadioInline1">掲載希望申請</label>
+                                            <input value="掲載希望申請" type="radio" id="category1" name="category" class="custom-control-input" required data-parsley-errors-container="#error-category">
+                                            <label class="custom-control-label label-contact" for="category1">掲載希望申請</label>
                                           </div>
-                                          <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-                                            <label class="custom-control-label label-contact" for="customRadioInline2">お問い合わせ</label>
-                                          </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input value="お問い合わせ" type="radio" id="category2" name="category" class="custom-control-input" required data-parsley-errors-container="#error-category">
+                                            <label class="custom-control-label label-contact" for="category2">お問い合わせ</label>
+                                        </div>
+                                        <div class="validation-fb" id="error-category">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="label-contact">企業名
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" class="input-contact" placeholder="例）株式会社トラストワン">
+                                        <input type="text" name="company_name" class="input-contact" placeholder="例）株式会社トラストワン" required data-parsley-errors-container="#error-company">
+                                        <div class="validation-fb" id="error-company">
+
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="label-contact">担当者名
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" class="input-contact" placeholder="例）山田 太郎">
+                                        <input type="text" name="contact_name" class="input-contact" placeholder="例）山田 太郎" required data-parsley-errors-container="#error-contact">
+                                        <div class="validation-fb" id="error-contact">
+
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="label-contact">Webサイト
                                         </label>
-                                        <input type="text" class="input-contact" placeholder="例）https://trust-one.net/">
+                                        <input type="text" name="website" class="input-contact" placeholder="例）https://trust-one.net/">
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="label-contact">お電話番号
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" class="input-contact" placeholder="例）08000000001" required>
+                                        <input type="text" name="phone" onkeypress="validate(event)" class="input-contact" placeholder="例）08000000001" required data-parsley-errors-container="#error-phone">
+                                        <div class="validation-fb" id="error-phone">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="label-contact">メールアドレス
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" class="input-contact error" placeholder="例）yamada.tarou@yamada.co.jp" required>
-                                        <div class="validation-fb">
-                                            必須項目です。メールアドレスが正しくありません。
+                                        <input data-parsley-errors-container="#error-email" type="email" name="email" class="input-contact" placeholder="例）yamada.tarou@yamada.co.jp" required
+                                            data-parsley-type="email"
+                                            data-parsley-error-message="必須項目です。メールアドレスが正しくありません。"
+                                            data-parsley-errors-container="#error-email">
+                                        <div class="validation-fb" id="error-email">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -806,11 +819,13 @@
                                     <div class="text-center mt-5">
                                         <div class="d-flex justify-content-center">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <input value="1" name="policy" type="checkbox" class="custom-control-input" id="customCheck1" required data-parsley-errors-container="#error-policy">
                                                 <label class="custom-control-label label-contact" for="customCheck1"><a href="#" class="policy-link">個人情報保護方針</a> に同意する</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-secondary w-50 px-5">送信する</button>
+                                        <div class="validation-fb" style="margin-top: -10px" id="error-policy">
+                                        </div>
+                                        <button type="submit" class="btn btn-secondary w-50 px-5 mt-3">送信する</button>
                                     </div>
                                 </form>
 							</div>
@@ -824,3 +839,19 @@
 <!-- End -->
 <!-- End -->
 @endsection
+@push('scripts')
+    <script src="{{asset('plugins/parsley/parsley.min.js')}}"></script>
+    @if (App::isLocale('en'))
+    <script src="{{asset('plugins/parsley/i18n/en.js')}}"></script>
+    @elseif (App::isLocale('ja'))
+    <script src="{{asset('plugins/parsley/i18n/ja.js')}}"></script>
+    @endif
+
+    <script>
+        $(document).ready(function() {
+            $('#contact-form').parsley({
+                errorClass: 'error',
+            });
+        });
+    </script>
+@endpush
