@@ -25,7 +25,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-12">
                                             <div class="banner-desc">
-                                                <h1 class="sub-heading font-weight-bold">飲食店向けの <span class="sub-main-heading d-block font-weight-bold">物件大募集!!</span></h1>
+                                                <h1 class="sub-heading font-weight-bold ff-noto">飲食店向けの <span class="sub-main-heading d-block font-weight-bold">物件大募集!!</span></h1>
                                             </div>
                                         </div>
                                     </div>
@@ -46,8 +46,8 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
-                                        <div class="col-lg-5 col-md-8 col-12">
-                                            <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form">
+                                        <div class="col-lg-6 col-xl-5 col-md-8 col-12">
+                                            <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
                                                 <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
                                             </a>
                                         </div>
@@ -75,7 +75,7 @@
                                     <img src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                 </div>
                                 <p class="heading-title text-uppercase">REFERRAL FEE</p>
-                                <h2 class="sub-title ff-base font-weight-bold">内装工事成約で <br class="d-lg-none"> <span style="color: #FE2020">紹介料</span>を支給!!</h2>
+                                <h2 class="sub-title ff-base font-weight-bold">内装工事成約で<br class="d-lg-none"><span style="color: #FE2020">紹介料</span>を支給!!</h2>
                             </div>
                             <img class="d-inline-block d-lg-none pt-5" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
 
@@ -94,39 +94,10 @@
     </div>
 </div>
 
-{{-- <div class="section-wrapper pt-0">
-	<div class="content-payment">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-12">
-					<div class="top-content">
-                        <div class="row justify-content-center">
-                            <div class="col-12 position-relative">
-                                <img class="w-100" src="{{asset('assets/img/frame-yen.png')}}" alt="">
-<div class="frame-payment">
-    <p class="text-payment">例えば2,000万円の内装工事が成約した場合…</p>
-    <p class="text-sub-payment d-inline-flex align-items-center">
-        <img class="icon-coin-size" src="{{asset('assets/img/icon-coin.svg')}}" alt="内装工事成約で 紹介料3%を支給!!"></span>
-        <span class="pl-lg-3 mx-2 mx-lg-0">
-            <span class="text-orange-secondary">3%の『60万円』</span>
-            <br class="d-lg-none">を紹介料としてお支払い！
-        </span>
-        <img class="icon-coin-size" src="{{asset('assets/img/icon-coin.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
-    </p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div> --}}
-
 <div class="section-wrapper pt-0">
     <div class="container">
         <div class="row justify-content-center">
-            <h3 class="title-flow-image">紹介料支給までの <br class="d-md-none"> 流れとイメージ</h3>
+            <h3 class="title-flow-image">紹介料支給までの<br class="d-md-none">流れとイメージ</h3>
             <div class="col-12">
                 <img class="w-100" src="{{asset('assets/img/flow.png')}}" alt="flow">
             </div>
@@ -225,9 +196,9 @@
                                         <p class="text-center desc-advantage">初期費用も、最低登録物件数の制約も、契約期間の縛りも、成功報酬の請求も一切ございません！
                                         </p>
                                     </div>
-                                    <div class="row justify-content-center mt-3">
+                                    <div class="row justify-content-center mt-4">
                                         <div class="col-lg-10">
-                                            <img class="w-100" src="{{asset('assets/img/graph1.svg')}}" alt="">
+                                            <img class="graph-img" src="{{asset('assets/img/graph1.svg')}}" alt="">
                                         </div>
                                         <div class="desc-content">
                                             <p class="footer-advantage">1物件あたりの利益<br class="d-lg-none">（掲載料分）が増加</p>
@@ -248,15 +219,15 @@
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
                                     <p class="title-advantage">成約手数料<span>無料</span></p>
-                                    <div class="desc-content mt-5 mb-2">
-                                        <h3 class="text-center desc-advantage">出店希望者様と不動産業者様のマッチング後は、直接やりとりを行っていただきます。
+                                    <div class="desc-content mt-5 mb-4">
+                                        <p class="text-center desc-advantage ff-noto">出店希望者様と不動産業者様のマッチング後は、直接やりとりを行っていただきます。
                                             <br>
                                             成約手数料は一切かかりません。
-                                        </h3>
+                                        </p>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-5">
-                                            <img class="w-100" src="{{asset('assets/img/free.svg')}}" alt="">
+                                            <img class="free-img" src="{{asset('assets/img/free.svg')}}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +244,7 @@
                             </div>
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
-                                    <p class="title-advantage">業界初｜紹介料<span>3%</span>が支給されるポータルサイト</p>
+                                    <p class="title-advantage">業界初｜紹介料が支給されるポータルサイト</p>
                                     <div class="desc-content mt-5 mb-40">
                                         <p class="text-center desc-advantage">内装をお考えの飲食店オーナーに弊社を紹介、内装工事ご成約で『内装工事金額の一部』をもれなくお支払いいたします。
                                             <br>※もちろん、当ポータルサイト経由以外の内装工事ご成約もOK！
@@ -282,8 +253,11 @@
                                     <div class="row justify-content-center">
                                         <div class="col-12">
                                             <div class="row justify-content-center">
-                                                <div class="col-lg-8">
-                                                    <img class="w-100 mx-lg-40" src="{{asset('assets/img/group03.png')}}" alt="">
+                                                <div class="col-lg-auto col-6">
+                                                    <img class="model-person-img" src="{{asset('assets/img/woman.png')}}" alt="業界初｜紹介料が支給されるポータルサイト">
+                                                </div>
+                                                <div class="col-lg-auto col-6">
+                                                    <img class="model-person-img" src="{{asset('assets/img/man.png')}}" alt="業界初｜紹介料が支給されるポータルサイト">
                                                 </div>
                                             </div>
                                         </div>
@@ -299,7 +273,7 @@
                         <div class="col-12 advantage-frame shadow-box py-64 border-0">
                             <div class="desc-content">
                                 <h3 class="title-desc ff-base font-weight-bold desc-about d-flex flex-lg-row flex-column align-items-center justify-content-center">
-                                    <img class="mr-1" src="{{asset('assets/img/logo.png')}}" alt="">
+                                    <img class="mr-1" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
                                     はなぜ掲載料無料なのか？
                                 </h3>
                                 <p class="mt-40 mb-4 text-blue-primary fs-18 font-weight-bold">弊社は内装業を主収益としているので、<br class="d-lg-none">掲載料・成約手数料をいただく必要がございません。</p>
@@ -319,7 +293,6 @@
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                             <div class="frame-banner">
                                 <p class="text-banner">掲載料<span>無料</span></p>
-                                <p class="text-sub-banner">※登録後、再登録で無料になります。</p>
                             </div>
                         </div>
 
@@ -332,7 +305,7 @@
 
                         <div class="col-lg-7 col-12 mt-5">
                             <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2">
-                                <img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="">掲載お問合せはコチラ【無料】
+                                <img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
                             </a>
                         </div>
                     </div>
@@ -628,7 +601,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-lg-8">
+                    <div class="col-12 col-lg-6">
                         <div class="page-header">
                             <p class="heading-title text-uppercase">faq</p>
                             <h2 class="sub-title ff-base font-weight-bold">よくあるご質問</h2>
@@ -654,7 +627,7 @@
                                 </div>
                                 <div class="collapse show" id="faqCollapse1">
                                     <div class="faq-child text-left">
-                                        <p> A:「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
+                                        <p>「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
                                     </div>
                                 </div>
                             </div>
@@ -673,7 +646,7 @@
                                 </div>
                                 <div class="collapse" id="faqCollapse2">
                                     <div class="faq-child text-left">
-                                        <p>A: はい、価格は全て税込み表記となります。</p>
+                                        <p>はい、価格は全て税込み表記となります。</p>
                                     </div>
                                 </div>
                             </div>
@@ -692,7 +665,7 @@
                                 </div>
                                 <div class="collapse" id="faqCollapse3">
                                     <div class="faq-child text-left">
-                                        <p>A: 別でかかる費用は一切ございません。</p>
+                                        <p>別でかかる費用は一切ございません。</p>
                                     </div>
                                 </div>
                             </div>
@@ -712,7 +685,7 @@
                                 </div>
                                 <div class="collapse" id="faqCollapse4">
                                     <div class="faq-child text-left">
-                                        <p>A: 株式会社トラストワンが運営しております。トラストワンでは年間100以上の店舗の内装を行う豊富な実績があり、一部上場企業様と多数の取引実績もございます。</p>
+                                        <p>株式会社トラストワンが運営しております。トラストワンでは年間100以上の店舗の内装を行う豊富な実績があり、一部上場企業様と多数の取引実績もございます。</p>
                                     </div>
                                 </div>
                             </div>
@@ -732,7 +705,7 @@
                                 </div>
                                 <div class="collapse" id="faqCollapse5">
                                     <div class="faq-child text-left">
-                                        <p>A: 重飲食（居酒屋や中華料理屋、焼き肉屋等）または軽飲食（カフェやバー・スナック等）の業態可能な店舗物件が登録できます。また居抜き・スケルトンのどちらも登録可能です。</p>
+                                        <p>重飲食（居酒屋や中華料理屋、焼き肉屋等）または軽飲食（カフェやバー・スナック等）の業態可能な店舗物件が登録できます。また居抜き・スケルトンのどちらも登録可能です。</p>
                                     </div>
                                 </div>
                             </div>
@@ -762,20 +735,21 @@
                     <div class="page-body pb-0 text-left" x-data="{aggrement: false}">
                         <div class="row justify-content-center">
                             <div class="col-lg-10 col-12 contact-form">
-                                <div class="d-flex">
-                                    <p class="title-form">お問い合わせカテゴリー</p>
-                                    <span class="label-required ml-2">必須</span>
-                                </div>
+
                                 <form method="POST" action="{{route('lp.contact')}}" class="mb-lg-64 mb-32" id="contact-form">
                                     @csrf
                                     <div class="form-group mb-4">
+                                        <div class="d-flex">
+                                            <label class="label-contact">お問い合わせカテゴリー</label>
+                                            <span class="label-required ml-2">必須</span>
+                                        </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input input-contact-radio" type="radio" name="category" id="inlineRadio1" value="掲載希望申請" required data-parsley-errors-container="#error-category">
-                                            <label class="form-check-label label-contact fw-400 mb-0" for="inlineRadio1">掲載希望申請</label>
+                                            <label class="form-check-label label-contact fw-500 mb-0" for="inlineRadio1">掲載希望申請</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input input-contact-radio" type="radio" name="category" id="inlineRadio2" value="お問い合わせ" required data-parsley-errors-container="#error-category">
-                                            <label class="form-check-label label-contact fw-400 mb-0" for="inlineRadio2">お問い合わせ</label>
+                                            <label class="form-check-label label-contact fw-500 mb-0" for="inlineRadio2">お問い合わせ</label>
                                         </div>
                                         <div class="validation-fb" id="error-category">
                                         </div>
@@ -827,7 +801,7 @@
                                     <div class="text-center mt-5">
                                         <div class="d-flex justify-content-center mb-4">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input input-contact-checkbox" type="checkbox" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
+                                                <input x-ref="policy" id="policy" class="form-check-input input-contact-checkbox" type="checkbox" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
                                                 <label class="form-check-label label-contact fw-400 fs-14 mb-0"></label>
                                                 <a role="button" x-on:click="aggrement = true" class="policy-link">個人情報保護方針</a> <span class="label-contact fw-400 fs-14 mb-0">に同意する</span>
                                             </div>
@@ -836,7 +810,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-secondary px-5 py-3 btn-submit-contact">送信する</button>
                                     </div>
-                                    <div id="agreement-content" :style="aggrement == true ? 'display: block' : 'display: hidden' ">
+                                    <div id="agreement-content" :style="aggrement == true ? 'display: block' : 'display: hidden'">
                                         <!--popup-->
                                         <div class="wrapper-popup-agreement">
                                             <div class="content-popup">
@@ -1010,15 +984,14 @@
                                                 <div class="button-wrapper">
                                                     <div class="container">
                                                         <div class="d-flex justify-content-center align-items-center">
-                                                            <div class="close-agreement btn-agreement">閉じる</div>
-                                                            <div class="check-agreement btn-agreement">同意する</div>
+                                                            <div class="close-agreement btn-agreement"><a role="button" x-on:click="aggrement = false" class="text-green-primary">閉じる</a></div>
+                                                            <div class="check-agreement btn-agreement"><a role="button" x-on:click="$refs.policy.checked = true, aggrement = false" class="text-white">同意する</a></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--popup-->
-
                                     </div>
                                 </form>
                             </div>
@@ -1046,6 +1019,5 @@
             errorClass: 'error'
         , });
     });
-
 </script>
 @endpush

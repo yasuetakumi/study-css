@@ -10,7 +10,7 @@ $text-primary-color: #333333;
 
 
 .text-green-primary{
-    color: $primary-color;
+    color: $primary-color !important;
 }
 .text-orange-secondary{
     color: $secondary-color !important;
@@ -258,8 +258,8 @@ $text-primary-color: #333333;
         }
     }
     .faq-btn{
-        width: 32px;
-        height: 32px;
+        width: 24px;
+        height: 24px;
     }
     .page-header{
         border-right: 1px solid;
@@ -745,6 +745,24 @@ $text-primary-color: #333333;
                 @include breakpoint-down(sm){
                     width: 50%;
                 }
+            }
+        }
+        .graph-img{
+            width: 648px;
+            @include breakpoint-down(md){
+                width: 100%;
+            }
+        }
+        .free-img{
+            width: 280px;
+            @include breakpoint-down(md){
+                width: 100%;
+            }
+        }
+        .model-person-img{
+            width: 300px;
+            @include breakpoint-down(md){
+                width: 100%;
             }
         }
         .title-advantage{

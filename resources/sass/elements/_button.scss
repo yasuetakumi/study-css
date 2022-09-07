@@ -281,10 +281,12 @@
             @include hover-focus {
                 color: $color;
                 background: #fff;
+                border: 1px solid $color;
             }
             @include active {
                 color: $color;
                 background: #fff;
+                border: 1px solid $color;
             }
         }
     }

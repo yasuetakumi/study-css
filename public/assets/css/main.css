@@ -543,12 +543,14 @@ body.body-paging.body-fadeout .animation-transition {
 .btn-secondary.revert:not(:disabled):not(.disabled):focus {
   color: #AACF52;
   background: #fff;
+  border: 1px solid #AACF52;
 }
 
 .btn-secondary.revert:not(:disabled):not(.disabled):active,
 .btn-secondary.revert:not(:disabled):not(.disabled).active {
   color: #AACF52;
   background: #fff;
+  border: 1px solid #AACF52;
 }
 
 .btn-about {
@@ -2573,6 +2575,10 @@ strong,
   max-height: 0;
 }
 
+.ff-noto {
+  font-family: "Noto Sans JP", sans-serif !important;
+}
+
 .title-border-left .border-y {
   width: 0.3125rem;
   height: 1.5rem;
@@ -4467,7 +4473,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 
 .banner-wrapper .banner-caption {
   padding-top: 40px;
-  padding-bottom: 64px;
+  padding-bottom: 40px;
   background: #000000b0;
   position: absolute;
   z-index: 9;
@@ -4532,7 +4538,6 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .banner-wrapper .banner-caption .banner-title span {
   display: inline-block;
   font-size: 4rem;
-  font-family: "Ostrich Sans", sans-serif;
   padding: 0 1rem;
   line-height: 1.2;
 }
@@ -4630,18 +4635,21 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 }
 
 .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
-  font-size: 1.5rem !important;
+  font-size: 1.25rem !important;
   font-weight: 700;
+}
+
+@media (max-width: 1199.98px) {
+  .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
+    font-size: 1rem !important;
+    padding: 1rem 1rem;
+  }
 }
 
 @media (max-width: 991.98px) {
   .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
     font-size: 1rem !important;
     padding: 2rem 0.5rem;
-  }
-
-  .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form .img-logo {
-    width: 145px;
   }
 }
 
@@ -4650,8 +4658,26 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
     font-size: 0.875rem !important;
     padding: 1rem 0.5rem;
   }
+}
 
-  .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form .img-logo {
+.banner-wrapper .banner-caption .wrapper-btn-contact .img-logo {
+  width: 145px;
+}
+
+@media (max-width: 1199.98px) {
+  .banner-wrapper .banner-caption .wrapper-btn-contact .img-logo {
+    width: 120px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .banner-wrapper .banner-caption .wrapper-btn-contact .img-logo {
+    width: 145px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .banner-wrapper .banner-caption .wrapper-btn-contact .img-logo {
     width: 120px;
   }
 }
@@ -4741,7 +4767,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 }
 
 .text-green-primary {
-  color: #AACF52;
+  color: #AACF52 !important;
 }
 
 .text-orange-secondary {
@@ -5060,8 +5086,8 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .contact-content .faq-btn,
 .feature-content .faq-btn,
 .product-content .faq-btn {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
 }
 
 .zoom-content .page-header,
@@ -6962,6 +6988,36 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 @media (max-width: 767.98px) {
   .advantage-content .advantage-frame .label-image img {
     width: 50%;
+  }
+}
+
+.advantage-content .advantage-frame .graph-img {
+  width: 648px;
+}
+
+@media (max-width: 991.98px) {
+  .advantage-content .advantage-frame .graph-img {
+    width: 100%;
+  }
+}
+
+.advantage-content .advantage-frame .free-img {
+  width: 280px;
+}
+
+@media (max-width: 991.98px) {
+  .advantage-content .advantage-frame .free-img {
+    width: 100%;
+  }
+}
+
+.advantage-content .advantage-frame .model-person-img {
+  width: 300px;
+}
+
+@media (max-width: 991.98px) {
+  .advantage-content .advantage-frame .model-person-img {
+    width: 100%;
   }
 }
 
