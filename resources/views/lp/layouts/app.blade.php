@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="description" content="「たべるば」は掲載料無料！成約手数料無料！業界初の内装工事成約で紹介料を支給！を行う新しい不動産ポータルサイトです。「たべるば」に掲載する飲食店向けの物件を大募集しています。">
+    <title>たべるば | 飲食店向けの物件大募集！ | 「飲食店物件専門」の不動産ポータルサイト！</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     {{-- <!-- Ionicons -->

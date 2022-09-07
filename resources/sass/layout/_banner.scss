@@ -73,7 +73,7 @@
 
     .banner-caption{
         padding-top: 40px;
-        padding-bottom: 64px;
+        padding-bottom: 40px;
         background: #000000b0;
         position: absolute;
         z-index: 9;
@@ -127,7 +127,6 @@
             span{
                 display: inline-block;
                 font-size: 4rem;
-                font-family: "Ostrich Sans", sans-serif;
                 padding: 0 1rem;
                 line-height: 1.2;
 
@@ -194,21 +193,34 @@
         .wrapper-btn-contact{
             margin-top: 32px;
             .btn-contact-form{
-                font-size: 1.5rem !important;
+                font-size: 1.25rem !important;
                 font-weight: 700;
+                @include breakpoint-down(lg){
+                    font-size: 1rem !important;
+                    padding: 1rem 1rem;
+                }
                 @include breakpoint-down(md){
                     font-size: 1rem !important;
                     padding: 2rem .5rem;
-                    .img-logo{
-                        width: 145px;
-                    }
                 }
                 @include breakpoint-down(sm){
                     font-size: .875rem !important;
                     padding: 1rem .5rem;
-                    .img-logo{
-                        width: 120px;
-                    }
+                }
+                @include breakpoint-up(xl){
+
+                }
+            }
+            .img-logo{
+                width: 145px;
+                @include breakpoint-down(lg){
+                    width: 120px;
+                }
+                @include breakpoint-down(md){
+                    width: 145px;
+                }
+                @include breakpoint-down(sm){
+                    width: 120px;
                 }
             }
         }
