@@ -31,24 +31,24 @@
 									</div>
 
                                     <div class="row justify-content-center">
-                                        <div class="position-relative col-md-4 col-12 mb-4 mb-lg-0">
+                                        <div class="position-relative col-lg-4 col-md-5 col-12 mb-4 mb-lg-0">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                                             <div class="frame-banner">
                                                 <p class="text-banner">掲載料<span>無料</span></p>
                                             </div>
                                         </div>
 
-                                        <div class="position-relative col-md-4 col-12">
+                                        <div class="position-relative col-lg-4 col-md-5 col-12">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
-                                            <div class="frame-banner">
+                                            <div class="frame-banner top-middle">
                                                 <p class="text-banner">成約手数料<span>無料</span></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
-                                        <div class="col-md-5 col-12">
+                                        <div class="col-lg-5 col-md-8 col-12">
                                             <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form">
-                                                <img class="align-self-center mx-2 icon-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="">掲載お問合せはコチラ【無料】
+                                                <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
                                             </a>
                                         </div>
                                     </div>
@@ -107,7 +107,10 @@
                                     <p class="text-payment">例えば2,000万円の内装工事が成約した場合…</p>
                                     <p class="text-sub-payment d-inline-flex align-items-center">
                                         <img class="icon-coin-size" src="{{asset('assets/img/icon-coin.svg')}}" alt="内装工事成約で 紹介料3%を支給!!"></span>
-                                        <span class="pl-lg-3">3%の『60万円』</span>を紹介料としてお支払い！
+                                        <span class="pl-lg-3 mx-2 mx-lg-0">
+                                            <span class="text-orange-secondary">3%の『60万円』</span>
+                                            <br class="d-lg-none">を紹介料としてお支払い！
+                                        </span>
                                         <img class="icon-coin-size" src="{{asset('assets/img/icon-coin.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                     </p>
                                 </div>
@@ -123,7 +126,7 @@
 <div class="section-wrapper">
     <div class="container">
 		<div class="row justify-content-center">
-			<h3 class="title-flow-image">紹介料支給までの流れとイメージ</h3>
+			<h3 class="title-flow-image">紹介料支給までの <br class="d-md-none"> 流れとイメージ</h3>
 			<div class="col-12">
 				<img class="w-100" src="{{asset('assets/img/flow.png')}}" alt="flow">
 			</div>
@@ -323,7 +326,7 @@
 
                 <div class="pt-64 pb-0">
                     <div class="row justify-content-center">
-                        <div class="position-relative col-md-4 col-12 mb-4 mb-lg-0">
+                        <div class="position-relative col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                             <div class="frame-banner">
                                 <p class="text-banner">掲載料<span>無料</span></p>
@@ -331,9 +334,9 @@
                             </div>
                         </div>
 
-                        <div class="position-relative col-md-4 col-12">
+                        <div class="position-relative col-lg-4 col-md-6 col-12">
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="Taberuba Logo">
-                            <div class="frame-banner">
+                            <div class="frame-banner top-middle">
                                 <p class="text-banner">成約手数料<span>無料</span></p>
                             </div>
                         </div>
@@ -393,7 +396,7 @@
 
 				<div class="page-body pb-0">
 					<div class="row justify-content-between">
-						<div class="col-12 col-md-6 col-lg-4">
+						<div class="col-12 col-md-4 col-lg-4">
 							<div class="flow-list-content line-01">
 								<div class="wrap-box">
 									<img src="{{asset('assets/img/flow-1.png')}}" class="img-cover lozad" alt="Flow 1">
@@ -401,7 +404,7 @@
 
 								<div class="wrap-desc">
 									<div class="d-title">
-										<div class="row content-center">
+										<div class="row content-center justify-content-md-center justify-content-lg-start">
 											<div class="col-8 sect-top">
 												<div class="row">
 													<div class="col-12 col-lg-4">
@@ -426,12 +429,12 @@
 								</div>
 							</div>
 						</div>
-                        <div class="d-none d-lg-block col line-01-02-wrapper px-0">
+                        <div class="d-none d-md-block d-lg-block col line-01-02-wrapper px-0">
                             <div class="line-01-02">
                             </div>
                         </div>
 
-						<div class="col-12 col-md-6 col-lg-4">
+						<div class="col-12 col-md-4 col-lg-4">
 							<div class="flow-list-content line-02">
 								<div class="wrap-box">
 									<img src="{{asset('assets/img/flow-2.png')}}" class="img-cover lozad" alt="Flow 2">
@@ -439,7 +442,7 @@
 
 								<div class="wrap-desc">
 									<div class="d-title">
-										<div class="row content-center">
+										<div class="row content-center justify-content-md-center justify-content-lg-start">
 											<div class="col-9 sect-top">
 												<div class="row">
 													<div class="col-12 col-lg-4">
@@ -465,11 +468,9 @@
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 
-                    <div class="row justify-content-center d-none d-lg-flex">
+                    <div class="row justify-content-center d-none d-md-flex d-lg-flex">
                         <div class="col-6 py-5 position-relative">
                             <div class="line-02-03 w-100 my-5">
                             </div>
@@ -480,16 +481,19 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4">
-							<div class="flow-list-content line-03">
+                        <div class="col-12 col-md-4 col-lg-4 mt-5 mt-md-0 position-relative">
+                            <div class="label-flow-overlap-sp d-md-none px-3 py-1">
+                                3-5営業日程度
+                            </div>
+							<div class="flow-list-content line-03 flow-3">
 								<div class="wrap-box">
 									<img src="{{asset('assets/img/flow-3.png')}}" class="img-cover lozad" alt="Flow 3">
 								</div>
 
 								<div class="wrap-desc">
 									<div class="d-title">
-										<div class="row content-center">
-											<div class="col-7 sect-top">
+										<div class="row content-center justify-content-md-center justify-content-lg-start">
+											<div class="col-lg-7 col-md-8 col-7 sect-top">
 												<div class="row">
 													<div class="col-12 col-lg-4">
 														<div class="sect-number">
@@ -514,7 +518,7 @@
 							</div>
 						</div>
 
-						<div class="col-12 col-md-6 col-lg-4">
+						<div class="col-12 col-md-4 col-lg-4">
 							<div class="flow-list-content line-04">
 								<div class="wrap-box">
 									<img style="height: 5rem; margin-top: 1.5rem" src="{{asset('assets/img/flow-4.png')}}" class="img-cover lozad" alt="Flow 4">
@@ -522,7 +526,7 @@
 
 								<div class="wrap-desc">
 									<div class="d-title">
-										<div class="row content-center">
+										<div class="row content-center justify-content-md-center justify-content-lg-start">
 											<div class="col-7 col-lg-10 sect-top">
 												<div class="row">
 													<div class="col-12 col-lg-3">
@@ -548,7 +552,10 @@
 							</div>
 						</div>
 
-						<div class="col-12 col-md-6 col-lg-4">
+						<div class="col-12 col-md-4 col-lg-4 position-relative">
+                            <div class="label-flow-4-overlap py-1 d-none d-md-block">
+                                即日
+                            </div>
 							<div class="flow-list-content last-child line-05">
 								<div class="wrap-box">
 									<img src="{{asset('assets/img/flow-5.png')}}" class="img-cover lozad" alt="Flow 5">
@@ -556,7 +563,7 @@
 
 								<div class="wrap-desc">
 									<div class="d-title">
-										<div class="row content-center">
+										<div class="row content-center justify-content-md-center justify-content-lg-start">
 											<div class="col-7 sect-top">
 												<div class="row">
 													<div class="col-12 col-lg-4">
@@ -597,7 +604,7 @@
 					<div class="row justify-content-center">
 						<div class="col-12 col-lg-8 text-center d-flex flex-column align-items-center">
                             <h2 class="team-title-header mb-32">心をこめて私たちがみなさまの <br>
-                                物件成約のお手伝いをいたします。</h2>
+                                物件成約のお手伝いを<br class="d-md-none">いたします。</h2>
                             <div class="bg-green-primary" style="height: 2px; width: 32px"></div>
 						</div>
 					</div>
@@ -740,7 +747,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="row justify-content-center">
-						<div class="col-12 col-lg-8">
+						<div class="col-12 col-lg-6">
 							<div class="page-header">
 								<p class="heading-title text-uppercase">REQUEST / CONTACT</p>
 								<h2 class="sub-title ff-base font-weight-bold">掲載希望申請 / お問い合わせ</h2>
@@ -757,19 +764,19 @@
                                 </div>
                                 <form method="POST" action="{{route('lp.contact')}}" class="mb-lg-64 mb-32" id="contact-form">
                                     @csrf
-                                    <div class="form-group">
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input value="掲載希望申請" type="radio" id="category1" name="category" class="custom-control-input" required data-parsley-errors-container="#error-category">
-                                            <label class="custom-control-label label-contact" for="category1">掲載希望申請</label>
-                                          </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input value="お問い合わせ" type="radio" id="category2" name="category" class="custom-control-input" required data-parsley-errors-container="#error-category">
-                                            <label class="custom-control-label label-contact" for="category2">お問い合わせ</label>
+                                    <div class="form-group mb-4">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input input-contact-radio" type="radio" name="category" id="inlineRadio1" value="掲載希望申請" required data-parsley-errors-container="#error-category">
+                                            <label class="form-check-label label-contact fw-400 mb-0" for="inlineRadio1">掲載希望申請</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input input-contact-radio" type="radio" name="category" id="inlineRadio2" value="お問い合わせ" required data-parsley-errors-container="#error-category">
+                                            <label class="form-check-label label-contact fw-400 mb-0" for="inlineRadio2">お問い合わせ</label>
                                         </div>
                                         <div class="validation-fb" id="error-category">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-4">
                                         <label for="" class="label-contact">企業名
                                             <span class="label-required ml-2">必須</span>
                                         </label>
@@ -778,7 +785,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-4">
                                         <label for="" class="label-contact">担当者名
                                             <span class="label-required ml-2">必須</span>
                                         </label>
@@ -787,12 +794,12 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-4">
                                         <label for="" class="label-contact">Webサイト
                                         </label>
                                         <input type="text" name="website" class="input-contact" placeholder="例）https://trust-one.net/">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-4">
                                         <label for="" class="label-contact">お電話番号
                                             <span class="label-required ml-2">必須</span>
                                         </label>
@@ -800,7 +807,7 @@
                                         <div class="validation-fb" id="error-phone">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-4">
                                         <label for="" class="label-contact">メールアドレス
                                             <span class="label-required ml-2">必須</span>
                                         </label>
@@ -811,21 +818,21 @@
                                         <div class="validation-fb" id="error-email">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-4">
                                         <label for="" class="label-contact">ご要望・ご質問等
                                         </label>
                                         <textarea placeholder="こちらにご要望・ご質問等をお書きください" class="input-contact py-3" name="description" id="" cols="30" rows="10" style="height: 240px;"></textarea>
                                     </div>
                                     <div class="text-center mt-5">
-                                        <div class="d-flex justify-content-center">
-                                            <div class="custom-control custom-checkbox">
-                                                <input value="1" name="policy" type="checkbox" class="custom-control-input" id="customCheck1" required data-parsley-errors-container="#error-policy">
-                                                <label class="custom-control-label label-contact" for="customCheck1"><a href="#" class="policy-link">個人情報保護方針</a> に同意する</label>
+                                        <div class="d-flex justify-content-center mb-4">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input input-contact-checkbox" type="checkbox" name="policy" id="inlineCheckbox1" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
+                                                <label class="form-check-label label-contact fw-400 fs-14 mb-0" for="inlineCheckbox1"><a href="#" class="policy-link">個人情報保護方針</a> に同意する</label>
                                             </div>
                                         </div>
-                                        <div class="validation-fb" style="margin-top: -10px" id="error-policy">
+                                        <div class="validation-fb d-block" id="error-policy">
                                         </div>
-                                        <button type="submit" class="btn btn-secondary w-50 px-5 mt-3">送信する</button>
+                                        <button type="submit" class="btn btn-secondary px-5 py-3 btn-submit-contact">送信する</button>
                                     </div>
                                 </form>
 							</div>

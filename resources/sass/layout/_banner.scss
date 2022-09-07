@@ -11,9 +11,9 @@
             width: 100%;
             height: 1100px;
             object-fit: cover;
-            // @include breakpoint-down(md){
-            //     height: 620px;
-            // }
+            @include breakpoint-down(md){
+                height: 850px;
+            }
             @include breakpoint-down(sm){
                 height: 815px;
             }
@@ -168,6 +168,9 @@
                 .sub-main-heading{
                     color: #FFFFFF;
                     font-size: 9.375rem;
+                    @include breakpoint-down(md){
+                        font-size: 8.375rem;
+                    }
                     @include breakpoint-down(sm){
                         font-size: 3.75rem;
                     }
@@ -193,9 +196,19 @@
             .btn-contact-form{
                 font-size: 1.5rem !important;
                 font-weight: 700;
+                @include breakpoint-down(md){
+                    font-size: 1rem !important;
+                    padding: 2rem .5rem;
+                    .img-logo{
+                        width: 145px;
+                    }
+                }
                 @include breakpoint-down(sm){
                     font-size: .875rem !important;
                     padding: 1rem .5rem;
+                    .img-logo{
+                        width: 120px;
+                    }
                 }
             }
         }
@@ -240,13 +253,13 @@
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
+    &.top-middle{
+        top: 37%;
+    }
 
     .text-banner{
         font-size: 2rem;
         font-weight: 700;
-        // @include breakpoint-down(md){
-        //     font-size: 1.5rem;
-        // }
         // @include breakpoint-down(sm){
         //     font-size: 1.2rem;
         // }

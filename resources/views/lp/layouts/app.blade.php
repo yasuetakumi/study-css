@@ -48,14 +48,6 @@
                         <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 fs-14" href="tel:05058072335">
                             <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
                             050-5807-2335</a>
-                        {{-- <a x-show="!mobileNav" role="button"
-                            x-on:click="mobileNav = !mobileNav">
-                            <i class="fas fa-bars fa-2x mt-2" :class="{'animate__animated animate__rotateOut' : mobileNav}"></i>
-                        </a>
-                        <a x-show="mobileNav" role="button"
-                            x-on:click="mobileNav = !mobileNav">
-                            <i class="fas fa-times fa-2x mt-2" :class="{'animate__animated animate__rotateIn' : mobileNav}"></i>
-                        </a> --}}
                     </div>
                     <div class="collapse navbar-collapse" id="navbarNav0">
                         <ul class="navbar-nav ml-auto align-items-center">
@@ -79,7 +71,7 @@
     @yield('content')
     <!-- vue init -->
     <footer class="bg-black p-3 text-center w-100">
-       <div class="text-white fs-14">&copy; 2022 RealEstateMedia inc.</div>
+       <div class="text-white fs-14">&copy; 2022 Taberuba inc.</div>
     </footer>
     <script src="{{asset('js/manifest.js')}}"></script>
     <script src="{{asset('js/vendor.js')}}"></script>
