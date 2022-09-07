@@ -642,83 +642,98 @@
                             <div x-data="{faq1: true}">
                                 {{-- faq 1 --}}
                                 <div class="faq-wrapper mb-3" x-bind:class="faq1 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq1 = !faq1">
+                                    <a class="d-flex align-items-center" role="button" x-on:click="faq1 = !faq1" data-toggle="collapse"
+                                        href="#faqCollapse1" role="button" aria-expanded="false" aria-controls="faqCollapse1">
                                         <div class="mr-3 font-weight-bold">Q1:</div>
                                         <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
                                         <div>
-                                            <img x-bind:class="!faq1 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
-                                            <img x-bind:class="faq1 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                            <img class="faq-btn" x-bind:class="!faq1 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                            <img class="faq-btn" x-bind:class="faq1 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
                                     </a>
                                 </div>
-                                <div class="faq-child text-left" x-show="faq1" x-collapse.duration.500ms>
-                                    <p> A:「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
+                                <div class="collapse show" id="faqCollapse1">
+                                    <div class="faq-child text-left">
+                                        <p> A:「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
+                                    </div>
                                 </div>
                             </div>
                             <div x-data="{faq2: false}">
                                 {{-- faq 2 --}}
                                 <div class="faq-wrapper mb-3" x-bind:class="faq2 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq2 = !faq2">
-                                        <div class="mr-3 font-weight-bold">Q2:</div>
-                                        <div class="flex-grow-1 text-left">物件の価格は税込み表記ですか？</div>
+                                    <a class="d-flex align-items-center" role="button" x-on:click="faq2 = !faq2" data-toggle="collapse"
+                                        href="#faqCollapse2" role="button" aria-expanded="false" aria-controls="faqCollapse2">
+                                        <div class="mr-3 font-weight-bold">Q1:</div>
+                                        <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
                                         <div>
-                                            <img x-bind:class="!faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
-                                            <img x-bind:class="faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                            <img class="faq-btn" x-bind:class="!faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                            <img class="faq-btn" x-bind:class="faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
                                     </a>
                                 </div>
-                                <div class="faq-child text-left" x-show="faq2" x-collapse>
-                                    <p>A: はい、価格は全て税込み表記となります。</p>
+                                <div class="collapse" id="faqCollapse2">
+                                    <div class="faq-child text-left">
+                                        <p>A: はい、価格は全て税込み表記となります。</p>
+                                    </div>
                                 </div>
                             </div>
                             <div x-data="{faq3: false}">
                                 {{-- faq 3 --}}
                                 <div class="faq-wrapper mb-3" x-bind:class="faq3 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq3 = !faq3">
+                                    <a class="d-flex align-items-center" role="button" x-on:click="faq3 = !faq3" data-toggle="collapse"
+                                        href="#faqCollapse3" role="button" aria-expanded="false" aria-controls="faqCollapse3">
                                         <div class="mr-3 font-weight-bold">Q3:</div>
                                         <div class="flex-grow-1 text-left">掲載料・成約手数料無料となっていますが、別でかかる費用はありますか？</div>
                                         <div>
-                                            <img x-bind:class="!faq3 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
-                                            <img x-bind:class="faq3 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                            <img class="faq-btn" x-bind:class="!faq3 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                            <img class="faq-btn" x-bind:class="faq3 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
                                     </a>
                                 </div>
-                                <div class="faq-child text-left" x-show="faq3" x-collapse>
-                                    <p>A: 別でかかる費用は一切ございません。</p>
+                                <div class="collapse" id="faqCollapse3">
+                                    <div class="faq-child text-left">
+                                        <p>A: 別でかかる費用は一切ございません。</p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div x-data="{faq4: false}">
                                 {{-- faq 4 --}}
                                 <div class="faq-wrapper mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq4 = !faq4">
+                                    <a class="d-flex align-items-center" role="button" x-on:click="faq4 = !faq4" data-toggle="collapse"
+                                        href="#faqCollapse4" role="button" aria-expanded="false" aria-controls="faqCollapse4">
                                         <div class="mr-3 font-weight-bold">Q4:</div>
                                         <div class="flex-grow-1 text-left">運営会社はどこですか？</div>
                                         <div>
-                                            <img x-bind:class="!faq4 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
-                                            <img x-bind:class="faq4 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                            <img class="faq-btn" x-bind:class="!faq4 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                            <img class="faq-btn" x-bind:class="faq4 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
                                     </a>
                                 </div>
-                                <div class="faq-child text-left" x-show="faq4" x-collapse>
-                                    <p>A: 株式会社トラストワンが運営しております。トラストワンでは年間100以上の店舗の内装を行う豊富な実績があり、一部上場企業様と多数の取引実績もございます。</p>
+                                <div class="collapse" id="faqCollapse4">
+                                    <div class="faq-child text-left">
+                                        <p>A: 株式会社トラストワンが運営しております。トラストワンでは年間100以上の店舗の内装を行う豊富な実績があり、一部上場企業様と多数の取引実績もございます。</p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div x-data="{faq5: false}">
                                 {{-- faq 5 --}}
                                 <div class="faq-wrapper mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq5 = !faq5">
+                                    <a class="d-flex align-items-center" role="button" x-on:click="faq5 = !faq5" data-toggle="collapse"
+                                        href="#faqCollapse5" role="button" aria-expanded="false" aria-controls="faqCollapse5">
                                         <div class="mr-3 font-weight-bold">Q5:</div>
                                         <div class="flex-grow-1 text-left">どんな業態の店舗物件が登録できますか？</div>
                                         <div>
-                                            <img x-bind:class="!faq5 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
-                                            <img x-bind:class="faq5 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
+                                            <img class="faq-btn" x-bind:class="!faq5 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
+                                            <img class="faq-btn" x-bind:class="faq5 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
                                     </a>
                                 </div>
-                                <div class="faq-child text-left" x-show="faq5" x-collapse>
-                                    <p>A: 重飲食（居酒屋や中華料理屋、焼き肉屋等）または軽飲食（カフェやバー・スナック等）の業態可能な店舗物件が登録できます。また居抜き・スケルトンのどちらも登録可能です。</p>
+                                <div class="collapse" id="faqCollapse5">
+                                    <div class="faq-child text-left">
+                                        <p>A: 重飲食（居酒屋や中華料理屋、焼き肉屋等）または軽飲食（カフェやバー・スナック等）の業態可能な店舗物件が登録できます。また居抜き・スケルトンのどちらも登録可能です。</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

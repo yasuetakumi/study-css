@@ -5046,6 +5046,24 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   }
 }
 
+.zoom-content .faq-btn,
+.about-content .faq-btn,
+.our-service-content .faq-btn,
+.advantage-content .faq-btn,
+.price-content .faq-btn,
+.flow-content .faq-btn,
+.executive-content .faq-btn,
+.dev-team-content .faq-btn,
+.message-content .faq-btn,
+.case-content .faq-btn,
+.faq-content .faq-btn,
+.contact-content .faq-btn,
+.feature-content .faq-btn,
+.product-content .faq-btn {
+  width: 32px;
+  height: 32px;
+}
+
 .zoom-content .page-header,
 .about-content .page-header,
 .our-service-content .page-header,
