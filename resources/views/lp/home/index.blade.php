@@ -75,7 +75,7 @@
                                     <img src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                 </div>
 								<p class="heading-title text-uppercase">REFERRAL FEE</p>
-								<h2 class="sub-title ff-base font-weight-bold">内装工事成約で <br class="d-lg-none"> <span style="color: #FE2020">紹介料3%</span>を支給!!</h2>
+								<h2 class="sub-title ff-base font-weight-bold">内装工事成約で <br class="d-lg-none"> <span style="color: #FE2020">紹介料</span>を支給!!</h2>
 							</div>
                             <img class="d-inline-block d-lg-none pt-5" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
 
@@ -83,7 +83,7 @@
                         <div class="col-12">
                             <div class="page-body pb-0">
                                 <div class="desc-content">
-                                    <p class="title-desc ff-base">改装工事をご紹介いただき成約した場合、<br class="d-lg-none"> 紹介料として内装工事費用の3%受け取れます。</p>
+                                    <p class="title-desc ff-base">内装工事費用の一部を受け取れます。<br class="d-lg-none">※紹介料に関しては応相談可（3％～）</p>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
 	</div>
 </div>
 
-<div class="section-wrapper pt-0">
+{{-- <div class="section-wrapper pt-0">
 	<div class="content-payment">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -121,9 +121,9 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --}}
 
-<div class="section-wrapper">
+<div class="section-wrapper pt-0">
     <div class="container">
 		<div class="row justify-content-center">
 			<h3 class="title-flow-image">紹介料支給までの <br class="d-md-none"> 流れとイメージ</h3>
@@ -274,25 +274,14 @@
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
                                     <p class="title-advantage">業界初｜紹介料<span>3%</span>が支給されるポータルサイト</p>
-                                    <div class="desc-content mt-5 mb-32">
-                                        <p class="text-center desc-advantage">内装をお考えの飲食店オーナーに弊社を紹介、内装工事ご成約で『内装工事金額の<span class="text-orange-secondary">3%</span>』をもれなくお支払いいたします。
+                                    <div class="desc-content mt-5 mb-40">
+                                        <p class="text-center desc-advantage">内装をお考えの飲食店オーナーに弊社を紹介、内装工事ご成約で『内装工事金額の一部』をもれなくお支払いいたします。
                                             <br>※もちろん、当ポータルサイト経由以外の内装工事ご成約もOK！
                                         </p>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-12">
-                                            <p class="text-payment-advantage">例えば2,000万円の内装工事が成約した場合…</p>
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <img class="icon-coin-size d-lg-block d-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト">
-                                                <p class="text-sub-payment-advantage mx-lg-2">
-                                                    <span><img class="icon-coin-size d-lg-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト"></span>
-                                                    <span class="text-orange-secondary mx-2 mx-lg-0">3%の『60万円』</span><span class="d-none d-lg-inline-flex">を紹介料としてお支払い！</span>
-                                                    <span><img class="icon-coin-size d-lg-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト"></span>
-                                                    <br class="d-lg-none"><span class="d-lg-none">を紹介料としてお支払い！</span>
-                                                </p>
-                                                <img class="icon-coin-size d-lg-block d-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト">
-                                            </div>
-                                            <div class="row justify-content-center mt-5">
+                                            <div class="row justify-content-center">
                                                 <div class="col-lg-8">
                                                     <img class="w-100 mx-lg-40" src="{{asset('assets/img/group03.png')}}" alt="">
                                                 </div>

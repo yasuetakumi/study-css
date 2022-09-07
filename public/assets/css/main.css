@@ -2214,6 +2214,10 @@ strong,
   margin-top: 2.5rem !important;
 }
 
+.mb-40 {
+  margin-bottom: 2.5rem !important;
+}
+
 @media (min-width: 992px) {
   .mx-lg-40 {
     margin-left: 2.5rem !important;
@@ -2547,6 +2551,10 @@ strong,
 
 .fs-10 {
   font-size: 0.625rem;
+}
+
+.fs-12 {
+  font-size: 0.75rem;
 }
 
 .bg-black {
