@@ -9,16 +9,16 @@
     .wrap-img{
         .img-banner{
             width: 100%;
-            height: 960px;
+            height: 1100px;
             object-fit: cover;
-            // @include breakpoint-down(md){
-            //     height: 620px;
-            // }
+            @include breakpoint-down(md){
+                height: 850px;
+            }
             @include breakpoint-down(sm){
-                height: 760px;
+                height: 815px;
             }
             @media screen and (max-width: 320px){
-                height: 760px;
+                height: 815px;
             }
 
 
@@ -72,7 +72,7 @@
     }
 
     .banner-caption{
-        padding-top: 64px;
+        padding-top: 40px;
         padding-bottom: 64px;
         background: #000000b0;
         position: absolute;
@@ -102,7 +102,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             line-height: 1.5;
-            margin-bottom: 1rem;
+            margin-bottom: .25rem;
             color: white;
         }
 
@@ -153,7 +153,8 @@
         }
 
         .banner-desc{
-            margin-top: 1.25rem;
+            margin-top: 1rem;
+            margin-bottom: 1.25rem;
             // padding-right: 1.5rem;
             @include breakpoint-down(md){
                 padding: 0;
@@ -163,6 +164,16 @@
                 color: #FFFFFF;
                 @include breakpoint-down(md){
                     margin-bottom: 1.5rem;
+                }
+                .sub-main-heading{
+                    color: #FFFFFF;
+                    font-size: 9.375rem;
+                    @include breakpoint-down(md){
+                        font-size: 8.375rem;
+                    }
+                    @include breakpoint-down(sm){
+                        font-size: 3.75rem;
+                    }
                 }
             }
 
@@ -177,6 +188,27 @@
                 font-size: 5rem;
                 @include breakpoint-down(sm){
                     font-size: 2rem;
+                }
+            }
+        }
+        .wrapper-btn-contact{
+            margin-top: 32px;
+            .btn-contact-form{
+                font-size: 1.5rem !important;
+                font-weight: 700;
+                @include breakpoint-down(md){
+                    font-size: 1rem !important;
+                    padding: 2rem .5rem;
+                    .img-logo{
+                        width: 145px;
+                    }
+                }
+                @include breakpoint-down(sm){
+                    font-size: .875rem !important;
+                    padding: 1rem .5rem;
+                    .img-logo{
+                        width: 120px;
+                    }
                 }
             }
         }
@@ -218,16 +250,16 @@
 .frame-banner{
     position: absolute;
     width: 100%;
-    top: 42%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
+    &.top-middle{
+        top: 37%;
+    }
 
     .text-banner{
         font-size: 2rem;
         font-weight: 700;
-        // @include breakpoint-down(md){
-        //     font-size: 1.5rem;
-        // }
         // @include breakpoint-down(sm){
         //     font-size: 1.2rem;
         // }
