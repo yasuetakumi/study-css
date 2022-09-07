@@ -40,7 +40,7 @@
 
                                         <div class="position-relative col-lg-4 col-md-5 col-12">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
-                                            <div class="frame-banner top-middle">
+                                            <div class="frame-banner">
                                                 <p class="text-banner">成約手数料<span>無料</span></p>
                                             </div>
                                         </div>
@@ -283,18 +283,18 @@
                                         <div class="col-12">
                                             <p class="text-payment-advantage">例えば2,000万円の内装工事が成約した場合…</p>
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <img class="icon-coin-size d-lg-block d-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="">
+                                                <img class="icon-coin-size d-lg-block d-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト">
                                                 <p class="text-sub-payment-advantage mx-lg-2">
                                                     <span><img class="icon-coin-size d-lg-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト"></span>
                                                     <span class="text-orange-secondary mx-2 mx-lg-0">3%の『60万円』</span><span class="d-none d-lg-inline-flex">を紹介料としてお支払い！</span>
                                                     <span><img class="icon-coin-size d-lg-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト"></span>
                                                     <br class="d-lg-none"><span class="d-lg-none">を紹介料としてお支払い！</span>
                                                 </p>
-                                                <img class="icon-coin-size d-lg-block d-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="">
+                                                <img class="icon-coin-size d-lg-block d-none" src="{{asset('assets/img/icon-coin.svg')}}" alt="業界初｜紹介料3%が支給されるポータルサイト">
                                             </div>
                                             <div class="row justify-content-center mt-5">
                                                 <div class="col-lg-8">
-                                                    <img class="w-100 mx-40" src="{{asset('assets/img/group03.png')}}" alt="">
+                                                    <img class="w-100 mx-lg-40" src="{{asset('assets/img/group03.png')}}" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -336,7 +336,7 @@
 
                         <div class="position-relative col-lg-4 col-md-6 col-12">
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="Taberuba Logo">
-                            <div class="frame-banner top-middle">
+                            <div class="frame-banner ">
                                 <p class="text-banner">成約手数料<span>無料</span></p>
                             </div>
                         </div>

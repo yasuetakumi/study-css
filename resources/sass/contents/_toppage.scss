@@ -581,6 +581,9 @@ $text-primary-color: #333333;
         height: 1px;
         background-color: #AACF52;
         transform: rotate(-201deg);
+        @include breakpoint-down(md){
+            transform: rotate(-210deg);
+        }
     }
 
     .label-flow-overlap{
@@ -614,15 +617,15 @@ $text-primary-color: #333333;
         width: 128px;
         z-index: 99;
         @include breakpoint-down(md){
-            position: absolute;
-            top: 7%;
-            left: -12%;
-            border: 1px solid #AACF52;
-            background-color: #fff;
-            color: #AACF52;
-            font-weight: 700;
-            width: 56px;
-            z-index: 99;
+                position: absolute;
+    top: 7%;
+    left: -12%;
+    border: 1px solid #AACF52;
+    background-color: #fff;
+    color: #AACF52;
+    font-weight: 700;
+    width: 56px;
+    z-index: 99;
         }
     }
 

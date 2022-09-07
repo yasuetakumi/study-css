@@ -276,6 +276,18 @@
             background-color: lighten( $color, 10% );
         }
     }
+    &.revert{
+        @include not-disabled {
+            @include hover-focus {
+                color: $color;
+                background: #fff;
+            }
+            @include active {
+                color: $color;
+                background: #fff;
+            }
+        }
+    }
 
 }
 .btn-about {
