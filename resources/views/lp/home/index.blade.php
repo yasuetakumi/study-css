@@ -31,24 +31,27 @@
                                     </div>
 
                                     <div class="row justify-content-center">
-                                        <div class="position-relative col-lg-4 col-md-5 col-12 mb-4 mb-lg-0">
+                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-12 mb-4 mb-lg-0">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                                             <div class="frame-banner">
                                                 <p class="text-banner">掲載料<span>無料</span></p>
                                             </div>
                                         </div>
 
-                                        <div class="position-relative col-lg-4 col-md-5 col-12">
+                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-12">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
-                                            <div class="frame-banner">
+                                            <div class="frame-banner top-middle">
                                                 <p class="text-banner">成約手数料<span>無料</span></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
-                                        <div class="col-lg-6 col-xl-5 col-md-8 col-12">
+                                        <div class="col-lg-6 col-xl-5 col-md-8 col-sm-8 col-12">
                                             <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
-                                                <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
+
+                                                <span>
+                                                    <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
+                                                </span>
                                             </a>
                                         </div>
                                     </div>
@@ -99,7 +102,7 @@
         <div class="row justify-content-center">
             <h3 class="title-flow-image">紹介料支給までの<br class="d-md-none">流れとイメージ</h3>
             <div class="col-12">
-                <img class="w-100" src="{{asset('assets/img/flow.png')}}" alt="flow">
+                <img class="w-100" src="{{asset('assets/img/flow.jpg')}}" alt="flow">
             </div>
         </div>
     </div>
@@ -298,7 +301,7 @@
 
                         <div class="position-relative col-lg-4 col-md-6 col-12">
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="Taberuba Logo">
-                            <div class="frame-banner ">
+                            <div class="frame-banner top-middle">
                                 <p class="text-banner">成約手数料<span>無料</span></p>
                             </div>
                         </div>
@@ -612,57 +615,60 @@
                 <div class="page-body pb-32">
                     <div class="row">
                         <div class="col-12">
-                            <div x-data="{faq1: true}">
+                            <div class="cursor-pointer" x-data="{faq1: true}">
                                 {{-- faq 1 --}}
-                                <div class="faq-wrapper mb-3" x-bind:class="faq1 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq1 = !faq1" data-toggle="collapse"
-                                        href="#faqCollapse1" role="button" aria-expanded="false" aria-controls="faqCollapse1">
+                                <a class="d-block faq-wrapper mb-3" x-bind:class="faq1 ? 'text-white bg-green-primary' : '' "
+                                    role="button" x-on:click="faq1 = !faq1" data-toggle="collapse"
+                                    href="#faqCollapse1" role="button" aria-expanded="false" aria-controls="faqCollapse1">
+                                    <div class="d-flex align-items-center" >
                                         <div class="mr-3 font-weight-bold">Q1:</div>
                                         <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
                                         <div>
                                             <img class="faq-btn" x-bind:class="!faq1 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
                                             <img class="faq-btn" x-bind:class="faq1 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                                 <div class="collapse show" id="faqCollapse1">
                                     <div class="faq-child text-left">
                                         <p>「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
                                     </div>
                                 </div>
                             </div>
-                            <div x-data="{faq2: false}">
+                            <div class="cursor-pointer" x-data="{faq2: false}">
                                 {{-- faq 2 --}}
-                                <div class="faq-wrapper mb-3" x-bind:class="faq2 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq2 = !faq2" data-toggle="collapse"
-                                        href="#faqCollapse2" role="button" aria-expanded="false" aria-controls="faqCollapse2">
+                                <a class="d-block faq-wrapper mb-3" x-bind:class="faq2 ? 'text-white bg-green-primary' : '' "
+                                    role="button" x-on:click="faq2 = !faq2" data-toggle="collapse"
+                                    href="#faqCollapse2" role="button" aria-expanded="false" aria-controls="faqCollapse2">
+                                    <div class="d-flex align-items-center">
                                         <div class="mr-3 font-weight-bold">Q1:</div>
                                         <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
                                         <div>
                                             <img class="faq-btn" x-bind:class="!faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
                                             <img class="faq-btn" x-bind:class="faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                                 <div class="collapse" id="faqCollapse2">
                                     <div class="faq-child text-left">
                                         <p>はい、価格は全て税込み表記となります。</p>
                                     </div>
                                 </div>
                             </div>
-                            <div x-data="{faq3: false}">
+                            <div class="cursor-pointer" x-data="{faq3: false}">
                                 {{-- faq 3 --}}
-                                <div class="faq-wrapper mb-3" x-bind:class="faq3 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq3 = !faq3" data-toggle="collapse"
-                                        href="#faqCollapse3" role="button" aria-expanded="false" aria-controls="faqCollapse3">
+                                <a class="d-block faq-wrapper mb-3" x-bind:class="faq3 ? 'text-white bg-green-primary' : '' "
+                                    role="button" x-on:click="faq3 = !faq3" data-toggle="collapse"
+                                    href="#faqCollapse3" role="button" aria-expanded="false" aria-controls="faqCollapse3">
+                                    <div class="d-flex align-items-center" >
                                         <div class="mr-3 font-weight-bold">Q3:</div>
                                         <div class="flex-grow-1 text-left">掲載料・成約手数料無料となっていますが、別でかかる費用はありますか？</div>
                                         <div>
                                             <img class="faq-btn" x-bind:class="!faq3 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
                                             <img class="faq-btn" x-bind:class="faq3 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                                 <div class="collapse" id="faqCollapse3">
                                     <div class="faq-child text-left">
                                         <p>別でかかる費用は一切ございません。</p>
@@ -670,11 +676,12 @@
                                 </div>
                             </div>
 
-                            <div x-data="{faq4: false}">
+                            <div class="cursor-pointer" x-data="{faq4: false}">
                                 {{-- faq 4 --}}
-                                <div class="faq-wrapper mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq4 = !faq4" data-toggle="collapse"
-                                        href="#faqCollapse4" role="button" aria-expanded="false" aria-controls="faqCollapse4">
+                                <div class="d-block faq-wrapper mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' "
+                                    role="button" x-on:click="faq4 = !faq4" data-toggle="collapse"
+                                    href="#faqCollapse4" role="button" aria-expanded="false" aria-controls="faqCollapse4">
+                                    <a class="d-flex align-items-center">
                                         <div class="mr-3 font-weight-bold">Q4:</div>
                                         <div class="flex-grow-1 text-left">運営会社はどこですか？</div>
                                         <div>
@@ -690,11 +697,12 @@
                                 </div>
                             </div>
 
-                            <div x-data="{faq5: false}">
+                            <div class="cursor-pointer" x-data="{faq5: false}">
                                 {{-- faq 5 --}}
-                                <div class="faq-wrapper mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' ">
-                                    <a class="d-flex align-items-center" role="button" x-on:click="faq5 = !faq5" data-toggle="collapse"
-                                        href="#faqCollapse5" role="button" aria-expanded="false" aria-controls="faqCollapse5">
+                                <div class="d-block faq-wrapper mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' "
+                                    role="button" x-on:click="faq5 = !faq5" data-toggle="collapse"
+                                    href="#faqCollapse5" role="button" aria-expanded="false" aria-controls="faqCollapse5">
+                                    <a class="d-flex align-items-center">
                                         <div class="mr-3 font-weight-bold">Q5:</div>
                                         <div class="flex-grow-1 text-left">どんな業態の店舗物件が登録できますか？</div>
                                         <div>
@@ -799,7 +807,7 @@
                                         <textarea placeholder="こちらにご要望・ご質問等をお書きください" class="input-contact py-3" name="description" id="" cols="30" rows="10" style="height: 240px;"></textarea>
                                     </div>
                                     <div class="text-center mt-5">
-                                        <div class="d-flex justify-content-center mb-4">
+                                        <div class="d-flex justify-content-center mb-2">
                                             <div class="form-check form-check-inline">
                                                 <input x-ref="policy" id="policy" class="form-check-input input-contact-checkbox" type="checkbox" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
                                                 <label class="form-check-label label-contact fw-400 fs-14 mb-0"></label>
