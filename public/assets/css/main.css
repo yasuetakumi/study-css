@@ -2569,6 +2569,10 @@ strong,
   font-weight: 500;
 }
 
+.max-h-0 {
+  max-height: 0;
+}
+
 .title-border-left .border-y {
   width: 0.3125rem;
   height: 1.5rem;
@@ -7901,16 +7905,17 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .contact-content .contact-form .input-contact-radio {
   height: 24px !important;
   width: 24px !important;
+  accent-color: #7a9d27 !important;
 }
 
 .contact-content .contact-form .input-contact-radio:checked {
-  background-color: #AACF52 !important;
-  border-color: #000 !important;
+  background-color: #fff !important;
 }
 
 .contact-content .contact-form .input-contact-checkbox {
   height: 20px !important;
   width: 20px !important;
+  accent-color: #7a9d27 !important;
 }
 
 .contact-content .contact-form .btn-submit-contact {

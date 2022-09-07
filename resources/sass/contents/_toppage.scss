@@ -1776,14 +1776,16 @@ $text-primary-color: #333333;
             height: 24px !important;
             width: 24px !important;
             // change accent color radio button
+            accent-color: #7a9d27 !important;
             &:checked{
-                background-color: $primary-color !important;
-                border-color: #000 !important;
+                background-color: #fff !important;
             }
         }
         .input-contact-checkbox{
             height: 20px !important;
             width: 20px !important;
+            // change accent color radio button
+            accent-color: #7a9d27 !important;
         }
         .btn-submit-contact{
             box-shadow: 0px 3px 6px #00000029;

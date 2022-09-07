@@ -651,7 +651,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="faq-child text-left" x-show="faq1" x-collapse.duration.500ms>
+                                <div class="faq-child text-left max-h-0" x-show="faq1" x-ref="container1" x-bind:style="faq1 == true ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''" x-transition>
                                     <p> A:「掲載希望申請/お問い合わせ」フォームに入力をお願いします。内容を確認し、弊社担当者よりご連絡させていただきます。</p>
                                 </div>
                             </div>
