@@ -70,6 +70,21 @@
 .mt-40{
     margin-top: 2.5rem !important;
 }
+.mb-40{
+    margin-bottom: 2.5rem !important;
+}
+.mx-lg-40{
+    @include breakpoint-up(lg){
+        margin-left: 2.5rem !important;
+        margin-right: 2.5rem !important;
+    }
+}
+.mx-lg-32{
+    @include breakpoint-up(lg){
+        margin-left: 2rem !important;
+        margin-right: 2rem !important;
+    }
+}
 // --------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
@@ -327,6 +342,9 @@
 }
 .fs-10{
     font-size: 0.625rem;
+}
+.fs-12{
+    font-size: 0.75rem;
 }
 .bg-black{
     background-color: #000;

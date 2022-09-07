@@ -36,26 +36,26 @@
     <div x-data="{ scrollAtTop: true }">
         <header class="navbar navbar-expand-lg navbar-top header-border-top fixed-top" id="navbarMenu"
                 :class="{ 'bg-nav-scroll': !scrollAtTop }" @scroll.window="scrollAtTop = (window.pageYOffset > 50) ? false : true">
-            <div class="container-fluid mx-lg-64">
-                <div class="row w-100 justify-content-between align-items-center" style="width: 104%">
+            <div class="container-fluid mx-lg-64 mx-md-4">
+                <div class="row w-100 justify-content-between align-items-center mx-lg-32">
                     <div>
-                        <a class="navbar-brand ml-3 pt-0 mr-0" href="#">
+                        <a class="navbar-brand pl-3 pt-0 mr-0" href="#">
                             <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
                         </a>
                     </div>
                     <div class="d-lg-none d-flex menu-btn-sp">
-                        <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 mr-2 fs-14" href="#contact">お問い合わせ</a>
-                        <a class="btn btn-secondary d-flex align-items-center h-auto py-1 px-2 fs-14" href="tel:05058072335">
+                        <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 mr-2 fs-12" href="#contact">お問い合わせ</a>
+                        <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 fs-12" href="tel:05058072335">
                             <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
                             050-5807-2335</a>
                     </div>
-                    <div class="collapse navbar-collapse" id="navbarNav0">
+                    <div class="collapse navbar-collapse pr-3" id="navbarNav0">
                         <ul class="navbar-nav ml-auto align-items-center">
                             <li class="nav-item">
-                                <a class="btn btn-secondary" href="#contact">お問い合わせ</a>
+                                <a class="btn btn-secondary revert" href="#contact">お問い合わせ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-secondary d-flex align-items-center" href="tel:05058072335">
+                                <a class="btn btn-secondary revert d-flex align-items-center" href="tel:05058072335">
                                     <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
                                     050-5807-2335</a>
                             </li>
