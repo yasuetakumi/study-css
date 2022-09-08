@@ -31,14 +31,14 @@
                                     </div>
 
                                     <div class="row justify-content-center">
-                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-12 mb-4 mb-lg-0">
+                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-10 mb-4 mb-lg-0">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                                             <div class="frame-banner">
                                                 <p class="text-banner">掲載料<span>無料</span></p>
                                             </div>
                                         </div>
 
-                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-12">
+                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-10">
                                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                                             <div class="frame-banner top-middle">
                                                 <p class="text-banner">成約手数料<span>無料</span></p>
@@ -46,11 +46,11 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
-                                        <div class="col-lg-6 col-xl-5 col-md-8 col-sm-8 col-12">
+                                        <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
                                             <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
 
                                                 <span>
-                                                    <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
+                                                    <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="hide-xl">コチラ【無料】
                                                 </span>
                                             </a>
                                         </div>
@@ -160,7 +160,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-7 col-12">
                                 <img class="w-100 pb-40 pt-32" src="{{asset('assets/img/macbook.png')}}" alt="内装会社「株式会社トラストワン」が運営する「飲食店物件専門」の不動産ポータルサイト！">
-                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill">実際に
+                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill border-0">実際に
                                     <img class="align-self-center mx-2 icon-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">を見てみる
                                     <img class="align-self-center ml-2 icon-link" src="{{asset('assets/img/icon-link.svg')}}" alt="">
                                 </a>
@@ -292,14 +292,14 @@
 
                 <div class="pt-64 pb-0">
                     <div class="row justify-content-center">
-                        <div class="position-relative col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                        <div class="position-relative col-lg-4 col-md-6 col-sm-6 col-12 mb-4 mb-lg-0">
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
                             <div class="frame-banner">
                                 <p class="text-banner">掲載料<span>無料</span></p>
                             </div>
                         </div>
 
-                        <div class="position-relative col-lg-4 col-md-6 col-12">
+                        <div class="position-relative col-lg-4 col-md-6 col-sm-6 col-12">
                             <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="Taberuba Logo">
                             <div class="frame-banner top-middle">
                                 <p class="text-banner">成約手数料<span>無料</span></p>
@@ -307,8 +307,8 @@
                         </div>
 
                         <div class="col-lg-7 col-12 mt-5">
-                            <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2">
-                                <img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せはコチラ【無料】
+                            <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
+                                <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-only">コチラ【無料】</span>
                             </a>
                         </div>
                     </div>
@@ -389,7 +389,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc">御社名、所在地などをお知らせください。</p>
+                                        <p class="sc-desc text-sm-center text-md-left">御社名、所在地などをお知らせください。</p>
                                     </div>
                                 </div>
                             </div>
@@ -427,8 +427,8 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc">宅建免許証のコピーをご提出ください。</p>
-                                        <p class="fs-12">※審査結果によってはご掲載いただけないケ<br>ースもございます。ご了承ください。</p>
+                                        <p class="sc-desc text-sm-center text-md-left">宅建免許証のコピーをご提出ください。</p>
+                                        <p class="fs-12 text-sm-center text-md-left">※審査結果によってはご掲載いただけないケ<br>ースもございます。ご了承ください。</p>
                                     </div>
                                 </div>
                             </div>
@@ -477,7 +477,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc">ご利用にあたって必要なID/PWをメールします。</p>
+                                        <p class="sc-desc text-sm-center text-md-left">ご利用にあたって必要なID/PWをメールします。</p>
                                     </div>
                                 </div>
                             </div>
@@ -511,7 +511,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc">掲載情報をご登録ください。</p>
+                                        <p class="sc-desc text-sm-center text-md-left">掲載情報をご登録ください。</p>
                                     </div>
                                 </div>
                             </div>
@@ -548,7 +548,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc">物件登録後すぐに物件が公開されます。</p>
+                                        <p class="sc-desc text-sm-center text-md-left">物件登録後すぐに物件が公開されます。</p>
                                     </div>
                                 </div>
                             </div>
@@ -727,7 +727,7 @@
 
 <!-- Contact -->
 <div class="section-wrapper contact-content py-0" id="contact">
-    <div class="content-blue pb-0">
+    <div class="contact-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -744,7 +744,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-10 col-12 contact-form">
 
-                                <form method="POST" action="{{route('lp.contact')}}" class="mb-lg-64 mb-32" id="contact-form">
+                                <form method="POST" action="{{route('lp.contact')}}" id="contact-form">
                                     @csrf
                                     <div class="form-group mb-4">
                                         <div class="d-flex">

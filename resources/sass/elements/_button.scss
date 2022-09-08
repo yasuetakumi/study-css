@@ -307,6 +307,14 @@
     padding: 2.5rem 3rem;
     font-size: 1.5rem;
     @include breakpoint-down(sm){
+        font-size: 1.25rem;
+        padding: 1rem 1.5rem;
+    }
+    @include breakpoint-down(xs){
+        font-size: 1.25rem;
+        padding: 1rem 1.5rem;
+    }
+    @media screen and (max-width: 450px){
         font-size: .875rem;
         padding: 1rem 1.5rem;
     }

@@ -574,6 +574,20 @@ body.body-paging.body-fadeout .animation-transition {
 
 @media (max-width: 767.98px) {
   .btn-about {
+    font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .btn-about {
+    font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .btn-about {
     font-size: 0.875rem;
     padding: 1rem 1.5rem;
   }
@@ -4426,13 +4440,25 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 
 @media (max-width: 767.98px) {
   .banner-wrapper .wrap-img .img-banner {
-    height: 815px;
+    height: 685px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media (max-width: 575.98px) {
   .banner-wrapper .wrap-img .img-banner {
-    height: 815px;
+    height: 850px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .banner-wrapper .wrap-img .img-banner {
+    height: 850px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .banner-wrapper .wrap-img .img-banner {
+    height: 750px;
   }
 }
 
@@ -4620,7 +4646,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 @media (max-width: 991.98px) {
   .banner-wrapper .banner-caption .banner-desc .main-heading .sub-main-heading,
   .banner-wrapper .banner-caption .banner-desc .sub-heading .sub-main-heading {
-    font-size: 8.375rem;
+    font-size: 7.375rem;
   }
 }
 
@@ -4662,15 +4688,14 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 
 @media (max-width: 991.98px) {
   .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
-    font-size: 1rem !important;
-    padding: 2rem 0.5rem;
+    font-size: 1.25rem !important;
   }
 }
 
 @media (max-width: 767.98px) {
   .banner-wrapper .banner-caption .wrapper-btn-contact .btn-contact-form {
-    font-size: 0.875rem !important;
-    padding: 1rem 0.5rem;
+    font-size: 1rem !important;
+    padding: 2rem 1rem;
   }
 }
 
@@ -4688,6 +4713,12 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 @media (max-width: 767.98px) {
   .banner-wrapper .banner-caption .wrapper-btn-contact .img-logo {
     width: 120px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .banner-wrapper .banner-caption .wrapper-btn-contact .hide-xl {
+    display: none;
   }
 }
 
@@ -4737,7 +4768,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
           transform: translate(-50%, -50%);
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .frame-banner.top-middle {
     top: 37%;
   }
@@ -4839,6 +4870,17 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 @media (max-width: 991.98px) {
   .section-top .price-top {
     position: relative;
+  }
+}
+
+.contact-wrapper {
+  padding: 4rem 0;
+  background-color: #F5F5F5;
+}
+
+@media (max-width: 991.98px) {
+  .contact-wrapper {
+    padding: 2rem 0;
   }
 }
 
@@ -5124,6 +5166,61 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .product-content .faq-btn {
   width: 24px;
   height: 24px;
+}
+
+.zoom-content .block-lg-only,
+.about-content .block-lg-only,
+.our-service-content .block-lg-only,
+.advantage-content .block-lg-only,
+.price-content .block-lg-only,
+.flow-content .block-lg-only,
+.executive-content .block-lg-only,
+.dev-team-content .block-lg-only,
+.message-content .block-lg-only,
+.case-content .block-lg-only,
+.faq-content .block-lg-only,
+.contact-content .block-lg-only,
+.feature-content .block-lg-only,
+.product-content .block-lg-only {
+  display: none;
+}
+
+@media (max-width: 1199.98px) {
+  .zoom-content .block-lg-only,
+  .about-content .block-lg-only,
+  .our-service-content .block-lg-only,
+  .advantage-content .block-lg-only,
+  .price-content .block-lg-only,
+  .flow-content .block-lg-only,
+  .executive-content .block-lg-only,
+  .dev-team-content .block-lg-only,
+  .message-content .block-lg-only,
+  .case-content .block-lg-only,
+  .faq-content .block-lg-only,
+  .contact-content .block-lg-only,
+  .feature-content .block-lg-only,
+  .product-content .block-lg-only {
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .zoom-content .block-lg-only,
+  .about-content .block-lg-only,
+  .our-service-content .block-lg-only,
+  .advantage-content .block-lg-only,
+  .price-content .block-lg-only,
+  .flow-content .block-lg-only,
+  .executive-content .block-lg-only,
+  .dev-team-content .block-lg-only,
+  .message-content .block-lg-only,
+  .case-content .block-lg-only,
+  .faq-content .block-lg-only,
+  .contact-content .block-lg-only,
+  .feature-content .block-lg-only,
+  .product-content .block-lg-only {
+    display: none;
+  }
 }
 
 .zoom-content .page-header,
@@ -6814,6 +6911,22 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   z-index: 99;
 }
 
+@media (max-width: 991.98px) {
+  .our-service-content .label-flow-overlap-sp,
+  .advantage-content .label-flow-overlap-sp,
+  .flow-content .label-flow-overlap-sp {
+    left: 38%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .our-service-content .label-flow-overlap-sp,
+  .advantage-content .label-flow-overlap-sp,
+  .flow-content .label-flow-overlap-sp {
+    left: 33%;
+  }
+}
+
 .our-service-content .label-flow-4-overlap,
 .advantage-content .label-flow-4-overlap,
 .flow-content .label-flow-4-overlap {
@@ -6883,7 +6996,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   }
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
   .our-service-content .line-03::after,
   .advantage-content .line-03::after,
   .flow-content .line-03::after {
@@ -6899,11 +7012,19 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   }
 }
 
-@media (min-width: 576px) {
+@media (max-width: 991.98px) {
   .our-service-content .line-02::after,
   .advantage-content .line-02::after,
   .flow-content .line-02::after {
     display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .our-service-content .line-02::after,
+  .advantage-content .line-02::after,
+  .flow-content .line-02::after {
+    display: block;
   }
 }
 
