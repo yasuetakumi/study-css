@@ -829,7 +829,7 @@
                                                 </a>
                                                 <div class="agreement-wrapper">
                                                     <div class="container">
-                                                        <h2 class="title-agreement text-center">個人情報保護方針</h2>
+                                                        <h2 class="title-agreement text-center font-noto">個人情報保護方針</h2>
 
                                                         <p class="mb-4 text-333">株式会社トラストワン（以下、当社）は、当社が取得した個人情報の取扱いに関し、個人情報の保護に関する法律、個人情報保護に関するガイドライン等の指針、その他個人情報保護に関する関係法令を遵守します。</p>
                                                         <div class="">
