@@ -7012,6 +7012,22 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   }
 }
 
+@media (max-width: 991.98px) {
+  .our-service-content .line-02::after,
+  .advantage-content .line-02::after,
+  .flow-content .line-02::after {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .our-service-content .line-02::after,
+  .advantage-content .line-02::after,
+  .flow-content .line-02::after {
+    display: block;
+  }
+}
+
 @media (max-width: 767.98px) {
   .our-service-content .line-04,
   .advantage-content .line-04,

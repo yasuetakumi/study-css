@@ -687,6 +687,12 @@ $text-primary-color: #333333;
             @include breakpoint-up(lg){
                 display: none;
             }
+            @include breakpoint-down(md){
+                display: none;
+            }
+            @include breakpoint-down(sm){
+                display: block;
+            }
         }
     }
 
