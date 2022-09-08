@@ -561,7 +561,7 @@
 </div>
 
 <!-- Executive -->
-<div class="section-wrapper executive-content py-0">
+<div class="section-wrapper executive-content pt-lg-0 pb-0">
     <div class="content-blue">
         <div class="container-fluid px-lg-64">
             <div class="row">
@@ -818,7 +818,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-secondary px-5 py-3 btn-submit-contact">送信する</button>
                                     </div>
-                                    <div id="agreement-content" :style="aggrement == true ? 'display: block' : 'display: hidden'">
+                                    <div id="agreement-content" :style="aggrement == true ? 'display: block' : 'display: hidden'" x-trap.noscroll="aggrement">
                                         <!--popup-->
                                         <div class="wrapper-popup-agreement">
                                             <div class="content-popup">

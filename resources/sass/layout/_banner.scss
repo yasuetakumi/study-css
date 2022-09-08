@@ -206,6 +206,7 @@
             }
             .img-logo{
                 width: 145px;
+                margin-top: -5px;
                 @include breakpoint-down(md){
                     width: 145px;
                 }

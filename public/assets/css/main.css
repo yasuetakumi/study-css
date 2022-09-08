@@ -2896,6 +2896,7 @@ strong,
   width: 90%;
   margin: auto;
   max-width: 682px;
+  padding-top: 4rem;
 }
 
 .wrapper-popup-agreement ol.numbering-list {
@@ -4675,6 +4676,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 
 .banner-wrapper .banner-caption .wrapper-btn-contact .img-logo {
   width: 145px;
+  margin-top: -5px;
 }
 
 @media (max-width: 991.98px) {
