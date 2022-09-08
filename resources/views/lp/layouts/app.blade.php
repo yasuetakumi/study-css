@@ -22,6 +22,7 @@
 
     <!-- Alpine Plugins -->
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Alpine Core -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -46,19 +47,25 @@
                     </div>
                     <div class="d-lg-none d-flex menu-btn-sp">
                         <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 mr-2 fs-12" href="#contact">お問い合わせ</a>
-                        <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 fs-12" href="tel:05058072335">
-                            <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
-                            050-5807-2335</a>
+                        <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 fs-12 icon-phone" href="tel:05058072335">
+                            {{-- <span class="icon"></span> --}}
+                            {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-white.png')}}" alt=""> --}}
+                            {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-green.png')}}" alt=""> --}}
+                            050-5807-2335
+                        </a>
                     </div>
-                    <div class="collapse navbar-collapse pr-3" id="navbarNav0">
+                    <div class="collapse navbar-collapse pr-3" id="navbarNav0" >
                         <ul class="navbar-nav ml-auto align-items-center">
                             <li class="nav-item">
                                 <a class="btn btn-secondary revert" href="#contact">お問い合わせ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-secondary revert d-flex align-items-center" href="tel:05058072335">
-                                    <span><img src="{{asset('assets/img/icon-phone-white.png')}}" alt=""></span>
-                                    050-5807-2335</a>
+                                <a class="btn btn-secondary revert d-flex align-items-center icon-phone" href="tel:05058072335">
+                                    {{-- <span class="icon"></span> --}}
+                                    {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-white.png')}}" alt=""> --}}
+                                    {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-green.png')}}" alt=""> --}}
+                                    050-5807-2335
+                                </a>
                             </li>
                         </ul>
                     </div>

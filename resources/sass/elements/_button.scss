@@ -268,8 +268,14 @@
     border: 0;
     color: #fff;
     background-color: $color;
+    border: 1px solid $color;
     @include not-disabled {
         @include hover-focus {
+            &.icon-phone::before{
+                content: url('../../../public/assets/img/icon-phone-green.png');
+                width: 24px;
+                height: 20px;
+            }
             background-color: lighten( $color, 5% );
         }
         @include active {
@@ -289,6 +295,11 @@
                 border: 1px solid $color;
             }
         }
+    }
+    &.icon-phone::before{
+        content: url('../../../public/assets/img/icon-phone-white.png');
+        width: 24px;
+        height: 20px;
     }
 
 }
