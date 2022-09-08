@@ -422,7 +422,7 @@
 
                                     <div class="sect-caption">
                                         <p class="sc-desc text-sm-center text-md-left">宅建免許証のコピーをご提出ください。</p>
-                                        <p class="fs-12 text-sm-center text-md-left">※審査結果によってはご掲載いただけないケ<br>ースもございます。ご了承ください。</p>
+                                        <p class="fs-12 text-sm-center text-md-left">※審査結果によってはご掲載いただけないケースもございます。ご了承ください。</p>
                                     </div>
                                 </div>
                             </div>
