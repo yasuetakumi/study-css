@@ -15,12 +15,17 @@
                 height: 850px;
             }
             @include breakpoint-down(sm){
-                height: 815px;
+                height: 685px;
             }
-            @media screen and (max-width: 320px){
-                height: 815px;
+            @include breakpoint-down(xs){
+                height: 850px;
             }
-
+            @include breakpoint-down(xs){
+                height: 850px;
+            }
+            @media screen and (max-width: 400px){
+                height: 750px;
+            }
 
         }
     }
@@ -168,7 +173,7 @@
                     color: #FFFFFF;
                     font-size: 8.375rem;
                     @include breakpoint-down(md){
-                        font-size: 8.375rem;
+                        font-size: 7.375rem;
                     }
                     @include breakpoint-down(sm){
                         font-size: 3.75rem;
@@ -196,12 +201,11 @@
                 font-size: 1.25rem !important;
                 font-weight: 700;
                 @include breakpoint-down(md){
-                    font-size: 1rem !important;
-                    padding: 2rem .5rem;
+                    font-size: 1.25rem !important;
                 }
                 @include breakpoint-down(sm){
-                    font-size: .875rem !important;
-                    padding: 1rem .5rem;
+                    font-size: 1rem !important;
+                    padding: 2rem 1rem;
                 }
             }
             .img-logo{
@@ -212,6 +216,11 @@
                 }
                 @include breakpoint-down(sm){
                     width: 120px;
+                }
+            }
+            .hide-xl{
+                @media screen and (min-width: 1400px){
+                    display: none;
                 }
             }
         }
@@ -257,7 +266,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     &.top-middle{
-        @include breakpoint-down(sm){
+        @include breakpoint-down(md){
             top: 37%;
         }
         @include breakpoint-down(xs){

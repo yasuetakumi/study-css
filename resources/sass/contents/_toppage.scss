@@ -38,6 +38,13 @@ $text-primary-color: #333333;
         }
     }
 }
+.contact-wrapper{
+    padding: 4rem 0;
+    background-color: #F5F5F5;
+    @include breakpoint-down(md){
+        padding: 2rem 0;
+    }
+}
 
 .top-content{
     .wrap-title{
@@ -257,6 +264,15 @@ $text-primary-color: #333333;
     .faq-btn{
         width: 24px;
         height: 24px;
+    }
+    .block-lg-only{
+        display: none;
+        @include breakpoint-down(lg){
+            display: block;
+        }
+        @include breakpoint-down(md){
+            display: none;
+        }
     }
     .page-header{
         border-right: 1px solid;
@@ -606,6 +622,12 @@ $text-primary-color: #333333;
         color: #AACF52;
         font-weight: 700;
         z-index: 99;
+        @include breakpoint-down(md){
+            left: 38%;
+        }
+        @include breakpoint-down(xs){
+            left: 33%;
+        }
     }
     .label-flow-4-overlap{
         position: absolute;
@@ -655,7 +677,7 @@ $text-primary-color: #333333;
             @include breakpoint-up(lg){
                 display: none;
             }
-            @include breakpoint-up(sm){
+            @include breakpoint-up(md){
                 display: none;
             }
         }
@@ -663,9 +685,6 @@ $text-primary-color: #333333;
     .line-02{
         &::after{
             @include breakpoint-up(lg){
-                display: none;
-            }
-            @include breakpoint-up(sm){
                 display: none;
             }
         }
