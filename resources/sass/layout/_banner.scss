@@ -9,22 +9,19 @@
     .wrap-img{
         .img-banner{
             width: 100%;
-            height: 1100px;
+            height: 1020px;
             object-fit: cover;
             @include breakpoint-down(md){
                 height: 850px;
             }
             @include breakpoint-down(sm){
-                height: 685px;
+                height: 580px;
             }
             @include breakpoint-down(xs){
-                height: 850px;
-            }
-            @include breakpoint-down(xs){
-                height: 850px;
+                height: 890px;
             }
             @media screen and (max-width: 400px){
-                height: 750px;
+                height: 650px;
             }
 
         }
@@ -178,6 +175,9 @@
                     @include breakpoint-down(sm){
                         font-size: 3.75rem;
                     }
+                    @include breakpoint-down(xs){
+                        font-size: 2.75rem;
+                    }
                 }
             }
 
@@ -216,6 +216,9 @@
                 }
                 @include breakpoint-down(sm){
                     width: 120px;
+                }
+                @include breakpoint-down(xs){
+                    width: 90px;
                 }
             }
             .hide-xl{
@@ -280,8 +283,11 @@
         @include breakpoint-down(md){
             font-size: 1.5rem;
         }
+        @include breakpoint-down(sm){
+            font-size: 1.25rem;
+        }
         @include breakpoint-down(xs){
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
         span{
             font-size: 2.5rem;
@@ -289,8 +295,11 @@
             @include breakpoint-down(md){
                 font-size: 2rem;
             }
+            @include breakpoint-down(sm){
+                font-size: 1.75rem;
+            }
             @include breakpoint-down(xs){
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
         }
     }
