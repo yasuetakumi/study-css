@@ -93,7 +93,7 @@
 <div class="section-wrapper pt-0">
     <div class="container">
         <div class="row justify-content-center">
-            <h3 class="title-flow-image">紹介料支給までの<br class="d-md-none">流れとイメージ</h3>
+            <h3 class="title-flow-image ff-noto">紹介料支給までの<br class="d-md-none">流れとイメージ</h3>
             <div class="col-12">
                 <img class="w-100" src="{{asset('assets/img/flow.jpg')}}" alt="flow">
             </div>
@@ -187,7 +187,7 @@
                             </div>
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
-                                    <p class="title-advantage">基本掲載料<span>無料</span></p>
+                                    <p class="title-advantage">掲載料<span>無料</span></p>
                                     <div class="desc-content mt-5 mb-2">
                                         <p class="text-center desc-advantage">初期費用も、最低登録物件数の制約も、契約期間の縛りも、成功報酬の請求も一切ございません！
                                         </p>
@@ -629,8 +629,8 @@
                                     role="button" x-on:click="faq2 = !faq2" data-toggle="collapse"
                                     href="#faqCollapse2" role="button" aria-expanded="false" aria-controls="faqCollapse2">
                                     <div class="d-flex align-items-center">
-                                        <div class="mr-3 font-weight-bold">Q1:</div>
-                                        <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
+                                        <div class="mr-3 font-weight-bold">Q2:</div>
+                                        <div class="flex-grow-1 text-left">物件の価格は税込み表記ですか？</div>
                                         <div>
                                             <img class="faq-btn" x-bind:class="!faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
                                             <img class="faq-btn" x-bind:class="faq2 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
