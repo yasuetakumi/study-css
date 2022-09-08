@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="「たべるば」は掲載料無料！成約手数料無料！業界初の内装工事成約で紹介料を支給！を行う新しい不動産ポータルサイトです。「たべるば」に掲載する飲食店向けの物件を大募集しています。">
     <title>たべるば | 飲食店向けの物件大募集！ | 「飲食店物件専門」の不動産ポータルサイト！</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     {{-- <!-- Ionicons -->
@@ -33,7 +36,7 @@
     </style>
 
 </head>
-<body>
+<body class="d-flex flex-column min-100vh">
     <!-- Header -->
     <div x-data="{ scrollAtTop: true }">
         <header class="navbar navbar-expand-lg navbar-top header-border-top fixed-top" id="navbarMenu"

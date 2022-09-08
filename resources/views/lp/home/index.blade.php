@@ -6,7 +6,7 @@
         <div class="row m-0">
             <div class="col-12 p-0">
                 <div class="wrap-img">
-                    <img class="img-banner lozad" src="{{asset('assets/img/banner.png')}}" alt="Top MV Banner">
+                    <img class="img-banner lozad" src="{{asset('assets/img/banner.jpg')}}" alt="Top MV Banner">
                 </div>
 
                 <div class="row justify-content-center">
@@ -39,12 +39,17 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
-                                        <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
+                                        {{-- <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
                                             <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
 
                                                 <span>
                                                     <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="hide-xl">コチラ【無料】
                                                 </span>
+                                            </a>
+                                        </div> --}}
+                                        <div class="col-lg-7 col-12">
+                                            <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
+                                                <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
                                             </a>
                                         </div>
                                     </div>
@@ -250,10 +255,10 @@
                                         <div class="col-12">
                                             <div class="row justify-content-center">
                                                 <div class="col-lg-auto col-6">
-                                                    <img class="model-person-img" src="{{asset('assets/img/woman.png')}}" alt="業界初｜紹介料が支給されるポータルサイト">
+                                                    <img class="model-person-img" src="{{asset('assets/img/woman.jpg')}}" alt="業界初｜紹介料が支給されるポータルサイト">
                                                 </div>
                                                 <div class="col-lg-auto col-6">
-                                                    <img class="model-person-img" src="{{asset('assets/img/man.png')}}" alt="業界初｜紹介料が支給されるポータルサイト">
+                                                    <img class="model-person-img" src="{{asset('assets/img/man.jpg')}}" alt="業界初｜紹介料が支給されるポータルサイト">
                                                 </div>
                                             </div>
                                         </div>
@@ -275,7 +280,7 @@
                                 <p class="mt-40 mb-4 text-blue-primary fs-18 font-weight-bold">弊社は内装業を主収益としているので、<br class="d-lg-none">掲載料・成約手数料をいただく必要がございません。</p>
                                 <div class="row justify-content-center">
                                     <div class="col-lg-7 col-12">
-                                        <img class="w-100 px-2" src="{{asset('assets/img/engineer.png')}}" alt="たべるばはなぜ掲載料無料なのか？">
+                                        <img class="w-100 px-2" src="{{asset('assets/img/engineer.jpg')}}" alt="たべるばはなぜ掲載料無料なのか？">
                                     </div>
                                 </div>
                             </div>
@@ -740,11 +745,11 @@
                                             <span class="label-required ml-2">必須</span>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input input-contact-radio" type="radio" name="category" id="inlineRadio1" value="掲載希望申請" required data-parsley-errors-container="#error-category">
+                                            <input class="form-check-input form-radio-contact" type="radio" name="category" id="inlineRadio1" value="掲載希望申請" required data-parsley-errors-container="#error-category">
                                             <label class="form-check-label label-contact fw-500 mb-0" for="inlineRadio1">掲載希望申請</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input input-contact-radio" type="radio" name="category" id="inlineRadio2" value="お問い合わせ" required data-parsley-errors-container="#error-category">
+                                            <input class="form-check-input form-radio-contact" type="radio" name="category" id="inlineRadio2" value="お問い合わせ" required data-parsley-errors-container="#error-category">
                                             <label class="form-check-label label-contact fw-500 mb-0" for="inlineRadio2">お問い合わせ</label>
                                         </div>
                                         <div class="validation-fb" id="error-category">

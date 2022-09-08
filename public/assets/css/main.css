@@ -1,6 +1,6 @@
-@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;
 
-500;700;900&display=swap);@charset "UTF-8";
+300;400;500;700;900&display=swap);@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -2611,6 +2611,10 @@ strong,
   cursor: pointer;
 }
 
+.min-100vh {
+  min-height: 100vh;
+}
+
 .title-border-left .border-y {
   width: 0.3125rem;
   height: 1.5rem;
@@ -5136,6 +5140,57 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   margin-top: 2.25rem;
 }
 
+.form-radio-contact {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid #000;
+  border-radius: 50%;
+  outline: none;
+  position: relative !important;
+}
+
+.form-radio-contact:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  content: "";
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.form-radio-contact:checked:before {
+  background: #AACF52;
+}
+
+.block-lg-xs {
+  display: none;
+}
+
+@media (max-width: 1199.98px) {
+  .block-lg-xs {
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .block-lg-xs {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .block-lg-xs {
+    display: block;
+  }
+}
+
 .zoom-content .team-title-header,
 .about-content .team-title-header,
 .our-service-content .team-title-header,
@@ -5191,80 +5246,6 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .product-content .faq-btn {
   width: 24px;
   height: 24px;
-}
-
-.zoom-content .block-lg-xs,
-.about-content .block-lg-xs,
-.our-service-content .block-lg-xs,
-.advantage-content .block-lg-xs,
-.price-content .block-lg-xs,
-.flow-content .block-lg-xs,
-.executive-content .block-lg-xs,
-.dev-team-content .block-lg-xs,
-.message-content .block-lg-xs,
-.case-content .block-lg-xs,
-.faq-content .block-lg-xs,
-.contact-content .block-lg-xs,
-.feature-content .block-lg-xs,
-.product-content .block-lg-xs {
-  display: none;
-}
-
-@media (max-width: 1199.98px) {
-  .zoom-content .block-lg-xs,
-  .about-content .block-lg-xs,
-  .our-service-content .block-lg-xs,
-  .advantage-content .block-lg-xs,
-  .price-content .block-lg-xs,
-  .flow-content .block-lg-xs,
-  .executive-content .block-lg-xs,
-  .dev-team-content .block-lg-xs,
-  .message-content .block-lg-xs,
-  .case-content .block-lg-xs,
-  .faq-content .block-lg-xs,
-  .contact-content .block-lg-xs,
-  .feature-content .block-lg-xs,
-  .product-content .block-lg-xs {
-    display: block;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .zoom-content .block-lg-xs,
-  .about-content .block-lg-xs,
-  .our-service-content .block-lg-xs,
-  .advantage-content .block-lg-xs,
-  .price-content .block-lg-xs,
-  .flow-content .block-lg-xs,
-  .executive-content .block-lg-xs,
-  .dev-team-content .block-lg-xs,
-  .message-content .block-lg-xs,
-  .case-content .block-lg-xs,
-  .faq-content .block-lg-xs,
-  .contact-content .block-lg-xs,
-  .feature-content .block-lg-xs,
-  .product-content .block-lg-xs {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .zoom-content .block-lg-xs,
-  .about-content .block-lg-xs,
-  .our-service-content .block-lg-xs,
-  .advantage-content .block-lg-xs,
-  .price-content .block-lg-xs,
-  .flow-content .block-lg-xs,
-  .executive-content .block-lg-xs,
-  .dev-team-content .block-lg-xs,
-  .message-content .block-lg-xs,
-  .case-content .block-lg-xs,
-  .faq-content .block-lg-xs,
-  .contact-content .block-lg-xs,
-  .feature-content .block-lg-xs,
-  .product-content .block-lg-xs {
-    display: block;
-  }
 }
 
 .zoom-content .page-header,
@@ -11409,7 +11390,7 @@ ul.parsley-errors-list li.parsley-type {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.5;
-  color: #07467b;
+  color: #AACF52;
 }
 
 @media (max-width: 767.98px) {
