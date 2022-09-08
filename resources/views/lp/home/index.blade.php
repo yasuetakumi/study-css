@@ -32,10 +32,10 @@
 
                                     <div class="row justify-content-center">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-8 mb-4 mb-sm-0">
-                                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="">
+                                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="掲載料無料">
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-8">
-                                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="">
+                                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="成約手数料無料">
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
@@ -286,10 +286,10 @@
                 <div class="pt-64 pb-0">
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-5 col-sm-5 col-10 mb-4 mb-sm-0">
-                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="">
+                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="掲載料無料">
                         </div>
                         <div class="col-lg-4 col-md-5 col-sm-5 col-10">
-                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="">
+                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="成約手数料無料">
                         </div>
                         <div class="col-lg-7 col-12 mt-5">
                             <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
