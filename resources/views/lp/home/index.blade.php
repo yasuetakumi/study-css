@@ -806,7 +806,12 @@
                                     <div class="text-center mt-5">
                                         <div class="d-flex justify-content-center mb-2">
                                             <div class="form-check form-check-inline">
-                                                <input x-ref="policy" id="policy" class="form-check-input input-contact-checkbox" type="checkbox" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
+                                                {{-- <input x-ref="policy" id="policy" class="form-check-input input-contact-checkbox" type="checkbox" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
+                                                 --}}
+                                                 <label class="control control-checkbox" >
+                                                    <input type="checkbox" x-ref="policy" id="policy" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。"/>
+                                                    <div class="control_indicator mr-2"></div>
+                                                </label>
                                                 <label class="form-check-label label-contact fw-400 fs-14 mb-0"></label>
                                                 <a role="button" x-on:click="aggrement = true" class="policy-link">個人情報保護方針</a> <span class="label-contact fw-400 fs-14 mb-0">に同意する</span>
                                             </div>
