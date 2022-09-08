@@ -11,46 +11,50 @@
 
                 <div class="row justify-content-center">
                     <div class="banner-caption mt-5 d-flex align-items-center">
-                        <div class="col-12">
-                            <div class="row justify-content-center m-0">
-                                <div class="col-12 p-0">
-                                    <div class="text-center">
-                                        <p class="banner-sub-title">飲食店専門</p>
-                                    </div>
-                                    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
-                                        <p class="banner-sub-title mb-0 mr-2">新しい不動産ポータルサイト</p>
-                                        <span><img class="block" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo"></span>
-                                    </div>
-
-                                    <div class="row justify-content-center">
-                                        <div class="col-12">
-                                            <div class="banner-desc">
-                                                <h1 class="sub-heading font-weight-bold ff-noto">飲食店向けの <span class="sub-main-heading d-block font-weight-bold">物件大募集!!</span></h1>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row justify-content-center m-0">
+                                        <div class="col-12 p-0">
+                                            <div class="text-center">
+                                                <p class="banner-sub-title">飲食店専門</p>
                                             </div>
-                                        </div>
-                                    </div>
+                                            <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
+                                                <p class="banner-sub-title mb-0 mr-2">新しい不動産ポータルサイト</p>
+                                                <span><img class="block" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo"></span>
+                                            </div>
 
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-8 mb-4 mb-sm-0">
-                                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="掲載料無料">
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-8">
-                                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="成約手数料無料">
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center wrapper-btn-contact">
-                                        {{-- <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
-                                            <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12">
+                                                    <div class="banner-desc">
+                                                        <h1 class="sub-heading font-weight-bold ff-noto">飲食店向けの <span class="sub-main-heading d-block font-weight-bold">物件大募集!!</span></h1>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                <span>
-                                                    <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="hide-xl">コチラ【無料】
-                                                </span>
-                                            </a>
-                                        </div> --}}
-                                        <div class="col-lg-7 col-12">
-                                            <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
-                                                <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
-                                            </a>
+                                            <div class="row justify-content-center">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-8 mb-4 mb-sm-0">
+                                                    <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="掲載料無料">
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-8">
+                                                    <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="成約手数料無料">
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center wrapper-btn-contact">
+                                                {{-- <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
+                                                    <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
+
+                                                        <span>
+                                                            <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="hide-xl">コチラ【無料】
+                                                        </span>
+                                                    </a>
+                                                </div> --}}
+                                                <div class="col-lg-7 col-12">
+                                                    <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
+                                                        <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
