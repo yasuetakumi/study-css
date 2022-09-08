@@ -91,6 +91,9 @@ header{
     @include breakpoint-down(sm){
         width: 115px;
     }
+    @include breakpoint-down(xs){
+        width: 90px;
+    }
 }
 .menu-btn-sp{
     @include breakpoint-down(sm){

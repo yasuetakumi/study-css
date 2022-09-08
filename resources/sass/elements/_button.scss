@@ -312,11 +312,11 @@
     }
     @include breakpoint-down(xs){
         font-size: 1.25rem;
-        padding: 1rem 1.5rem;
+        padding: 2rem 1.5rem;
     }
     @media screen and (max-width: 450px){
         font-size: .875rem;
-        padding: 1rem 1.5rem;
+        padding: 2rem 1.5rem;
     }
     .icon-logo{
         @include breakpoint-down(sm){

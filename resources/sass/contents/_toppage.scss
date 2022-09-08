@@ -265,13 +265,16 @@ $text-primary-color: #333333;
         width: 24px;
         height: 24px;
     }
-    .block-lg-only{
+    .block-lg-xs{
         display: none;
         @include breakpoint-down(lg){
             display: block;
         }
         @include breakpoint-down(md){
             display: none;
+        }
+        @media screen and (max-width: 375px){
+            display: block;
         }
     }
     .page-header{
@@ -616,18 +619,23 @@ $text-primary-color: #333333;
     .label-flow-overlap-sp{
         position: absolute;
         top: -23%;
-        left: 33%;
+        left: 50%;
         border: 1px solid #AACF52;
         background-color: #fff;
         color: #AACF52;
         font-weight: 700;
         z-index: 99;
-        @include breakpoint-down(md){
-            left: 38%;
-        }
-        @include breakpoint-down(xs){
-            left: 33%;
-        }
+        transform: translateX(-50%);
+        // @include breakpoint-down(sm){
+        //     left: 38%;
+        // }
+        // @include breakpoint-down(xs){
+        //     left: 33%;
+        // }
+        // @media screen and (max-width: 320px){
+        //     left: 32%;
+
+        // }
     }
     .label-flow-4-overlap{
         position: absolute;
@@ -1836,6 +1844,7 @@ $text-primary-color: #333333;
             height: auto;
             width: 350px;
             margin-top: 20px;
+            max-width: 100%;
         }
 
     }

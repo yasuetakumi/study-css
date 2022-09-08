@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="row justify-content-center">
-                    <div class="banner-caption mt-5">
+                    <div class="banner-caption mt-5 d-flex align-items-center">
                         <div class="col-12">
                             <div class="row justify-content-center m-0">
                                 <div class="col-12 p-0">
@@ -31,18 +31,11 @@
                                     </div>
 
                                     <div class="row justify-content-center">
-                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-10 mb-4 mb-lg-0">
-                                            <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
-                                            <div class="frame-banner">
-                                                <p class="text-banner">掲載料<span>無料</span></p>
-                                            </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-8 mb-4 mb-sm-0">
+                                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="">
                                         </div>
-
-                                        <div class="position-relative col-lg-4 col-md-4 col-sm-5 col-10">
-                                            <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
-                                            <div class="frame-banner top-middle">
-                                                <p class="text-banner">成約手数料<span>無料</span></p>
-                                            </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-8">
+                                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="">
                                         </div>
                                     </div>
                                     <div class="row justify-content-center wrapper-btn-contact">
@@ -292,23 +285,15 @@
 
                 <div class="pt-64 pb-0">
                     <div class="row justify-content-center">
-                        <div class="position-relative col-lg-4 col-md-6 col-sm-6 col-12 mb-4 mb-lg-0">
-                            <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="">
-                            <div class="frame-banner">
-                                <p class="text-banner">掲載料<span>無料</span></p>
-                            </div>
+                        <div class="col-lg-4 col-md-5 col-sm-5 col-10 mb-4 mb-sm-0">
+                            <img class="w-100" src="{{asset('assets/img/banner1.png')}}" alt="">
                         </div>
-
-                        <div class="position-relative col-lg-4 col-md-6 col-sm-6 col-12">
-                            <img class="w-100 px-2" src="{{asset('assets/img/frame-banner.png')}}" alt="Taberuba Logo">
-                            <div class="frame-banner top-middle">
-                                <p class="text-banner">成約手数料<span>無料</span></p>
-                            </div>
+                        <div class="col-lg-4 col-md-5 col-sm-5 col-10">
+                            <img class="w-100" src="{{asset('assets/img/banner2.png')}}" alt="">
                         </div>
-
                         <div class="col-lg-7 col-12 mt-5">
                             <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
-                                <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-only">コチラ【無料】</span>
+                                <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
                             </a>
                         </div>
                     </div>
@@ -517,11 +502,14 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-4 col-lg-4 position-relative">
+                        <div class="col-12 col-md-4 col-lg-4 mt-5 mt-md-0 position-relative">
                             <div class="label-flow-4-overlap py-1 d-none d-md-block">
                                 即日
                             </div>
-                            <div class="flow-list-content last-child line-05">
+                            <div class="label-flow-overlap-sp d-md-none px-3 py-1" style="top: -29%">
+                                即日
+                            </div>
+                            <div class="flow-list-content last-child line-05 flow-3">
                                 <div class="wrap-box">
                                     <img src="{{asset('assets/img/flow-5.png')}}" class="img-cover lozad" alt="Flow 5">
                                 </div>
@@ -816,7 +804,7 @@
                                         </div>
                                         <div class="validation-fb d-block" id="error-policy">
                                         </div>
-                                        <button type="submit" class="btn btn-secondary px-5 py-3 btn-submit-contact">送信する</button>
+                                        <button type="submit" class="btn btn-secondary px-5 py-3 btn-submit-contact border-0">送信する</button>
                                     </div>
                                     <div id="agreement-content" :style="aggrement == true ? 'display: block' : 'display: hidden'" x-trap.noscroll="aggrement">
                                         <!--popup-->
