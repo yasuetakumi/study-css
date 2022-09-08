@@ -238,6 +238,46 @@ $text-primary-color: #333333;
     margin-top: 2.25rem;
 }
 
+.form-radio-contact {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid #000;
+    border-radius: 50%;
+    outline: none;
+    position: relative !important;
+
+    &:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        content:'';
+        display:block;
+        width: 16px;
+        height: 16px;
+        border-radius:50%;
+    }
+
+    &:checked:before {
+        background: #AACF52;
+    }
+}
+.block-lg-xs{
+    display: none;
+    @include breakpoint-down(lg){
+        display: block;
+    }
+    @include breakpoint-down(md){
+        display: none;
+    }
+    @media screen and (max-width: 375px){
+        display: block;
+    }
+}
+
 .zoom-content,
 .about-content,
 .our-service-content,
@@ -265,18 +305,7 @@ $text-primary-color: #333333;
         width: 24px;
         height: 24px;
     }
-    .block-lg-xs{
-        display: none;
-        @include breakpoint-down(lg){
-            display: block;
-        }
-        @include breakpoint-down(md){
-            display: none;
-        }
-        @media screen and (max-width: 375px){
-            display: block;
-        }
-    }
+
     .page-header{
         border-right: 1px solid;
         border-left: 1px solid;
