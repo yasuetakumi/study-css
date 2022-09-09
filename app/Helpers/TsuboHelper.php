@@ -42,3 +42,15 @@ if(!function_exists('manPerTsubo')){
         return $result;
     }
 }
+
+
+    if(!function_exists('yenPerTsubo')){
+        function yenPerTsubo($yen, $meter, $sign = false){
+            $result = round($yen / toTsubo($meter));
+            if($sign){
+                $result = number_format($result) . '円';
+            }
+            return $result;
+        }
+    }
+
