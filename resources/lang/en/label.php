@@ -138,6 +138,7 @@ return [
     'close_btn' => 'Close',
     'walk_from_nearest_station' => 'Walking Distance from Nearest Station',
     'publication_status' => 'Publication Status',
+    'see_property_detail' => 'See the detail page that already published',
 
     //A16
     'company_approval_list' => 'Company Approval List',

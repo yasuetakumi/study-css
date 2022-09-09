@@ -184,7 +184,7 @@ class Property extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED);
+        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED)->orWhere('publication_status_id', PropertyPublicationStatus::ID_LIMITED_PUBLISHED);
     }
 
     public function scopeRangeArea($query, $min, $max, $column){
