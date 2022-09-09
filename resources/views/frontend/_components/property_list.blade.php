@@ -133,7 +133,7 @@
                 return this.property.man_per_tsubo + '万円';
             },
             yenPerTsubo: function(){
-                return this.property.yen_per_tsubo + '円';
+                return number_format(this.property.yen_per_tsubo) + '円';
             },
             man: function(){
                 return this.property.man;
