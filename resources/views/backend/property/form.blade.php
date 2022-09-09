@@ -203,7 +203,11 @@
         @component('backend._components.input_image360', ['name' => 'image_360_4', 'label' => __('label.image_360') . ' 4', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
         @component('backend._components.input_image360', ['name' => 'image_360_5', 'label' => __('label.image_360') . ' 5', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
-        @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
+        @if($page_type == 'create')
+            @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
+        @else
+            @component('backend._components.input_float_button', ['page_type' => $page_type])@endcomponent
+        @endif
     @endcomponent
 
 @endsection
