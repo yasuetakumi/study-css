@@ -254,3 +254,14 @@ div.wrapper .navbar-info {
 .float-btn:focus{
     outline: none;
 }
+.text-link {
+    color: #17a2b8;
+    text-decoration: underline;
+}
+.text-link:hover{
+    color: #17a2b8;
+    text-decoration: none;
+}
+.fs-16{
+    font-size: 16px;
+}
