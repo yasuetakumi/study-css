@@ -31,7 +31,7 @@ class Property extends Model
     const SKELETON_JP_LABEL = '居抜き物件';
 
     protected $appends = [
-        'tsubo', 'man', 'man_per_tsubo'
+        'tsubo', 'man', 'man_per_tsubo','yen_per_tsubo'
     ];
     protected $fillable = [
         'user_id',
