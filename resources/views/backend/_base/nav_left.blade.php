@@ -54,6 +54,90 @@
                             </li>
                         </ul>
                     </li>
+                    @if($role == 'admin' || $role == 'super_admin')
+                    {{-- Admin --}}
+                    <li class="nav-item has-treeview" id="tree_admins">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p> @lang('label.admin') <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="create_admin" class="nav-item">
+                                <a href="{{route('admin.admins.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_admin" class="nav-item">
+                                <a href="{{route('admin.admins.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Company --}}
+                    <li class="nav-item has-treeview" id="tree_companies">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-building"></i>
+                            <p> @lang('label.company')<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="create_company" class="nav-item">
+                                <a href="{{route('admin.company.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_company" class="nav-item">
+                                <a href="{{route('admin.company.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Employee --}}
+                    <li class="nav-item has-treeview" id="tree_admins">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-user-alt"></i>
+                            <p> @lang('label.real_estate_company_employee') <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="create_admin" class="nav-item">
+                                <a href="{{route('admin.user.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.createNew')</p>
+                                </a>
+                            </li>
+                            <li id="list_admin" class="nav-item">
+                                <a href="{{route('admin.user.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Approval --}}
+                    <li class="nav-item has-treeview" id="tree_approvals">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-check-double"></i>
+                            <p> @lang('label.company_approval_list')<i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li id="list_approval" class="nav-item">
+                                <a href="{{route('admin.approval.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>@lang('label.list')</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
                     {{-- Property --}}
                     <li class="nav-item has-treeview" id="tree_propertys">
                         <a href="#" class="nav-link">
@@ -62,12 +146,6 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            {{-- <li id="create_property" class="nav-item">
-                                <a href="{{route('admin.property.detail', 1)}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>@lang('label.detail_page')</p>
-                                </a>
-                            </li> --}}
                             <li id="list_property" class="nav-item">
                                 <a href="{{route('admin.property.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
@@ -82,35 +160,13 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- END PROPERTY --}}
                 @endif
 
                 @if($role == 'admin' || $role == 'super_admin')
-                <li class="nav-item has-treeview" id="tree_admins">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p> @lang('label.admin') <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="create_admin" class="nav-item">
-                            <a href="{{route('admin.admins.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_admin" class="nav-item">
-                            <a href="{{route('admin.admins.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-item has-treeview" id="tree_members">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
-                        <p> @lang('label.members') <i class="right fas fa-angle-left"></i>
+                        <p> @lang('label.wish_open_store') <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -128,107 +184,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview" id="tree_companies">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-building"></i>
-                        <p> @lang('label.company')<i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="create_company" class="nav-item">
-                            <a href="{{route('admin.company.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_company" class="nav-item">
-                            <a href="{{route('admin.company.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- Company Approval --}}
-                <li class="nav-item has-treeview" id="tree_approvals">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-check-double"></i>
-                        <p> @lang('label.company_approval_list')<i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="list_approval" class="nav-item">
-                            <a href="{{route('admin.approval.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item has-treeview" id="tree_admins">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-alt"></i>
-                        <p> @lang('label.user') <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="create_admin" class="nav-item">
-                            <a href="{{route('admin.user.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_admin" class="nav-item">
-                            <a href="{{route('admin.user.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- <li class="nav-item has-treeview" id="tree_news">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-newspaper"></i>
-                        <p> @lang('label.news') <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li id="create_news" class="nav-item">
-                            <a href="{{route('admin.news.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_admin" class="nav-item">
-                            <a href="{{route('admin.news.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item has-treeview" id="tree_features">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-window-maximize"></i>
-                        <p> @lang('label.Feature') <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('admin.features.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.createNew')</p>
-                            </a>
-                        </li>
-                        <li id="list_admin" class="nav-item">
-                            <a href="{{route('admin.features.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>@lang('label.list')</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-
                 @endif
 
                 @if($role == 'company_admin')
@@ -250,7 +205,7 @@
                 <li class="nav-item has-treeview" id="tree_project">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-list-alt"></i>
-                        <p> @lang('label.log_activity') <i class="right fas fa-angle-left"></i>
+                        <p> @lang('label.operation_history') <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
