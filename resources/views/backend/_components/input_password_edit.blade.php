@@ -11,7 +11,7 @@
         <button type="button" name="reset" id="reset-button" class="btn btn-outline-info">@lang('label.change')</button>
     </div>
     <div id="reset-field" class="col-xs-10 col-sm-10 col-md-8 col-lg-9 col-content d-none">
-        <input type="password" id="input-password" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old("password") }}" data-parsley-minlength="8" />
+        <input data-parsley-required-message="@lang('validation.required', ['attribute' => __('label.password')])" type="password" id="input-password" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old("password") }}" data-parsley-minlength="8" />
         <label for="show-password">
             <input id="show-password" type="checkbox" name="show-password" value="1">
             <span>@lang('label.showPassword')</span>

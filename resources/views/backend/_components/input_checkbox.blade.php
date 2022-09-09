@@ -7,7 +7,7 @@
                     $current_value = !empty($is_indexed_value) ? $loop->index + 1 : $option;
                 @endphp
                 <div class="icheck-cyan d-inline">
-                    <input type="checkbox" value="{{ $current_value }}" id="input-{{ $name }}-{{ $loop->index }}" name="{{ $name }}" {{ in_array($current_value, $value) ? "checked" : "" }} data-parsley-checkmin="1" />
+                    <input data-parsley-required-message="@lang('validation.required', ['attribute' => $label])" type="checkbox" value="{{ $current_value }}" id="input-{{ $name }}-{{ $loop->index }}" name="{{ $name }}" {{ in_array($current_value, $value) ? "checked" : "" }} data-parsley-checkmin="1" />
                     <label for="input-{{ $name }}-{{ $loop->index }}" class="text-uppercase mr-5">{{ $option }}</label>
                 </div>
             @endforeach
