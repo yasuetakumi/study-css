@@ -176,7 +176,7 @@ return [
     'surface_area_meter' => 'Surface Area(Meters)',
     'surface_area_tsubo' => 'Surface Area(Tsubo)',
     'rent_amount' => 'Rent Amount',
-    'cost_of_rent' => 'Cost of Rent (Man) per Tsubo',
+    'rent_cost_yen_per_tsubo' => 'Cost of Rent (Man) per Tsubo',
     'rent_amount_man' => 'Rent amount(Man)',
     'number_of_floor_underground' => 'Number of Floors underground',
     'number_of_floor_aboveground' => 'Number of Floors aboveground',
