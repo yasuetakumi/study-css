@@ -242,4 +242,15 @@ class Property extends Model
         }
 
     }
+
+    public function getYenPerTsuboAttribute()
+    {
+        if($this->rent_amount != null && $this->surface_area != null){
+            $result = round($this->rent_amount / toTsubo($this->surface_area));
+            return $result;
+        } else {
+            return 0;
+        }
+
+    }
 }

@@ -130,7 +130,10 @@
                 return this.stationLineName + "　" + this.stationName + "　" + "徒歩" + this.distanceMinutes;
             },
             manPerTsubo: function(){
-                return this.property.man_per_tsubo + '円';
+                return this.property.man_per_tsubo + '万円';
+            },
+            yenPerTsubo: function(){
+                return this.property.yen_per_tsubo + '円';
             },
             man: function(){
                 return this.property.man;

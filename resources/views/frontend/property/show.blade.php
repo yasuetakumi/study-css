@@ -31,7 +31,7 @@
     @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area, true, 2): ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
     {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
-    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? manPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.rent_cost_yen_per_tsubo'), 'value' => $item->rent_amount ? yenPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'value' => $item->rent_amount ? number_format($item->rent_amount) . '円' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ? '地下' . $item->number_of_floors_under_ground . '階' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ? '地上' . $item->number_of_floors_above_ground . '階' : '' ])@endcomponent
