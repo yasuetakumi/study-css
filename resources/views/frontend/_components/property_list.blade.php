@@ -27,7 +27,7 @@
                     <div class="col-7">
                         <dl>
                             <dt class="text-dark">@{{ closestStationDistance }} </dt>
-                            <dt class="text-info">賃料／坪単価 <span class="text-dark">@{{man}} / @{{manPerTsubo}}</span></dt>
+                            <dt class="text-info">賃料／坪単価 <span class="text-dark">@{{man}} / @{{yenPerTsubo}}</span></dt>
                             <dt class="text-info">面積 <span class="text-dark">@{{property.surface_area}}㎡ / @{{property.tsubo}}</span></dt>
                             <dt class="text-info">所在地 <span class="text-dark">@{{property.location}}</span></dt>
                             <dt class="text-info">前業態／希望譲渡料 <span class="text-dark">@{{cuisineOrTransfer}}</span></dt>
