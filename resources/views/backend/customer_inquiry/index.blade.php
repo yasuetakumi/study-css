@@ -38,7 +38,7 @@
     <th data-col="name" style="min-width: 80px;">@lang('label.name_inquiry')</th>
     <th data-col="email">@lang('label.email_inquiry')</th>
     <th data-col="company_name" style="min-width: 80px;">@lang('label.company_name')</th>
-    <th data-col="created_at" style="min-width: 80px;">@lang('label.inquiry_created_at')</th>
-    <th data-col="updated_at" style="min-width: 80px;">@lang('label.inquiry_updated_at')</th>
+    <th class="no-sort" data-filter="false" data-col="created_at" style="min-width: 80px;">@lang('label.created_at_datetime')</th>
+    <th class="no-sort" data-filter="false" data-col="updated_at" style="min-width: 80px;">@lang('label.updated_at_datetime')</th>
     <th data-col="action">@lang('label.action')</th>
 @endsection
