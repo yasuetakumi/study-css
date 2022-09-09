@@ -117,6 +117,11 @@ return [
     'browsing_history'      => '物件閲覧履歴',
     'favorite_property'     => 'お気に入り',
 
+    // Sidebar
+    'real_estate_company_employee' => '不動産会社社員',
+    'operation_history' => '操作履歴',
+    'wish_open_store' => '出店希望者',
+
     // A2
     'members' => 'メンバー',
     'member_name' => '会員名',

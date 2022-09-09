@@ -115,6 +115,11 @@ return [
     'browsing_history'      => 'History',
     'favorite_property'     => 'Favorite',
 
+    // Sidebar
+    'real_estate_company_employee' => 'Real Estate Company Employee',
+    'operation_history' => 'Operation History',
+    'wish_open_store' => 'Open a Store',
+
     // A2
     'members' => 'Members',
     'member_name' => 'Name',
