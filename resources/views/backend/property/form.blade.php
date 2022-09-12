@@ -552,21 +552,25 @@
                 }, 400);
             },
 
-            changePlanBySurfaceArea: function(){
-                this.getPlanBySurfaceCategory(1);
-                this.getPlanBySurfaceCategory(2);
-                this.getPlanBySurfaceCategory(3);
-                this.getPlanBySurfaceCategory(4);
+            changePlanBySurfaceArea: async function(){
+                this.items.loading = true;
+
+                await this.getPlanBySurfaceCategory(1);
+                await this.getPlanBySurfaceCategory(2);
+                await this.getPlanBySurfaceCategory(3);
+                await this.getPlanBySurfaceCategory(4);
+                setTimeout(() => {
+                    this.items.loading = false;
+                }, 1000);
             },
             getPlanBySurfaceCategory: function (catId) {
                 let surface_area = document.querySelector("input[name=surface_area]").value;
                 this.items.surface_area = surface_area;
                 var isSurfaceEmpty = surface_area === '';
                 if(isSurfaceEmpty == false && catId != null){
-                    this.items.loading = true;
                     axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + catId)
                     .then((result) => {
-                        console.log("RESULTTT", result.data.data);
+                        // console.log("RESULTTT", result.data.data);
                         this.items.message_plan_properties = '';
                         if(catId == this.items.design_category_1){
                             this.items.plans_design_category_1 = result.data.data;
@@ -631,7 +635,7 @@
                         }
                         // console.log("err");
                     });
-                    this.items.loading = false;
+                    // this.items.loading = false;
                 } else if (isSurfaceEmpty){
                     this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
                 }
