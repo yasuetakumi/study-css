@@ -62,9 +62,9 @@ class CompanyController extends Controller
         $data['page_title'] = __('label.company'). __('label.list');
         $data['filter_select_columns'] = [
             'status' => [
-                'pending' => 'pending',
-                'active' => 'active',
-                'block' => 'block',
+                'pending' => __('label.pending'),
+                'active' => __('label.active'),
+                'block' => __('label.block'),
             ]
         ];
 

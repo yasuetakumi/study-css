@@ -132,6 +132,15 @@ return [
     'last_update_datetime' => '作成日時',
     'company_id' => '企業ID',
     'company_name' => '企業名',
+    'approval_status' => '承認状況',
+    'pending' => '未承認',
+    'active' => '有効 (承認済み)',
+    'block' => '無効 (否認済み)',
+    'real_estate_company' => '不動産会社',
+
+    // A9
+    'role' => '役割',
+
 
     // A13 / A14 Property Form
     'property_editing' => '物件編集',

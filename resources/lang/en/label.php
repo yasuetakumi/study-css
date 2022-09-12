@@ -130,6 +130,11 @@ return [
     'last_update_datetime' => 'Last Update',
     'company_id' => 'Company ID',
     'company_name' => 'Company Name',
+    'approval_status' => 'Approval Status',
+    'pending' => 'Unapproved',
+    'active' => 'Enabled (Approved)',
+    'block' => 'Invalid (Denied)',
+    'real_estate_company' => 'Real Estate Company',
 
     // A13 / A14 Property Form
     'property_editing' => 'Property Editing',

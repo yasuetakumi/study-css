@@ -29,8 +29,8 @@
 
 @section('content')
     <th data-col="id">ID</th>
-    <th data-col="company_name">@lang('label.company_name')</th>
-    <th data-col="status" width="100" data-select='{!! str_replace("'","`", json_encode($filter_select_columns['status'])) !!}'>@lang('label.status')</th>
+    <th data-col="company_name">@lang('label.real_estate_company')</th>
+    <th data-col="status" width="100" data-select='{!! str_replace("'","`", json_encode($filter_select_columns['status'])) !!}'>@lang('label.approval_status')</th>
     <th data-col="post_code">@lang('label.post_code')</th>
     <th data-col="address">@lang('label.address')</th>
     <th data-col="phone">@lang('label.phone')</th>

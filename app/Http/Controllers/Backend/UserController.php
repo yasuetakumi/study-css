@@ -73,7 +73,7 @@ class UserController extends Controller
         $data['item']       = new User();
         $data['page_title'] = __('label.add') . __('label.user');
         $data['form_action']= route('admin.company.user.store', $parent_company_id);
-        $data['user_roles'] = UserRole::pluck('label', 'id')->all();
+        $data['user_roles'] = UserRole::USER_ROLES;
         $data['page_type']  = 'create';
 
         return view('backend.user.form', $data);
@@ -96,7 +96,7 @@ class UserController extends Controller
 
         $data['page_title']     = __('label.user');
         $data['form_action']    = route('admin.company.user.update', [$parent_company_id, $company_user_id]);
-        $data['user_roles']     = UserRole::pluck('label', 'id')->all();
+        $data['user_roles']     = UserRole::USER_ROLES;
         $data['page_type']      = 'edit';
 
         return view('backend.user.form', $data);
