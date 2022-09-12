@@ -49,7 +49,7 @@ class PropertySeeder extends Seeder
                     'postcode_id' => rand(1, 100),
                     'prefecture_id' => $prefecture_id,
                     'city_id' => 12254,
-                    'location' => $faker->city,
+                    'location' => $faker->streetName,
                     'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
                     'surface_area'=> $i==0 ? 50 : $surfaceArea[array_rand($surfaceArea)],
                     'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
