@@ -21,7 +21,7 @@ $factory->define(\App\Models\Property::class, function (Faker $faker) {
         'postcode_id' => rand(1, 100),
         'prefecture_id' => $prefecture_id,
         'city_id' => City::where('prefecture_id', $prefecture_id)->pluck('id')->random(),
-        'location' => $faker->city,
+        'location' => $faker->streetName,
         'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
         'surface_area'=> fromTsubo(rand(15,29)), //base on plan.design_category_id 1,2,3,4 has area tsubo 15 - 29, for matching between property.surface_area and property_plans.plan_id
         'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
