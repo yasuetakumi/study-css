@@ -197,7 +197,7 @@ return [
     'surface_area_meter' => '面積（㎡）',
     'surface_area_tsubo' => '面積（坪）',
     'rent_amount' => '賃料',
-    'rent_cost_yen_per_tsubo' => '坪単価(円／坪)',
+    'rent_cost_yen_per_tsubo' => '坪単価(円/坪)',
     'rent_amount_man' => '賃料（万）',
     'number_of_floor_underground' => '階数(地下)',
     'number_of_floor_aboveground' => '階数(地上)',
