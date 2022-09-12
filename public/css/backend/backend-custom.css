@@ -255,13 +255,25 @@ div.wrapper .navbar-info {
     outline: none;
 }
 .text-link {
-    color: #17a2b8;
-    text-decoration: underline;
+    color: #17a2b8 !important;
+    text-decoration: underline !important;
 }
 .text-link:hover{
-    color: #17a2b8;
-    text-decoration: none;
+    color: #17a2b8 !important;
+    text-decoration: none !important;
 }
 .fs-16{
     font-size: 16px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.text-to-top{
+    color: #6cb2eb !important;
+    cursor: pointer;
+}
+.text-to-top:hover{
+    color: #6cb2eb !important;
+    text-decoration: underline !important;
+    cursor: pointer;
 }
