@@ -36,7 +36,7 @@
                                     <span>@{{index + 1}}</span>
                                 </div>
                             </div>
-                            <p class="text-right">登録日:@{{sc.created_at}}</p>
+                            <p class="text-right">登録日:@{{convertToDateOnly(sc.created_at)}}</p>
                             <div class="pl-5">
                                 <div class="row mb-3">
                                     <div class="col-8">
@@ -283,7 +283,10 @@
                     document.getElementById("btnCancel"+index).classList.remove("d-block");
                     document.getElementById("btnCancel"+index).classList.add("d-none");
                 }
-            }
+            },
+            convertToDateOnly: function(date){
+                return moment(date).format('YYYY-MM-DD');
+            },
 
         }
 
