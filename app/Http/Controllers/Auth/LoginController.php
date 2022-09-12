@@ -67,7 +67,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $this->saveLog('User login succeed', 'Email = ' . $user->email . ', User Name = ' . $user->display_name, $user->id);
+        $this->saveLog('ログイン', 'メールアドレス：' . $user->email . ', ユーザー名' . $user->display_name, $user->id);
 
         // Set target url
         if (Auth::guard('web')->user()->admin_role_id == AdminRole::ROLE_SUPER_ADMIN) {

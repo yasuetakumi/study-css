@@ -107,7 +107,7 @@ class AdminController extends Controller
         $item->delete();
 
         $admin_email    = $item->email;
-        $this->saveLog('Delete Admin', 'Delete Admin, Email : ' . $admin_email . '', Auth::user()->id);
+        $this->saveLog('管理者の削除', '管理者の削除、 メールアドレス： ' . $admin_email . '', Auth::user()->id);
 
         return 1;
       }

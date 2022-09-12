@@ -102,7 +102,7 @@ class SuperAdminController extends Controller
         $item->delete();
 
         $admin_email    = $item->email;
-        $this->saveLog('Delete SuperAdmin', 'Delete SuperAdmin, Email : ' . $admin_email . '', Auth::user()->id);
+        $this->saveLog('特権管理者の削除', '特権管理者の削除、メールアドレス：' . $admin_email . '', Auth::user()->id);
 
         return 1;
     }
