@@ -17,17 +17,17 @@ class DatatablesHelper
      *
      * @return string json - pagination, search etc. processed by Yajra Datatable package
      */
-    public function json($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null)
+    public function json($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null, $btn_view_to_edit = false)
     {
-        return $this->instance($eloquent, $btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id)->toJson();
+        return $this->instance($eloquent, $btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id, $btn_view_to_edit)->toJson();
     }
 
-    public function instance($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null)
+    public function instance($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null, $btn_view_to_edit = false)
     {
 
         $datatablse = Datatables::of($eloquent);
         if (!empty($btn_edit) || !empty($btn_delete) || !empty($btn_view)) {
-            $datatablse->addColumn('action', function ($query) use ($btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id) {
+            $datatablse->addColumn('action', function ($query) use ($btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id, $btn_view_to_edit) {
                 // *** Generate Action column ***
 
                 // Generate link URLs
@@ -57,8 +57,10 @@ class DatatablesHelper
 
                 // Generate button elements of HTML.
                 $buttons = [];
-                if (!empty($btn_view)) {
+                if (!empty($btn_view) && $btn_view_to_edit == false) {
                     $buttons[] = '<a title="View Data" href="' . $url_view . '" class="btn btn-success"><i class="fas fa-eye"></i></a>';
+                } else if(!empty($btn_view) && $btn_view_to_edit == true) {
+                    $buttons[] = '<a title="View Data" href="' . $url_view . '" class="btn btn-success"><i class="fas fa-edit"></i></a>';
                 }
                 if (!empty($btn_edit) && Auth::check()) {
                     $buttons[] = '<a title="Edit Data" href="' . $url_edit . '" class="btn btn-secondary"><i class="fas fa-edit"></i></a>';
