@@ -70,7 +70,7 @@ class CompanyUserLoginController extends Controller
         if (auth()->guard('user')->attempt(['email' => $request->email, 'password' => $request->password ])) {
             //check if company user status is active
             if(auth()->guard('user')->user()->company->status == 'active'){
-                $this->saveLog('ログイン', 'Email = ' . $request->email . ', User Name = ' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
+                $this->saveLog('ログイン', 'メールアドレス：' . $request->email . '、ユーザ名：' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
 
                 // Logging gout admin user, now user will be login as company user
                 Auth::guard('web')->logout();
