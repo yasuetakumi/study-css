@@ -30,6 +30,7 @@ class PropertySeeder extends Seeder
         $deposit_amount = [100,200,300,400,500,600,700,800,900,1000];
         $prefecture_id = rand(1,20);
         $surfaceArea = [48,51,55];
+        $rent_amount = [10,15,20,25,30]; // for getting yen_per_tsubo (rent_amount / tsubo(surface_area)) between 1000 - 20000 yen
         // copy example image to uploads directory
         for($i = 1; $i <= 5; $i++){
             if(!Storage::disk('public')->exists('uploads/example_image360_' . $i . '.jpg')){
@@ -52,7 +53,7 @@ class PropertySeeder extends Seeder
                     'location' => $faker->streetName,
                     'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
                     'surface_area'=> $i==0 ? 50 : $surfaceArea[array_rand($surfaceArea)],
-                    'rent_amount' => fromMan(RentPriceOption::all()->pluck('value')->random()),
+                    'rent_amount' => fromMan($rent_amount[array_rand($rent_amount)]), // for getting yen_per_tsubo (rent_amount / tsubo(surface_area)) between 1000 - 20000 yen
                     'number_of_floors_under_ground' => rand(0,7),
                     'number_of_floors_above_ground' => rand(0,7),
                     'property_type_id' => rand(1,3),
