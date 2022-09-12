@@ -15,8 +15,6 @@
         {{-- filter form --}}
         @include('frontend.property.component.filter')
 
-        {{-- search history --}}
-        @include('frontend.property.component.search-history')
 
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
