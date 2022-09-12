@@ -40,6 +40,11 @@
     <station-city-modal v-if="items.prefectureSelected" :filters="items.filter" :prefecture="items.prefectureSelected"></station-city-modal>
 
 </div>
+<div class="text-center">
+    <a role="button" class="text-to-top fs-16" @click="scrollToTop">
+        ページトップへ↑
+    </a>
+</div>
 @endsection
 
 @push('scripts')
@@ -662,6 +667,12 @@
             },
             handleOpenStationCity(id){
                 this.items.prefectureSelected = id;
+            },
+            scrollToTop: function(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             },
             // -----------------------------------------------------------------
         }
