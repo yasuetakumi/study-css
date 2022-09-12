@@ -99,7 +99,7 @@
                     @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}" target="_blank"><i class="fa fa-home" aria-hidden="true"></i>
-                        @lang('label.top_page')</a>
+                        @lang('label.service_page')</a>
                     </li>
                     <li>
                         <?php
