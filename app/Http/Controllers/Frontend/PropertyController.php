@@ -385,7 +385,7 @@ class PropertyController extends Controller {
         }
 
         // Created at
-        $result['created_at'] = Carbon::now()->format('Y/m/d h:i:s');
+        $result['created_at'] = Carbon::now()->format('Y/m/d H:i:s');
 
         // Get number of match property related to the filter
         $request->merge(['count' => true]);
