@@ -17,3 +17,11 @@
     <th data-col="ip">@lang('label.ip')</th>
     <th class="no-sort" data-filter="false" data-col="access_time">@lang('label.access_time')</th>
 @endsection
+
+@push('css')
+    <style>
+        #datatable tbody tr > td:last-of-type {
+            text-align: left !important;
+        }
+    </style>
+@endpush
