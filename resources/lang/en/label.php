@@ -31,6 +31,7 @@ return [
     'login_form'             => 'Login Form',
     'language'               => 'Language',
     'top_page'               => 'TOP PAGE',
+    'service_page'           => 'SERVICE PAGE',
     'logout'                 => 'LOG OUT',
     /** Login ============================= */
     'enterEmailAddress'      => 'Email',

@@ -31,6 +31,7 @@ return [
     'login_form'             => 'ログインフォーム',
     'language'               => '言語',
     'top_page'               => 'トップページ',
+    'service_page'           => 'サービスページへ',
     'logout'                 => 'ログアウト',
     /** Login ============================= */
     'enterEmailAddress'      => 'メールアドレス',
