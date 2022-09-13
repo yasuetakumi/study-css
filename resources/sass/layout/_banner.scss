@@ -20,7 +20,20 @@
             @include breakpoint-down(xs){
                 height: 890px;
             }
-            @media screen and (max-width: 400px){
+            // min 375px max 400px
+            @media screen and (min-width: 501px) and (max-width: 575px){
+                height: 780px;
+            }
+            @media screen and (min-width: 451px) and (max-width: 500px){
+                height: 750px;
+            }
+            @media screen and (min-width: 401px) and (max-width: 450px){
+                height: 720px;
+            }
+            @media screen and (min-width: 375px) and (max-width: 400px){
+                height: 700px;
+            }
+            @media screen and (max-width: 374px){
                 height: 650px;
             }
 
@@ -168,7 +181,7 @@
                 }
                 .sub-main-heading{
                     color: #FFFFFF;
-                    font-size: 8.375rem;
+                    font-size: 7.5rem;
                     @include breakpoint-down(md){
                         font-size: 7.375rem;
                     }
@@ -189,7 +202,7 @@
             }
 
             .sub-heading{
-                font-size: 5rem;
+                font-size: 4rem;
                 @include breakpoint-down(sm){
                     font-size: 2rem;
                 }

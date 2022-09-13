@@ -79,16 +79,17 @@
                                 <div class="top-brand-logo d-none d-lg-block">
                                     <img src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                 </div>
+                                <img class="logo-top-brand-sp mb-2" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                 <p class="heading-title text-uppercase">REFERRAL FEE</p>
                                 <h2 class="sub-title ff-base font-weight-bold">内装工事成約で<br class="d-lg-none"><span style="color: #FE2020">紹介料</span>を支給!!</h2>
                             </div>
-                            <img class="d-inline-block d-lg-none pt-5" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
+                            <img class="logo-top-brand-tab pt-5" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
 
                         </div>
                         <div class="col-12">
                             <div class="page-body pb-0">
                                 <div class="desc-content">
-                                    <p class="title-desc ff-base">内装工事費用の一部を受け取れます。<br class="d-lg-none">※紹介料に関しては応相談可（3％～）</p>
+                                    <p class="title-desc fs-16-sp ff-base">内装工事費用の一部を受け取れます。<br class="d-lg-none">※紹介料に関しては応相談（3％～）</p>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +157,7 @@
                             </div>
                         </div>
                         <div class="desc-content">
-                            <h3 class="title-desc ff-base font-weight-bold desc-about">内装会社「株式会社トラストワン」が運営する
+                            <h3 class="title-desc ff-base font-weight-bold desc-about fs-16-sp">内装会社「株式会社トラストワン」が運営する
                                 <br>「飲食店物件専門」の不動産ポータルサイト！</h3>
                         </div>
                         <div class="row justify-content-center">
@@ -203,7 +204,7 @@
                                     </div>
                                     <div class="row justify-content-center mt-4">
                                         <div class="col-lg-10">
-                                            <img class="graph-img" src="{{asset('assets/img/graph1.svg')}}" alt="">
+                                            <img class="graph-img" src="{{asset('assets/img/graph1.jpg')}}" alt="">
                                         </div>
                                         <div class="desc-content">
                                             <p class="footer-advantage">1物件あたりの利益<br class="d-lg-none">（掲載料分）が増加</p>
@@ -232,7 +233,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-5">
-                                            <img class="free-img" src="{{asset('assets/img/free.svg')}}" alt="">
+                                            <img class="free-img" src="{{asset('assets/img/free.jpg')}}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -278,8 +279,8 @@
                         <div class="col-12 advantage-frame shadow-box py-64 border-0">
                             <div class="desc-content">
                                 <h3 class="title-desc ff-base font-weight-bold desc-about d-flex flex-lg-row flex-column align-items-center justify-content-center">
-                                    <img class="mr-1" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
-                                    はなぜ掲載料無料なのか？
+                                    <span class="d-flex align-items-center"><img class="mr-1" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo"><span class="d-block d-lg-none pt-1">は</span></span>
+                                    <span class="d-flex"><span class="d-none d-lg-flex">は</span>なぜ掲載料無料なのか？</span>
                                 </h3>
                                 <p class="mt-40 mb-4 text-blue-primary fs-18 font-weight-bold">弊社は内装業を主収益としているので、<br class="d-lg-none">掲載料・成約手数料をいただく必要がございません。</p>
                                 <div class="row justify-content-center">
@@ -383,7 +384,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc text-sm-center text-md-left">御社名、所在地などをお知らせください。</p>
+                                        <p class="sc-desc text-center text-md-left">御社名、所在地などをお知らせください。</p>
                                     </div>
                                 </div>
                             </div>
@@ -421,8 +422,8 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc text-sm-center text-md-left">宅建免許証のコピーをご提出ください。</p>
-                                        <p class="fs-12 text-sm-center text-md-left">※審査結果によってはご掲載いただけないケースもございます。ご了承ください。</p>
+                                        <p class="sc-desc text-center text-md-left">宅建免許証のコピーをご提出ください。</p>
+                                        <p class="fs-12 text-center text-md-left">※審査結果によってはご掲載いただけないケースもございます。ご了承ください。</p>
                                     </div>
                                 </div>
                             </div>
@@ -471,7 +472,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc text-sm-center text-md-left">ご利用にあたって必要なID/PWをメールします。</p>
+                                        <p class="sc-desc text-center text-md-left">ご利用にあたって必要なID/PWをメールします。</p>
                                     </div>
                                 </div>
                             </div>
@@ -505,7 +506,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc text-sm-center text-md-left">掲載情報をご登録ください。</p>
+                                        <p class="sc-desc text-center text-md-left">掲載情報をご登録ください。</p>
                                     </div>
                                 </div>
                             </div>
@@ -545,7 +546,7 @@
                                     </div>
 
                                     <div class="sect-caption">
-                                        <p class="sc-desc text-sm-center text-md-left">物件登録後すぐに物件が公開されます。</p>
+                                        <p class="sc-desc text-center text-md-left">物件登録後すぐに物件が公開されます。</p>
                                     </div>
                                 </div>
                             </div>
@@ -988,7 +989,7 @@
                                                             <h3 class="title">お問い合せ窓口</h3>
                                                         </div>
                                                         <p class="text-333">株式会社トラストワン 東京本社<br>住所: 〒102-0073<br>東京都千代田区九段北1-14-21
-                                                            <br class="sp-only">九段アイレックスビル6F<br>TEL : 050-5807-2335&nbsp;&nbsp;&nbsp;<br class="sp-only">FAX : 050-5807-2335<br>Email : taberuba@trust-one.net</p>
+                                                            <br class="sp-only">九段アイレックスビル6F<br>TEL : 050-5807-2335&nbsp;&nbsp;&nbsp;<br class="sp-only">FAX : 03-6228-3301<br>Email : taberuba@trust-one.net</p>
                                                     </div>
                                                 </div>
                                                 <div class="button-wrapper">

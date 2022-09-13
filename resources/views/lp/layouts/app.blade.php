@@ -60,7 +60,7 @@
                     <div class="collapse navbar-collapse pr-3" id="navbarNav0" >
                         <ul class="navbar-nav ml-auto align-items-center">
                             <li class="nav-item">
-                                <a class="btn btn-secondary revert" href="#contact">お問い合わせ</a>
+                                <a class="btn btn-secondary revert" href="{{route('lp.index') . '#contact'}}">お問い合わせ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-secondary revert d-flex align-items-center icon-phone" href="tel:05058072335">
