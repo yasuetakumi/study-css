@@ -888,6 +888,12 @@ $text-primary-color: #333333;
             top: 0;
             left: 10%;
             transform: translate(-40%, -60%);
+            @include breakpoint-down(lg){
+                left: 15%;
+            }
+            @include breakpoint-down(md){
+                left: 17%;
+            }
             img {
                 @include breakpoint-down(sm){
                     width: 50%;
