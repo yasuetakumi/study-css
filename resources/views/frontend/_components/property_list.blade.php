@@ -4,8 +4,9 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <p class="text-black mb-0">@{{cityName}}
+                        <p class="text-black mb-0" v-if="property.city_id != null">@{{cityName}}
                             (@{{stationName}}駅　徒歩@{{distanceMinutes}}) の貸店舗</p>
+                        <p class="text-black mb-0" v-else>-</p>
                     </div>
                     <i class="fas fa-chevron-right"></i>
                 </div>
