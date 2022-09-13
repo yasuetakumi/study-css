@@ -179,6 +179,7 @@
                     design_category_4: 4,
                     estimation_loading: true,
                     designNotFound: false,
+                    displayBtnShowMore: true,
                 },
                 // ----------------------------------------------------------
             };
@@ -278,6 +279,7 @@
             showDesignPlanByCategory: function(event) {
                 this.items.estimation_loading = true;
                 this.items.loading = true;
+                this.items.displayBtnShowMore = true;
                 let designCat = event.target.value;
                 this.items.selected_dc = event.target.value
                 this.items.list_design_style = null;
@@ -303,6 +305,7 @@
             },
 
             showMoreDesign: async function(){
+                this.items.displayBtnShowMore = false;
                 this.items.estimation_loading = true;
                 this.items.loading = true;
                 // this.items.list_design_style = null;

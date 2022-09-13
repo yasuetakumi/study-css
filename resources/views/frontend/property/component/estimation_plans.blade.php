@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" v-if="items.displayBtnShowMore">
                         <div class="text-center">
                             <button class="btn btn-secondary" @click="showMoreDesign">
                                 もっと見る
