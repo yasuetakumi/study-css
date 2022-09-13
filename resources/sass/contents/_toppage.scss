@@ -360,21 +360,9 @@ $text-primary-color: #333333;
 
 .logo-top-brand-sp{
     display: none;
-    @include breakpoint-down(xs){
+    @include breakpoint-down(lg){
         display: inline-block;
         width: 100px;
-    }
-}
-.logo-top-brand-tab{
-    display: none;
-    @include breakpoint-down(xs){
-        display: none;
-    }
-    @include breakpoint-up(xs){
-        display: inline-block;
-    }
-    @include breakpoint-up(lg){
-        display: none;
     }
 }
 
