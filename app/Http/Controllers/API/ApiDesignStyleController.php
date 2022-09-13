@@ -15,7 +15,7 @@ class ApiDesignStyleController extends Controller
         return response()->json($designstyle);
     }
 
-    public function getDesignByCategoryFrontentProperty($category_id, $property_id){
+    public function getDesignByCategoryFrontentProperty($category_id, $property_id, $paginate = 3){
         $planList = PropertyPlan::where('property_id', $property_id)->pluck('plan_id');
         $plans = Plan::whereIn('id', $planList)->where('design_category_id', $category_id)->first();
 
@@ -23,7 +23,7 @@ class ApiDesignStyleController extends Controller
             $designstyle = DesignStyle::with('design_category')
             ->where('design_category_id',$category_id)
             ->orderBy('display_name','ASC')
-            ->get();
+            ->paginate($paginate);
             return response()->json($designstyle, 200);
         }else{
             $designstyle = null;
