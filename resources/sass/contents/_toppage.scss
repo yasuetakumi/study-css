@@ -358,6 +358,26 @@ $text-primary-color: #333333;
     transform: scale(0);
 }
 
+.logo-top-brand-sp{
+    display: none;
+    @include breakpoint-down(xs){
+        display: inline-block;
+        width: 100px;
+    }
+}
+.logo-top-brand-tab{
+    display: none;
+    @include breakpoint-down(xs){
+        display: none;
+    }
+    @include breakpoint-up(xs){
+        display: inline-block;
+    }
+    @include breakpoint-up(lg){
+        display: none;
+    }
+}
+
 .zoom-content,
 .about-content,
 .our-service-content,

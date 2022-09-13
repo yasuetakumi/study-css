@@ -367,3 +367,8 @@
 .min-100vh{
     min-height: 100vh;
 }
+.fs-16-sp{
+    @include breakpoint-down(xs){
+        font-size: 1rem !important;
+    }
+}
