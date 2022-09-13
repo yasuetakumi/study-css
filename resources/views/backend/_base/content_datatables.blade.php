@@ -37,6 +37,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
+                                    <div class="text-left">
+                                        @yield('actions')
+                                    </div>
                                     <table id="datatable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info" style="width:100%">
                                         <thead>
                                             <tr>
