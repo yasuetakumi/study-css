@@ -155,7 +155,7 @@
             },
             convertToMan(value){
                 let man = 10000;
-                let result = (value/man).toFixed(2);
+                let result = value/man;
                 return result + '万円'
             }
         },
