@@ -2615,6 +2615,12 @@ strong,
   min-height: 100vh;
 }
 
+@media (max-width: 575.98px) {
+  .fs-16-sp {
+    font-size: 1rem !important;
+  }
+}
+
 .title-border-left .border-y {
   width: 0.3125rem;
   height: 1.5rem;
@@ -4462,7 +4468,31 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (min-width: 501px) and (max-width: 575px) {
+  .banner-wrapper .wrap-img .img-banner {
+    height: 780px;
+  }
+}
+
+@media screen and (min-width: 451px) and (max-width: 500px) {
+  .banner-wrapper .wrap-img .img-banner {
+    height: 750px;
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 450px) {
+  .banner-wrapper .wrap-img .img-banner {
+    height: 720px;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 400px) {
+  .banner-wrapper .wrap-img .img-banner {
+    height: 700px;
+  }
+}
+
+@media screen and (max-width: 374px) {
   .banner-wrapper .wrap-img .img-banner {
     height: 650px;
   }
@@ -4646,7 +4676,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 .banner-wrapper .banner-caption .banner-desc .main-heading .sub-main-heading,
 .banner-wrapper .banner-caption .banner-desc .sub-heading .sub-main-heading {
   color: #FFFFFF;
-  font-size: 8.375rem;
+  font-size: 7.5rem;
 }
 
 @media (max-width: 991.98px) {
@@ -4681,7 +4711,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 }
 
 .banner-wrapper .banner-caption .banner-desc .sub-heading {
-  font-size: 5rem;
+  font-size: 4rem;
 }
 
 @media (max-width: 767.98px) {
@@ -5283,6 +5313,17 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
   z-index: 99999;
   -webkit-transform: scale(0);
           transform: scale(0);
+}
+
+.logo-top-brand-sp {
+  display: none;
+}
+
+@media (max-width: 1199.98px) {
+  .logo-top-brand-sp {
+    display: inline-block;
+    width: 100px;
+  }
 }
 
 .zoom-content .team-title-header,
