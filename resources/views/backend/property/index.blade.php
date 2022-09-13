@@ -28,6 +28,21 @@
     @endif
 @endsection
 
+@section('actions')
+    <div class="d-flex align-items-center justify-content-end">
+        <form method="POST" action="#" enctype="multipart/form-data">
+            @csrf
+            <a class="text-link fs-16 mr-2" target="_blank" download="" href="{{asset('csv/property_template.csv')}}">テンプレートファイルをダウンロード</a>
+            <span class="btn btn-primary btn-file bg-white border cursor-pointer mr-1">
+                CSVファイルを選択 <input type="file">
+            </span>
+            <button type="submit" class="btn btn-success">
+                保存
+            </button>
+        </form>
+    </div>
+@endsection
+
 @section('content')
     @if(Request::is('admin/*'))
         <th data-col="user.company.id">@lang('label.company_id')</th>
