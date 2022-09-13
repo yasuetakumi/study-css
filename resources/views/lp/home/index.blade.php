@@ -193,7 +193,7 @@
                     <div class="row mt-5 px-2 px-lg-0">
                         <div class="col-12 advantage-frame position-relative">
                             <div class="label-image">
-                                <img src="{{asset('assets/img/label-adv-01.svg')}}" alt="強み01">
+                                <img src="{{asset('assets/img/label-adv-01.jpg')}}" alt="強み01">
                             </div>
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
@@ -220,7 +220,7 @@
                     <div class="row mt-5 px-2 px-lg-0">
                         <div class="col-12 advantage-frame position-relative">
                             <div class="label-image">
-                                <img src="{{asset('assets/img/label-adv-02.svg')}}" alt="強み02">
+                                <img src="{{asset('assets/img/label-adv-02.jpg')}}" alt="強み02">
                             </div>
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
@@ -246,7 +246,7 @@
                     <div class="row mt-5 px-2 px-lg-0">
                         <div class="col-12 advantage-frame position-relative">
                             <div class="label-image">
-                                <img src="{{asset('assets/img/label-adv-03.svg')}}" alt="強み03">
+                                <img src="{{asset('assets/img/label-adv-03.jpg')}}" alt="強み03">
                             </div>
                             <div class="row justify-content-center my-64">
                                 <div class="col-12">
