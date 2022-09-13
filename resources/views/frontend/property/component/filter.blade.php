@@ -18,7 +18,7 @@
 
              {{-- Region Section --}}
             <div class="search-all mb-3">
-                <h6 class="border-left border-primary pl-2">地域</h6>
+                <h6 class="border-left border-primary pl-2">地域・駅</h6>
                 <div class="row justify-content-end">
                     <div class="col-auto">
                         <button data-toggle="modal" data-target="#prefectureModal" class="btn btn-primary text-right" type="button">地域・駅から絞り込み</button>
