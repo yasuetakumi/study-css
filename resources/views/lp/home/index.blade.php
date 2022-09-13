@@ -49,9 +49,9 @@
                                                         </span>
                                                     </a>
                                                 </div> --}}
-                                                <div class="col-lg-7 col-12">
-                                                    <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-lg-4 px-2 border-0">
-                                                        <span><img class="align-self-center mx-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
+                                                <div class="col-lg-7 col-12 px-lg-0">
+                                                    <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-2 border-0">
+                                                        <span><img class="align-self-center mr-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -76,14 +76,14 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-lg-10">
                             <div class="page-header position-relative">
-                                <div class="top-brand-logo d-none d-lg-block">
+                                <div class="top-brand-logo d-none d-xl-block">
                                     <img src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                 </div>
                                 <img class="logo-top-brand-sp mb-2" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
                                 <p class="heading-title text-uppercase">REFERRAL FEE</p>
                                 <h2 class="sub-title ff-base font-weight-bold">内装工事成約で<br class="d-lg-none"><span style="color: #FE2020">紹介料</span>を支給!!</h2>
                             </div>
-                            <img class="logo-top-brand-tab pt-5" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!">
+                            {{-- <img class="logo-top-brand-tab pt-5" src="{{asset('assets/img/top-brand.svg')}}" alt="内装工事成約で 紹介料3%を支給!!"> --}}
 
                         </div>
                         <div class="col-12">
