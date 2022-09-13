@@ -55,6 +55,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div class="text-center">
+                            <button class="btn btn-secondary" @click="showMoreDesign">
+                                もっと見る
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

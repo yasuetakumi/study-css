@@ -287,14 +287,30 @@
                 }, 2000);
                 this.items.loading = false;
             },
-            getDesignByCategory: function(designCat){
-                axios.get(root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id)
+            getDesignByCategory: function(designCat, loadAll = false){
+                const paginateAll = 1000;
+                let url = root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id;
+                if(loadAll){
+                    url = root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id + '/' + paginateAll;
+                }
+                axios.get(url)
                 .then((result) => {
-                    this.items.list_design_style = result.data;
+                    this.items.list_design_style = result.data.data;
                     this.items.designNotFound = false;
                 }).catch((err) => {
                     this.items.designNotFound = true;
                 });
+            },
+
+            showMoreDesign: async function(){
+                this.items.estimation_loading = true;
+                this.items.loading = true;
+                // this.items.list_design_style = null;
+                await this.getDesignByCategory(this.items.selected_dc, true);
+                await setTimeout(() => {
+                    this.estimationIndex();
+                }, 2000);
+                this.items.loading = false;
             },
 
             estimationIndex: function(){
