@@ -275,18 +275,21 @@ class PropertyController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('admin.property.index')->with('success', 'Property created successfully');
+            if(Auth::guard('user')->check()){
+                return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            } else {
+                return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            }
         } catch (\Exception $e) {
             DB::rollback();
+            if(Auth::guard('user')->check()){
+                return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            }
             return redirect()->route('admin.property.create')->with('error', 'Property created unsuccessfully');
         }
 
 
-        if(Auth::guard('user')->check()){
-            return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
-        } else {
-            return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
-        }
+
     }
 
     public function edit($id)
