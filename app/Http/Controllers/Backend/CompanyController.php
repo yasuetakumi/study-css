@@ -132,7 +132,7 @@ class CompanyController extends Controller
         $item = Company::findOrFail($id);
         $item->delete();
 
-        $this->saveLog('Delete Company', 'Delete Company, Name : ' . $item->company_name . '', Auth::user()->id);
+        $this->saveLog('不動産会社の削除', '不動産会社の削除、法人名：' . $item->company_name . '', Auth::user()->id);
 
         return 1;
     }

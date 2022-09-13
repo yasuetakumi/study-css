@@ -122,7 +122,7 @@ class UserMasterController extends Controller
         $item = User::findOrFail($id);
         $item->delete();
 
-        $this->saveLog('Delete User', 'Delete User, Email : ' . $item->email . '', Auth::user()->id);
+        $this->saveLog('不動産社員の削除', '不動産社員の削除、メールアドレス：' . $item->email . '', Auth::user()->id);
 
         return 1;
     }
