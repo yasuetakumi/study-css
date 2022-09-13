@@ -180,6 +180,7 @@ class PropertyController extends Controller
         $data['walking_distances'] = WalkingDistanceFromStationOption::pluck('label_jp', 'id')->all();
 
         $data['design_categories'] = collect($categories)->all();
+        $data['publication_statuses'] = PropertyPublicationStatus::pluck('label_jp', 'id')->all();
 
         return view('backend.property.form', $data);
     }

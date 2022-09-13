@@ -62,9 +62,9 @@
                     <a class="text-link fs-16" target="_blank" href="{{route('property.detail', $item->id)}}">@lang('label.see_property_detail')</a>
                 </div>
             @endif
-            @component('backend._components.input_radio', ['is_indexed_value' => true, 'options' => $publication_statuses, 'name' => 'publication_status_id', 'label' => __('label.publication_status'), 'value' => $item->publication_status_id, 'required' => false])
-            @endcomponent
         @endif
+        @component('backend._components.input_radio', ['is_indexed_value' => true, 'options' => $publication_statuses, 'name' => 'publication_status_id', 'label' => __('label.publication_status'), 'value' => $item->publication_status_id ?? '', 'required' => false])
+        @endcomponent
 
         {{-- publish button for company user --}}
         {{-- @if($page_type == 'edit' && auth()->guard('user')->check())
