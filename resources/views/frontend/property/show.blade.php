@@ -14,7 +14,7 @@
 @section('top_buttons')
     @if (!Auth::check())
         <div class="text-right">
-            <a id="favorite" type="button" style="color: red" @click="setLikeProperty">
+            <a id="favorite" type="button" style="color: red" @click="setLikeProperty(items.property_id)">
                 <i v-if="isLiked" class="fas fa-heart fa-2x"></i>
                 <i v-else class="far fa-heart fa-2x"></i>
             </a>
@@ -88,12 +88,14 @@
         <div class="card-header">
             <h5>{{$item->city->display_name}} で似た物件</h5>
         </div>
-        <div class="row py-2">
+        <div class="row py-2 px-2">
             <div class="col-12" v-if="property_related == null || property_related == ''">
                 <p class="text-center">似た物件は見つかりませんでした</p>
             </div>
-            <div v-else class="col-lg-4" v-for="pr in property_related">
-                <property-related-list :property="pr"></property-related-list>
+            <div v-else class="col-lg-4 d-flex align-items-stretch" v-for="pr in property_related">
+                <property-list :property="pr">
+                    <button-favorite :likes="items.like_property" :idproperty="pr.id" @click="setLikeProperty(pr.id)"></button-favorite>
+                </property-list>
             </div>
         </div>
     </div>
@@ -105,7 +107,8 @@
 @endpush
 
 @push('vue-scripts')
-@include('frontend._components.property_related_list')
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
 <script>
 
     // ----------------------------------------------------------------------
@@ -222,7 +225,7 @@
             },
             isLiked: function () {
                 if(this.items.like_property && this.items.like_property.length > 0){
-                    let isPropertyLiked = this.items.like_property.find(x => {return x.id == this.items.property_id});
+                    let isPropertyLiked = this.items.like_property.includes(this.items.property_id);
                     if(isPropertyLiked){
                         return true;
                     } else {
@@ -332,19 +335,51 @@
                     });
             },
             getLikeProperty: function() {
-                let local = localStorage.getItem('favoritePropertyId');
-                this.items.like_property = JSON.parse(local);
+                this.updateLocalLikeProperty();
+                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                let filterId = [];
+                if(local.length > 0){
+                    for(let i= 0; i < local.length; i++){
+                        // console.log(id);
+                        filterId.push(local[i].id);
+                    }
+                    console.log(filterId);
+                    if(filterId.length > 0){
+                        this.items.like_property = filterId;
+                    } else {
+                        this.items.like_property = [];
+                    }
+
+                } else {
+                    this.items.like_property = [];
+                }
             },
-            setLikeProperty: function () {
+            updateLocalLikeProperty: function() {
+                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                if (local.length > 0) {
+                    // remove data if the date added is undefined
+                    const updateLocal = [];
+                    for (let i = 0; i < local.length; i++) {
+                        if (typeof local[i].date_added !== 'undefined') {
+                            updateLocal.push(local[i]);
+                        }
+                    }
+                    local = localStorage.getItem('favoritePropertyId');
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(updateLocal));
+                }
+            },
+            setLikeProperty: function (id) {
                 //this.items.like_property.push(this.items.property_id)
+                console.log('id', id);
+                let propertyID = id;
                 var properties_like = [];
                 var filterArr = [];
                 let local = localStorage.getItem('favoritePropertyId');
                 properties_like = JSON.parse(local) || [];
-                filterArr = properties_like.filter(x => {return x.id == this.items.property_id});
+                filterArr = properties_like.filter(x => {return x.id == propertyID});
+
                 if(filterArr.length > 0){
-                    let index = properties_like.findIndex(object => {return object.id == this.items.property_id});
-                    // console.log("index", index);
+                    let index = properties_like.findIndex(object => {return object.id == propertyID});
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                     let msg = 'お気に入り物件から削除しました'; //remove like
@@ -354,7 +389,7 @@
                 } else {
                     const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
                     var objectFavorite = {
-                        'id': this.items.property_id,
+                        'id': propertyID,
                         'distance': null,
                         'date_added': dateTime
                     };
