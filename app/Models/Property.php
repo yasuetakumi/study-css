@@ -225,7 +225,7 @@ class Property extends Model
     public function getManAttribute()
     {
         if($this->rent_amount != null){
-            $result = toMan($this->rent_amount);
+            $result = toMan($this->rent_amount, false, 2);
             return $result . '万円';
         } else {
             return 0;
