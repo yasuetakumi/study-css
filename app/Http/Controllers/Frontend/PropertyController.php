@@ -111,9 +111,8 @@ class PropertyController extends Controller {
         $data['design_categories'] = collect($categories)->all();
         $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
         $data['form_action_inquiry'] = route('enduser.inquiry.store');
-        $data['property_related'] = Property::with(['city', 'property_stations.station'])
+        $data['property_related'] = Property::with(['city', 'property_stations.station.station_line', 'cuisine'])
                 ->published()
-                ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
                 ->where('city_id', $data['item']->city_id)
                 ->where('id', '!=', $data['item']->id)
                 ->orderByRaw('ABS(surface_area - '.$data['item']->surface_area.') ASC')
