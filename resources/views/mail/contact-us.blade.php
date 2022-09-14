@@ -42,7 +42,7 @@
         大阪府大阪市淀川区西中島3-11-10 新三宝ビル301
     </p>
     <div>
-        <p>tel:<a href="tel:050-5807-2335">050-5807-2335</a>
+        <p>tel: <a href="tel:050-5807-2335">050-5807-2335</a>
             <br>
             web: <a href="https://trust-one.net/">https://trust-one.net/</a>
         </p>
