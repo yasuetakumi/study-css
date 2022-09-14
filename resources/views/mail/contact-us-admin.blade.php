@@ -1,5 +1,7 @@
 <div>
     <p>
+        差出人:
+        <br>
         {{$content['company_name']}}
         <br>
         {{$content['email']}}

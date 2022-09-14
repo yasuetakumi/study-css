@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="「たべるば」は掲載料無料！成約手数料無料！業界初の内装工事成約で紹介料を支給！を行う新しい不動産ポータルサイトです。「たべるば」に掲載する飲食店向けの物件を大募集しています。">
-    <title>たべるば | 飲食店向けの物件大募集！ | 「飲食店物件専門」の不動産ポータルサイト！</title>
+    @yield('meta')
+    <link rel="icon" type="image/png" href="{{asset('favicon.png')}}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    {{-- favicon --}}
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     {{-- <!-- Ionicons -->
@@ -18,17 +19,22 @@
     {{--custom css--}}
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+    <script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"url": "{{route('lp.index')}}",
+			"logo": "{{asset('assets/img/logo.png')}}",
+			"name" : "たべるば | 飲食店向けの物件大募集！ | 「飲食店物件専門」の不動産ポータルサイト！"
+		}
+	</script>
 
     <!-- Alpine Plugins -->
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Alpine Core -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
     <style>
         ul.parsley-errors-list li.parsley-type{
             display: block !important;
@@ -44,7 +50,7 @@
             <div class="container-fluid mx-lg-64 mx-md-4">
                 <div class="row w-100 justify-content-between align-items-center mx-lg-32">
                     <div>
-                        <a class="navbar-brand pl-3 pt-0 mr-0" href="#">
+                        <a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.index')}}">
                             <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
                         </a>
                     </div>
