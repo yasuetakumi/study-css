@@ -1,7 +1,7 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/assets/css/main.css": "/assets/css/main.css",
     "/js/manifest.js": "/js/manifest.js",
     "/js/vendor.js": "/js/vendor.js",
+    "/js/app.js": "/js/app.js",
+    "/assets/css/main.css": "/assets/css/main.css",
     "/js/vue.js": "/js/vue.js"
 }

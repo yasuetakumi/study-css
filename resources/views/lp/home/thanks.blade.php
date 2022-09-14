@@ -7,14 +7,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{route('lp.index')}}">
+    <meta property="og:url" content="{{url()->current()}}">
     <meta property="og:title" content="お問い合わせ受付完了 | たべるば">
     <meta property="og:description" content="たべるばのお問い合わせ完了ページです。">
     <meta property="og:image" content="{{asset('og-taberuba.jpg')}}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{route('lp.index')}}">
+    <meta property="twitter:url" content="{{url()->current()}}">
     <meta property="twitter:title" content="お問い合わせ受付完了 | たべるば">
     <meta property="twitter:description" content="たべるばのお問い合わせ完了ページです。">
     <meta property="twitter:image" content="{{asset('og-taberuba.jpg')}}">

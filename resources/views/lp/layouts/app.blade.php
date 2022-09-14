@@ -25,13 +25,12 @@
 			"@type": "Organization",
 			"url": "{{route('lp.index')}}",
 			"logo": "{{asset('assets/img/logo.png')}}",
-			"name" : "たべるば | 飲食店向けの物件大募集！ | 「飲食店物件専門」の不動産ポータルサイト！"
+			"name" : "業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば"
 		}
 	</script>
 
     <!-- Alpine Plugins -->
-    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.10.3/dist/cdn.min.js"></script>
 
     <!-- Alpine Core -->
     <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
