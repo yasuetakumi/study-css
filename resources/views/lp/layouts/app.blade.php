@@ -4,18 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @yield('meta')
+    <title>@yield('title')</title>
+    <meta name="title" content="@yield('title')">
+    <meta name="description" content="@yield('description')">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{url()->current()}}">
+    <meta property="og:title" content="@yield('title')">
+    <meta property="og:description" content="@yield('description')">
+    <meta property="og:image" content="{{asset('og-taberuba.jpg')}}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{url()->current()}}">
+    <meta property="twitter:title" content="@yield('title')">
+    <meta property="twitter:description" content="@yield('description')">
+    <meta property="twitter:image" content="{{asset('og-taberuba.jpg')}}">
+
     <link rel="icon" type="image/png" href="{{asset('favicon.png')}}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    {{-- favicon --}}
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
-    {{-- <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
     {{-- Bootstrap --}}
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
     {{--custom css--}}
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
@@ -56,9 +70,6 @@
                     <div class="d-lg-none d-flex menu-btn-sp">
                         <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 mr-2 fs-12" href="#contact">お問い合わせ</a>
                         <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 fs-12 icon-phone" href="tel:05058072335">
-                            {{-- <span class="icon"></span> --}}
-                            {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-white.png')}}" alt=""> --}}
-                            {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-green.png')}}" alt=""> --}}
                             050-5807-2335
                         </a>
                     </div>
@@ -69,9 +80,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-secondary revert d-flex align-items-center icon-phone" href="tel:05058072335">
-                                    {{-- <span class="icon"></span> --}}
-                                    {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-white.png')}}" alt=""> --}}
-                                    {{-- <img class="pr-1" src="{{asset('assets/img/icon-phone-green.png')}}" alt=""> --}}
                                     050-5807-2335
                                 </a>
                             </li>
