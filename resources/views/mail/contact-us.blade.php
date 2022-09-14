@@ -10,6 +10,7 @@
     </p>
     <p>カテゴリ名: : {{$content['category']}}</p>
     <p>企業名 : {{$content['company_name']}}</p>
+    <p>担当者名 : {{$content['contact_name']}}</p>
     <p>Webサイト : {{$content['website']}}</p>
     <p>お電話番号 : {{$content['phone']}}</p>
     <p>メールアドレス : {{$content['email']}}</p>
@@ -41,7 +42,7 @@
         大阪府大阪市淀川区西中島3-11-10 新三宝ビル301
     </p>
     <div>
-        <p><a href="tel:050-5807-2335">tel: 050-5807-2335</a>
+        <p><a href="tel:050-5807-2335">050-5807-2335</a>
             <br>
             web: <a href="https://trust-one.net/">https://trust-one.net/</a>
         </p>
