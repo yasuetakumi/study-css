@@ -1,24 +1,9 @@
 @extends('lp.layouts.app')
-@section('meta')
-    <!-- Primary Meta Tags -->
-    <title>業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば</title>
-    <meta name="title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば">
-    <meta name="description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{url()->current()}}">
-    <meta property="og:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば">
-    <meta property="og:description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
-    <meta property="og:image" content="{{asset('og-taberuba.jpg')}}">
+@section('title', '業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば')
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{url()->current()}}">
-    <meta property="twitter:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば">
-    <meta property="twitter:description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
-    <meta property="twitter:image" content="{{asset('og-taberuba.jpg')}}">
-@endsection
+@section('description', '飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。')
+
 @section('content')
 <!-- Banner -->
 <div class="banner-wrapper">
@@ -61,14 +46,6 @@
                                                 </div>
                                             </div>
                                             <div class="row justify-content-center wrapper-btn-contact">
-                                                {{-- <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
-                                                    <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
-
-                                                        <span>
-                                                            <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="hide-xl">コチラ【無料】
-                                                        </span>
-                                                    </a>
-                                                </div> --}}
                                                 <div class="col-lg-7 col-12 px-lg-0">
                                                     <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-2 border-0">
                                                         <span><img class="align-self-center mr-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
@@ -180,7 +157,7 @@
                             <h3 class="title-desc ff-base font-weight-bold desc-about fs-16-sp">内装会社「株式会社トラストワン」が運営する
                                 <br>「飲食店物件専門」の不動産ポータルサイト！</h3>
                         </div>
-                        <div class="row justify-content-center">
+                        {{-- <div class="row justify-content-center">
                             <div class="col-lg-7 col-12">
                                 <img class="w-100 pb-40 pt-32" src="{{asset('assets/img/macbook.png')}}" alt="内装会社「株式会社トラストワン」が運営する「飲食店物件専門」の不動産ポータルサイト！">
                                 <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill border-0">実際に
@@ -188,7 +165,7 @@
                                     <img class="align-self-center ml-2 icon-link" src="{{asset('assets/img/icon-link.svg')}}" alt="">
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -336,7 +313,7 @@
 <!-- End -->
 
 {{-- Member --}}
-<div class="section-wrapper dev-team-content">
+{{-- <div class="section-wrapper dev-team-content">
     <div class="content-blue">
         <div class="container">
             <div class="row">
@@ -358,7 +335,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- FLow -->
 <div class="section-wrapper flow-content">

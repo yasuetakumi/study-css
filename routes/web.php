@@ -30,15 +30,15 @@ You can registered routing by this command.
 */
 // check if is production
 if (Config::get('app.env') === 'production') {
-    Route::get('/lp01','LpController@index')->name('lp.index');
-    Route::post('/lp01', 'LpController@contact')->name('lp.contact');
-    Route::get('/thanks', function(){
+    Route::get('/partner','LpController@index')->name('lp.index');
+    Route::post('/partner', 'LpController@contact')->name('lp.contact');
+    Route::get('/partner/thanks', function(){
         return view('lp.home.thanks');
     })->name('lp.thanks');
     // catch all route except /thanks and /lp01
     Route::get('/{any}',function(){
         return redirect()->route('lp.index');
-    })->where('any', '^(?!thanks|lp01).*$');
+    })->where('any', '^(?!partner|partner/thanks).*$');
 } else {
     Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { // start basic auth protection
 
@@ -227,9 +227,9 @@ if (Config::get('app.env') === 'production') {
 
         Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
     });
-    Route::get('/lp01', 'LpController@index')->name('lp.index');
-    Route::post('/lp01', 'LpController@contact')->name('lp.contact');
-    Route::get('/thanks', function(){
+    Route::get('/partner', 'LpController@index')->name('lp.index');
+    Route::post('/partner', 'LpController@contact')->name('lp.contact');
+    Route::get('/partner/thanks', function(){
         return view('lp.home.thanks');
     })->name('lp.thanks');
 }
