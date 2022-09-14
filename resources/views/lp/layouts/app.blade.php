@@ -29,9 +29,9 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     {{-- Bootstrap --}}
-    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}?v={{ env('APP_VERSION', date('YmdHis'))}}">
     {{--custom css--}}
-    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}?v={{ env('APP_VERSION', date('YmdHis'))}}">
 
     <script type="application/ld+json">
 		{
