@@ -61,14 +61,6 @@
                                                 </div>
                                             </div>
                                             <div class="row justify-content-center wrapper-btn-contact">
-                                                {{-- <div class="col-lg-6 col-xl-5 col-md-8 col-sm-7 col-10">
-                                                    <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill btn-contact-form px-lg-2">
-
-                                                        <span>
-                                                            <img class="align-self-center mx-2 icon-logo img-logo" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="hide-xl">コチラ【無料】
-                                                        </span>
-                                                    </a>
-                                                </div> --}}
                                                 <div class="col-lg-7 col-12 px-lg-0">
                                                     <a href="#contact" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-2 border-0">
                                                         <span><img class="align-self-center mr-2 icon-logo mb-1" src="{{asset('assets/img/logo-white.svg')}}" alt="Taberuba Logo">掲載お問合せは<br class="block-lg-xs">コチラ【無料】</span>
@@ -180,7 +172,7 @@
                             <h3 class="title-desc ff-base font-weight-bold desc-about fs-16-sp">内装会社「株式会社トラストワン」が運営する
                                 <br>「飲食店物件専門」の不動産ポータルサイト！</h3>
                         </div>
-                        <div class="row justify-content-center">
+                        {{-- <div class="row justify-content-center">
                             <div class="col-lg-7 col-12">
                                 <img class="w-100 pb-40 pt-32" src="{{asset('assets/img/macbook.png')}}" alt="内装会社「株式会社トラストワン」が運営する「飲食店物件専門」の不動産ポータルサイト！">
                                 <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill border-0">実際に
@@ -188,7 +180,7 @@
                                     <img class="align-self-center ml-2 icon-link" src="{{asset('assets/img/icon-link.svg')}}" alt="">
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -336,7 +328,7 @@
 <!-- End -->
 
 {{-- Member --}}
-<div class="section-wrapper dev-team-content">
+{{-- <div class="section-wrapper dev-team-content">
     <div class="content-blue">
         <div class="container">
             <div class="row">
@@ -358,7 +350,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- FLow -->
 <div class="section-wrapper flow-content">
