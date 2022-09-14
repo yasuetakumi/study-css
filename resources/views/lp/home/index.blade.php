@@ -1,4 +1,24 @@
 @extends('lp.layouts.app')
+@section('meta')
+    <!-- Primary Meta Tags -->
+    <title>業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば</title>
+    <meta name="title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば">
+    <meta name="description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。。">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{route('lp.index')}}">
+    <meta property="og:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば">
+    <meta property="og:description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
+    <meta property="og:image" content="{{asset('og-taberuba.jpg')}}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{route('lp.index')}}">
+    <meta property="twitter:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば">
+    <meta property="twitter:description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
+    <meta property="twitter:image" content="{{asset('og-taberuba.jpg')}}">
+@endsection
 @section('content')
 <!-- Banner -->
 <div class="banner-wrapper">
@@ -617,7 +637,7 @@
                                 {{-- faq 1 --}}
                                 <a class="d-block faq-wrapper mb-3" x-bind:class="faq1 ? 'text-white bg-green-primary' : '' "
                                     role="button" x-on:click="faq1 = !faq1" data-toggle="collapse"
-                                    href="#faqCollapse1" role="button" aria-expanded="false" aria-controls="faqCollapse1">
+                                    href="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1">
                                     <div class="d-flex align-items-center" >
                                         <div class="mr-3 font-weight-bold">Q1:</div>
                                         <div class="flex-grow-1 text-left">たべるばへのお問い合わせはどのように行ったらよろしいですか？</div>
@@ -637,7 +657,7 @@
                                 {{-- faq 2 --}}
                                 <a class="d-block faq-wrapper mb-3" x-bind:class="faq2 ? 'text-white bg-green-primary' : '' "
                                     role="button" x-on:click="faq2 = !faq2" data-toggle="collapse"
-                                    href="#faqCollapse2" role="button" aria-expanded="false" aria-controls="faqCollapse2">
+                                    href="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
                                     <div class="d-flex align-items-center">
                                         <div class="mr-3 font-weight-bold">Q2:</div>
                                         <div class="flex-grow-1 text-left">物件の価格は税込み表記ですか？</div>
@@ -657,7 +677,7 @@
                                 {{-- faq 3 --}}
                                 <a class="d-block faq-wrapper mb-3" x-bind:class="faq3 ? 'text-white bg-green-primary' : '' "
                                     role="button" x-on:click="faq3 = !faq3" data-toggle="collapse"
-                                    href="#faqCollapse3" role="button" aria-expanded="false" aria-controls="faqCollapse3">
+                                    href="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
                                     <div class="d-flex align-items-center" >
                                         <div class="mr-3 font-weight-bold">Q3:</div>
                                         <div class="flex-grow-1 text-left">掲載料・成約手数料無料となっていますが、別でかかる費用はありますか？</div>
@@ -676,18 +696,18 @@
 
                             <div class="cursor-pointer" x-data="{faq4: false}">
                                 {{-- faq 4 --}}
-                                <div class="d-block faq-wrapper mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' "
+                                <a class="d-block faq-wrapper mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' "
                                     role="button" x-on:click="faq4 = !faq4" data-toggle="collapse"
-                                    href="#faqCollapse4" role="button" aria-expanded="false" aria-controls="faqCollapse4">
-                                    <a class="d-flex align-items-center">
+                                    href="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                                    <div class="d-flex align-items-center">
                                         <div class="mr-3 font-weight-bold">Q4:</div>
                                         <div class="flex-grow-1 text-left">運営会社はどこですか？</div>
                                         <div>
                                             <img class="faq-btn" x-bind:class="!faq4 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
                                             <img class="faq-btn" x-bind:class="faq4 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                                 <div class="collapse" id="faqCollapse4">
                                     <div class="faq-child text-left">
                                         <p>株式会社トラストワンが運営しております。トラストワンでは年間100以上の店舗の内装を行う豊富な実績があり、一部上場企業様と多数の取引実績もございます。</p>
@@ -697,18 +717,18 @@
 
                             <div class="cursor-pointer" x-data="{faq5: false}">
                                 {{-- faq 5 --}}
-                                <div class="d-block faq-wrapper mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' "
+                                <a class="d-block faq-wrapper mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' "
                                     role="button" x-on:click="faq5 = !faq5" data-toggle="collapse"
-                                    href="#faqCollapse5" role="button" aria-expanded="false" aria-controls="faqCollapse5">
-                                    <a class="d-flex align-items-center">
+                                    href="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                                    <div class="d-flex align-items-center">
                                         <div class="mr-3 font-weight-bold">Q5:</div>
                                         <div class="flex-grow-1 text-left">どんな業態の店舗物件が登録できますか？</div>
                                         <div>
                                             <img class="faq-btn" x-bind:class="!faq5 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-plus.svg')}}" alt="icon-plus">
                                             <img class="faq-btn" x-bind:class="faq5 ? 'd-block' : 'd-none' " src="{{asset('assets/img/icon-minus.svg')}}" alt="icon-minus">
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                                 <div class="collapse" id="faqCollapse5">
                                     <div class="faq-child text-left">
                                         <p>重飲食（居酒屋や中華料理屋、焼き肉屋等）または軽飲食（カフェやバー・スナック等）の業態可能な店舗物件が登録できます。また居抜き・スケルトンのどちらも登録可能です。</p>
@@ -761,57 +781,55 @@
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label for="" class="label-contact">企業名
+                                        <label for="company_name" class="label-contact">企業名
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" name="company_name" class="input-contact" placeholder="例）株式会社トラストワン" required data-parsley-errors-container="#error-company">
+                                        <input id="company_name" type="text" name="company_name" class="input-contact" placeholder="例）株式会社トラストワン" required data-parsley-errors-container="#error-company">
                                         <div class="validation-fb" id="error-company">
 
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label for="" class="label-contact">担当者名
+                                        <label for="contact_name" class="label-contact">担当者名
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" name="contact_name" class="input-contact" placeholder="例）山田 太郎" required data-parsley-errors-container="#error-contact">
+                                        <input id="contact_name" type="text" name="contact_name" class="input-contact" placeholder="例）山田 太郎" required data-parsley-errors-container="#error-contact">
                                         <div class="validation-fb" id="error-contact">
 
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label for="" class="label-contact">Webサイト
+                                        <label for="website" class="label-contact">Webサイト
                                         </label>
-                                        <input type="text" name="website" class="input-contact" placeholder="例）https://trust-one.net/">
+                                        <input id="website" type="text" name="website" class="input-contact" placeholder="例）https://trust-one.net/">
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label for="" class="label-contact">お電話番号
+                                        <label for="phone" class="label-contact">お電話番号
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input type="text" name="phone" onkeypress="validate(event)" class="input-contact" placeholder="例）08000000001" required data-parsley-errors-container="#error-phone">
+                                        <input id="phone" type="text" name="phone" onkeypress="validate(event)" class="input-contact" placeholder="例）08000000001" required data-parsley-errors-container="#error-phone">
                                         <div class="validation-fb" id="error-phone">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label for="" class="label-contact">メールアドレス
+                                        <label for="email" class="label-contact">メールアドレス
                                             <span class="label-required ml-2">必須</span>
                                         </label>
-                                        <input data-parsley-errors-container="#error-email" type="email" name="email" class="input-contact" placeholder="例）yamada.tarou@yamada.co.jp" required data-parsley-type="email" data-parsley-error-message="必須項目です。メールアドレスが正しくありません。" data-parsley-errors-container="#error-email">
+                                        <input id="email" type="email" name="email" class="input-contact" placeholder="例）yamada.tarou@yamada.co.jp" required data-parsley-type="email" data-parsley-error-message="必須項目です。メールアドレスが正しくありません。" data-parsley-errors-container="#error-email">
                                         <div class="validation-fb" id="error-email">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label for="" class="label-contact">ご要望・ご質問等
+                                        <label for="description" class="label-contact">ご要望・ご質問等
                                         </label>
-                                        <textarea placeholder="こちらにご要望・ご質問等をお書きください" class="input-contact py-3" name="description" id="" cols="30" rows="10" style="height: 240px;"></textarea>
+                                        <textarea id="description" placeholder="こちらにご要望・ご質問等をお書きください" class="input-contact py-3" name="description" cols="30" rows="10" style="height: 240px;"></textarea>
                                     </div>
                                     <div class="text-center mt-5">
                                         <div class="d-flex justify-content-center mb-2">
                                             <div class="form-check form-check-inline">
-                                                {{-- <input x-ref="policy" id="policy" class="form-check-input input-contact-checkbox" type="checkbox" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。">
-                                                 --}}
                                                  <label class="control control-checkbox" >
                                                     <input type="checkbox" x-ref="policy" id="policy" name="policy" value="1" required data-parsley-errors-container="#error-policy" data-parsley-error-message="個人情報保護方針にご同意いただける場合は、チェックボックスにチェックを入れ、同意の上「送信する」を押してください。"/>
-                                                    <div class="control_indicator mr-2"></div>
+                                                    <span class="d-block control_indicator mr-2"></span>
                                                 </label>
                                                 <label class="form-check-label label-contact fw-400 fs-14 mb-0"></label>
                                                 <a role="button" x-on:click="aggrement = true" class="policy-link">個人情報保護方針</a> <span class="label-contact fw-400 fs-14 mb-0">に同意する</span>
