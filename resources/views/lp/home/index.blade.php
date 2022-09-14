@@ -1,21 +1,21 @@
 @extends('lp.layouts.app')
 @section('meta')
     <!-- Primary Meta Tags -->
-    <title>業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば</title>
-    <meta name="title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば">
-    <meta name="description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。。">
+    <title>業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば</title>
+    <meta name="title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば">
+    <meta name="description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{route('lp.index')}}">
-    <meta property="og:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば">
+    <meta property="og:url" content="{{url()->current()}}">
+    <meta property="og:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば">
     <meta property="og:description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
     <meta property="og:image" content="{{asset('og-taberuba.jpg')}}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{route('lp.index')}}">
-    <meta property="twitter:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。| たべるば">
+    <meta property="twitter:url" content="{{url()->current()}}">
+    <meta property="twitter:title" content="業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば">
     <meta property="twitter:description" content="飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。">
     <meta property="twitter:image" content="{{asset('og-taberuba.jpg')}}">
 @endsection
