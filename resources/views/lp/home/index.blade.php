@@ -127,7 +127,7 @@
                         <div class="desc-content">
                             <h3 class="title-desc ff-base font-weight-bold desc-about">これまでの大手ポータルサイトにおいて悩みだった、、</h3>
                         </div>
-                        <div class="row justify-content-center py-32">
+                        <div class="row justify-content-center pt-32">
                             <div class="col-lg-7 col-12">
                                 <div class="row justify-content-center">
                                     <div class="col-auto flex-grow-1 text-left">
@@ -153,10 +153,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="desc-content">
+                        {{-- <div class="desc-content">
                             <h3 class="title-desc ff-base font-weight-bold desc-about fs-16-sp">内装会社「株式会社トラストワン」が運営する
                                 <br>「飲食店物件専門」の不動産ポータルサイト！</h3>
-                        </div>
+                        </div> --}}
                         {{-- <div class="row justify-content-center">
                             <div class="col-lg-7 col-12">
                                 <img class="w-100 pb-40 pt-32" src="{{asset('assets/img/macbook.png')}}" alt="内装会社「株式会社トラストワン」が運営する「飲食店物件専門」の不動産ポータルサイト！">
