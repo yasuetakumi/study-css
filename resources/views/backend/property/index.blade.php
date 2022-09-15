@@ -30,11 +30,11 @@
 
 @section('actions')
     <div class="d-flex align-items-center justify-content-end">
-        <form method="POST" action="#" enctype="multipart/form-data">
+        <form method="POST" action="{{route('admin.property.import')}}" enctype="multipart/form-data">
             @csrf
-            <a class="text-link fs-16 mr-2" target="_blank" download="" href="{{asset('csv/property_template.csv')}}">テンプレートファイルをダウンロード</a>
+            <a class="text-link fs-16 mr-2" target="_blank" download href="{{asset('csv/property_template.csv')}}">テンプレートファイルをダウンロード</a>
             <span class="btn btn-primary btn-file bg-white border cursor-pointer mr-1">
-                CSVファイルを選択 <input type="file">
+                CSVファイルを選択 <input type="file" name="file">
             </span>
             <button type="submit" class="btn btn-success">
                 保存
