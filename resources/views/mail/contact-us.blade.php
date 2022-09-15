@@ -1,6 +1,6 @@
 <div>
     <p>
-        {{$content['company_name']}} 様
+        {{$content['company_name']}} {{$content['contact_name']}} 様
     </p>
     <p>この度は「たべるば」よりお問い合わせをいただき、誠にありがとうございました。
         <br>
