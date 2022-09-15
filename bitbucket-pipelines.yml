@@ -17,7 +17,7 @@ pipelines:
           script:
             - apt-get update
             - apt-get -qq install git-ftp
-            - git ftp init --force --user $FTP_USERNAME_LIVE --passwd $FTP_PASSWORD_LIVE $FTP_HOST_PATH_LIVE -s deploy_demo_to_xserver
+            - git ftp catchup --force --user $FTP_USERNAME_LIVE --passwd $FTP_PASSWORD_LIVE $FTP_HOST_PATH_LIVE -s deploy_demo_to_xserver
 
     # release/test_deploy_init: #please create this branch first time before start test_deploy.
     #   - step:
