@@ -133,5 +133,7 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
     'lp_contact_admin' => env('LP_CONTACT_ADMIN', 'admin.test@gruneasia.info'),
+    'lp_contact_admin_cc' => env('LP_CONTACT_ADMIN_CC', "r-murakami@grune.co.jp,t-sullivan@grune.co.jp,k-age@grune.co.jp"),
+    'lp_contact_admin_bcc' => env('LP_CONTACT_ADMIN_BCC', "mail@gruneasia.info"),
 
 ];
