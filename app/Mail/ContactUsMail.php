@@ -31,7 +31,7 @@ class ContactUsMail extends Mailable
     public function build()
     {
         return $this->view($this->type == 'user' ? 'mail.contact-us' : 'mail.contact-us-admin')
-                ->from('no-reply@taberuba.com', 'たべるば')
+                ->from('no-reply@trust-one.net', 'たべるば')
                 ->subject($this->type == 'user' ? '【たべるば】お問い合わせを受け付けました。' : '【たべるば】webサイトからお問い合わせを受け付けました。');
 
     }
