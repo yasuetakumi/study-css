@@ -14,7 +14,7 @@
 @section('top_buttons')
     @if (!Auth::check())
         <div class="text-right">
-            <a id="favorite" type="button" style="color: red" @click="setLikeProperty">
+            <a id="favorite" type="button" style="color: red" @click="setLikeProperty(items.property_id)">
                 <i v-if="isLiked" class="fas fa-heart fa-2x"></i>
                 <i v-else class="far fa-heart fa-2x"></i>
             </a>
@@ -28,10 +28,10 @@
     @component('frontend._components.text_label', ['label' => __('label.prefecture'), 'value' => $item->prefecture_id ? $item->prefecture->display_name : ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.cities'), 'value' => $item->city_id ? $item->city->display_name : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.location'), 'value' => $item->location ?? '' ])@endcomponent
-    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area, true): ''])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.surface_area_tsubo'), 'value' => $item->surface_area ? toTsubo($item->surface_area, true, 2): ''])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.surface_area_meter'), 'value' => $item->surface_area ? $item->surface_area . '㎡' : '' ])@endcomponent
     {{-- @component('frontend._components.text_label', ['label' => __('label.rent_amount_man'), 'value' => $item->rent_amount ? number_format(toMan($item->rent_amount)) . '万円' : '' ])@endcomponent --}}
-    @component('frontend._components.text_label', ['label' => __('label.cost_of_rent'), 'value' => $item->rent_amount ? manPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
+    @component('frontend._components.text_label', ['label' => __('label.rent_cost_yen_per_tsubo'), 'value' => $item->rent_amount ? yenPerTsubo($item->rent_amount, $item->surface_area, true) : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.rent_amount'), 'value' => $item->rent_amount ? number_format($item->rent_amount) . '円' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_underground'), 'value' => $item->number_of_floors_under_ground ? '地下' . $item->number_of_floors_under_ground . '階' : '' ])@endcomponent
     @component('frontend._components.text_label', ['label' => __('label.number_of_floor_aboveground'), 'value' => $item->number_of_floors_above_ground ? '地上' . $item->number_of_floors_above_ground . '階' : '' ])@endcomponent
@@ -88,12 +88,14 @@
         <div class="card-header">
             <h5>{{$item->city->display_name}} で似た物件</h5>
         </div>
-        <div class="row py-2">
+        <div class="row py-2 px-2">
             <div class="col-12" v-if="property_related == null || property_related == ''">
                 <p class="text-center">似た物件は見つかりませんでした</p>
             </div>
-            <div v-else class="col-lg-4" v-for="pr in property_related">
-                <property-related-list :property="pr"></property-related-list>
+            <div v-else class="col-lg-4 d-flex align-items-stretch" v-for="pr in property_related">
+                <property-list :property="pr">
+                    <button-favorite :likes="items.like_property" :idproperty="pr.id" @click="setLikeProperty(pr.id)"></button-favorite>
+                </property-list>
             </div>
         </div>
     </div>
@@ -105,7 +107,8 @@
 @endpush
 
 @push('vue-scripts')
-@include('frontend._components.property_related_list')
+@include('frontend._components.property_list')
+@include('frontend._components.button_favorite')
 <script>
 
     // ----------------------------------------------------------------------
@@ -176,6 +179,7 @@
                     design_category_4: 4,
                     estimation_loading: true,
                     designNotFound: false,
+                    displayBtnShowMore: true,
                 },
                 // ----------------------------------------------------------
             };
@@ -222,7 +226,7 @@
             },
             isLiked: function () {
                 if(this.items.like_property && this.items.like_property.length > 0){
-                    let isPropertyLiked = this.items.like_property.find(x => {return x.id == this.items.property_id});
+                    let isPropertyLiked = this.items.like_property.includes(this.items.property_id);
                     if(isPropertyLiked){
                         return true;
                     } else {
@@ -275,6 +279,7 @@
             showDesignPlanByCategory: function(event) {
                 this.items.estimation_loading = true;
                 this.items.loading = true;
+                this.items.displayBtnShowMore = true;
                 let designCat = event.target.value;
                 this.items.selected_dc = event.target.value
                 this.items.list_design_style = null;
@@ -284,14 +289,31 @@
                 }, 2000);
                 this.items.loading = false;
             },
-            getDesignByCategory: function(designCat){
-                axios.get(root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id)
+            getDesignByCategory: function(designCat, loadAll = false){
+                const paginateAll = 1000;
+                let url = root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id;
+                if(loadAll){
+                    url = root_url + '/api/v1/design-styles/getDesignByCategoryFrontentProperty/' + designCat + '/' + this.items.property_id + '/' + paginateAll;
+                }
+                axios.get(url)
                 .then((result) => {
-                    this.items.list_design_style = result.data;
+                    this.items.list_design_style = result.data.data;
                     this.items.designNotFound = false;
                 }).catch((err) => {
                     this.items.designNotFound = true;
                 });
+            },
+
+            showMoreDesign: async function(){
+                this.items.displayBtnShowMore = false;
+                this.items.estimation_loading = true;
+                this.items.loading = true;
+                // this.items.list_design_style = null;
+                await this.getDesignByCategory(this.items.selected_dc, true);
+                await setTimeout(() => {
+                    this.estimationIndex();
+                }, 2000);
+                this.items.loading = false;
             },
 
             estimationIndex: function(){
@@ -332,19 +354,51 @@
                     });
             },
             getLikeProperty: function() {
-                let local = localStorage.getItem('favoritePropertyId');
-                this.items.like_property = JSON.parse(local);
+                this.updateLocalLikeProperty();
+                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                let filterId = [];
+                if(local.length > 0){
+                    for(let i= 0; i < local.length; i++){
+                        // console.log(id);
+                        filterId.push(local[i].id);
+                    }
+                    console.log(filterId);
+                    if(filterId.length > 0){
+                        this.items.like_property = filterId;
+                    } else {
+                        this.items.like_property = [];
+                    }
+
+                } else {
+                    this.items.like_property = [];
+                }
             },
-            setLikeProperty: function () {
+            updateLocalLikeProperty: function() {
+                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                if (local.length > 0) {
+                    // remove data if the date added is undefined
+                    const updateLocal = [];
+                    for (let i = 0; i < local.length; i++) {
+                        if (typeof local[i].date_added !== 'undefined') {
+                            updateLocal.push(local[i]);
+                        }
+                    }
+                    local = localStorage.getItem('favoritePropertyId');
+                    localStorage.setItem('favoritePropertyId', JSON.stringify(updateLocal));
+                }
+            },
+            setLikeProperty: function (id) {
                 //this.items.like_property.push(this.items.property_id)
+                console.log('id', id);
+                let propertyID = id;
                 var properties_like = [];
                 var filterArr = [];
                 let local = localStorage.getItem('favoritePropertyId');
                 properties_like = JSON.parse(local) || [];
-                filterArr = properties_like.filter(x => {return x.id == this.items.property_id});
+                filterArr = properties_like.filter(x => {return x.id == propertyID});
+
                 if(filterArr.length > 0){
-                    let index = properties_like.findIndex(object => {return object.id == this.items.property_id});
-                    // console.log("index", index);
+                    let index = properties_like.findIndex(object => {return object.id == propertyID});
                     properties_like.splice(index, 1);
                     localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
                     let msg = 'お気に入り物件から削除しました'; //remove like
@@ -354,7 +408,7 @@
                 } else {
                     const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
                     var objectFavorite = {
-                        'id': this.items.property_id,
+                        'id': propertyID,
                         'distance': null,
                         'date_added': dateTime
                     };

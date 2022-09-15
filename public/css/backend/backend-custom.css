@@ -147,6 +147,24 @@ body label:not(.form-check-label):not(.custom-file-label) {
 .error {
     color: red;
 }
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    cursor: inherit;
+    display: block;
+}
 
 /* Parsley */
 .parsley-errors-list {
@@ -234,3 +252,46 @@ div.wrapper .navbar-info {
     border-color: #dddddd;
     color: #444;
 } */
+.wrapper-float-btn{
+    position: fixed;
+    bottom: 64px;
+    right: 64px;
+    z-index: 999;
+}
+.float-btn{
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    border-radius: 50%;
+    font-size: 16px;
+    border: 0;
+}
+.float-btn:focus{
+    outline: none;
+}
+.text-link {
+    color: #17a2b8 !important;
+    text-decoration: underline !important;
+}
+.text-link:hover{
+    color: #17a2b8 !important;
+    text-decoration: none !important;
+}
+.fs-16{
+    font-size: 16px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.text-to-top{
+    color: #6cb2eb !important;
+    cursor: pointer;
+}
+.text-to-top:hover{
+    color: #6cb2eb !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}

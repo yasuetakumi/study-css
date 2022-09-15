@@ -24,8 +24,12 @@
                 data-parsley-errors-container = "#errorBlock-{{$name}}"
                 >
             </v-select>
-            <input id="input-{{$name}}" type="text" class="d-none" :value="{{$model}}" name="{{$name}}" {{ !empty($required) ? 'required' : '' }}>
             <div id="errorBlock-{{$name}}" class="errorBlock"></div>
+            <div class="position-relative mt-1">
+                <div class="bg-white position-absolute" style="top:0; bottom:0; right:0; left:0; z-index:99"></div>
+                <input id="input-{{$name}}" type="text" class="" :value="{{$model}}" name="{{$name}}" {{ !empty($required) && $required != 'false' ? 'required' : '' }} data-parsley-required-message="@lang('validation.required', ['attribute' => $label])" data-parsley-errors-container = "#errorBlock-{{$name}}" data-parsley-no-focus>
+            </div>
+
         </div>
     </div>
 </div>

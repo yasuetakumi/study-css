@@ -2,6 +2,7 @@
     @include('backend._components._input_header',['label'=>$label, 'required'=>$required])
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
         <input type="text"
+            data-parsley-required-message="@lang('validation.required', ['attribute' => $label])"
             placeholder="{{ isset($placeholder) ? $placeholder : '' }}"
             id="input-{{ $name }}" name="{{ $name }}"
             class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}

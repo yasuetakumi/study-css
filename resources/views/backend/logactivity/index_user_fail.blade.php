@@ -15,5 +15,13 @@
     <th data-col="id">ID</th>
     <th data-col="detail">@lang('label.detail')</th>
     <th data-col="ip">@lang('label.ip')</th>
-    <th data-col="access_time">@lang('label.access_time')</th>
+    <th class="no-sort" data-filter="false" data-col="access_time">@lang('label.access_time')</th>
 @endsection
+
+@push('css')
+    <style>
+        #datatable tbody tr > td:last-of-type {
+            text-align: left !important;
+        }
+    </style>
+@endpush

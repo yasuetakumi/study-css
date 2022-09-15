@@ -18,6 +18,7 @@ use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 use App\Models\PropertyPreference;
 use App\Models\TransferPriceOption;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
@@ -56,15 +57,16 @@ class PropertyController extends Controller {
         // Default value for search condition
         $searchCondition = [];
 
-        // If this function was called by clicking search button on C2 Page
-        // The search condition will contain at least created at, number of match property and url
-        if ($request->session()->has('searchCondition')) {
-            $searchCondition = session()->get('searchCondition');
-            // $data['searchCondition'] = $searchCondition;
-        } else {
-            // this search condition from C-Common6 or copy paste link on browser
-            $searchCondition = $this->compileFilter($request, true);
-        }
+        // // If this function was called by clicking search button on C2 Page
+        // // The search condition will contain at least created at, number of match property and url
+        // if ($request->session()->has('searchCondition')) {
+        //     $searchCondition = session()->get('searchCondition');
+        //     // $data['searchCondition'] = $searchCondition;
+        // } else {
+        //     // this search condition from C-Common6 or copy paste link on browser
+
+        // }
+        $searchCondition = $this->compileFilter($request, true);
         $data['searchCondition'] = $searchCondition;
         // dd($data);
 
@@ -109,9 +111,8 @@ class PropertyController extends Controller {
         $data['design_categories'] = collect($categories)->all();
         $data['contact_us_type'] = ContactUsType::select('id', 'label_jp')->orderBy('id')->get();
         $data['form_action_inquiry'] = route('enduser.inquiry.store');
-        $data['property_related'] = Property::with(['city', 'property_stations.station'])
+        $data['property_related'] = Property::with(['city', 'property_stations.station.station_line', 'cuisine'])
                 ->published()
-                ->select('id', 'location', 'city_id', 'surface_area', 'thumbnail_image_main')
                 ->where('city_id', $data['item']->city_id)
                 ->where('id', '!=', $data['item']->id)
                 ->orderByRaw('ABS(surface_area - '.$data['item']->surface_area.') ASC')
@@ -316,7 +317,7 @@ class PropertyController extends Controller {
         if(isset($filter['floor_under']) && !empty($filter['floor_under'])){
             $arrUnders = $filter['floor_under'];
             if(!is_array($filter['floor_under'])){
-                $arrUnders = explode(",", (int) $filter['floor_under']);
+                $arrUnders = explode(",", $filter['floor_under']);
             }
             $underGrounds = NumberOfFloorsUnderGround::whereIn('value', $arrUnders)->pluck('label_jp')->join(', ');
             $result['階数_地上'] = $underGrounds;
@@ -324,7 +325,7 @@ class PropertyController extends Controller {
         if(isset($filter['floor_above']) && !empty($filter['floor_above'])){
             $arrAboves = $filter['floor_above'];
             if(!is_array($filter['floor_above'])){
-                $arrAboves = explode(",", (int) $filter['floor_above']);
+                $arrAboves = explode(",", $filter['floor_above']);
             }
             $aboveGrounds = NumberOfFloorsAboveGround::whereIn('value', $arrAboves)->pluck('label_jp')->join(', ');
             $result['階数_地下'] = $aboveGrounds;
@@ -353,7 +354,7 @@ class PropertyController extends Controller {
         if(isset($filter['furnished']) && !empty($filter['furnished'])){
             $skeletonOrFurnished->push(Property::FURNISHED_JP_LABEL);
         }
-        if (count($skeletonOrFurnished)) {
+        if (count($skeletonOrFurnished) > 0) {
             $result['スケルトン物件_居抜き物件'] = $skeletonOrFurnished->join(', ');
         }
 
@@ -383,7 +384,7 @@ class PropertyController extends Controller {
         }
 
         // Created at
-        $result['created_at'] = Carbon::now()->format('Y/m/d h:i:s');
+        $result['created_at'] = Carbon::now()->format('Y/m/d H:i:s');
 
         // Get number of match property related to the filter
         $request->merge(['count' => true]);

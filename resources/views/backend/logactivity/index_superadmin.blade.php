@@ -18,5 +18,13 @@
     <th data-col="detail">@lang('label.detail')</th>
     <th data-col="ip">@lang('label.ip')</th>
     {{-- example custom filter --}}
-    <th data-col="formatted_access_time" data-name="formatted_access_time" data-datepicker="true">@lang('label.access_time')</th>
+    <th class="no-sort" data-filter="false" data-col="formatted_access_time" data-name="formatted_access_time" data-datepicker="true">@lang('label.access_time')</th>
 @endsection
+
+@push('css')
+    <style>
+        #datatable tbody tr > td:last-of-type {
+            text-align: left !important;
+        }
+    </style>
+@endpush

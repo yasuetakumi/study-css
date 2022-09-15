@@ -91,5 +91,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PointTypeSeeder::class);
         $this->call(CompanyPointSeeder::class);
 
+        $this->call(MemberSeeder::class);
+        $this->call(SocialAccountSeeder::class);
+
     }
 }

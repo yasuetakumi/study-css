@@ -140,7 +140,7 @@ class NewsController extends Controller
         ImageHelper::removeImage($delete->image);
         $delete->delete();
 
-        $this->saveLog('Delete News', 'Delete News, Title : ' . $delete->title . '', Auth::user()->id);
+        $this->saveLog('ニュースの削除', 'ニュースの削除、件名： ' . $delete->title . '', Auth::user()->id);
 
         return 1;
     }

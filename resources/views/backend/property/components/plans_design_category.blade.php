@@ -10,8 +10,10 @@
 
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
                 <div class="field-group clearfix">
-                    <div v-if="loadingData">
-                        Search Plans..
+                    <div v-if="items.loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
                     <div v-else>
                         <h4>居酒屋</h4>
@@ -30,6 +32,7 @@
                             <p>設定された坪数にマッチするプランが存在しません : @{{items.surface_area + '坪'}}</p>
                         </div>
                         <hr>
+
                         <h4>カフェ</h4>
                         <div class="mb-2" v-if="plans_design_category_2">
                             <div class="row" >

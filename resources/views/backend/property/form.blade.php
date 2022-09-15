@@ -26,6 +26,8 @@
     for($i = $year100ago; $i <= $year100later; $i++){
         $optionsYears[$i] = $i;
     }
+    $propertyIsPublish = \App\Models\PropertyPublicationStatus::ID_PUBLISHED;
+    $propertyIsLimited = \App\Models\PropertyPublicationStatus::ID_LIMITED_PUBLISHED;
 
 @endphp
 @extends('backend._base.content_form')
@@ -54,24 +56,25 @@
 @section('content')
     @component('backend._components.form_container', ["action" => $form_action, 'id' => 'property-form',  "page_type" => $page_type, "files" => true])
         {{-- publish button for admin --}}
-        @if($page_type == 'edit' && auth()->guard('web')->check())
-            @component('backend._components.input_button_anchor', [
-                'label' => isset($item) && $item->publication_status_id == 1 ? '保存して掲載する' : '保存して非掲載にする',
-                'value' => isset($item) && $item->publication_status_id == 1 ? '掲載にする' : '非掲載にする',
-                'required' => 0,
-                'route' => isset($item) ? route('admin.publication.status', $item->id) : null
-            ])@endcomponent
+        @if($page_type == 'edit')
+            @if($item->publication_status_id == $propertyIsPublish || $item->publication_status_id == $propertyIsLimited)
+                <div class="text-right">
+                    <a class="text-link fs-16" target="_blank" href="{{route('property.detail', $item->id)}}">@lang('label.see_property_detail')</a>
+                </div>
+            @endif
         @endif
+        @component('backend._components.input_radio', ['is_indexed_value' => true, 'options' => $publication_statuses, 'name' => 'publication_status_id', 'label' => __('label.publication_status'), 'value' => $item->publication_status_id ?? '', 'required' => false])
+        @endcomponent
 
         {{-- publish button for company user --}}
-        @if($page_type == 'edit' && auth()->guard('user')->check())
+        {{-- @if($page_type == 'edit' && auth()->guard('user')->check())
             @component('backend._components.input_button_anchor', [
                 'label' => isset($item) && $item->publication_status_id == 1 ? '保存して掲載する' : '保存して非掲載にする',
                 'value' => isset($item) && $item->publication_status_id == 1 ? '掲載にする' : '非掲載にする',
                 'required' => 0,
                 'route' => isset($item) ? route('company.publication.status', $item->id) : null
             ])@endcomponent
-        @endif
+        @endif --}}
 
         @component('backend._components.vue.form.vue-select', [
             'name'          => 'company_id',
@@ -101,7 +104,7 @@
             'url'               => route('select2.postcode'),
             'value'             => $item->postcode_id ?? ''])
         @endcomponent
-        @component('backend._components.input_select_ajax',[
+        {{-- @component('backend._components.input_select_ajax',[
             'name'              => 'prefecture_id',
             'options'           => [empty($item->prefecture->display_name) ? '' : $item->prefecture->display_name],
             'label'             => __('label.prefecture'),
@@ -116,12 +119,47 @@
             'required'          => 1,
             'url'               => route('select2.city'),
             'value'             => $item->city_id ?? ''])
-        @endcomponent
+        @endcomponent --}}
+        @component('backend._components.vue.form.vue-select', [
+            'name'          => 'prefecture_id',
+            'label'         => __('label.prefecture'),
+            'label_select'  => 'text',
+            'required'      => 'true',
+            'options'       => 'prefectures',
+            'model'         => 'items.prefecture_city_id',
+            'method'        => 'handleSelectPrefectureCity',
+            'disabled'      => 'false',
+        ])@endcomponent
+
+        @component('backend._components.vue.form.vue-select', [
+            'name'          => 'city_id',
+            'label'         => __('label.cities'),
+            'label_select'  => 'text',
+            'required'      => 'true',
+            'options'       => 'items.list_city',
+            'model'         => 'items.city_id',
+            'disabled'      => 'false',
+        ])@endcomponent
 
         @component('backend._components.input_text', ['name' => 'location', 'label' => __('label.location'), 'required' => 1, 'value' => $item->location ?? '', 'isReadOnly' => $disableForm ]) @endcomponent
-        @component('backend._components.input_number', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
+        @component('backend.property.components.station')@endcomponent
+        <div v-if="getSelectedStations.length > 0">
+            @component('backend._components.vue.form.vue-select', [
+                'name'          => 'nearest_station_id',
+                'label'         => __('label.nearest_station'),
+                'label_select'  => 'display_name',
+                'required'      => 'false',
+                'options'       => 'getSelectedStations',
+                'model'         => 'items.select_nearest_station',
+                'disabled'      => 'false',
+            ])@endcomponent
+        </div>
+        <div v-if="items.select_nearest_station">
+            @component('backend._components.input_select', ['name' => 'walking_distance_id', 'options' => $walking_distances, 'label' => __('label.walk_from_nearest_station'), 'required' => false, 'value' => $item->property_stations_closest->distance_from_station ?? '', 'isDisabled' => $disableForm]) @endcomponent
+        </div>
+        @component('backend._components.input_decimal', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area, false, 2), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
 
-        @component('backend._components.input_number', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toMan($item->rent_amount), 'isReadOnly' => $disableForm]) @endcomponent
+        @component('backend._components.input_decimal', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toMan($item->rent_amount, false, 2), 'isReadOnly' => $disableForm]) @endcomponent
 
         @component('backend._components.input_number', ['name' => 'number_of_floors_under_ground', 'label' => __('label.number_of_floor_underground'), 'required' => null, 'value' => $item->number_of_floors_under_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
         @component('backend._components.input_number', ['name' => 'number_of_floors_above_ground', 'label' => __('label.number_of_floor_aboveground'), 'required' => null, 'value' => $item->number_of_floors_above_ground ?? '', 'isReadOnly' => $disableForm]) @endcomponent
@@ -172,7 +210,11 @@
         @component('backend._components.input_image360', ['name' => 'image_360_4', 'label' => __('label.image_360') . ' 4', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_4 ?? '']) @endcomponent
         @component('backend._components.input_image360', ['name' => 'image_360_5', 'label' => __('label.image_360') . ' 5', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->image_360_5 ?? '']) @endcomponent
         {{-- input button --}}
-        @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
+        @if($page_type == 'create')
+            @component('backend._components.input_buttons', ['page_type' => $page_type])@endcomponent
+        @else
+            @component('backend._components.input_float_button', ['page_type' => $page_type])@endcomponent
+        @endif
     @endcomponent
 
 @endsection
@@ -208,6 +250,7 @@
                     companies_options: @json($companies_options),
                     property: @json($item),
                     property_related: @json($property_related),
+                    prefectures: @json($prefectures),
                 },
                 // ----------------------------------------------------------
             };
@@ -270,6 +313,18 @@
                     design_category_3: 3,
                     design_category_4: 4,
                     surface_area: null,
+
+                    //stations
+                    prefecture_id: null,
+                    station_line_id: null,
+                    list_station_lines: [],
+                    list_stations: [],
+                    selected_stations: [],
+                    select_nearest_station: null,
+
+                    prefecture_city_id: null,
+                    list_city: [],
+                    city_id: null,
                 },
                 // ----------------------------------------------------------
             };
@@ -293,7 +348,24 @@
                 this.items.company_id = item.user.company.id;
                 this.items.user_id = item.user_id;
                 this.items.property_id = item.id;
+                this.items.prefecture_city_id = item.prefecture_id;
+                this.items.city_id = item.city_id;
                 this.setVisitedProperty();
+
+                var property_stations = item.property_stations ?? [];
+                if(property_stations.length > 0 ){
+                    property_stations.forEach(function(item){
+                        this.items.selected_stations.push(item.station_id);
+                    }.bind(this));
+                    if(item.property_stations_closest != null){
+                        this.items.prefecture_id = item.property_stations_closest.station.prefecture_id;
+                        this.items.station_line_id = item.property_stations_closest.station.station_line.id;
+                        this.items.select_nearest_station = item.property_stations_closest.station.id;
+                        this.getStationByStationLine(this.items.prefecture_id, this.items.station_line_id);
+                        this.getStationLineByPrefecture(this.items.prefecture_id);
+                    }
+                }
+
             }
             if (@json($page_type) == 'create' && @json($companyUserId) != null) {
                 var id = @json($companyUserId);
@@ -303,10 +375,10 @@
             }
 
             this.handleSelectCompany();
+            this.handleSelectPrefectureCity();
             if(@json($page_type) != 'detail'){
                 this.changePlanBySurfaceArea();
             }
-
 
 
         },
@@ -324,6 +396,30 @@
         computed: {
             companies_options: function(){
                 return this.$store.state.preset.companies_options;
+            },
+            prefectures: function(){
+                return this.$store.state.preset.prefectures;
+            },
+            getSelectedStationLine: function(){
+                if(this.items.station_line_id != null){
+                    return this.items.list_station_lines.find(function(item){
+                        return item.id == this.items.station_line_id;
+                    }.bind(this));
+                } else {
+                    return nu;
+                }
+            },
+            getSelectedStations: function(){
+                if(this.items.selected_stations.length > 0){
+                    const selectedStation = this.items.selected_stations;
+                    // filter out the selected stations
+                    const stations = this.items.list_stations.filter(station => {
+                        return selectedStation.includes(station.id);
+                    });
+                    return stations;
+                } else {
+                    return [];
+                }
             },
             users_options: function(){
                 if(this.items.list_user != null){
@@ -420,7 +516,23 @@
         ## vue reactive data watch
         ## ------------------------------------------------------------------
         */
-        watch: {},
+        watch: {
+            // watch for changes in the prefecture_id
+            'items.prefecture_id': function(){
+                // this.items.station_line_id = null;
+                // this.items.list_station_lines = [];
+                // this.items.list_stations = [];
+                // this.items.selected_stations = [];
+                // console.log('prefecture_id changed');
+                // this.handleSelectPrefecture();
+            },
+            'items.station_line_id': function(){
+                // this.items.list_stations = [];
+                // this.items.selected_stations = [];
+                // console.log('station_line_id changed');
+                // this.handleSelectStationLine();
+            }
+        },
 
         /*
         ## ------------------------------------------------------------------
@@ -440,21 +552,25 @@
                 }, 400);
             },
 
-            changePlanBySurfaceArea: function(){
-                this.getPlanBySurfaceCategory(1);
-                this.getPlanBySurfaceCategory(2);
-                this.getPlanBySurfaceCategory(3);
-                this.getPlanBySurfaceCategory(4);
+            changePlanBySurfaceArea: async function(){
+                this.items.loading = true;
+
+                await this.getPlanBySurfaceCategory(1);
+                await this.getPlanBySurfaceCategory(2);
+                await this.getPlanBySurfaceCategory(3);
+                await this.getPlanBySurfaceCategory(4);
+                setTimeout(() => {
+                    this.items.loading = false;
+                }, 1000);
             },
             getPlanBySurfaceCategory: function (catId) {
                 let surface_area = document.querySelector("input[name=surface_area]").value;
                 this.items.surface_area = surface_area;
                 var isSurfaceEmpty = surface_area === '';
                 if(isSurfaceEmpty == false && catId != null){
-                    this.items.loading = true;
                     axios.get(root_url + '/api/v1/plans/getPlanBySurfaceAndCategory/' + surface_area + '/' + catId)
                     .then((result) => {
-                        console.log("RESULTTT", result.data.data);
+                        // console.log("RESULTTT", result.data.data);
                         this.items.message_plan_properties = '';
                         if(catId == this.items.design_category_1){
                             this.items.plans_design_category_1 = result.data.data;
@@ -519,7 +635,7 @@
                         }
                         // console.log("err");
                     });
-                    this.items.loading = false;
+                    // this.items.loading = false;
                 } else if (isSurfaceEmpty){
                     this.items.message_plan_properties = 'Please Input Surface Area Tsubo First';
                 }
@@ -610,6 +726,72 @@
                         });
                 }
             },
+            handleSelectPrefecture: function(){
+                this.items.station_line_id = null;
+                this.items.list_station_lines = [];
+                this.items.list_stations = [];
+                this.items.selected_stations = [];
+                this.items.select_nearest_station = null;
+                if(this.items.prefecture_id !== null){
+                    this.getStationLineByPrefecture(this.items.prefecture_id);
+                }
+            },
+            handleSelectPrefectureCity: function(){
+                this.getCityByPrefecture();
+            },
+            handleSelectStationLine: function(){
+                this.items.list_stations = [];
+                this.items.selected_stations = [];
+                this.items.select_nearest_station = null;
+                if(this.items.station_line_id !== null && this.items.prefecture_id !== null){
+                    // this.items.list_stations = [];
+                    // this.items.selected_stations = [];
+                    this.getStationByStationLine(this.items.prefecture_id, this.items.station_line_id);
+                }
+            },
+            getStationLineByPrefecture: function(prefectureId){
+                axios.get(root_url + '/api/v1/select2stationline/' + prefectureId)
+                        .then((result) => {
+                            this.items.list_station_lines = result.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+            },
+            getStationByStationLine: function(prefectureId, stationLineId){
+                axios.get(root_url + '/api/v1/station/getStationByStationLine/' + stationLineId + '/' + prefectureId)
+                    .then((result) => {
+                        this.items.list_stations = result.data;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+            },
+            getCityByPrefecture: function(){
+                if(this.items.prefecture_city_id == null){
+                    axios.get(root_url + '/api/v1/city/getCityByPrefectureSelect2')
+                    .then((result) => {
+                        this.items.list_city = result.data;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                } else {
+                    axios.get(root_url + '/api/v1/city/getCityByPrefectureSelect2/' + this.items.prefecture_city_id)
+                    .then((result) => {
+                        this.items.list_city = result.data;
+                        if(this.items.city_id != null){
+                            const filtered = this.items.list_city.filter(el => el.id == this.items.city_id);
+                            if(filtered.length == 0){
+                                this.items.city_id = null;
+                            }
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
+            },
+            clearAll: function(){
+                this.items.selected_stations = [];
+                this.items.select_nearest_station = null;
+            }
             // --------------------------------------------------------------
         }
     }

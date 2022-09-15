@@ -4,8 +4,9 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <p class="text-black mb-0">@{{cityName}}
+                        <p class="text-black mb-0" v-if="property.city_id != null">@{{cityName}}
                             (@{{stationName}}駅　徒歩@{{distanceMinutes}}) の貸店舗</p>
+                        <p class="text-black mb-0" v-else>-</p>
                     </div>
                     <i class="fas fa-chevron-right"></i>
                 </div>
@@ -27,10 +28,10 @@
                     <div class="col-7">
                         <dl>
                             <dt class="text-dark">@{{ closestStationDistance }} </dt>
-                            <dt class="text-info">賃料／坪単価 <span class="text-dark">@{{man}} / @{{manPerTsubo}}</span></dt>
+                            <dt class="text-info">賃料/坪単価 <span class="text-dark">@{{man}} / @{{yenPerTsubo}}</span></dt>
                             <dt class="text-info">面積 <span class="text-dark">@{{property.surface_area}}㎡ / @{{property.tsubo}}</span></dt>
                             <dt class="text-info">所在地 <span class="text-dark">@{{property.location}}</span></dt>
-                            <dt class="text-info">前業態／希望譲渡料 <span class="text-dark">@{{cuisineOrTransfer}}</span></dt>
+                            <dt class="text-info">前業態/希望譲渡料 <span class="text-dark">@{{cuisineOrTransfer}}</span></dt>
                         </dl>
                     </div>
                 </div>
@@ -123,14 +124,17 @@
                 if (labelCuisine == "" && (interiorPrice == 0 || interiorPrice == "")) {
                     return ""
                 } else {
-                    return labelCuisine + "／" + interiorPrice;
+                    return labelCuisine + "/" + interiorPrice;
                 }
             },
             closestStationDistance: function(){
                 return this.stationLineName + "　" + this.stationName + "　" + "徒歩" + this.distanceMinutes;
             },
             manPerTsubo: function(){
-                return this.property.man_per_tsubo + '円';
+                return this.property.man_per_tsubo + '万円';
+            },
+            yenPerTsubo: function(){
+                return this.property.yen_per_tsubo.toLocaleString() + '円';
             },
             man: function(){
                 return this.property.man;
@@ -151,7 +155,7 @@
             },
             convertToMan(value){
                 let man = 10000;
-                let result = (value/man).toFixed(2);
+                let result = value/man;
                 return result + '万円'
             }
         },

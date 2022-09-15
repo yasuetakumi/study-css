@@ -15,8 +15,6 @@
         {{-- filter form --}}
         @include('frontend.property.component.filter')
 
-        {{-- search history --}}
-        @include('frontend.property.component.search-history')
 
         {{-- visited property --}}
         @include('frontend.property.component.visited-property')
@@ -41,6 +39,11 @@
     {{-- Modal Station City --}}
     <station-city-modal v-if="items.prefectureSelected" :filters="items.filter" :prefecture="items.prefectureSelected"></station-city-modal>
 
+</div>
+<div class="text-center">
+    <a role="button" class="text-to-top fs-16" @click="scrollToTop">
+        ページトップへ↑
+    </a>
 </div>
 @endsection
 
@@ -664,6 +667,12 @@
             },
             handleOpenStationCity(id){
                 this.items.prefectureSelected = id;
+            },
+            scrollToTop: function(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             },
             // -----------------------------------------------------------------
         }

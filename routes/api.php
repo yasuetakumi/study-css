@@ -42,6 +42,7 @@ Route::prefix('v1')->group(function () {
     // City
     Route::get('select2city', 'API\ApiCityController@select2City')->name('select2.city');
     Route::get('/city/getCityByPrefecture/{prefecture_id}', 'API\ApiCityController@getCityByPrefecture')->name('api.city.by.prefecture');
+    Route::get('/city/getCityByPrefectureSelect2/{prefecture_id?}', 'API\ApiCityController@getCityByPrefectureSelect2')->name('select2.city.by.prefecture');
     // User Company
     Route::get('select2usercompany/{companyId?}', 'API\ApiUserCompanyController@select2UserCompany')->name('select2.usercompany');
     // Get Grand total Estimation
@@ -53,7 +54,7 @@ Route::prefix('v1')->group(function () {
     Route::post('property/getPropertiesCount', 'API\ApiPropertyController@getPropertyByFilter');
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'API\ApiDesignStyleController@getDesignByCategory');
-    Route::get('/design-styles/getDesignByCategoryFrontentProperty/{category_id}/{property_id}', 'API\ApiDesignStyleController@getDesignByCategoryFrontentProperty');
+    Route::get('/design-styles/getDesignByCategoryFrontentProperty/{category_id}/{property_id}/{paginate?}', 'API\ApiDesignStyleController@getDesignByCategoryFrontentProperty');
 
     //Plan
     Route::get('/plans/getPlansByCategory/{category_id}', 'API\ApiPlanController@getPlanByCategory');
@@ -64,6 +65,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/station/getStationByStationLine/{station_line}/{prefecture_id}', 'API\ApiStationController@getStationByStationLine');
     Route::get('/station/getStationByPrefecture/{prefecture_id}', 'API\ApiStationController@getStationByPrefecture')->name('api.station.by.prefecture');
     Route::get('/station/getStationLineByPrefecture/{prefecture_id}', 'API\ApiStationController@getStationLineByPrefecture')->name('api.station.line.by.prefecture');
+    Route::get('/select2stationline/{prefecture_id}', 'API\ApiStationController@select2StationLineByPrefecture')->name('select2.stationline');
+    // Route::get('/select2station/{station_line_id}', 'API\ApiStationController@select2StationByStationLine')->name('select2.station');
 
     //History
     Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');

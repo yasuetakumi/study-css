@@ -31,7 +31,7 @@ class Property extends Model
     const SKELETON_JP_LABEL = '居抜き物件';
 
     protected $appends = [
-        'tsubo', 'man', 'man_per_tsubo'
+        'tsubo', 'man', 'man_per_tsubo','yen_per_tsubo'
     ];
     protected $fillable = [
         'user_id',
@@ -139,6 +139,11 @@ class Property extends Model
         return $this->hasMany(PropertiesStations::class, 'property_id');
     }
 
+    public function property_stations_closest()
+    {
+        return $this->hasOne(PropertiesStations::class, 'property_id')->where('is_closest', 1)->orderBy('distance_from_station', 'asc');
+    }
+
     public function properties_property_preferences()
     {
         return $this->hasMany(PropertiesPropertyPreference::class, 'properties_id');
@@ -179,7 +184,7 @@ class Property extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED);
+        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED)->orWhere('publication_status_id', PropertyPublicationStatus::ID_LIMITED_PUBLISHED);
     }
 
     public function scopeRangeArea($query, $min, $max, $column){
@@ -220,7 +225,7 @@ class Property extends Model
     public function getManAttribute()
     {
         if($this->rent_amount != null){
-            $result = toMan($this->rent_amount);
+            $result = toMan($this->rent_amount, false, 2);
             return $result . '万円';
         } else {
             return 0;
@@ -231,6 +236,17 @@ class Property extends Model
     {
         if($this->rent_amount != null && $this->surface_area != null){
             $result = round(toMan($this->rent_amount) / toTsubo($this->surface_area));
+            return $result;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function getYenPerTsuboAttribute()
+    {
+        if($this->rent_amount != null && $this->surface_area != null){
+            $result = round($this->rent_amount / toTsubo($this->surface_area));
             return $result;
         } else {
             return 0;

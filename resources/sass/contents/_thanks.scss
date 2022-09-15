@@ -1,0 +1,42 @@
+.content-thanks{
+    position: relative;
+    padding: 10rem 0;
+    overflow-x: hidden;
+    text-align: center;
+    min-height: 48rem;
+    .title{
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.5;
+        color: #AACF52;
+        @include breakpoint-down(sm){
+            font-size: 1.5rem;
+        }
+    }
+    .subtitle{
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #333;
+        padding: 1.5rem 0;
+        line-height: 1.5;
+        @include breakpoint-down(sm){
+            text-align: left;
+        }
+    }
+    .text{
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.5;
+        font-weight: 400;
+        padding-bottom: 4rem;
+        @include breakpoint-down(sm){
+            text-align: left;
+        }
+    }
+    .btn-thanks{
+        padding: 1rem 1rem !important;
+        width: 350px !important;
+        height: auto !important;
+        box-shadow: 0px 3px 6px #00000029;
+    }
+}

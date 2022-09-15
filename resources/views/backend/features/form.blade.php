@@ -14,19 +14,19 @@
         @component('backend._components.input_text', ['name' => 'title', 'label' => __('label.title'), 'required' => 1, 'value' => $item->title]) @endcomponent
 
         {{-- select company --}}
-        <!-- @component('backend._components.input_select_ajax',[
+        @component('backend._components.input_select_ajax',[
             'name'              => 'company_id',
             'options'           => [empty($item->company->company_name) ? '' : $item->company->company_name],
             'label'             => __('label.company'),
-            'required'          => 0,
+            'required'          => 1,
             'url'               => route('admin.news.show', 'searchcompany'),
             'value'             => $item->company_id])
-        @endcomponent -->
+        @endcomponent
 
         @component('backend._components.vue.form.select2', [
             'name'          => 'company_id',
             'label'         => __('label.company'),
-            'required'      => 'false',
+            'required'      => 'true',
             'options'       => '$store.state.preset.company_options',
             'model'         => 'items.company_id',
         ])
@@ -180,7 +180,7 @@
                 // ----------------------------------------------------------
                 items: {
                     company_id: null,
-                },  
+                },
                 // ----------------------------------------------------------
             };
             // --------------------------------------------------------------

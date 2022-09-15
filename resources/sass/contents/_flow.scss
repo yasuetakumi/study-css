@@ -1,0 +1,308 @@
+// main: ../main.scss
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// Flow page
+// --------------------------------------------------------------------------
+.contract-benefit-content{
+    margin-top: 8rem;
+}
+
+.card-contract{
+    .card-header{
+        padding: 1.5rem;
+        height: 6.25rem;
+        border-radius: 0;
+        border: 2px solid #3098A8;
+        background-color: #3098A8;
+
+        .title{
+            color: #FFFFFF;
+            font-size: 1.25rem;
+            position: relative;
+            z-index: 2;
+            top: 1.5rem;
+            font-weight: bold;
+        }
+
+        .box-icon{
+            width: 8.125rem;
+            height: 8.125rem;
+            background-color: #3098A8;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -3.125rem;
+            margin: 0 auto;
+
+            .img-icon{
+                max-width: 100%;
+                height: auto;
+                margin: 2rem auto;
+            }
+        }
+    }
+
+    .card-body{
+        border-radius: 0;
+        border: 2px solid #3098A8;
+        background-color: #EFFEFF;
+        padding: 2rem 3rem;
+        @include breakpoint-down(sm){
+            padding: 1.5rem 1rem;
+        }
+
+        .body-desc{
+            .text-center{
+                @include breakpoint-down(sm){
+                    text-align: left!important;
+                }
+            }
+        }
+
+        .body-button{
+            margin-top: 2rem;
+
+            .btn-contract{
+                width: 13.125rem;
+                height: 3rem;
+                border-radius: 1.5rem;
+                color: #FFFFFF;
+                background-color: #3098A8;
+            }
+        }
+    }
+}
+
+.flow-developement-content{
+    ol.flow-list{
+        list-style-type: none;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+
+        li {
+            position: relative;
+            margin: 0;
+            padding-bottom: 4rem;
+            @include breakpoint-down(sm){
+                padding-bottom: 3rem;
+            }
+
+            .flow-number{
+                padding: .625rem 2.25rem;
+                position: relative;
+                z-index: 9;
+                @include breakpoint-down(md){
+                    text-align: center;
+                }
+
+                .label-number{
+                    color: #379BAB;
+                }
+
+                .text-lg{
+                    font-size: 2rem;
+                    line-height: 1;
+                }
+            }
+
+            .flow-desc{
+                @include breakpoint-down(md){
+                    margin-top: 1.5rem;
+                }
+                .sub-title{
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    margin-bottom: 1rem;
+                    @include breakpoint-down(sm){
+                        text-align: center;
+                    }
+                }
+            }
+
+            .transparent{
+                background: #FFFFFF!important;
+                border: 1px solid #707070;
+                box-shadow: none!important;
+                margin-top: 1.5rem!important;
+
+                .ec-title, .ec-desc{
+                    font-size: 1rem!important;
+                    color: #000000!important;
+                    margin: 0!important;
+                }
+
+                &::before{
+                    display: none;
+                }
+            }
+
+            .estimate-content, .transparent{
+                background-color: #379BAB;
+                height: 5.5625rem;
+                @include breakpoint-down(md){
+                    height: auto;
+                }
+                margin-top: .5rem;
+                padding: 1rem;
+                position: relative;
+                box-shadow: 0px .375rem .75rem #00000029;
+                -webkit-box-shadow: 0px .375rem .75rem #00000029;
+                -moz-box-shadow: 0px .375rem .75rem #00000029;
+                -mz-box-shadow: 0px .375rem .75rem #00000029;
+                -o-box-shadow: 0px .375rem .75rem #00000029;
+
+                .ec-title, .ec-desc{
+                    text-align: center;
+                    color: #FFFFFF;
+                }
+
+                .ec-title{
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    margin-bottom: .25rem;
+                    @include breakpoint-down(sm){
+                        margin-bottom: .5rem!important;
+                        font-size: 1.125rem;
+                    }
+                }
+
+                &::before{
+                    content: "";
+                    width: 0px;
+                    height: 0px;
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-bottom: 8px solid #379bab;
+                    position: absolute;
+                    top: -.5rem;
+                    left: 0;
+                    right: 0;
+                    margin: 0 auto;
+                }
+            }
+
+            .dev-phase-content{
+                margin: 1rem 0 0;
+                @include breakpoint-down(sm){
+                    margin: 1.5rem 0 0;
+                }
+
+                .section-blue, .section-white{
+                    background-color: #E2F2F3;
+                    padding: 1.5rem;
+                    @include breakpoint-down(sm){
+                        padding: 1.5rem 1rem;
+                    }
+                    margin-bottom: 2rem;
+                }
+
+                .section-white{
+                    background-color: #FFFFFF;
+                    margin-bottom: 1rem;
+                    padding: 1rem!important;
+                }
+
+                .phase-title, .phase-sub{
+                    margin-bottom: 1.5rem;
+
+                    .pt-title, .ps-sub-title{
+                        font-size: 1.125rem;
+                        font-weight: bold;
+                        @include breakpoint-down(sm){
+                            text-align: center;
+                        }
+                    }
+
+                    .ps-sub-title{
+                        font-size: 1rem;
+                    }
+                }
+
+                .phase-sub{
+                    margin-bottom: .5rem;
+                }
+
+                .justify-space-between{
+                    justify-content: space-between;
+
+                    .align-center{
+                        @include breakpoint-down(sm){
+                            text-align: center;
+                        }
+
+                        @include breakpoint-down(lg){
+                            margin-top: 1.5rem;
+                        }
+                    }
+                }
+
+                .btn-phase{
+                    width: 7rem;
+                    height: 2rem;
+                    border-radius: 1.5rem;
+                    font-size: .9375rem;
+                    color: #FFFFFF;
+                    background-color: #3098A8;
+                    padding: 3px 0;
+                    font-weight: normal;
+                    @include breakpoint-down(sm){
+                        width: 9.75rem;
+                    }
+                }
+            }
+
+            &::before {
+                content: '';
+                background-color: #379BAB;
+                position: absolute;
+                bottom: 0px;
+                top: 0px;
+                left: 3rem;
+                width: 2px;
+                @include breakpoint-down(md){
+                    display: none;
+                }
+            }
+
+            &::after {
+                content: '';
+                width: 5rem;
+                height: 5rem;
+                border-radius: 50%;
+                position: absolute;
+                left: .5rem;
+                top: 0;
+                border: 2px solid #379BAB;
+                background-color: #FFFFFF;
+                @include breakpoint-down(md){
+                    left: 0;
+                    right: 0;
+                    margin: 0 auto;
+                }
+            }
+
+            &:last-child{
+                padding-bottom: 0;
+            }
+        }
+    }
+}
+
+.list-feature{
+    margin-bottom: 4rem;
+    text-align: left;
+    background-color: #FFFFFF;
+    padding: 1rem;
+    border: 1px solid #000000;
+    @include breakpoint-down(md){
+        margin-bottom: 2rem;
+    }
+
+    ul{
+        list-style: disc;
+        padding-left: 1.5rem;
+    }
+}

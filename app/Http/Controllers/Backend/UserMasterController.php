@@ -71,7 +71,7 @@ class UserMasterController extends Controller
         $data['page_title'] = __('label.add') . __('label.user');
         $data['form_action']= route('admin.user.store');
 
-        $data['user_roles'] = UserRole::pluck('label', 'id')->all();
+        $data['user_roles'] = UserRole::USER_ROLES;
         $data['companies']  = Company::pluck('company_name', 'id')->all();
 
         $data['page_type']  = 'create';
@@ -94,7 +94,7 @@ class UserMasterController extends Controller
         $data['page_title']     = __('label.edit') . __('label.user');
         $data['form_action']    = route('admin.user.update', $id);
 
-        $data['user_roles'] = UserRole::pluck('label', 'id')->all();
+        $data['user_roles'] = UserRole::USER_ROLES;
         $data['companies']  = Company::pluck('company_name', 'id')->all();
 
         $data['page_type']      = 'edit';
@@ -122,7 +122,7 @@ class UserMasterController extends Controller
         $item = User::findOrFail($id);
         $item->delete();
 
-        $this->saveLog('Delete User', 'Delete User, Email : ' . $item->email . '', Auth::user()->id);
+        $this->saveLog('不動産社員の削除', '不動産社員の削除、メールアドレス：' . $item->email . '', Auth::user()->id);
 
         return 1;
     }

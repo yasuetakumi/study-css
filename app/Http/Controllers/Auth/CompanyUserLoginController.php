@@ -70,7 +70,7 @@ class CompanyUserLoginController extends Controller
         if (auth()->guard('user')->attempt(['email' => $request->email, 'password' => $request->password ])) {
             //check if company user status is active
             if(auth()->guard('user')->user()->company->status == 'active'){
-                $this->saveLog('User login succeed', 'Email = ' . $request->email . ', User Name = ' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
+                $this->saveLog('ログイン', 'メールアドレス：' . $request->email . '、ユーザ名：' . auth()->guard('user')->user()->display_name, auth()->guard('user')->user()->id);
 
                 // Logging gout admin user, now user will be login as company user
                 Auth::guard('web')->logout();
@@ -78,11 +78,11 @@ class CompanyUserLoginController extends Controller
                 return redirect()->route('company.property.index');
             } else {
                 Auth::guard('user')->logout();
-                $this->saveLog('User login fail', 'Email = ' . $request->email . ', Password = ' . $request->password);
+                $this->saveLog('ログインの失敗', 'メールアドレス： ' . $request->email . '、パスワード：' . $request->password);
                 return back()->withErrors(['status' => 'Your belong company is not active yet']);
             }
         }
-        $this->saveLog('User login fail', 'Email = ' . $request->email . ', Password = ' . $request->password);
+        $this->saveLog('ログインの失敗', 'メールアドレス： ' . $request->email . '、パスワード：' . $request->password);
         return back()->withErrors(['email' => 'Email or password are wrong.']);
     }
 }

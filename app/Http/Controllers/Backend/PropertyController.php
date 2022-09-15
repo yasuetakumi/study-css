@@ -30,11 +30,15 @@ use App\Helpers\DatatablesHelper;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Helpers\Select2AjaxHelper;
+use App\Models\PropertiesStations;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\PropertyPublicationStatus;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PropertyPublicationStatus;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PropertyPublicationStatusPeriod;
+use App\Models\WalkingDistanceFromStationOption;
 
 class PropertyController extends Controller
 {
@@ -71,7 +75,7 @@ class PropertyController extends Controller
 
         if( $param == 'json' ){
 
-            $model = Property::with(['user', 'postcode']);
+            $model = Property::with(['user.company', 'postcode']);
             if(Auth::guard('user')->check()){
                 $model = Property::with(['user', 'postcode']);
                 $model->whereHas('user', function($q){
@@ -87,6 +91,20 @@ class PropertyController extends Controller
                                             ->filterColumn('postcode.postcode', function($query, $keyword){
                                                 $query->whereHas('postcode', function($q) use ($keyword){
                                                     $q->where('postcode', 'like', '%'.$keyword.'%');
+                                                });
+                                            })
+                                            ->filterColumn('user.company.id', function($query, $keyword){
+                                                $query->whereHas('user', function($q) use ($keyword){
+                                                    $q->whereHas('company', function($q) use ($keyword){
+                                                        $q->where('id', 'like', '%'.$keyword.'%');
+                                                    });
+                                                });
+                                            })
+                                            ->filterColumn('user.company.company_name', function($query, $keyword){
+                                                $query->whereHas('user', function($q) use ($keyword){
+                                                    $q->whereHas('company', function($q) use ($keyword){
+                                                        $q->where('company_name', 'like', '%'.$keyword.'%');
+                                                    });
                                                 });
                                             })
                                             ->addColumn('prefecture_city_location', function(Property $property){
@@ -157,7 +175,12 @@ class PropertyController extends Controller
             ],
 
         ];
+        $prefectures = collect(Prefecture::pluck('display_name', 'id')->all());
+        $data['prefectures'] = $this->initSelect2Options($prefectures);
+        $data['walking_distances'] = WalkingDistanceFromStationOption::pluck('label_jp', 'id')->all();
+
         $data['design_categories'] = collect($categories)->all();
+        $data['publication_statuses'] = PropertyPublicationStatus::pluck('label_jp', 'id')->all();
 
         return view('backend.property.form', $data);
     }
@@ -166,7 +189,6 @@ class PropertyController extends Controller
     {
         $data = $request->all();
         $this->validator($data, 'create')->validate();
-        // dd($data);
 
         $properties_plans = array();
         if(isset($data['plan_id_dc_1'])){
@@ -186,6 +208,12 @@ class PropertyController extends Controller
         if(Auth::guard('user')->check()){
             $data['user_id'] = Auth::id();
         }
+
+        // handle properties stations
+        $properties_stations = $data['select_stations'] ?? [];
+        $closest_station_id = $data['nearest_station_id'] ?? null;
+        $distance_closest_station = $data['walking_distance_id'] ?? null;
+
 
         //return $data;
         $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
@@ -225,27 +253,49 @@ class PropertyController extends Controller
         $data['interior_transfer_price'] = fromMan($data['interior_transfer_price']);
         $data['monthly_maintainance_fee'] = fromMan($data['monthly_maintainance_fee']);
 
+        DB::beginTransaction();
+        try {
+            $feature = new Property();
+            $feature->fill($data)->save();
 
-        $feature = new Property();
-        $feature->fill($data)->save();
+            foreach($properties_plans as $pp){
+                PropertyPlan::create([
+                    'plan_id' => $pp,
+                    'property_id' => $feature->id,
+                ]);
+            }
 
-        foreach($properties_plans as $pp){
-            PropertyPlan::create([
-                'plan_id' => $pp,
-                'property_id' => $feature->id,
-            ]);
+            // handle properties stations
+            foreach($properties_stations as $ps){
+                PropertiesStations::create([
+                    'station_id' => $ps,
+                    'property_id' => $feature->id,
+                    'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
+                    'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
+                ]);
+            }
+
+            DB::commit();
+            if(Auth::guard('user')->check()){
+                return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            } else {
+                return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            if(Auth::guard('user')->check()){
+                return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+            }
+            return redirect()->route('admin.property.create')->with('error', 'Property created unsuccessfully');
         }
 
-        if(Auth::guard('user')->check()){
-            return redirect()->route('company.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
-        } else {
-            return redirect()->route('admin.property.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
-        }
+
+
     }
 
     public function edit($id)
     {
-        $data['item'] = Property::with(['property_plans.plan', 'postcode', 'prefecture', 'city', 'user.company'])->find($id);
+        $data['item'] = Property::with(['property_plans.plan', 'postcode', 'prefecture', 'city', 'user.company', 'property_stations', 'property_stations_closest.station.station_line'])->find($id);
         // return $data;
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
@@ -267,6 +317,7 @@ class PropertyController extends Controller
         $data['page_title'] = __('label.property_editing');
         $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
+        $data['publication_statuses'] = PropertyPublicationStatus::pluck('label_jp', 'id')->all();
 
         // options for vue select 2 options
         $companies                     = collect(Company::pluck('company_name', 'id')->all());
@@ -297,6 +348,9 @@ class PropertyController extends Controller
         ];
         $data['design_categories'] = collect($categories)->all();
         $data['dc_id'] = Plan::select('design_category_id')->find($data['item']->plan_id);
+        $prefectures = collect(Prefecture::pluck('display_name', 'id')->all());
+        $data['prefectures'] = $this->initSelect2Options($prefectures);
+        $data['walking_distances'] = WalkingDistanceFromStationOption::pluck('label_jp', 'id')->all();
         return view('backend.property.form', $data);
     }
 
@@ -323,7 +377,14 @@ class PropertyController extends Controller
             $data['user_id'] = Auth::id();
         }
 
+        // handle properties stations
+        $properties_stations = $data['select_stations'] ?? [];
+        $closest_station_id = $data['nearest_station_id'] ?? null;
+        $distance_closest_station = $data['walking_distance_id'] ?? null;
+
         $edit = Property::find($id);
+        $publicationStatusBeforeUpdate = $edit->publication_status_id;
+
         $data['date_built'] = $request->date_built ? $request->date_built . '-01-01' : null; // save as first day of the year
         $data['thumbnail_image_main']   = ImageHelper::update( $request->file('thumbnail_image_main'), $edit->thumbnail_image_main);
 
@@ -360,7 +421,20 @@ class PropertyController extends Controller
         $data['interior_transfer_price'] = fromMan($data['interior_transfer_price']);
         $data['monthly_maintainance_fee'] = fromMan($data['monthly_maintainance_fee']);
 
+        // check publication status id need update
+        $publicationId = (int) $data['publication_status_id'];
+        if(($publicationId == PropertyPublicationStatus::ID_PUBLISHED ||
+            $publicationId == PropertyPublicationStatus::ID_LIMITED_PUBLISHED)
+            && $publicationStatusBeforeUpdate != $publicationId){
+            $data['publication_date'] = Carbon::now();
+        }
+
         $edit->update($data);
+
+        // update publication status period if it is changed
+        if($data['publication_status_id'] != $publicationStatusBeforeUpdate){
+            $this->updatePublicationStatus($edit->id);
+        }
 
         $property_plans_old = array();
         foreach($edit->plans as $plan){
@@ -373,6 +447,24 @@ class PropertyController extends Controller
             $edit->plans()->attach($properties_plans);
         }
 
+        $property_stations_old = array();
+        foreach($edit->property_stations as $ps){
+            array_push($property_stations_old, $ps->station_id);
+        }
+        $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
+        if($shouldUpdatePropertyStations){
+            Log::info("message: should update property stations");
+            $edit->property_stations()->delete();
+            // handle properties stations
+            foreach($properties_stations as $ps){
+                PropertiesStations::create([
+                    'station_id' => $ps,
+                    'property_id' => $edit->id,
+                    'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
+                    'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
+                ]);
+            }
+        }
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {
@@ -396,6 +488,7 @@ class PropertyController extends Controller
 
     public function updatePublicationStatus($propertyId)
     {
+        Log::info("message: propertyId");
         $property = Property::find($propertyId);
 
         $previous_period = PropertyPublicationStatusPeriod::where('property_id', $propertyId)->where('is_current_status', 1)->latest();
@@ -435,16 +528,16 @@ class PropertyController extends Controller
         }
 
         // finally update property publication_status_id
-        if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
-            $property->update([
-                'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
-                'publication_date' => Carbon::now(),
-            ]);
-        } else {
-            $property->update([
-                'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
-            ]);
-        }
+        // if($property->publication_status_id == PropertyPublicationStatus::ID_NOT_PUBLISHED){
+        //     $property->update([
+        //         'publication_status_id' => PropertyPublicationStatus::ID_PUBLISHED,
+        //         'publication_date' => Carbon::now(),
+        //     ]);
+        // } else {
+        //     $property->update([
+        //         'publication_status_id' => PropertyPublicationStatus::ID_NOT_PUBLISHED,
+        //     ]);
+        // }
 
         return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }

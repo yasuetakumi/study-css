@@ -37,6 +37,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
+                                    <div class="text-left">
+                                        @yield('actions')
+                                    </div>
                                     <table id="datatable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info" style="width:100%">
                                         <thead>
                                             <tr>
@@ -108,6 +111,8 @@
             @endif
 
             $("[data-col=action]").attr("rowspan", 2).addClass("text-center align-middle actionDatatables");
+            // disable filter on data-filter=false column
+            $("[data-filter=false]").attr("rowspan", 2).addClass("text-center align-middle actionDatatables");
             var column = [];
             // COLUMN SEARCH
             $('#datatable thead tr').clone(true).appendTo('#datatable thead');
@@ -127,6 +132,8 @@
                 var attr = $(this).attr('rowspan');
                 var select = $(this).data('select');
                 var datePicker = $(this).data('datepicker');
+                var filter = $(this).data('filter');
+
                 if (typeof attr !== typeof undefined && attr !== false) {
                     $(this).remove();
                 }
@@ -203,15 +210,25 @@
             if( $("[data-col=action]").length ){
                 column.push({data: 'action', name: 'action', orderable: false, searchable: false});
             }
-
+            @if (Route::is('admin.property.index'))
+                //  initial order property id (column index 2) for property list
+                var initialOrder = [
+                    [2, 'desc']
+                ];
+            @else
+                var initialOrder = [
+                    [0, 'desc']
+                ];
+            @endif
+            console.log(initialOrder);
             // DATATABLE SETUP
             let table = $('#datatable').DataTable({
-                "order": [[0, "desc"]],
+                "order": initialOrder,
                 "orderCellsTop": true,
                 "fixedHeader": true,
                 "paging": true,
                 "lengthChange": true,
-                "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "@lang('label.all')"]],
+                "lengthMenu": [[100, 300, 500, -1], [100, 300, 500, "@lang('label.all')"]],
                 "searching": true,
                 "ordering": true,
                 "info": true,
@@ -225,6 +242,7 @@
                 "ajax": "{{ url()->current() . "/json" }}",
                 "columnDefs": [
                     {"width": "60px", "targets": 0},
+                    {"orderable": false, "targets": 'no-sort'},
                 ],
                 "columns": column,
                 @if(App::isLocale('ja'))

@@ -28,190 +28,210 @@ You can registered routing by this command.
 
 
 */
+// check if is production
+if (Config::get('app.env') === 'production') {
+    Route::get('/partner','LpController@index')->name('lp.index');
+    Route::post('/partner', 'LpController@contact')->name('lp.contact');
+    Route::get('/partner/thanks', function(){
+        return view('lp.home.thanks');
+    })->name('lp.thanks');
+    // catch all route except /thanks and /lp01
+    Route::get('/{any}',function(){
+        return redirect()->route('lp.index');
+    })->where('any', '^(?!partner|partner/thanks).*$');
+} else {
+    Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { // start basic auth protection
 
-Route::group(['middleware' => ['multi_lang','auth.very_basic']], function() { // start basic auth protection
+        // Route::get('/', function(){
+        //     return view('welcome');
+        // })->middleware('guest');
 
-    // Route::get('/', function(){
-    //     return view('welcome');
-    // })->middleware('guest');
+        Route::get('/auth-check', function(){
+            dd(Auth::guard("user")->check());
+            //dd(Auth::guard("user")->user()->toArray());
+        });
 
-    Route::get('/auth-check', function(){
-        dd(Auth::guard("user")->check());
-        //dd(Auth::guard("user")->user()->toArray());
-    });
+        // Authentication Routes...
+        Route::get('/admin', function() { return redirect()->route('login'); });
+        Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
+        Route::post('/admin/login', 'Auth\LoginController@login');
 
-    // Authentication Routes...
-    Route::get('/admin', function() { return redirect()->route('login'); });
-    Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
-    Route::post('/admin/login', 'Auth\LoginController@login');
+        Route::get('/company', function() { return redirect()->route('company-user-login'); });
+        Route::get('/company/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
+        Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
 
-    Route::get('/company', function() { return redirect()->route('company-user-login'); });
-    Route::get('/company/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
-    Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
+        // Password Reset Routes...
+        Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+        Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+        Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+        Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-    // Password Reset Routes...
-    Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-    Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+        // Email Verification Routes...
+        Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+        Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+        Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
-    // Email Verification Routes...
-    Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-    Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-    Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+        /*
+        |------------------------------------------------------------------
+        | Route groups backend
+        |------------------------------------------------------------------
+        */
 
-    /*
-    |------------------------------------------------------------------
-    | Route groups backend
-    |------------------------------------------------------------------
-    */
+        /**
+         * Administrator login.
+         */
+        Route::get('setlanguage/{language}', 'Backend\LanguageController@SetLanguage')->name('setlanguage');
+        Route::group(['middleware' => 'auth:web'], function(){
+            // Route::get('dashboard', function(){ return "@TODO: Create simple dashboard contained count and simple chart"; })->name('dashboard');
+            Route::get('dashboard', 'Backend\DashboardController@index')->name('dashboard');
 
-    /**
-     * Administrator login.
-     */
-    Route::get('setlanguage/{language}', 'Backend\LanguageController@SetLanguage')->name('setlanguage');
-    Route::group(['middleware' => 'auth:web'], function(){
-        // Route::get('dashboard', function(){ return "@TODO: Create simple dashboard contained count and simple chart"; })->name('dashboard');
-        Route::get('dashboard', 'Backend\DashboardController@index')->name('dashboard');
+            Route::get('admin/logout', 'Auth\LoginController@logout')->name('admin.logout');
+            Route::namespace('Backend')->prefix('admin')->name('admin.')->group(function(){
+                //------------------------------------------------------------------
+                // Only super admin group
+                //------------------------------------------------------------------
+                Route::group(['middleware' => ['role:super_admin']], function(){
+                    Route::resource('superadmin', 'SuperAdminController');
 
-        Route::get('admin/logout', 'Auth\LoginController@logout')->name('admin.logout');
-        Route::namespace('Backend')->prefix('admin')->name('admin.')->group(function(){
-            //------------------------------------------------------------------
-            // Only super admin group
-            //------------------------------------------------------------------
-            Route::group(['middleware' => ['role:super_admin']], function(){
-                Route::resource('superadmin', 'SuperAdminController');
+                    Route::resource('log-superadmin-activities', 'LogSuperAdminActivityController')->only(['index', 'show']);
 
-                Route::resource('log-superadmin-activities', 'LogSuperAdminActivityController')->only(['index', 'show']);
+                    Route::resource('log-admin-activities', 'LogAdminActivityController')->only(['index', 'show']);
 
-                Route::resource('log-admin-activities', 'LogAdminActivityController')->only(['index', 'show']);
+                    Route::resource('log-user-activities', 'LogUserActivityController')->only(['index', 'show']);
 
-                Route::resource('log-user-activities', 'LogUserActivityController')->only(['index', 'show']);
+                    Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
 
-                Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
+                    Route::resource('property', 'PropertyController')->except('detail');
 
-                Route::resource('property', 'PropertyController')->except('detail');
+                    Route::prefix('company')->group(function(){
+                        //manual name route to fix issue route name auto generate with double dots, ex: admin.company..create
+                        Route::resource('', 'CompanyController', ['names' => [
+                            'store' => 'company.store',
+                            'create' => 'company.create',
+                            'destroy' => 'company.destroy',
+                        ]]);
+                        Route::resource('approval', 'CompanyApprovalController');
+                        Route::get('update-status/{propertyId}', 'PropertyController@updatePublicationStatus')->name('publication.status');
+                    });
+                    Route::resource('member', 'MemberController')->except('detail');
 
-                Route::prefix('company')->group(function(){
-                    //manual name route to fix issue route name auto generate with double dots, ex: admin.company..create
-                    Route::resource('', 'CompanyController', ['names' => [
-                        'store' => 'company.store',
-                        'create' => 'company.create',
-                        'destroy' => 'company.destroy',
-                    ]]);
-                    Route::resource('approval', 'CompanyApprovalController');
-                    Route::get('update-status/{propertyId}', 'PropertyController@updatePublicationStatus')->name('publication.status');
+                    // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
+                });
+                //------------------------------------------------------------------
+                // Sharing for super admin and company admin
+                //------------------------------------------------------------------
+                Route::group(['middleware' => ['role:super_admin,company_admin']], function(){
+                    Route::resource('company', 'CompanyController')->only(['index', 'update', 'show', 'edit']);
+
+                    // Laravel handle as nested resource if separated "." (dot)
+                    // Ex: company/{parent_id}/user/{child_id}/
+                    //     -> first arg: {parent_id} , second arg: {child_id} on Controller.
+                    Route::resource('company.user', 'UserController');
+
+                    Route::resource('user', 'UserMasterController');
                 });
 
-                // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
-            });
-            //------------------------------------------------------------------
-            // Sharing for super admin and company admin
-            //------------------------------------------------------------------
-            Route::group(['middleware' => ['role:super_admin,company_admin']], function(){
-                Route::resource('company', 'CompanyController')->only(['index', 'update', 'show', 'edit']);
+                //------------------------------------------------------------------
+                // Sharing for super admin and admin
+                //------------------------------------------------------------------
+                Route::group(['middleware' => ['role:super_admin,admin']], function(){
+                    Route::resource('admins', 'AdminController');
+                    Route::resource('news', 'NewsController');
+                    Route::resource('features', 'FeaturesController');
 
-                // Laravel handle as nested resource if separated "." (dot)
-                // Ex: company/{parent_id}/user/{child_id}/
-                //     -> first arg: {parent_id} , second arg: {child_id} on Controller.
-                Route::resource('company.user', 'UserController');
-
-                Route::resource('user', 'UserMasterController');
-            });
-
-            //------------------------------------------------------------------
-            // Sharing for super admin and admin
-            //------------------------------------------------------------------
-            Route::group(['middleware' => ['role:super_admin,admin']], function(){
-                Route::resource('admins', 'AdminController');
-                Route::resource('news', 'NewsController');
-                Route::resource('features', 'FeaturesController');
+                });
 
             });
-
         });
-    });
 
-    /**
-     * Company User (B Module)
-     */
-    Route::group(['middleware' => 'auth:user'], function() {
+        /**
+         * Company User (B Module)
+         */
+        Route::group(['middleware' => 'auth:user'], function() {
 
-        Route::get('company/logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
-        Route::group(['middleware' => ['user_role:supervisor,operator'], 'prefix' => 'company'], function () {
-            // B2
-            Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
-            Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
-            // B3 - B5
-            Route::name('company.')->group(function() {
-                Route::get('property/add', 'Backend\PropertyController@create')->name('property.create');
-                Route::get('property/edit/{id}', 'Backend\PropertyController@edit')->name('property.edit');
-                Route::resource('property', 'Backend\PropertyController')->except(['create', 'edit']);
+            Route::get('company/logout', 'Auth\CompanyUserLoginController@logout')->name('logout');
+            Route::group(['middleware' => ['user_role:supervisor,operator'], 'prefix' => 'company'], function () {
+                // B2
+                Route::get('account', 'Backend\UserController@editAsUserOwner')->name('userowner-edit');
+                Route::post('account', 'Backend\UserController@updateAsUserOwner')->name('userowner-update');
+                // B3 - B5
+                Route::name('company.')->group(function() {
+                    Route::get('property/add', 'Backend\PropertyController@create')->name('property.create');
+                    Route::get('property/edit/{id}', 'Backend\PropertyController@edit')->name('property.edit');
+                    Route::resource('property', 'Backend\PropertyController')->except(['create', 'edit']);
+                });
+                // B6
+                Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
+                Route::put('company-information', 'Backend\CompanyController@updateAsCompanyOwner')->name('companyowner-update');
+                // B7
+                Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
+                // B8
+                Route::get('payment', 'Backend\CompanyPaymentController@edit')->name('company.payment.edit');
+                Route::put('payment', 'Backend\CompanyPaymentController@update')->name('company.payment.update');
+                Route::post('payment', 'Backend\CompanyPaymentController@store')->name('company.payment.store');
+                Route::get('update-status/{propertyId}', 'Backend\PropertyController@updatePublicationStatus')->name('company.publication.status');
             });
-            // B6
-            Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
-            Route::put('company-information', 'Backend\CompanyController@updateAsCompanyOwner')->name('companyowner-update');
-            // B7
-            Route::resource('inquiry', 'Backend\CustomerInquiryController')->except('detail');
-            // B8
-            Route::get('payment', 'Backend\CompanyPaymentController@edit')->name('company.payment.edit');
-            Route::put('payment', 'Backend\CompanyPaymentController@update')->name('company.payment.update');
-            Route::post('payment', 'Backend\CompanyPaymentController@store')->name('company.payment.store');
-            Route::get('update-status/{propertyId}', 'Backend\PropertyController@updatePublicationStatus')->name('company.publication.status');
         });
-    });
 
-    // End User (C Module)
-    // C4
-    Route::get('properties/{id}', 'Frontend\PropertyController@show')->name('property.detail');
-    // C4
-    Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
-    // C1
-    Route::get('/', 'Frontend\HomeController@index')->name('home');
-    // C2
-    Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
-    Route::post('result', 'Frontend\PropertyController@filter')->name('property.filter');
-    Route::post('compile-filter', 'Frontend\PropertyController@compileFilter');
-    Route::post('search-preference', 'Frontend\CustomerSearchPreferenceController@store');
-    // C3
-    Route::get('map', function () {
-        return 'map';
-    });
-    // C5
-    Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
-    // C6
-    Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
-    // C7
-    Route::get('faqs', function() {
-        return 'Pending design of static page';
-    });
-    // C8
-    Route::get('contact', function() {
-        return 'Pending design of static page';
-    })->name('contact');
-    // C9
-    Route::get('sitemap', function() {
-        return 'Pending design of static page';
-    });
-    // C10
-    Route::get('privacy-policy', function() {
-        return 'Pending design of static page';
-    });
-    // C12
-    Route::get('terms-of-service', function() {
-        return 'Pending design of static page';
-    });
-    // C13
-    Route::get('overview', function() {
-        return 'pending design of static page';
-    });
-    // C15 registration of new real estate agency
-    Route::get('estate/register', 'Frontend\EstateController@create')->name('company.register');
-    Route::post('estate/confirm', 'Frontend\EstateController@confirm')->name('company.confirm');
-    Route::post('estate/store', 'Frontend\EstateController@store')->name('company.store');
-    Route::get('estate/check_email', 'Frontend\EstateController@check_email')->name('company.check_email');
+        // End User (C Module)
+        // C4
+        Route::get('properties/{id}', 'Frontend\PropertyController@show')->name('property.detail');
+        // C4
+        Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
+        // C1
+        Route::get('/', 'Frontend\HomeController@index')->name('home');
+        // C2
+        Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
+        Route::post('result', 'Frontend\PropertyController@filter')->name('property.filter');
+        Route::post('compile-filter', 'Frontend\PropertyController@compileFilter');
+        Route::post('search-preference', 'Frontend\CustomerSearchPreferenceController@store');
+        // C3
+        Route::get('map', function () {
+            return 'map';
+        });
+        // C5
+        Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
+        // C6
+        Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
+        // C7
+        Route::get('faqs', function() {
+            return 'Pending design of static page';
+        });
+        // C8
+        Route::get('contact', function() {
+            return 'Pending design of static page';
+        })->name('contact');
+        // C9
+        Route::get('sitemap', function() {
+            return 'Pending design of static page';
+        });
+        // C10
+        Route::get('privacy-policy', function() {
+            return 'Pending design of static page';
+        });
+        // C12
+        Route::get('terms-of-service', function() {
+            return 'Pending design of static page';
+        });
+        // C13
+        Route::get('overview', function() {
+            return 'pending design of static page';
+        });
+        // C15 registration of new real estate agency
+        Route::get('estate/register', 'Frontend\EstateController@create')->name('company.register');
+        Route::post('estate/confirm', 'Frontend\EstateController@confirm')->name('company.confirm');
+        Route::post('estate/store', 'Frontend\EstateController@store')->name('company.store');
+        Route::get('estate/check_email', 'Frontend\EstateController@check_email')->name('company.check_email');
 
-    Route::get('thanks', 'Frontend\EstateController@thanks_page')->name('thanks.page');
+        Route::get('thanks', 'Frontend\EstateController@thanks_page')->name('thanks.page');
 
-    Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
-});
+        Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
+    });
+    Route::get('/partner', 'LpController@index')->name('lp.index');
+    Route::post('/partner', 'LpController@contact')->name('lp.contact');
+    Route::get('/partner/thanks', function(){
+        return view('lp.home.thanks');
+    })->name('lp.thanks');
+}
+
+

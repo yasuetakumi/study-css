@@ -31,6 +31,7 @@ return [
     'login_form'             => 'Login Form',
     'language'               => 'Language',
     'top_page'               => 'TOP PAGE',
+    'service_page'           => 'SERVICE PAGE',
     'logout'                 => 'LOG OUT',
     /** Login ============================= */
     'enterEmailAddress'      => 'Email',
@@ -78,6 +79,8 @@ return [
     /** =================================== */
     'created_at'             => 'Created at',
     'update_at'              => 'Updated at',
+    'created_at_datetime'    => 'Created at',
+    'updated_at_datetime'    => 'Updated at',
     'action'                 => 'Action',
     /** Login History====================== */
     'historyLog'             => 'Log Activity',
@@ -113,9 +116,40 @@ return [
     'browsing_history'      => 'History',
     'favorite_property'     => 'Favorite',
 
+    // Sidebar
+    'real_estate_company_employee' => 'Real Estate Company Employee',
+    'operation_history' => 'Operation History',
+    'wish_open_store' => 'Open a Store',
+
+    // A2
+    'members' => 'Members',
+    'member_name' => 'Name',
+    'line_id' => 'Line ID',
+    'social_login' => 'Social Login',
+
+    // A6
+    'last_update_datetime' => 'Last Update',
+    'company_id' => 'Company ID',
+    'company_name' => 'Company Name',
+    'approval_status' => 'Approval Status',
+    'pending' => 'Unapproved',
+    'active' => 'Enabled (Approved)',
+    'block' => 'Invalid (Denied)',
+    'real_estate_company' => 'Real Estate Company',
+
     // A13 / A14 Property Form
     'property_editing' => 'Property Editing',
     'new_property_create' => 'New Property Create',
+    'nearest_station' => 'Nearest Station',
+    'select_station' => 'Select Station',
+    'station_line' => 'Station Line',
+    'stations_belong_to_station_line' => 'Stations Belong to Station Line',
+    'selected_stations' => 'Selected Stations',
+    'clear_btn' => 'Clear',
+    'close_btn' => 'Close',
+    'walk_from_nearest_station' => 'Walking Distance from Nearest Station',
+    'publication_status' => 'Publication Status',
+    'see_property_detail' => 'See the detail page that already published',
 
     //A16
     'company_approval_list' => 'Company Approval List',
@@ -154,7 +188,7 @@ return [
     'surface_area_meter' => 'Surface Area(Meters)',
     'surface_area_tsubo' => 'Surface Area(Tsubo)',
     'rent_amount' => 'Rent Amount',
-    'cost_of_rent' => 'Cost of Rent (Man) per Tsubo',
+    'rent_cost_yen_per_tsubo' => 'Cost of Rent (Yen) per Tsubo',
     'rent_amount_man' => 'Rent amount(Man)',
     'number_of_floor_underground' => 'Number of Floors underground',
     'number_of_floor_aboveground' => 'Number of Floors aboveground',

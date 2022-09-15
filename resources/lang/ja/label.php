@@ -31,6 +31,7 @@ return [
     'login_form'             => 'ログインフォーム',
     'language'               => '言語',
     'top_page'               => 'トップページ',
+    'service_page'           => 'サービスページへ',
     'logout'                 => 'ログアウト',
     /** Login ============================= */
     'enterEmailAddress'      => 'メールアドレス',
@@ -81,6 +82,8 @@ return [
     /** =================================== */
     'created_at'             => '作成日',
     'update_at'              => '更新日',
+    'created_at_datetime'    => '作成日時',
+    'updated_at_datetime'    => '更新日時',
     'action'                 => '編集',
     /** Login History====================== */
     'historyLog'             => '管理者ログイン履歴',
@@ -115,9 +118,45 @@ return [
     'browsing_history'      => '物件閲覧履歴',
     'favorite_property'     => 'お気に入り',
 
+    // Sidebar
+    'real_estate_company_employee' => '不動産会社社員',
+    'operation_history' => '操作履歴',
+    'wish_open_store' => '出店希望者',
+
+    // A2
+    'members' => 'メンバー',
+    'member_name' => '会員名',
+    'line_id' => 'ＬＩＮＥ ＩＤ',
+    'social_login' => 'ログインが可能なＳＮＳ',
+
+    // A6
+    'last_update_datetime' => '作成日時',
+    'company_id' => '企業ID',
+    'company_name' => '企業名',
+    'approval_status' => '承認状況',
+    'pending' => '未承認',
+    'active' => '有効 (承認済み)',
+    'block' => '無効 (否認済み)',
+    'real_estate_company' => '不動産会社',
+
+    // A9
+    'role' => '役割',
+
+
     // A13 / A14 Property Form
     'property_editing' => '物件編集',
     'new_property_create' => '物件の新規作成',
+    'nearest_station' => '最寄り駅',
+    'select_station' => '駅を選択する',
+    'station_line' => '路線',
+    'stations_belong_to_station_line' => '選択した路線に属している駅',
+    'selected_stations' => '選択した駅',
+    'clear_btn' => 'クリア',
+    'close_btn' => '閉じる',
+    'walk_from_nearest_station' => '最寄り駅からの徒歩',
+    'publication_status' => '公開状況',
+    'see_property_detail' => '公開中の詳細ページを見る',
+
 
 
     //A16
@@ -158,7 +197,7 @@ return [
     'surface_area_meter' => '面積（㎡）',
     'surface_area_tsubo' => '面積（坪）',
     'rent_amount' => '賃料',
-    'cost_of_rent' => '坪単価(万／坪)',
+    'rent_cost_yen_per_tsubo' => '坪単価(円/坪)',
     'rent_amount_man' => '賃料（万）',
     'number_of_floor_underground' => '階数(地下)',
     'number_of_floor_aboveground' => '階数(地上)',
@@ -167,7 +206,7 @@ return [
     'deposit' => '保証金または敷金',
     'monthly_maintaner' => '権利金または礼金',
     'repayment_conditions' => '解約時の償却情報',
-    'year_built' => '建築日',
+    'year_built' => '築年',
     'renewal_fee' => '更新料',
     'contract_length' => '契約期間',
     'moving_fee' => '造作譲渡料',

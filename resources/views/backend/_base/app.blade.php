@@ -99,7 +99,7 @@
                     @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}" target="_blank"><i class="fa fa-home" aria-hidden="true"></i>
-                        @lang('label.top_page')</a>
+                        @lang('label.service_page')</a>
                     </li>
                     <li>
                         <?php
@@ -178,13 +178,13 @@
 <!-- /.control-Right sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer text-sm {{ Request::is('admin/*') || Request::is('company/*') ? '' : 'ml-0' }}">
+    <footer class="main-footer text-sm {{ Request::is('admin/*') || Request::is('company/*') ? '' : 'ml-0' }} d-flex justify-content-end">
         <!-- To the right -->
-        <div class="float-right d-none d-sm-inline">
+        <div class="text-right w-100 d-none d-sm-inline">
             Version 1
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; <span id="spanYear"></span> <a href="https://grune.co.jp">Grune</a>.</strong> All rights reserved.
+        {{-- <strong>Copyright &copy; <span id="spanYear"></span> <a href="https://grune.co.jp">Grune</a>.</strong> All rights reserved. --}}
     </footer>
 </div>
 <!-- ./wrapper -->
