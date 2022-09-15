@@ -2,6 +2,7 @@
 
 use App\Models\Structure;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class StructureSeeder extends Seeder
 {
@@ -12,12 +13,15 @@ class StructureSeeder extends Seeder
      */
     public function run()
     {
-        Structure::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        Structure::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $admin = new Structure();
         $admin->insert([
             [
                 'label_en'       => 'Steel Frame',
-                'label_jp'      => ' 鉄骨造',
+                'label_jp'      => '鉄骨造',
             ],
             [
                 'label_en'       => 'RC Construction',
