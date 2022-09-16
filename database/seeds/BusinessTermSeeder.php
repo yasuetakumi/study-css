@@ -2,6 +2,7 @@
 
 use App\Models\BusinessTerm;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class BusinessTermSeeder extends Seeder
 {
@@ -12,12 +13,15 @@ class BusinessTermSeeder extends Seeder
      */
     public function run()
     {
-        BusinessTerm::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        BusinessTerm::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $admin = new BusinessTerm();
         $admin->insert([
             [
                 'label_en'       => 'General',
-                'label_jp'      => ' 一般媒介',
+                'label_jp'      => '一般媒介',
             ],
             [
                 'label_en'       => 'Full-time',

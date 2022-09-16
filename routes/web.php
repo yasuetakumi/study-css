@@ -103,6 +103,8 @@ if (Config::get('app.env') === 'production') {
 
                     Route::resource('property', 'PropertyController')->except('detail');
 
+                    Route::post('import', 'PropertyController@import')->name('property.import');
+
                     Route::prefix('company')->group(function(){
                         //manual name route to fix issue route name auto generate with double dots, ex: admin.company..create
                         Route::resource('', 'CompanyController', ['names' => [

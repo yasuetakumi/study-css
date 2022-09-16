@@ -27,6 +27,7 @@ use App\Models\ContactUsType;
 use App\Models\CustomerInquiry;
 use App\Models\TagArchitecture;
 use App\Helpers\DatatablesHelper;
+use App\Imports\PropertiesImport;
 use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
 use App\Helpers\Select2AjaxHelper;
@@ -35,6 +36,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\PropertyPublicationStatus;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PropertyPublicationStatusPeriod;
@@ -540,6 +542,19 @@ class PropertyController extends Controller
         // }
 
         return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+        $file = $request->file('file');
+        Excel::import(new PropertiesImport, $file, null, \Maatwebsite\Excel\Excel::CSV);
+        // (new PropertiesImport)->import($file, null, \Maatwebsite\Excel\Excel::CSV);
+
+        return redirect()->back()->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
     }
 
 
