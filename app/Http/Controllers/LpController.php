@@ -47,14 +47,11 @@ class LpController extends Controller
         $content['phone'] = $request->phone;
         $content['description'] = $request->description ?? '-';
 
-        $emailAdminCC = explode(',', config('mail.lp_contact_admin_cc'));
-        $emailAdminBCC = config('mail.lp_contact_admin_bcc');
-
         // send email to user
         Mail::to($request->email)->send(new ContactUsMail($content, 'user'));
 
         // send email to admin and cc/bcc
-        Mail::to(config('mail.lp_contact_admin'))->cc($emailAdminCC)->bcc($emailAdminBCC)
+        Mail::to(config('mail.lp_contact_admin'))
               ->send(new ContactUsMail($content, 'admin'));
 
         return redirect()->route('lp.thanks');
