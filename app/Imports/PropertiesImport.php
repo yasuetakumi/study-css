@@ -139,4 +139,38 @@ class PropertiesImport implements ToModel, WithHeadingRow, WithValidation
             '居抜き譲渡額' => ['nullable', 'numeric'], // interior_transfer_price
         ];
     }
+
+    public function customValidationMessages()
+    {
+        return [
+            '担当者.required' => '列: :attribute は必須です',
+            '担当者.in' => '列: :attribute は存在しない値です',
+            '郵便番号(optional).required' => '列: :attribute は必須です',
+            '郵便番号(optional).in' => '列: :attribute は存在しない値です',
+            '都道府県.required' => '列: :attribute は必須です',
+            '都道府県.in' => '列: :attribute は存在しない値です',
+            '市町村区.required' => '列: :attribute は必須です',
+            '市町村区.in' => '列: :attribute は存在しない値です',
+            'その他住所（町名・番地・建物名）.required' => '列: :attribute は必須です',
+            '公開状況.required' => '列: :attribute は必須です',
+            '公開状況.in' => '列: :attribute は存在しない値です',
+            '面積(坪).required' => '列: :attribute は必須です',
+            '面積(坪).numeric' => '列: :attribute は数値で入力してください',
+            '賃料(円).required' => '列: :attribute は必須です',
+            '賃料(円).numeric' => '列: :attribute は数値で入力してください',
+            '階数(地上).numeric' => '列: :attribute は数値で入力してください',
+            '階数(地下).numeric' => '列: :attribute は数値で入力してください',
+            '飲食店の種類.in' => '列: :attribute は存在しない値です',
+            '構造.in' => '列: :attribute は存在しない値です',
+            '保証金または敷金.numeric' => '列: :attribute は数値で入力してください',
+            '権利金または礼金.numeric' => '列: :attribute は数値で入力してください',
+            '築年.date_format' => '列: :attribute は日付で入力してください',
+            '契約期間.numeric' => '列: :attribute は数値で入力してください',
+            '造作譲渡料.numeric' => '列: :attribute は数値で入力してください',
+            '取引態様.in' => '列: :attribute は存在しない値です',
+            'スケルトン物件 or 居抜き物件.in' => '列: :attribute は存在しない値です',
+            '業態.in' => '列: :attribute は存在しない値です',
+            '居抜き譲渡額.numeric' => '列: :attribute は数値で入力してください',
+        ];
+    }
 }

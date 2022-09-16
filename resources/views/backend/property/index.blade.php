@@ -30,15 +30,17 @@
 
 @section('actions')
     <div class="d-flex align-items-center justify-content-end">
-        <form method="POST" action="{{route('admin.property.import')}}" enctype="multipart/form-data">
+        <form id="formSubmitCsv" method="POST" action="{{route('admin.property.import')}}" enctype="multipart/form-data">
             @csrf
             <a class="text-link fs-16 mr-2" target="_blank" download href="{{asset('csv/property_template.csv')}}">テンプレートファイルをダウンロード</a>
-            <span class="btn btn-primary btn-file bg-white border cursor-pointer mr-1">
-                CSVファイルを選択 <input type="file" name="file">
-            </span>
-            <button type="submit" class="btn btn-success">
+            <input id="input-file" type="file" name="file" accept=".csv" class="d-none" ref="fileInput" v-on:change="onFilePicked">
+            <button id="trigger-btn" type="button" class="btn btn-outline-secondary mr-2" @click="onPickFile">CSVファイルを選択</button>
+            <button id="submit-btn" type="submit" class="btn btn-success">
                 保存
             </button>
+            <span class="d-block text-right fs-16 mt-2" v-if="name">
+                ファイル名 : @{{name}}
+            </span>
         </form>
     </div>
 @endsection
@@ -58,5 +60,123 @@
     <th data-col="created_at" class="no-sort" data-filter="false">@lang('label.created_at_datetime')</th>
     <th data-col="action">@lang('label.action')</th>
 @endsection
+
+@push('scripts')
+    <script>
+        $( document ).ready(function() {
+            // disable button while submit
+            $('#formSubmitCsv').submit(function() {
+                $('#trigger-btn').attr('disabled', true);
+                $('#submit-btn').attr('disabled', true);
+            });
+        });
+    </script>
+@endpush
+
+@push('vue-scripts')
+
+<script>
+
+    // ----------------------------------------------------------------------
+    // Vuex store - Centralized data
+    // ----------------------------------------------------------------------
+    store = {
+        // ------------------------------------------------------------------
+        // Reactive central data
+        // ------------------------------------------------------------------
+        state: function(){
+            var state = {
+                // ----------------------------------------------------------
+                // Status flags
+                // ----------------------------------------------------------
+                status: { },
+                // ----------------------------------------------------------
+
+                // ----------------------------------------------------------
+                // Preset data
+                // ----------------------------------------------------------
+                preset: {
+                },
+                // ----------------------------------------------------------
+            };
+            // --------------------------------------------------------------
+
+            // --------------------------------------------------------------
+            return state;
+            // --------------------------------------------------------------
+        },
+        // ------------------------------------------------------------------
+
+        // ------------------------------------------------------------------
+        // Updating state data will need to go through these mutations
+        // ------------------------------------------------------------------
+        mutations: {}
+        // ------------------------------------------------------------------
+    };
+    // ----------------------------------------------------------------------
+
+    mixin = {
+        /*
+        ## ------------------------------------------------------------------
+        ## VUE DATA
+        ## vue data binding, difine a properties
+        ## ------------------------------------------------------------------
+        */
+        data: function(){
+            var data = {
+                // ----------------------------------------------------------
+                // Form result set here
+                // ----------------------------------------------------------
+                name: null,
+                file: null,
+                data: null,
+                is_load : null,
+                // ----------------------------------------------------------
+            };
+            // --------------------------------------------------------------
+
+            // --------------------------------------------------------------
+            return data;
+            // --------------------------------------------------------------
+        },
+
+        /*
+        ## ------------------------------------------------------------------
+        ## VUE MOUNTED
+        ## vue on mounted state
+        ## ------------------------------------------------------------------
+        */
+        mounted: function(){
+
+        },
+
+        /*
+        ## ------------------------------------------------------------------
+        ## VUE METHOD
+        ## function associated with the vue instance
+        ## ------------------------------------------------------------------
+        */
+        methods: {
+            // --------------------------------------------------------------
+            onPickFile() {
+                this.$refs.fileInput.click();
+            },
+            onFilePicked(event) {
+                const files = event.target.files;
+                let filename = files[0].name;
+                this.name = filename;
+                let extention = filename.split(".");
+
+                if ('csv' === extention[extention.length - 1]) {
+                    this.file = files[0];
+                } else {
+                    console.log("csv only")
+                }
+            },
+
+        }
+    }
+</script>
+@endpush
 
 
