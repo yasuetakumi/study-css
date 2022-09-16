@@ -34,7 +34,7 @@ class MemberController extends Controller
 
     public function index()
     {
-        $data['page_title'] = __('label.members');
+        $data['page_title'] = __('label.members') . __('label.list');
         return view('backend.member.index', $data);
     }
 

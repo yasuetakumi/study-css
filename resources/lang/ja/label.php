@@ -124,7 +124,7 @@ return [
     'wish_open_store' => '出店希望者',
 
     // A2
-    'members' => 'メンバー',
+    'members' => '出店希望者',
     'member_name' => '会員名',
     'line_id' => 'ＬＩＮＥ ＩＤ',
     'social_login' => 'ログインが可能なＳＮＳ',

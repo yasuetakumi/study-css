@@ -138,9 +138,9 @@
                     $(this).remove();
                 }
                 var placeholder = "@lang('label.search') " + title;
-                if( id === "id" ){
-                    placeholder = '';
-                }
+                // if( id === "id" ){
+                //     placeholder = '';
+                // }
 
                 if(select != null){
                     var html = '<select class="form-control select-'+i+'" id="search_'+id+'">';
