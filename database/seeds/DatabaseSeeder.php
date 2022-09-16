@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanySeeder::class);
         $this->call(UserRoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(NewsSeeder::class);
+        // $this->call(NewsSeeder::class);
         $this->call(PostcodeSeeder::class);
         $this->call(LogActivitySeeder::class);
-        $this->call(FeatureSeeder::class);
+        // $this->call(FeatureSeeder::class);
         $this->call(AreaSeeder::class);
         $this->call(PrefectureSeeder::class);
         $this->call(SurfaceAreaOptionSeeder::class);

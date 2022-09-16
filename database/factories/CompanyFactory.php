@@ -18,7 +18,7 @@ $factory->define(App\Models\Company::class, function(Faker $faker){
         'agent_license_number' => $faker->numerify('######'),
         'post_code' => rand(1000000, 9999999),
         'address' => $faker->address,
-        'phone' => $faker->phoneNumber,
+        'phone' => $faker->e164PhoneNumber,
         'fax' => $hkFaker->phoneNumber,
         'url' => $faker->url,
         'status' => $statuses->random(),
