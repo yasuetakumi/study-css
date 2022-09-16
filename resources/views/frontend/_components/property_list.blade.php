@@ -4,8 +4,10 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <p class="text-black mb-0" v-if="property.city_id != null">@{{cityName}}
-                            (@{{stationName}}駅　徒歩@{{distanceMinutes}}) の貸店舗</p>
+                        <p class="text-black mb-0" v-if="property.city_id != null && stationName && distanceMinutes">
+                            @{{fullLabelDefault}}
+                        <p class="text-black mb-0" v-else-if="property.city_id != null && !stationName">@{{cityName}}の貸店舗</p>
+                        <p class="text-black mb-0" v-else-if="property.city_id != null && !distanceMinutes">@{{cityName}}（@{{stationName}}駅）の貸店舗"</p>
                         <p class="text-black mb-0" v-else>-</p>
                     </div>
                     <i class="fas fa-chevron-right"></i>
@@ -52,6 +54,7 @@
         props: {
             property: { required: true, default: null },
             distance: { required: false, default: null},
+            isFromSimilar : { required: false, default: false },
         },
         // Computed properties
         computed: {
@@ -77,6 +80,9 @@
                 } else {
                     return '';
                 }
+            },
+            check: function(){
+                return '';
             },
             distanceMinutes: function(){
                 if(this.property.property_stations[0] != null){
@@ -129,6 +135,25 @@
             },
             closestStationDistance: function(){
                 return this.stationLineName + "　" + this.stationName + "　" + "徒歩" + this.distanceMinutes;
+            },
+            prefectureName: function(){
+                if(this.property.prefecture != null){
+                    return this.property.prefecture.display_name;
+                } else {
+                    return '';
+                }
+            },
+            fullAddress: function(){
+                return this.prefectureName + this.cityName + this.property.location;
+            },
+            fullLabelDefault: function(){
+                if(this.isFromSimilar){
+                    return this.cityName + " （" + this.stationName + "駅　徒歩" + this.distanceMinutes + ") の貸店舗"
+                } else {
+                    return this.fullAddress + "（" +this.stationName + "駅" + "  " + "徒歩" + this.distanceMinutes + ") の貸店舗" ;
+                }
+
+
             },
             manPerTsubo: function(){
                 return this.property.man_per_tsubo + '万円';

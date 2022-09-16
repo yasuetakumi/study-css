@@ -93,7 +93,7 @@
                 <p class="text-center">似た物件は見つかりませんでした</p>
             </div>
             <div v-else class="col-lg-4 d-flex align-items-stretch" v-for="pr in property_related">
-                <property-list :property="pr">
+                <property-list :property="pr" :is-from-similar="true">
                     <button-favorite :likes="items.like_property" :idproperty="pr.id" @click="setLikeProperty(pr.id)"></button-favorite>
                 </property-list>
             </div>
