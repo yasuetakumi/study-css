@@ -537,6 +537,9 @@ class PropertyController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:csv,txt'
+        ], [
+            'file.required' => __('validation.required', ['attribute' => 'ファイル']),
+            'file.mimes' => __('validation.mimes', ['attribute' => 'ファイル', 'values' => 'csv']),
         ]);
 
         $file = $request->file('file');

@@ -101,7 +101,9 @@ if (Config::get('app.env') === 'production') {
 
                     Route::resource('log-user-fail', 'LogUserFailController')->only(['index', 'show']);
 
-                    Route::resource('property', 'PropertyController')->except('detail');
+                    Route::resource('property', 'PropertyController')->except('detail', 'destroy');
+
+                    Route::post('property/delete/{property}', 'PropertyController@destroy')->name('property.destroy');
 
                     Route::post('import', 'PropertyController@import')->name('property.import');
 
@@ -160,7 +162,8 @@ if (Config::get('app.env') === 'production') {
                 Route::name('company.')->group(function() {
                     Route::get('property/add', 'Backend\PropertyController@create')->name('property.create');
                     Route::get('property/edit/{id}', 'Backend\PropertyController@edit')->name('property.edit');
-                    Route::resource('property', 'Backend\PropertyController')->except(['create', 'edit']);
+                    Route::resource('property', 'Backend\PropertyController')->except(['create', 'edit', 'destroy']);
+                    Route::post('property/delete/{property}', 'Backend\PropertyController@destroy')->name('property.destroy');
                 });
                 // B6
                 Route::get('company-information', 'Backend\CompanyController@editAsCompanyOwner')->name('companyowner-edit');
