@@ -3,34 +3,23 @@
 namespace App\Http\Controllers\Backend;
 
 use stdClass;
-use TsuboHelper;
 use Carbon\Carbon;
-use App\Models\City;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Cuisine;
-use App\Models\TagMood;
-use App\Models\Postcode;
 use App\Models\Property;
-use App\Models\TagStyle;
 use App\Models\Structure;
 use App\Models\Prefecture;
 use App\Helpers\FileHelper;
-use App\Models\DesignStyle;
 use App\Helpers\ImageHelper;
 use App\Models\BusinessTerm;
 use App\Models\PropertyPlan;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
-use App\Models\ContactUsType;
-use App\Models\CustomerInquiry;
-use App\Models\TagArchitecture;
 use App\Helpers\DatatablesHelper;
 use App\Imports\PropertiesImport;
-use App\Models\SurfaceAreaOption;
 use App\Traits\CommonToolsTraits;
-use App\Helpers\Select2AjaxHelper;
 use App\Models\PropertiesStations;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -82,9 +71,9 @@ class PropertyController extends Controller
                 $model = Property::with(['user', 'postcode']);
                 $model->whereHas('user', function($q){
                     $q->where('belong_company_id', Auth::guard('user')->user()->belong_company_id);
-                });
+                })->propertyCompany(); // only property is not deleted and not expired
             }
-            return (new DatatablesHelper)->instance($model)
+            return (new DatatablesHelper)->instance($model, true, true, null, null, null, false, true)
                                             ->filterColumn('user.display_name', function($query, $keyword){
                                                 $query->whereHas('user', function($q) use ($keyword){
                                                     $q->where('display_name', 'like', '%'.$keyword.'%');
@@ -139,8 +128,10 @@ class PropertyController extends Controller
     {
         $data['item'] = new StdClass();
         $data['form_action'] = route('admin.property.store');
+        $data['publication_statuses'] = PropertyPublicationStatus::ONLY_VISIBLE_ADMIN_FORM;
         if(Auth::guard('user')->check()){
             $data['form_action'] = route('company.property.store');
+            $data['publication_statuses'] = PropertyPublicationStatus::ONLY_VISIBLE_COMPANY_FORM;
         }
         $data['property_related'] = '';
         $data['page_type'] = 'create';
@@ -182,7 +173,6 @@ class PropertyController extends Controller
         $data['walking_distances'] = WalkingDistanceFromStationOption::pluck('label_jp', 'id')->all();
 
         $data['design_categories'] = collect($categories)->all();
-        $data['publication_statuses'] = PropertyPublicationStatus::pluck('label_jp', 'id')->all();
 
         return view('backend.property.form', $data);
     }
@@ -302,14 +292,16 @@ class PropertyController extends Controller
         // Company user can edit properties on their own company
         // User A and User B on the same company, User A can edit the property of User B
         if(Auth::guard('user')->check()){
-            if($data['item']->user->company->id != Auth::user()->company->id){
-                return redirect()->route('company.property.index')->withErrors(['msg' => 'You dont have access to this property']);
+            // Company user only can edit if the property is on their company or the property publication status id is not deleted or expired
+            if($data['item']->user->company->id != Auth::user()->company->id || in_array($data['item']->publication_status_id, PropertyPublicationStatus::ONLY_VISIBLE_ADMIN)){
+                return redirect()->route('company.property.index')->withErrors(['msg' => 'このプロパティへのアクセス権がありません']);
             }
         }
-
+        $data['publication_statuses'] = PropertyPublicationStatus::ONLY_VISIBLE_ADMIN_FORM;
         $data['form_action'] = route('admin.property.update', $id);
         if(Auth::guard('user')->check()){
             $data['form_action'] = route('company.property.update', $id);
+            $data['publication_statuses'] = PropertyPublicationStatus::ONLY_VISIBLE_COMPANY_FORM;
         }
         $data['property_related'] = '';
         $data['page_type'] = 'edit';
@@ -319,7 +311,6 @@ class PropertyController extends Controller
         $data['page_title'] = __('label.property_editing');
         $data['is_skeleton'] = [Property::FURNISHED => __('label.furnished'), Property::SKELETON => __('label.skeleton')];
         $data['cuisines'] = Cuisine::pluck('label_jp', 'id')->all();
-        $data['publication_statuses'] = PropertyPublicationStatus::pluck('label_jp', 'id')->all();
 
         // options for vue select 2 options
         $companies                     = collect(Company::pluck('company_name', 'id')->all());
@@ -478,9 +469,7 @@ class PropertyController extends Controller
     public function destroy($id)
     {
         $property = Property::find($id);
-        $property->delete();
-
-        // return redirect()->back()->with('success', __('label.SUCCESS_DELETE_MESSAGE'));
+        $property->update(['publication_status_id' => PropertyPublicationStatus::ID_MANUALLY_DELETED]);
     }
 
     public function getCompanyName($id){

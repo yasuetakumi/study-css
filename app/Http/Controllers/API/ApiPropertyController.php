@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
 use App\Models\PropertyPreference;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\PropertyPublicationStatus;
 use App\Models\WalkingDistanceFromStationOption;
 // -----------------------------------------------------------------------------
@@ -36,8 +38,15 @@ class ApiPropertyController extends Controller
         // Base query
         $query = Property::with(['properties_property_preferences', 'cuisine', 'city', 'prefecture', 'property_stations.station.station_line', 'property_stations' => function($query){
             $query->orderBy('distance_from_station', 'ASC');
-        }])->published();
+        }]);
 
+        if(Auth::check() || Auth::guard('user')->check()) {
+            Log::info('User is logged in');
+            $query->published();
+        } else {
+            Log::info('User is not logged in');
+            $query->publishedOnly();
+        }
         // Filter city
         if(!empty($filter->city)){
             $arrCity = $filter->city;
