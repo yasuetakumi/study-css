@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
-    use SoftDeletes;
     const FURNISHED = 0;
     const SKELETON = 1;
 
