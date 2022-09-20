@@ -77,7 +77,14 @@ class PropertyController extends Controller {
     {
         $data['item']       = Property::with(['city', 'postcode', 'user.company', 'prefecture', 'property_type', 'structure', 'business_term', 'cuisine', 'property_plans.plan' => function($query){
             $query->select('id', 'display_name', 'design_category_id');
-        }])->published()->find($id);
+        }]);
+        if(auth()->check() || auth()->guard('user')->check()) {
+            //if login
+            $data['item'] = $data['item']->published()->find($id);
+        } else {
+            // if not login
+            $data['item'] = $data['item']->publishedOnly()->find($id);
+        }
         // if property not found or publication status is not published, redirect to 404 page
         if(empty($data['item'])){
             abort(404);

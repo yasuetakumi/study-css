@@ -314,6 +314,38 @@
                     toastr.error('@lang('label.jsSorry')');
             });
 
+            // DELETE WITH POST
+            $('#datatable').on('click', '.postData[data-remote]', function (e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                let url = $(this).data('remote');
+                // CONFIRMATION
+                if (confirm('@lang('label.jsConfirmDeleteData')')) {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        dataType: 'json',
+                        data: {_method: "POST", submit: true}
+                    }).always(function (data) {
+                        console.log(data);
+                        $('#datatable').DataTable().draw(false);
+                        if (data.status == 200){
+                          toastr.success('@lang('label.jsInfoDeletedData')');
+                          table.ajax.reload();
+                        }
+                        else {
+                          toastr.error('@lang('label.FAILED_DELETE_SELF_MESSAGE')');
+                        }
+
+                    });
+                } else
+                    toastr.error('@lang('label.jsSorry')');
+            });
+
             $('.input-datepicker').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: false,

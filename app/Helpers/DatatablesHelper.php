@@ -17,17 +17,17 @@ class DatatablesHelper
      *
      * @return string json - pagination, search etc. processed by Yajra Datatable package
      */
-    public function json($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null, $btn_view_to_edit = false)
+    public function json($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null, $btn_view_to_edit = false, $btn_delete_post = false)
     {
-        return $this->instance($eloquent, $btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id, $btn_view_to_edit)->toJson();
+        return $this->instance($eloquent, $btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id, $btn_view_to_edit, $btn_delete_post)->toJson();
     }
 
-    public function instance($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null, $btn_view_to_edit = false)
+    public function instance($eloquent, $btn_edit = true, $btn_delete = true, $btn_view = null, $btn_nested = null, $nested_parent_id = null, $btn_view_to_edit = false, $btn_delete_post = false)
     {
 
         $datatablse = Datatables::of($eloquent);
         if (!empty($btn_edit) || !empty($btn_delete) || !empty($btn_view)) {
-            $datatablse->addColumn('action', function ($query) use ($btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id, $btn_view_to_edit) {
+            $datatablse->addColumn('action', function ($query) use ($btn_edit, $btn_delete, $btn_view, $btn_nested, $nested_parent_id, $btn_view_to_edit, $btn_delete_post) {
                 // *** Generate Action column ***
 
                 // Generate link URLs
@@ -68,9 +68,15 @@ class DatatablesHelper
                 if (!empty($btn_nested)) {
                     $buttons[] = '<a href="' . URL::route($routeShow, $query->id) . '/' . $btn_nested['current_nest'] . '" class="btn btn-' . $btn_nested['style'] . '"><i class="fas fa-' . $btn_nested['icon'] . '"></i></a>';
                 }
-                if (!empty($btn_delete) && Auth::check()) {
+
+                if(!empty($btn_delete) && Auth::check() && $btn_delete_post == true){
+                    $buttons[] = '<a title="Delete Data" href="" data-remote="' . $url_delete . '" class="btn btn-danger postData"><i class="fas fa-trash"></i></a>';
+                } else if(!empty($btn_delete) && Auth::check() && $btn_delete_post == false){
                     $buttons[] = '<a title="Delete Data" href="" data-remote="' . $url_delete . '" class="btn btn-danger deleteData"><i class="fas fa-trash"></i></a>';
                 }
+                // if (!empty($btn_delete) && Auth::check()) {
+                //     $buttons[] = '<a title="Delete Data" href="" data-remote="' . $url_delete . '" class="btn btn-danger deleteData"><i class="fas fa-trash"></i></a>';
+                // }
 
                 $render = "";
                 if (count($buttons) > 0) {

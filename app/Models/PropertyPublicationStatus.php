@@ -23,6 +23,25 @@ class PropertyPublicationStatus extends Model {
     const ID_MANUALLY_DELETED = 4;
     const ID_EXPIRED = 5;
 
+    const ONLY_VISIBLE_ADMIN = [
+        self::ID_MANUALLY_DELETED,
+        self::ID_EXPIRED,
+    ];
+
+    const ONLY_VISIBLE_ADMIN_FORM = [
+        self::ID_NOT_PUBLISHED => self::NOT_PUBLISHED_LABEL_JP,
+        self::ID_PUBLISHED => self::PUBLISHED_LABEL_JP,
+        self::ID_LIMITED_PUBLISHED => self::LIMITED_PUBLISHED_LABEL_JP,
+        self::ID_MANUALLY_DELETED => self::MANUALLY_DELETED_LABEL_JP,
+        self::ID_EXPIRED => self::EXPIRED_LABEL_JP,
+    ];
+
+    const ONLY_VISIBLE_COMPANY_FORM = [
+        self::ID_NOT_PUBLISHED => self::NOT_PUBLISHED_LABEL_JP,
+        self::ID_PUBLISHED => self::PUBLISHED_LABEL_JP,
+        self::ID_LIMITED_PUBLISHED => self::LIMITED_PUBLISHED_LABEL_JP,
+    ];
+
 
     protected $fillable = [
         'label_en',

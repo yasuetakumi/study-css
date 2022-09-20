@@ -15,6 +15,7 @@ use App\Models\PropertyType;
 use App\Models\RentPriceOption;
 use App\Models\SurfaceAreaOption;
 use App\Models\PropertyPreference;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
@@ -182,9 +183,24 @@ class Property extends Model
         return null;
     }
 
+    public function scopePublishedOnly($query)
+    {
+        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED);
+    }
+
+    public function scopeLimitedPublishedOnly($query)
+    {
+        return $query->where('publication_status_id', PropertyPublicationStatus::ID_LIMITED_PUBLISHED);
+    }
+
     public function scopePublished($query)
     {
-        return $query->where('publication_status_id', PropertyPublicationStatus::ID_PUBLISHED)->orWhere('publication_status_id', PropertyPublicationStatus::ID_LIMITED_PUBLISHED);
+        return $query->whereIn('publication_status_id', [PropertyPublicationStatus::ID_PUBLISHED, PropertyPublicationStatus::ID_LIMITED_PUBLISHED]);
+    }
+
+    public function scopePropertyCompany($query)
+    {
+        return $query->whereNotIn('publication_status_id', PropertyPublicationStatus::ONLY_VISIBLE_ADMIN);
     }
 
     public function scopeRangeArea($query, $min, $max, $column){
