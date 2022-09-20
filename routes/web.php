@@ -47,8 +47,13 @@ if (Config::get('app.env') === 'production') {
         // })->middleware('guest');
 
         Route::get('/auth-check', function(){
-            dd(Auth::guard("user")->check());
-            //dd(Auth::guard("user")->user()->toArray());
+            return response()->json(
+                [
+                    'admin' => Auth::guard('web')->check() ? 'true' : 'false',
+                    'company' => Auth::guard('user')->check() ? 'true' : 'false',
+                    'member' => Auth::guard('member')->check() ? 'true' : 'false',
+                ]
+            );
         });
 
         // Authentication Routes...
@@ -58,7 +63,12 @@ if (Config::get('app.env') === 'production') {
 
         Route::get('/company', function() { return redirect()->route('company-user-login'); });
         Route::get('/company/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
-        Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');;
+        Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');
+
+        Route::get('/login', 'Auth\MemberLoginController@showLoginForm')->name('member-login');
+        Route::post('/login', 'Auth\MemberLoginController@login')->name('member-login-action');
+        Route::get('/register', 'Auth\MemberLoginController@showRegisterForm')->name('member-register');
+        Route::post('/register', 'Auth\MemberLoginController@register')->name('member-register-action');
 
         // Password Reset Routes...
         Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -176,6 +186,13 @@ if (Config::get('app.env') === 'production') {
                 Route::post('payment', 'Backend\CompanyPaymentController@store')->name('company.payment.store');
                 Route::get('update-status/{propertyId}', 'Backend\PropertyController@updatePublicationStatus')->name('company.publication.status');
             });
+        });
+
+        /**
+         * Member User (C Module)
+         */
+        Route::group(['middleware' => 'auth:member'], function() {
+            Route::get('member/logout', 'Auth\MemberLoginController@logout')->name('member.logout');
         });
 
         // End User (C Module)
