@@ -166,6 +166,7 @@
                 items: {
                     selected_dc: 1,
                     list_design_style: null,
+                    initial_list_design_style: null,
                     list_estimation: null,
                     design_category_id: null,
                     loading: false,
@@ -218,6 +219,9 @@
             designStyles: function(){
                 return this.items.list_design_style;
             },
+            initialDesignStyles: function(){
+                return this.items.initial_list_design_style;
+            },
             property_related: function(){
                 return this.$store.state.preset.property_related;
             },
@@ -248,7 +252,6 @@
             },
         },
         updated: function(){
-            // this.has_kitchen();
         },
 
         /*
@@ -281,7 +284,8 @@
                 this.items.loading = true;
                 this.items.displayBtnShowMore = true;
                 let designCat = event.target.value;
-                this.items.selected_dc = event.target.value
+                this.items.selected_dc = event.target.value;
+                this.items.initial_list_design_style = null;
                 this.items.list_design_style = null;
                 this.getDesignByCategory(designCat);
                 setTimeout(() => {
@@ -297,7 +301,19 @@
                 }
                 axios.get(url)
                 .then((result) => {
-                    this.items.list_design_style = result.data.data;
+                    if(this.items.initial_list_design_style == null || this.items.initial_list_design_style.length == 0){
+                        this.items.initial_list_design_style = result.data.data;
+                    }
+                    if(loadAll){
+                        this.items.list_design_style = result.data.data;
+                        // remove duplicate data on initial list design style
+                        this.items.list_design_style = this.items.list_design_style.filter((item) => {
+                            return !this.items.initial_list_design_style.some((item2) => {
+                                return item.id === item2.id;
+                            });
+                        });
+
+                    }
                     this.items.designNotFound = false;
                 }).catch((err) => {
                     this.items.designNotFound = true;
@@ -308,7 +324,6 @@
                 this.items.displayBtnShowMore = false;
                 this.items.estimation_loading = true;
                 this.items.loading = true;
-                // this.items.list_design_style = null;
                 await this.getDesignByCategory(this.items.selected_dc, true);
                 await setTimeout(() => {
                     this.estimationIndex();
@@ -323,21 +338,24 @@
                 let id_plans = '';
                 let id_designs = [];
                 for (let i = 0; i < plans.length; i++) {
-                    // console.log(plans[i]);
                     if(plans[i].plan.design_category_id == this.items.selected_dc){
                         id_plans = plans[i].plan_id;
                     }
+                }
+                for(let j=0; j < this.items.initial_list_design_style.length; j++){
+                    id_designs.push(this.items.initial_list_design_style[j].id)
+                }
 
+                if(this.items.list_design_style && this.items.list_design_style.length > 0){
+                    for(let j=0; j < this.items.list_design_style.length; j++){
+                        id_designs.push(this.items.list_design_style[j].id)
+                    }
                 }
-                // console.log(id_plans);
-                for(let j=0; j < this.items.list_design_style.length; j++){
-                    id_designs.push(this.items.list_design_style[j].id)
-                }
+
                 let surface_area = this.property.tsubo;
                 let tsubo = surface_area.match(/\d/g);
                 tsubo = tsubo.join("");
                 tsubo = parseInt(tsubo)
-                //console.log(tsubo)
                 axios.post(root_url + '/api/v1/plans/getEstimationByPlanAndCategory', {
                     plan_id : id_plans,
                     design_category_id : this.items.selected_dc,
@@ -359,10 +377,8 @@
                 let filterId = [];
                 if(local.length > 0){
                     for(let i= 0; i < local.length; i++){
-                        // console.log(id);
                         filterId.push(local[i].id);
                     }
-                    console.log(filterId);
                     if(filterId.length > 0){
                         this.items.like_property = filterId;
                     } else {
@@ -452,7 +468,6 @@
             },
             has_kitchen: function(id, kitchen){
                 if(this.items.list_estimation && this.items.list_estimation.length > 0){
-
                     // $data = this.items.list_estimation.find();
                     const filtered = this.items.list_estimation.filter(el => el.design_style_id == id && el.has_kitchen == kitchen );
                     if(filtered.length > 0){
@@ -461,7 +476,8 @@
                     } else {
                         return '-';
                     }
-
+                } else {
+                    return '-';
                 }
             },
             handleImageNotFound: function(event){

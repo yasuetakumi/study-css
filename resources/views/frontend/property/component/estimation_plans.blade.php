@@ -22,7 +22,7 @@
                 </div>
             </div>
             <!-- show all data if there is data for design styles-->
-            <div class="col-12" v-if="designStyles && designStyles.length>0">
+            <div class="col-12" v-if="initialDesignStyles && initialDesignStyles.length>0">
                 <div id="form-group--plans" class="row form-group">
 
                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header" style="align-self:flex-start;">
@@ -35,13 +35,30 @@
                                 <p>Loading Data...</p>
                             </div>
                             <div v-else class="row">
-                                <div v-for="dc in designStyles" :key="dc.id" class="col-md-4">
+                                <div v-for="dc in initialDesignStyles" :key="dc.id" class="col-md-4">
                                     <div style="position: relative;">
                                         <img :src="pathToImage + dc.id +'/'+ dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
                                     </div>
                                     <div class="my-2">
                                         <p>@{{dc.display_name}}</p>
-                                        <span v-if="estimationLoading">
+                                        <span v-if="estimationLoading && items.displayBtnShowMore">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </span>
+                                        <span v-else>
+                                            <p>スケルトン： @{{has_kitchen(dc.id, 1)}} <span :id="'furnished-'+ dc.id"></span></p>
+                                            <p>居抜き： @{{has_kitchen(dc.id, 0)}} <span :id="'skeleton-'+ dc.id"></span></p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div v-if="!items.displayBtnShowMore" v-for="dc in designStyles" :key="dc.id" class="col-md-4">
+                                    <div style="position: relative;">
+                                        <img :src="pathToImage + dc.id +'/'+ dc.thumbnail_image" alt="" v-on:error="handleImageNotFound" class="w-100 img-thumbnail d-block mx-auto">
+                                    </div>
+                                    <div class="my-2">
+                                        <p>@{{dc.display_name}}</p>
+                                        <span v-if="estimationLoading && !items.displayBtnShowMore">
                                             <div class="spinner-border text-primary" role="status">
                                                 <span class="sr-only">Loading...</span>
                                             </div>
