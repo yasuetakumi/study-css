@@ -41,4 +41,11 @@ class ApiChatController extends Controller
         return response()->json($response);
     }
 
+    public function callback(Request $request)
+    {
+        $bot = new LineBotMessage();
+        $response = $bot->webhook($request);
+        return response()->json($response);
+    }
+
 }

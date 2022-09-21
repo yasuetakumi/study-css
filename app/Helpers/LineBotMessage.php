@@ -2,16 +2,23 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Facades\Config;
+use Exception;
+use LINE\LINEBot;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use LINE\LINEBot\SignatureValidator;
+use LINE\LINEBot\Constant\HTTPHeader;
+use Illuminate\Support\Facades\Config;
+use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 
 class LineBotMessage
 {
 
     public function baseConfig()
     {
-        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(config('line.channel_access_token'));
-        $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => config('line.channel_secret')]);
+        $httpClient = new CurlHTTPClient(config('line.channel_access_token'));
+        $bot = new LINEBot($httpClient, ['channelSecret' => config('line.channel_secret')]);
 
         return $bot;
     }
@@ -20,18 +27,34 @@ class LineBotMessage
         return $this->accessToken;
     }
 
-    public function callback()
+    public function webhook (Request $request)
     {
-        $bot = $this->baseConfig();
-        $signature = $_SERVER["HTTP_" . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
-        $events = $bot->parseEventRequest(file_get_contents('php://input'), $signature);
 
-        foreach ($events as $event) {
-            if ($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage) {
-                $bot->replyText($event->getReplyToken(), $event->getText());
-            }
+        $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
+        if (!SignatureValidator::validateSignature($request->getContent(), config('line.channel_secret'), $signature)) {
+            return;
         }
 
+        $httpClient = new CurlHTTPClient (config('line.channel_access_token'));
+        $lineBot = new LINEBot($httpClient, ['channelSecret' => config('line.channel_secret')]);
+
+        try {
+
+            $events = $lineBot->parseEventRequest($request->getContent(), $signature);
+
+            foreach ($events as $event) {
+
+                $replyToken = $event->getReplyToken();
+                $text = $event->getText();
+                $lineBot->replyText($replyToken, $text);
+
+            }
+        } catch (Exception $e) {
+
+            return;
+        }
+
+        return;
     }
 
     function getBotInfo()
@@ -60,7 +83,7 @@ class LineBotMessage
     function broadcastMessage($msg)
     {
         $bot = $this->baseConfig();
-        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($msg);
+        $textMessageBuilder = new TextMessageBuilder($msg);
         $response = $bot->broadcast($textMessageBuilder);
         if ($response->isSucceeded()) {
             return $response;
@@ -86,7 +109,7 @@ class LineBotMessage
     function sendMessageToMultiUser($userIds, $msg)
     {
         $bot = $this->baseConfig();
-        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($msg);
+        $textMessageBuilder = new TextMessageBuilder($msg);
         $response = $bot->multicast($userIds, $textMessageBuilder);
         if ($response->isSucceeded()) {
             return $response;
@@ -99,7 +122,7 @@ class LineBotMessage
     function pushMultipleMessage($userIds, $msg)
     {
         $bot = $this->baseConfig();
-        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($msg);
+        $textMessageBuilder = new TextMessageBuilder($msg);
         $response = $bot->pushMessage($userIds, $textMessageBuilder);
         if ($response->isSucceeded()) {
             return response()->json([

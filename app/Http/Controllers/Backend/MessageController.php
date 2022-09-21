@@ -83,12 +83,11 @@ class MessageController extends Controller
             ]);
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
         $bot = new LineBotMessage();
-        $response = $bot->callback();
+        $response = $bot->webhook($request);
         return response()->json($response);
     }
-
 
 }
