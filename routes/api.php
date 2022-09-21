@@ -70,4 +70,9 @@ Route::prefix('v1')->group(function () {
 
     //History
     Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');
+
+    //Chat Line
+    Route::post('chat/broadcastMessage', 'API\ApiChatController@broadcastMessage')->name('api.chat.broadcast');
+    Route::post('chat/sendMessageToUser', 'API\ApiChatController@sendMessageToUser')->name('api.chat.send');
+    Route::get('chat/botInformation', 'API\ApiChatController@getBotInfo')->name('api.chat.bot.information');
 });

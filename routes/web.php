@@ -2,10 +2,10 @@
 
 use App\Models\User;
 use App\Models\Property;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Route;
 use Stripe\StripeClient;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ You can registered routing by this command.
 
 
 */
-// check if is production
+// check if is productions
 if (Config::get('app.env') === 'production') {
     Route::get('/partner','LpController@index')->name('lp.index');
     Route::post('/partner', 'LpController@contact')->name('lp.contact');
@@ -76,6 +76,14 @@ if (Config::get('app.env') === 'production') {
         | Route groups backend
         |------------------------------------------------------------------
         */
+        // Chat Line Demo
+        Route::namespace('Backend')->name('chat.')->prefix('chat')->group(function () {
+            Route::get('/', 'MessageController@index')->name('index');
+            Route::post('/broadcast', 'MessageController@broadcast')->name('broadcast');
+            Route::post('/send', 'MessageController@pushMessage')->name('send');
+            Route::get('/botInfo', 'MessageController@getBotInfo')->name('bot.info');
+            Route::post('/callback', 'MessageController@callback')->name('callback');
+        });
 
         /**
          * Administrator login.
