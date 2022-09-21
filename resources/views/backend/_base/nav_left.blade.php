@@ -13,7 +13,7 @@
 <aside class="main-sidebar elevation-1 sidebar-light-secondary">
     <!-- Brand Logo -->
     <a href="{{route('dashboard')}}" class="brand-link">
-        <span class="brand-text">Laravel6Starter</span>
+        <span class="brand-text">{{config('app.name')}}</span>
     </a>
 
     <!-- Sidebar -->
