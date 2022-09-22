@@ -26,13 +26,15 @@
 
         @else
             @component('backend._components.text_label', ['name' => 'linked_line_id', 'label' => __('label.linked_line_id'), 'value' => $item->line_id ?? '', 'required' => false]) @endcomponent
-            @component('backend._components.input_button_anchor',[
-                'label' => __('label.cancel_sns'),
-                'required' => false,
-                'route' => route('admin.member.cancelSns', ['member' => $item->id]),
-                'value' => __('label.cancel_sns')
-            ])
-            @endcomponent
+            @if($page_type == 'edit')
+                @component('backend._components.input_button_anchor',[
+                    'label' => __('label.cancel_sns'),
+                    'required' => false,
+                    'route' => route('admin.member.cancelSns', ['member' => $item->id]),
+                    'value' => __('label.cancel_sns')
+                ])
+                @endcomponent
+            @endif
         @endif
 
 
