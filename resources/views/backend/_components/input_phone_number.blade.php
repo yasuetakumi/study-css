@@ -12,7 +12,7 @@
         {{isset($min) ? 'minlength='.$min : '' }}
         {{isset($max) ? 'maxlength='.$max : '' }}
         data-parsley-phonenumber
-        data-parsley-phonenumber-message="間違った電話番号、例: 123-456-7890 または 123-4567-8901"
+        data-parsley-phonenumber-message="@lang('label.phone_validation', ['attribute' => $label])"
         {{isset($isDisabled) && $isDisabled == true ? 'disabled' : '' }} />
     </div>
 </div>
