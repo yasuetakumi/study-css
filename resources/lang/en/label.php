@@ -127,6 +127,17 @@ return [
     'line_id' => 'Line ID',
     'social_login' => 'Social Login',
 
+    // A3
+    'name_furigana' => 'Name furigana',
+    'name_kana' => 'Name kana',
+    'line_linkage_status' => 'Line Linkage status',
+    'linked_line_id' => 'Linked Line ID',
+    'line_qr_or_link' => 'QR code or url to link to LINE',
+    'line_notif_settings' => 'Line Notification Settings',
+    'email_notif_settings' => 'Email Notification Settings',
+    'linked' => 'Linked',
+    'cancel_sns' => 'Cancel Certifcation SNS',
+
     // A6
     'last_update_datetime' => 'Last Update',
     'company_id' => 'Company ID',

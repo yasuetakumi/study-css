@@ -80,7 +80,7 @@ if (Config::get('app.env') === 'production') {
         Route::namespace('Backend')->name('chat.')->prefix('chat')->group(function () {
             Route::get('/', 'MessageController@index')->name('index');
             Route::post('/broadcast', 'MessageController@broadcast')->name('broadcast');
-            Route::post('/send', 'MessageController@pushMessage')->name('send');
+            Route::post('/send', 'MessageController@sendMessage')->name('send');
             Route::get('/botInfo', 'MessageController@getBotInfo')->name('bot.info');
             Route::post('/callback', 'MessageController@callback')->name('callback');
         });
@@ -126,6 +126,7 @@ if (Config::get('app.env') === 'production') {
                         Route::get('update-status/{propertyId}', 'PropertyController@updatePublicationStatus')->name('publication.status');
                     });
                     Route::resource('member', 'MemberController')->except('detail');
+                    Route::get('member/cancel/{member}', 'MemberController@cancelLineSns')->name('member.cancelSns');
 
                     // Route::get('property/detail/{id}', 'PropertyController@detail')->name('property.detail');
                 });

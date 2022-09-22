@@ -4,5 +4,7 @@
         @if(isset($value))
             <p class="mb-0 ml-1">{{$value}}</p>
         @endif
+
+        {{ $slot }}
     </div>
 </div>
