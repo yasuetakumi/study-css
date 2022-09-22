@@ -7,6 +7,9 @@
             @foreach($options as $option)
                 @php
                     $current_value = !empty($is_indexed_value) ? $loop->index + 1 : $option;
+                    if(isset($indexStartFrom0) && $indexStartFrom0){
+                        $current_value = $loop->index;
+                    }
                 @endphp
                 <div class="icheck-cyan d-inline">
                     <input type="radio" value="{{ $current_value }}" id="input-{{ $name }}-{{ $loop->index }}"

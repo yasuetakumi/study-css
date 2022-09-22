@@ -44,6 +44,10 @@ class MemberController extends Controller
         $data['page_type'] = 'create';
         $data['form_action'] = route('admin.member.store');
         $data['item'] = new Member();
+        $data['notif_statuses'] = [
+            Member::ID_DISABLE_NOTIF => Member::ID_DISABLE_NOTIF_LABEL,
+            Member::ID_ENABLE_NOTIF => Member::ID_ENABLE_NOTIF_LABEL
+        ];
         return view('backend.member.form', $data);
     }
 
@@ -71,6 +75,10 @@ class MemberController extends Controller
         $data['page_type'] = 'edit';
         $data['form_action'] = route('admin.member.update', $id);
         $data['item'] = Member::find($id);
+        $data['notif_statuses'] = [
+            Member::ID_DISABLE_NOTIF => Member::ID_DISABLE_NOTIF_LABEL,
+            Member::ID_ENABLE_NOTIF => Member::ID_ENABLE_NOTIF_LABEL
+        ];
         return view('backend.member.form', $data);
     }
 
@@ -106,5 +114,19 @@ class MemberController extends Controller
         $property = Member::find($id);
         $property->delete();
         // return redirect()->route('backend.member.index')->with('success', __('label.delete_success'));
+    }
+
+    public function cancelLineSns($id)
+    {
+        $member = Member::find($id);
+        if(!empty($member)){
+            $member->update([
+                'is_line_notification_enabled' => Member::ID_DISABLE_NOTIF,
+                'line_id' => null
+            ]);
+            return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+        } else {
+            return redirect()->back()->with('errors', __('label.FAILED_UPDATE_MESSAGE'));
+        }
     }
 }

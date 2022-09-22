@@ -353,6 +353,16 @@
                     return regex.test(value);
                 }
             });
+
+            //phone number
+            //pattern : xxx-xxxx-xxxx OR xxx-xxx-xxxx
+            window.Parsley.addValidator("phonenumber", {
+                validateString: function(value, element) {
+                    regex = /^\d{1,4}-\d{1,4}-\d{4}$/;
+                    return regex.test(value);
+                }
+            });
+
         });
     </script>
 @endpush

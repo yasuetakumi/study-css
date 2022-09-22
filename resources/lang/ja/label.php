@@ -132,7 +132,10 @@ return [
     // A3
     'name_furigana' => 'フリガナ',
     'name_kana' => 'カタカナ',
-    'line_notif_settings' => 'ＬＩＮＥ通知設定',
+    'line_linkage_status' => 'LINE連携の状況',
+    'linked_line_id' => 'LINE連携のID',
+    'line_qr_or_link' => 'LINE連携可能なQRコードとリンク',
+    'line_notif_settings' => 'LINE通知設定',
     'email_notif_settings' => 'メール通知設定',
     'linked' => 'リンク済み',
     'cancel_sns' => 'ＳＮＳ連携解除',
