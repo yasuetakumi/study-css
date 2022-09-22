@@ -56,7 +56,6 @@ class MemberController extends Controller
         $data = $request->validate([
             'company_name' => 'nullable',
             'name' => 'required',
-            'name_furigana' => 'nullable',
             'name_kana' => 'nullable',
             'phone_number' => 'nullable|min:11|max:13',
             'email' => 'required|email|unique:members,email',
@@ -87,7 +86,6 @@ class MemberController extends Controller
         $data = $request->validate([
             'company_name' => 'nullable',
             'name' => 'required',
-            'name_furigana' => 'nullable',
             'name_kana' => 'nullable',
             'phone_number' => 'nullable|min:11|max:13',
             'email' => 'required|email|unique:members,email,' . $id,

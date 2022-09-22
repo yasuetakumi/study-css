@@ -23,7 +23,6 @@ class Member extends Model
     protected $fillable = [
         'company_name',
         'name',
-        'name_furigana',
         'name_kana',
         'phone_number',
         'email',
