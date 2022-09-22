@@ -38,11 +38,67 @@ class MemberController extends Controller
         return view('backend.member.index', $data);
     }
 
+    public function create()
+    {
+        $data['page_title'] = __('label.members') . ' - ' . __('label.add');
+        $data['page_type'] = 'create';
+        $data['form_action'] = route('admin.member.store');
+        $data['item'] = new Member();
+        return view('backend.member.form', $data);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'company_name' => 'nullable',
+            'name' => 'required',
+            'name_furigana' => 'nullable',
+            'name_kana' => 'nullable',
+            'phone_number' => 'nullable|min:11|max:13',
+            'email' => 'required|email|unique:members,email',
+            'password' => 'required|min:8',
+            'is_line_notification_enabled' => 'nullable',
+            'is_email_notification_enabled' => 'nullable',
+        ]);
+        $data['password'] = bcrypt($data['password']);
+        $member = Member::create($data);
+        return redirect()->route('admin.member.index')->with('success', __('label.SUCCESS_CREATE_MESSAGE'));
+    }
+
     public function edit($id)
     {
         $data['page_title'] = __('label.members') . ' - ' . __('label.edit');
-        $data['member'] = Member::find($id);
+        $data['page_type'] = 'edit';
+        $data['form_action'] = route('admin.member.update', $id);
+        $data['item'] = Member::find($id);
         return view('backend.member.form', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'company_name' => 'nullable',
+            'name' => 'required',
+            'name_furigana' => 'nullable',
+            'name_kana' => 'nullable',
+            'phone_number' => 'nullable|min:11|max:13',
+            'email' => 'required|email|unique:members,email,' . $id,
+            'password' => 'nullable|min:8',
+            'is_line_notification_enabled' => 'nullable',
+            'is_email_notification_enabled' => 'nullable',
+        ]);
+        $member = Member::find($id);
+        if(!empty($member)){
+            if(!empty($data['password'])){
+                $data['password'] = bcrypt($data['password']);
+            }else{
+                unset($data['password']);
+            }
+            $member->update($data);
+            return redirect()->route('admin.member.index')->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+        } else {
+            return redirect()->route('admin.member.index')->with('errors', __('label.FAILED_UPDATE_MESSAGE'));
+        }
     }
 
     public function destroy($id)

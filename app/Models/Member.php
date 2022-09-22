@@ -18,11 +18,14 @@ class Member extends Model
         'company_name',
         'name',
         'name_furigana',
+        'name_kana',
         'phone_number',
         'email',
         'password',
         'line_id',
         'remember_token',
+        'is_line_notification_enabled',
+        'is_email_notification_enabled'
     ];
 
     public function socialAccounts()

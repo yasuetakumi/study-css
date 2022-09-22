@@ -170,12 +170,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        {{-- <li id="create_member" class="nav-item">
+                        <li id="create_member" class="nav-item">
                             <a href="{{route('admin.member.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>@lang('label.createNew')</p>
                             </a>
-                        </li> --}}
+                        </li>
                         <li id="list_member" class="nav-item">
                             <a href="{{route('admin.member.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>

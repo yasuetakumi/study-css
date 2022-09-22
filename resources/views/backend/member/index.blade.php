@@ -7,6 +7,7 @@
 @endsection
 
 @section('top_buttons')
+    <a href="{{route('admin.member.create')}}" class="btn btn-secondary">@lang(('label.createNew'))</a>
 @endsection
 
 @section('content')

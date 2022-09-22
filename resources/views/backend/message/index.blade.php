@@ -13,7 +13,6 @@
             <h3 class="text-center">Send Message To User</h3>
             @component('backend._components.form_container', ["action" => $form_action, 'id' => 'chat-form',  "page_type" => $page_type, "files" => false])
                 @component('backend._components.input_text', ['name' => 'message', 'label' => 'Message', 'required' => 1, 'value' => '']) @endcomponent
-                {{-- @component('backend._components.input_text', ['name' => 'title', 'label' => __('label.title'), 'required' => 1, 'value' => '']) @endcomponent --}}
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-secondary" id="input-submit">
                         <i class="fas fa-save"></i> Broadcast Message

@@ -129,6 +129,14 @@ return [
     'line_id' => 'ＬＩＮＥ ＩＤ',
     'social_login' => 'ログインが可能なＳＮＳ',
 
+    // A3
+    'name_furigana' => 'フリガナ',
+    'name_kana' => 'カタカナ',
+    'line_notif_settings' => 'ＬＩＮＥ通知設定',
+    'email_notif_settings' => 'メール通知設定',
+    'linked' => 'リンク済み',
+    'cancel_sns' => 'ＳＮＳ連携解除',
+
     // A6
     'last_update_datetime' => '作成日時',
     'company_id' => '企業ID',
