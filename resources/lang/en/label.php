@@ -137,6 +137,7 @@ return [
     'email_notif_settings' => 'Email Notification Settings',
     'linked' => 'Linked',
     'cancel_sns' => 'Cancel Certifcation SNS',
+    'phone_validation' => 'The :attribute must be less than 11 digit without hyphens.',
 
     // A6
     'last_update_datetime' => 'Last Update',

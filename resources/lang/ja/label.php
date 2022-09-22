@@ -139,6 +139,7 @@ return [
     'email_notif_settings' => 'メール通知設定',
     'linked' => 'リンク済み',
     'cancel_sns' => 'ＳＮＳ連携解除',
+    'phone_validation' => ':attributeは、ハイフン無しの11桁以内で入力してください。',
 
     // A6
     'last_update_datetime' => '作成日時',
