@@ -55,6 +55,16 @@
                     </div>
                     <!-- /.col -->
                 </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-auto">
+                        <div class="icheck-primary">
+                            <input id="terms" type="checkbox" name="terms" required>
+                            <label for="terms" style="font-weight: normal; font-size: 0.8rem">
+                                @lang('label.agree_with_terms')
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row mt-4">
 
                     <div class="px-2">
@@ -76,6 +86,7 @@
                         </a>
                     </div>
                 </div>
+
             </form>
 
             {{--<div class="social-auth-links text-center mb-3">--}}
@@ -92,6 +103,19 @@
             {{-- <a href="#" class="text-center">Register a new membership</a>--}}
             {{--</p>--}}
         </div>
+        <div class="card-footer">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <a class="text-link" href="{{route('terms-of-use')}}">利用規約</a>
+                </div>
+                <div class="col-auto">
+                    <a class="text-link" href="{{route('privacy-policy')}}">プライバシーポリシー</a>
+                </div>
+                <div class="col-auto">
+                    <a class="text-link" href="{{route('contact')}}">お問い合わせ</a>
+                </div>
+            </div>
+        </div>
     </div>
     @if (Route::has('password.request'))
     <p class="mb-1 mt-1 ml-1" style="float: left">
@@ -101,7 +125,7 @@
     </p>
     @endif
     <p class="mb-1 mt-1 mr-1" style="float: right">
-        <a href="{{ route('login') }}" style="font-weight: normal; font-size: 0.8rem">@lang('label.adminloginscreen')</a>
+        <a href="{{ route('member-register') }}" style="font-weight: normal; font-size: 0.8rem">@lang('label.member_registration')</a>
     </p>
 </div>
 @endsection

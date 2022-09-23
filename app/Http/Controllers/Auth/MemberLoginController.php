@@ -75,22 +75,31 @@ class MemberLoginController extends Controller
 
     protected function showRegisterForm()
     {
-        return view('auth.register-member');
+        $data['page_title'] = __('label.member_registration');
+        $data['page_type'] = 'create';
+        $data['form_action'] = route('member-register-action');
+        $data['item'] = new Member();
+        $data['notif_statuses'] = [
+            Member::ID_DISABLE_NOTIF => Member::ID_DISABLE_NOTIF_LABEL,
+            Member::ID_ENABLE_NOTIF => Member::ID_ENABLE_NOTIF_LABEL
+        ];
+        return view('auth.register-member', $data);
     }
 
     public function register(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:members',
-            'password' => 'required|string|min:6|confirmed:password_confirmation',
+        $data = $request->validate([
+            'company_name' => 'nullable',
+            'name' => 'required',
+            'name_kana' => 'nullable',
+            'phone_number' => 'nullable|min:11|max:13',
+            'email' => 'required|email|unique:members,email',
+            'password' => 'required|min:8',
+            'is_line_notification_enabled' => 'nullable',
+            'is_email_notification_enabled' => 'nullable',
         ]);
-
-        $member = Member::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        $data['password'] = bcrypt($data['password']);
+        $member = Member::create($data);
 
         $this->saveLog('会員登録', 'メールアドレス：' . $request->email . '、ユーザ名：' . $request->name, $member->id);
 

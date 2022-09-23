@@ -22,6 +22,10 @@ class Authenticate extends Middleware
             // User try to access company route and not login as user yet
             elseif ($request->is('company/*') && !Auth::guard('user')->check())
                 return route('company-user-login');
+            // User try to access member route and not login as member yet
+            elseif ($request->is('/') && !Auth::guard('member')->check())
+                return route('member-login');
+
         }
     }
 }

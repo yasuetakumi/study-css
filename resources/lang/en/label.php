@@ -294,4 +294,11 @@ return [
 
     //C-Common-6
     'no_condition_saved' => 'No Search Condition Saved',
+
+    //C18
+    'member_registration' => 'Member Registration',
+    'to_confirmation_page' => 'To confirmation page',
+    'term_of_use' => 'I consent to the Terms of Use',
+    'privacy_policy' => 'I consent to the Privacy Policy',
+    'agree_with_terms' => 'I agree with the Terms & Conditions',
 ];
