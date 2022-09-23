@@ -67,8 +67,8 @@ if (Config::get('app.env') === 'production') {
 
         Route::get('/login', 'Auth\MemberLoginController@showLoginForm')->name('member-login');
         Route::post('/login', 'Auth\MemberLoginController@login')->name('member-login-action');
-        Route::get('/register', 'Auth\MemberLoginController@showRegisterForm')->name('member-register');
-        Route::post('/register', 'Auth\MemberLoginController@register')->name('member-register-action');
+        Route::get('/sign-up', 'Auth\MemberLoginController@showRegisterForm')->name('member-register');
+        Route::post('/sign-up', 'Auth\MemberLoginController@register')->name('member-register-action');
 
         // Socialite
         Route::get('/auth/{provider}', 'Auth\SocialLoginController@redirectToProvider')->name('socialite.redirect');
@@ -206,28 +206,39 @@ if (Config::get('app.env') === 'production') {
          */
         Route::group(['middleware' => 'auth:member'], function() {
             Route::get('member/logout', 'Auth\MemberLoginController@logout')->name('member.logout');
+            // End User (C Module)
+            // C1
+            Route::get('/', 'Frontend\HomeController@index')->name('home');
+            // C4
+            Route::get('properties/{id}', 'Frontend\PropertyController@show')->name('property.detail');
+            // C4
+            Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
+
+            // C2
+            Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
+            Route::post('result', 'Frontend\PropertyController@filter')->name('property.filter');
+            Route::post('compile-filter', 'Frontend\PropertyController@compileFilter');
+            Route::post('search-preference', 'Frontend\CustomerSearchPreferenceController@store');
+            // C3
+            Route::get('map', function () {
+                return 'map';
+            });
+            // C5
+            Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
+            // C6
+            Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
+
+            // C15 registration of new real estate agency
+            Route::get('estate/register', 'Frontend\EstateController@create')->name('company.register');
+            Route::post('estate/confirm', 'Frontend\EstateController@confirm')->name('company.confirm');
+            Route::post('estate/store', 'Frontend\EstateController@store')->name('company.store');
+            Route::get('estate/check_email', 'Frontend\EstateController@check_email')->name('company.check_email');
+
+            Route::get('thanks', 'Frontend\EstateController@thanks_page')->name('thanks.page');
+
+            Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
         });
 
-        // End User (C Module)
-        // C4
-        Route::get('properties/{id}', 'Frontend\PropertyController@show')->name('property.detail');
-        // C4
-        Route::post('/inquiry', 'Backend\CustomerInquiryController@store')->name('enduser.inquiry.store');
-        // C1
-        Route::get('/', 'Frontend\HomeController@index')->name('home');
-        // C2
-        Route::get('result', 'Frontend\PropertyController@index')->name('property.index');
-        Route::post('result', 'Frontend\PropertyController@filter')->name('property.filter');
-        Route::post('compile-filter', 'Frontend\PropertyController@compileFilter');
-        Route::post('search-preference', 'Frontend\CustomerSearchPreferenceController@store');
-        // C3
-        Route::get('map', function () {
-            return 'map';
-        });
-        // C5
-        Route::get('/prefecture/{name}', 'Frontend\HomeController@prefecture')->name('prefecture.detail');
-        // C6
-        Route::get('property-history', 'Frontend\PropertyHistoryController@index')->name('property.history');
         // C7
         Route::get('faqs', function() {
             return 'Pending design of static page';
@@ -243,24 +254,16 @@ if (Config::get('app.env') === 'production') {
         // C10
         Route::get('privacy-policy', function() {
             return 'Pending design of static page';
-        });
+        })->name('privacy-policy');
         // C12
         Route::get('terms-of-service', function() {
             return 'Pending design of static page';
-        });
+        })->name('terms-of-use');
         // C13
         Route::get('overview', function() {
             return 'pending design of static page';
         });
-        // C15 registration of new real estate agency
-        Route::get('estate/register', 'Frontend\EstateController@create')->name('company.register');
-        Route::post('estate/confirm', 'Frontend\EstateController@confirm')->name('company.confirm');
-        Route::post('estate/store', 'Frontend\EstateController@store')->name('company.store');
-        Route::get('estate/check_email', 'Frontend\EstateController@check_email')->name('company.check_email');
 
-        Route::get('thanks', 'Frontend\EstateController@thanks_page')->name('thanks.page');
-
-        Route::get('company-name/{id}', 'Backend\PropertyController@getCompanyName');
     });
     Route::get('/partner', 'LpController@index')->name('lp.index');
     Route::post('/partner', 'LpController@contact')->name('lp.contact');
