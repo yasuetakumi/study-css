@@ -2,12 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Member extends Model
+class Member extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use SoftDeletes;
+    // These traits are used for admin login authentication
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable, SoftDeletes;
 
     const ID_ENABLE_NOTIF = 1;
     const ID_DISABLE_NOTIF = 0;
