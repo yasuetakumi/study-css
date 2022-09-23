@@ -5,11 +5,12 @@
 @section('title', 'Administrator Login Page | ' . config('app.name'))
 
 @section('content')
+<div class="login-box">
     <div class="login-logo">
         <a class="text-uppercase" style="letter-spacing: 2px" href="javascript:;">{{ env('APP_NAME','') }}</a>
     </div>
     <div class="text-sm">
-    @include("backend._includes.alert")
+        @include("backend._includes.alert")
     </div>
     <div class="card card-user-login">
         <div class="card-body login-card-body">
@@ -21,9 +22,7 @@
                 <span class="help-block text-sm" role="alert"> <strong>{{ $message }}</strong> </span>
                 @enderror
                 <div class="input-group mb-3 {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input id="email" type="email" class="form-control @error('email')is-invalid @enderror"
-                        name="email" value="{{ old('email') }}" required autocomplete="email"
-                        placeholder="@lang('label.enterEmailAddress')" autofocus>
+                    <input id="email" type="email" class="form-control @error('email')is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="@lang('label.enterEmailAddress')" autofocus>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -34,9 +33,7 @@
                 <span class="invalid-feedback text-sm" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
                 <div class="input-group mb-3{{ $errors->has('password') ? ' has-error' : '' }}">
-                    <input id="password" type="password"
-                        class="form-control @error('password')is-invalid @enderror" name="password"
-                        required autocomplete="current-password" placeholder="@lang('label.enterPassword')">
+                    <input id="password" type="password" class="form-control @error('password')is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="@lang('label.enterPassword')">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -46,7 +43,7 @@
                 <div class="row mt-5">
                     <div class="col-8">
                         <div class="icheck-primary">
-                            <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} >
+                            <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                             <label for="remember" style="font-weight: normal; font-size: 0.8rem">
                                 @lang('label.remember')
                             </label>
@@ -68,29 +65,30 @@
                 @endif
             </form>
 
-        {{--<div class="social-auth-links text-center mb-3">--}}
-        {{--    <p>- OR -</p>--}}
-        {{--    <a href="#" class="btn btn-block btn-primary">--}}
-        {{--        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook--}}
-        {{--    </a>--}}
-        {{--    <a href="#" class="btn btn-block btn-danger">--}}
-        {{--        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+--}}
-        {{--    </a>--}}
-        {{--</div>--}}
-        <!-- /.social-auth-links -->
+            {{--<div class="social-auth-links text-center mb-3">--}}
+            {{-- <p>- OR -</p>--}}
+            {{-- <a href="#" class="btn btn-block btn-primary">--}}
+            {{-- <i class="fab fa-facebook mr-2"></i> Sign in using Facebook--}}
+            {{-- </a>--}}
+            {{-- <a href="#" class="btn btn-block btn-danger">--}}
+            {{-- <i class="fab fa-google-plus mr-2"></i> Sign in using Google+--}}
+            {{-- </a>--}}
+            {{--</div>--}}
+            <!-- /.social-auth-links -->
             {{--<p class="mb-0">--}}
-            {{--    <a href="#" class="text-center">Register a new membership</a>--}}
+            {{-- <a href="#" class="text-center">Register a new membership</a>--}}
             {{--</p>--}}
         </div>
     </div>
     @if (Route::has('password.request'))
-        <p class="mb-1 mt-1 ml-1" style="float: left">
-            @if(!env('DEMO_MODE'))
-            <a href="{{ route('password.request') }}"  style="font-weight: normal; font-size: 0.8rem">@lang('label.IForgotMyPassword')</a>
-            @endif
-        </p>
+    <p class="mb-1 mt-1 ml-1" style="float: left">
+        @if(!env('DEMO_MODE'))
+        <a href="{{ route('password.request') }}" style="font-weight: normal; font-size: 0.8rem">@lang('label.IForgotMyPassword')</a>
+        @endif
+    </p>
     @endif
     <p class="mb-1 mt-1 mr-1" style="float: right">
-        <a href="{{ route('login') }}"  style="font-weight: normal; font-size: 0.8rem">@lang('label.adminloginscreen')</a>
+        <a href="{{ route('login') }}" style="font-weight: normal; font-size: 0.8rem">@lang('label.adminloginscreen')</a>
     </p>
+</div>
 @endsection
