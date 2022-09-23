@@ -44,4 +44,10 @@ return [
         'redirect'      => env('GOOGLE_REDIRECT'),
     ],
 
+    'line' => [
+        'client_id'     => env('LINE_AUTH_CLIENT_ID'),
+        'client_secret' => env('LINE_AUTH_CLIENT_SECRET'),
+        'redirect'      => env('LINE_AUTH_REDIRECT'),
+    ],
+
 ];
