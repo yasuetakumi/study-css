@@ -36,9 +36,9 @@ class SocialLoginController extends Controller
             return $socialAccount->member;
         }else{
             // check if same email exists
-            $checkEmailMember = Member::where('email', $socialLite->getEmail())->first();
+            $member = Member::where('email', $socialLite->getEmail())->first();
             $randomPassword = Str::random(8);
-            if(!$checkEmailMember){
+            if(!$member){
                 // if email not available from sociallite use name as email
                 if($socialLite->getEmail() == null || $socialLite->getEmail() == ''){
                     $member = Member::create([
