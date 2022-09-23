@@ -23,17 +23,26 @@ class LineBotMessage
         return $bot;
     }
 
+    public function validateSignature(Request $request)
+    {
+        $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
+        if (empty($signature)) {
+            throw new Exception('Signature not set');
+        }
+
+        if (!SignatureValidator::validateSignature($request->getContent(), config('line.channel_secret'), $signature)) {
+            throw new Exception('Invalid signature');
+        }
+    }
+
     public function getAccessToken(){
         return $this->accessToken;
     }
 
     public function webhook (Request $request)
     {
-
-        $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
-        if (!SignatureValidator::validateSignature($request->getContent(), config('line.channel_secret'), $signature)) {
-            return;
-        }
+        $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
+        $this->validateSignature($request);
 
         $httpClient = new CurlHTTPClient (config('line.channel_access_token'));
         $lineBot = new LINEBot($httpClient, ['channelSecret' => config('line.channel_secret')]);
@@ -47,10 +56,14 @@ class LineBotMessage
                 $replyToken = $event->getReplyToken();
                 $text = $event->getText();
                 $lineBot->replyText($replyToken, $text);
+                Log::info('Event' . $event);
+                Log::info('Reply token: ' . $replyToken);
+                Log::info('Text: ' . $text);
+
 
             }
         } catch (Exception $e) {
-
+            Log::error('Error: ' . $e->getMessage());
             return;
         }
 

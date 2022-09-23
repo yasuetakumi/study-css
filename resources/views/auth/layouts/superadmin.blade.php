@@ -36,17 +36,7 @@
     </style>
 </head>
 <body class="hold-transition login-page">
-
-<div class="login-box">
-
-    {{--
-    <div class="login-logo">
-        <a href="{{url('/')}}"><b>管理者ログイン画面</b></a>
-    </div>
-    --}}
     @yield('content')
-</div>
-<!-- /.login-box -->
 
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

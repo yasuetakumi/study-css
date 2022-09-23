@@ -116,6 +116,9 @@
         @else
             <!-- navbar for frontend user C-COMMON-1 -->
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #446eb8;">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         {{-- Top Page --}}
@@ -149,6 +152,18 @@
                         <li class="nav-item border-right">
                             <a class="nav-link text-light" href="{{ route('property.history', ['favorite' => true ]) }}">お気に入り</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <!-- C-0 -->
+                        @if(auth()->guard('member')->check())
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{route('member.logout')}}">@lang('label.logout')</a>
+                        </li>
+                        @else
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{route('member-login')}}">@lang('label.login')</a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
             </nav>

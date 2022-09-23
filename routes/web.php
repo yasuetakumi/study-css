@@ -70,6 +70,10 @@ if (Config::get('app.env') === 'production') {
         Route::get('/register', 'Auth\MemberLoginController@showRegisterForm')->name('member-register');
         Route::post('/register', 'Auth\MemberLoginController@register')->name('member-register-action');
 
+        // Socialite
+        Route::get('/auth/{provider}', 'Auth\SocialLoginController@redirectToProvider')->name('socialite.redirect');
+        Route::get('/auth/{provider}/callback', 'Auth\SocialLoginController@handleProviderCallback')->name('socialite.callback');
+
         // Password Reset Routes...
         Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
