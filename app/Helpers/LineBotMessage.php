@@ -56,9 +56,9 @@ class LineBotMessage
                 $replyToken = $event->getReplyToken();
                 $text = $event->getText();
                 $lineBot->replyText($replyToken, $text);
-                Log::info('Event' . $event);
-                Log::info('Reply token: ' . $replyToken);
-                Log::info('Text: ' . $text);
+                Log::info('Event' . json_encode($event, JSON_PRETTY_PRINT));
+                Log::info('Reply token: ' . json_encode($replyToken, JSON_PRETTY_PRINT));
+                Log::info('Text: ' . json_encode($text, JSON_PRETTY_PRINT));
 
 
             }
