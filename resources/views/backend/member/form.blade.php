@@ -155,6 +155,16 @@
         */
         methods: {
             // --------------------------------------------------------------
+            handleLineWebhook: function(){
+                var self = this;
+                var url = "{{ route('api.chat.webhook') }}";
+                axios.post(url).then(function(response){
+                    console.log(response);
+                }).catch(function(error){
+                    console.log(error);
+                });
+            }
+
 
             // --------------------------------------------------------------
         }

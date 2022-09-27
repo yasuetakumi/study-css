@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Exception;
 use LINE\LINEBot;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use LINE\LINEBot\SignatureValidator;
@@ -50,17 +51,24 @@ class LineBotMessage
         try {
 
             $events = $lineBot->parseEventRequest($request->getContent(), $signature);
-
+            Log::info(json_encode($events, JSON_PRETTY_PRINT));
             foreach ($events as $event) {
+                // handle event message
+                if ($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage) {
+                    $textMessageBuilder = new TextMessageBuilder($event->getText());
+                    $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
+                }
 
-                $replyToken = $event->getReplyToken();
-                $text = $event->getText();
-                $lineBot->replyText($replyToken, $text);
-                Log::info('Event' . json_encode($event, JSON_PRETTY_PRINT));
-                Log::info('Reply token: ' . json_encode($replyToken, JSON_PRETTY_PRINT));
-                Log::info('Text: ' . json_encode($text, JSON_PRETTY_PRINT));
+                // handle follow event
+                if ($event instanceof \LINE\LINEBot\Event\FollowEvent) {
+                    // get user profile
+                    $userProfile = $lineBot->getProfile($event->getUserId())->getJSONDecodedBody();
 
+                    // send welcome message in japanese
+                    $textMessageBuilder = new TextMessageBuilder('こんにちは！'.$userProfile['displayName'].'さん。');
+                    $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
 
+                }
             }
         } catch (Exception $e) {
             Log::error('Error: ' . $e->getMessage());
