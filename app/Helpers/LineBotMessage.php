@@ -7,6 +7,7 @@ use LINE\LINEBot;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\Constant\HTTPHeader;
 use Illuminate\Support\Facades\Config;
@@ -67,6 +68,14 @@ class LineBotMessage
                     // send welcome message in japanese
                     $textMessageBuilder = new TextMessageBuilder('こんにちは！'.$userProfile['displayName'].'さん。');
                     $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
+
+                    // check current logged in member
+                    if(Auth::guard('member')->check()){
+                        $member = Member::find(Auth::guard('member')->user()->id);
+                        $member->update([
+                            'line_id' => $event->getUserId()
+                        ]);
+                    }
 
                 }
             }
