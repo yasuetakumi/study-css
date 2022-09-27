@@ -73,16 +73,42 @@ class MemberLoginController extends Controller
         return view('auth.login-member-user');
     }
 
-    protected function showRegisterForm()
+    protected function showRegisterForm(Request $request)
     {
+        $data['item'] = $request->all();
         $data['page_title'] = __('label.member_registration');
+        $data['form_action'] = route('member-register-confirm');
         $data['page_type'] = 'create';
-        $data['form_action'] = route('member-register-action');
-        $data['item'] = new Member();
+        $data['isConfirmPage'] = false;
         $data['notif_statuses'] = [
             Member::ID_DISABLE_NOTIF => Member::ID_DISABLE_NOTIF_LABEL,
             Member::ID_ENABLE_NOTIF => Member::ID_ENABLE_NOTIF_LABEL
         ];
+        return view('auth.register-member', $data);
+    }
+
+    protected function confirmRegistration(Request $request)
+    {
+        $request->validate([
+            'company_name' => 'nullable',
+            'name' => 'required',
+            'name_kana' => 'nullable',
+            'phone_number' => 'nullable|min:11|max:13',
+            'email' => 'required|email|unique:members,email',
+            'password' => 'required|min:8',
+            'is_email_notification_enabled' => 'nullable',
+        ]);
+
+        $data['item'] = $request->all();
+        $data['isConfirmPage']  = true;
+        $data['page_title']     = __('label.member_registration_confirm');
+        $data['form_action']    = route('member-register-create');
+        $data['page_type']      = 'create';
+        $data['notif_statuses'] = [
+            Member::ID_DISABLE_NOTIF => Member::ID_DISABLE_NOTIF_LABEL,
+            Member::ID_ENABLE_NOTIF => Member::ID_ENABLE_NOTIF_LABEL
+        ];
+
         return view('auth.register-member', $data);
     }
 
@@ -95,16 +121,20 @@ class MemberLoginController extends Controller
             'phone_number' => 'nullable|min:11|max:13',
             'email' => 'required|email|unique:members,email',
             'password' => 'required|min:8',
-            'is_line_notification_enabled' => 'nullable',
             'is_email_notification_enabled' => 'nullable',
         ]);
         $data['password'] = bcrypt($data['password']);
         $member = Member::create($data);
 
-        $this->saveLog('会員登録', 'メールアドレス：' . $request->email . '、ユーザ名：' . $request->name, $member->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('label.member_registration_success'),
+        ]);
 
-        auth()->guard('member')->login($member);
+        // $this->saveLog('会員登録', 'メールアドレス：' . $request->email . '、ユーザ名：' . $request->name, $member->id);
 
-        return redirect()->route('home');
+        // auth()->guard('member')->login($member);
+
+        // return redirect()->route('home');
     }
 }

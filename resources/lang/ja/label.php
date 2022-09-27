@@ -305,6 +305,7 @@ return [
 
     //C18
     'member_registration' => '出店希望者の新規登録',
+    'member_registration_confirm' => '登録情報の確認',
     'to_confirmation_page' => '確認画面へ',
     'term_of_use' => '利用規約に同意する',
     'privacy_policy' => 'プライバシーポリシーに同意する',
