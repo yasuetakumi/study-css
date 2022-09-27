@@ -96,7 +96,6 @@ if (Config::get('app.env') === 'production') {
             Route::post('/broadcast', 'MessageController@broadcast')->name('broadcast');
             Route::post('/send', 'MessageController@sendMessage')->name('send');
             Route::get('/botInfo', 'MessageController@getBotInfo')->name('bot.info');
-            Route::post('/callback', 'MessageController@callback')->name('callback');
         });
 
         /**
