@@ -93,7 +93,7 @@
                         </span>
                     </span>
                 </button>
-                <a href="{{route('member-login')}}" id="redirectToLoginPage" class="d-none"></a>
+                <a href="{{route('member-register-thanks')}}" id="redirectToThanksPage" class="d-none"></a>
             </div>
         </div>
         @else
@@ -254,7 +254,7 @@
                     vm.$toasted.show( message, { type: 'success' });
                     vm.$store.commit( 'setLoading', false );
                     setTimeout(() => {
-                        document.getElementById('redirectToLoginPage').click();
+                        document.getElementById('redirectToThanksPage').click();
                     }, 2000);
                     // ------------------------------------------------------
                 }else{
@@ -267,7 +267,7 @@
 
             },
             redirectPage: function(){
-                let btn = document.getElementById("redirectToLoginPage");
+                let btn = document.getElementById("redirectToThanksPage");
                 console.log(btn);
                 btn.click();
             }
