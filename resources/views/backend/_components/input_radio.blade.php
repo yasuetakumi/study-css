@@ -15,6 +15,7 @@
                     <input type="radio" value="{{ $current_value }}" id="input-{{ $name }}-{{ $loop->index }}"
                     name="{{ $name }}" {{ !empty($loop->first) && (!empty($value) || $value == "") ? "checked" : "" }} {{ $value == $current_value ? "checked" : "" }}
                     {{isset($isDisabled) && $isDisabled == true ? 'disabled' : '' }}
+                    {{isset($isReadonly) && $isReadonly == true ? 'readonly' : '' }}
                     data-parsley-required-message="@lang('validation.required', ['attribute' => $label])"/>
                     <label for="input-{{ $name }}-{{ $loop->index }}" class="text-uppercase mr-5">{{ $option }}</label>
                 </div>

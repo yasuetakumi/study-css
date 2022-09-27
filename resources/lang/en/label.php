@@ -297,6 +297,7 @@ return [
 
     //C18
     'member_registration' => 'Member Registration',
+    'member_registration_confirm' => 'Confirm Registration Information',
     'to_confirmation_page' => 'To confirmation page',
     'term_of_use' => 'I consent to the Terms of Use',
     'privacy_policy' => 'I consent to the Privacy Policy',
