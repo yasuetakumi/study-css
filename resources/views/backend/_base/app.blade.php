@@ -121,39 +121,41 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        {{-- Top Page --}}
-                        <li class="nav-item border-right">
-                            <a class="nav-link text-light" href="{{ route('home') }}">@lang('label.top_page')</a>
-                        </li>
-                        <!-- C-1-1 -->
-                        <li class="nav-item border-right">
-                            <a class="nav-link text-light" href="{{ route('property.index') }}"><span class="fas fa-search"> 店舗物件を探す</span></a>
-                        </li>
-                        <!-- C-1-2 -->
-                        <li class="nav-item border-right">
-                            <search-condition-list isbutton="false" label="希望にマッチした物件"></search-condition-list>
-                        </li>
-                        <!-- C-1-3 -->
-                        <!--<li class="nav-item dropdown border-right">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            駅か市で探す
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>-->
-                        <!-- C-1-4 -->
-                        <li class="nav-item border-right">
-                            <a class="nav-link text-light" href="{{ route('property.history') }}">閲覧履歴</a>
-                        </li>
-                        <li class="nav-item border-right">
-                            <a class="nav-link text-light" href="{{ route('property.history', ['favorite' => true ]) }}">お気に入り</a>
-                        </li>
-                    </ul>
+                    @if((auth()->guard('web')->check() || auth()->guard('user')->check() || auth()->guard('member')->check()))
+                        <ul class="navbar-nav mr-auto">
+                            {{-- Top Page --}}
+                            <li class="nav-item border-right">
+                                <a class="nav-link text-light" href="{{ route('home') }}">@lang('label.top_page')</a>
+                            </li>
+                            <!-- C-1-1 -->
+                            <li class="nav-item border-right">
+                                <a class="nav-link text-light" href="{{ route('property.index') }}"><span class="fas fa-search"> 店舗物件を探す</span></a>
+                            </li>
+                            <!-- C-1-2 -->
+                            <li class="nav-item border-right">
+                                <search-condition-list isbutton="false" label="希望にマッチした物件"></search-condition-list>
+                            </li>
+                            <!-- C-1-3 -->
+                            <!--<li class="nav-item dropdown border-right">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                駅か市で探す
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>-->
+                            <!-- C-1-4 -->
+                            <li class="nav-item border-right">
+                                <a class="nav-link text-light" href="{{ route('property.history') }}">閲覧履歴</a>
+                            </li>
+                            <li class="nav-item border-right">
+                                <a class="nav-link text-light" href="{{ route('property.history', ['favorite' => true ]) }}">お気に入り</a>
+                            </li>
+                        </ul>
+                    @endif
                     <ul class="navbar-nav ml-auto">
                         <!-- C-0 -->
                         @if(auth()->guard('member')->check())
