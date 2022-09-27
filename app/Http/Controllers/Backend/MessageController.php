@@ -60,16 +60,9 @@ class MessageController extends Controller
     public function getProfileUser(Request $request)
     {
         $bot = new LineBotMessage();
-        $response = $bot->getProfileUser($request->userId);
+        $response = $bot->getUserProfile($request->userId);
 
-        if($response->getHTTPStatus() == 200){
-            return redirect()->back()->with([
-                'success', 'Message sent successfully',
-                'data' => $response->getJSONDecodedBody()
-            ]);
-        }else{
-            return redirect()->back()->with('errors', 'Message sent failed' . $response);
-        }
+        return response()->json($response);
     }
 
     public function getBotInfo()

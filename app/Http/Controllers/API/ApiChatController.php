@@ -48,4 +48,12 @@ class ApiChatController extends Controller
         // return response()->json($response);
     }
 
+    public function getUserProfile(Request $request)
+    {
+        $bot = new LineBotMessage();
+        $response = $bot->getUserProfile($request->userId);
+
+        return response()->json($response);
+    }
+
 }
