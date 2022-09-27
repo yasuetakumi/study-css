@@ -250,7 +250,7 @@
                     // ------------------------------------------------------
                     // redirect to login page
                     // ------------------------------------------------------
-                    var message = '私は入力したものを保存しました、メールをご確認ください';
+                    var message = "@lang('label.SUCCESS_CREATE_MESSAGE')";
                     vm.$toasted.show( message, { type: 'success' });
                     vm.$store.commit( 'setLoading', false );
                     setTimeout(() => {
@@ -259,7 +259,7 @@
                     // ------------------------------------------------------
                 }else{
                     // ------------------------------------------------------
-                    var message = 'メールの送信に失敗しました';
+                    var message = "@lang('label.FAILED_CREATE_MESSAGE')";
                     vm.$toasted.show( message, { type: 'error' });
                     vm.$store.commit( 'setLoading', false );
                     // ------------------------------------------------------
