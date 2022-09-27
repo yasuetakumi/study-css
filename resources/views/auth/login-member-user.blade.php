@@ -125,7 +125,7 @@
     </p>
     @endif
     <p class="mb-1 mt-1 mr-1" style="float: right">
-        <a href="{{ route('member-register') }}" style="font-weight: normal; font-size: 0.8rem">@lang('label.member_registration')</a>
+        <a href="{{ route('member-register-create') }}" style="font-weight: normal; font-size: 0.8rem">@lang('label.member_registration')</a>
     </p>
 </div>
 @endsection

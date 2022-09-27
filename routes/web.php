@@ -67,8 +67,9 @@ if (Config::get('app.env') === 'production') {
 
         Route::get('/login', 'Auth\MemberLoginController@showLoginForm')->name('member-login');
         Route::post('/login', 'Auth\MemberLoginController@login')->name('member-login-action');
-        Route::get('/sign-up', 'Auth\MemberLoginController@showRegisterForm')->name('member-register');
-        Route::post('/sign-up', 'Auth\MemberLoginController@register')->name('member-register-action');
+        Route::get('/sign-up', 'Auth\MemberLoginController@showRegisterForm')->name('member-register-create');
+        Route::post('/sign-up/confirm', 'Auth\MemberLoginController@confirmRegistration')->name('member-register-confirm');
+        Route::post('/sign-up', 'Auth\MemberLoginController@register')->name('member-register-store');
 
         // Socialite
         Route::get('/auth/{provider}', 'Auth\SocialLoginController@redirectToProvider')->name('socialite.redirect');
@@ -96,7 +97,6 @@ if (Config::get('app.env') === 'production') {
             Route::post('/broadcast', 'MessageController@broadcast')->name('broadcast');
             Route::post('/send', 'MessageController@sendMessage')->name('send');
             Route::get('/botInfo', 'MessageController@getBotInfo')->name('bot.info');
-            Route::post('/callback', 'MessageController@callback')->name('callback');
         });
 
         /**

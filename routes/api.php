@@ -75,4 +75,6 @@ Route::prefix('v1')->group(function () {
     Route::post('chat/broadcastMessage', 'API\ApiChatController@broadcastMessage')->name('api.chat.broadcast');
     Route::post('chat/sendMessageToUser', 'API\ApiChatController@sendMessageToUser')->name('api.chat.send');
     Route::get('chat/botInformation', 'API\ApiChatController@getBotInfo')->name('api.chat.bot.information');
+    Route::post('chat/webhook', 'API\ApiChatController@webhook')->name('api.chat.webhook');
+    Route::get('chat/getUserProfile', 'API\ApiChatController@getUserProfile')->name('api.chat.user.profile');
 });
