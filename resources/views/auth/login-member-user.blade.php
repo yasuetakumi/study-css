@@ -62,6 +62,7 @@
                             <label for="terms" style="font-weight: normal; font-size: 0.8rem">
                                 @lang('label.agree_with_terms')
                             </label>
+                            <a href="{{route('terms-of-use')}}" target="_blank"><i class="fas fa-external-link-alt fa-lg"></i></a>
                         </div>
                     </div>
                 </div>

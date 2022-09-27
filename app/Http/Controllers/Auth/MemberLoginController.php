@@ -52,6 +52,17 @@ class MemberLoginController extends Controller
         return auth()->guard('member');
     }
 
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'terms' => 'required',
+        ], [
+            'terms.required' => '利用規約に同意する必要があります。',
+        ]);
+    }
+
     protected function showLoginForm(Request $request){
 
         // Member loggedin try to access login page
