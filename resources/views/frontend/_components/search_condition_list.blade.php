@@ -41,7 +41,7 @@
                                 <div class="row mb-3">
                                     <div class="col-8">
                                         <p class="mb-0">検索条件:
-                                            <span><span style="color: rgb(243, 78, 5)">[市区町村] </span>@{{sc.市区町村 ? sc.市区町村 : ' - '}} </span>
+                                            <span><span style="color: rgb(243, 78, 5)">[市区町村] </span>@{{sc.市区町村 ? sc.市区町村 : ' ー '}} </span>
                                             <!-- If min and max surface-->
                                             <span v-if="sc.surfaceMin && sc.surfaceMax"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{sc.surfaceMin + '〜' + sc.surfaceMax}}</span>
                                             <!-- If min != null and max == null surface-->
@@ -49,7 +49,7 @@
                                             <!-- If min == null and max != null surface-->
                                             <span v-else-if="!sc.surfaceMin && sc.surfaceMax"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{'下限なし' + '〜' + sc.surfaceMax}}</span>
                                             <!-- If min == null and max == null surface-->
-                                            <span v-else><span style="color: rgb(243, 78, 5)">[面積] </span> - </span>
+                                            <span v-else><span style="color: rgb(243, 78, 5)">[面積] </span> ー </span>
 
                                             <!-- If min and max rent_amount-->
                                             <span v-if="sc.rentAmountMin && sc.rentAmountMax"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{sc.rentAmountMin + '〜' + sc.rentAmountMax}}</span>
@@ -58,10 +58,10 @@
                                             <!-- If min == null and max != null rent_amount-->
                                             <span v-else-if="!sc.rentAmountMin && sc.rentAmountMax"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{'下限なし' + '〜' + sc.rentAmountMax}}</span>
                                             <!-- If min == null and max == null rent_amount-->
-                                            <span v-else><span style="color: rgb(243, 78, 5)">[賃料] </span> - </span>
+                                            <span v-else><span style="color: rgb(243, 78, 5)">[賃料] </span> ー </span>
 
-                                            <span><span style="color: rgb(243, 78, 5)">[フリーワード] </span>@{{sc.フリーワード ? sc.フリーワード : ' - '}}</span>
-                                            <span><span style="color: rgb(243, 78, 5)">[徒歩] </span>@{{sc.徒歩 ? sc.徒歩 : ' - '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)">[フリーワード] </span>@{{sc.フリーワード ? sc.フリーワード : ' ー '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)">[徒歩] </span>@{{sc.徒歩 ? sc.徒歩 : ' ー '}}</span>
 
                                             <!-- If min and max transfer_price-->
                                             <span v-if="sc.譲渡額下限 && sc.譲渡額上限"><span style="color: rgb(243, 78, 5)">[譲渡額] </span>@{{sc.譲渡額下限 + '〜' + sc.譲渡額上限}}</span>
@@ -70,13 +70,13 @@
                                             <!-- If min == null and max != null transfer_price-->
                                             <span v-else-if="!sc.譲渡額下限 && sc.譲渡額上限"><span style="color: rgb(243, 78, 5)">[譲渡額] </span>@{{'下限なし' + '〜' + sc.譲渡額上限}}</span>
                                             <!-- If min == null and max == null transfer_price-->
-                                            <span v-else><span style="color: rgb(243, 78, 5)">[譲渡額] </span> - </span>
+                                            <span v-else><span style="color: rgb(243, 78, 5)">[譲渡額] </span> ー </span>
 
-                                            <span><span style="color: rgb(243, 78, 5)">[階数(地上)] </span>@{{sc.階数_地上 ? sc.階数_地上 : ' - '}}</span>
-                                            <span><span style="color: rgb(243, 78, 5)">[階数(地下)] </span>@{{sc.階数_地下 ? sc.階数_地下 : ' - '}}</span>
-                                            <span><span style="color: rgb(243, 78, 5)">[こだわり条件] </span>@{{sc.こだわり条件 ? sc.こだわり条件 : ' - '}}</span>
-                                            <span><span style="color: rgb(243, 78, 5)">[飲食店の種類] </span>@{{sc.飲食店の種類 ? sc.飲食店の種類 : ' - '}}</span>
-                                            <span><span style="color: rgb(243, 78, 5)"> [スケルトン物件・居抜き物件] </span> @{{sc.スケルトン物件_居抜き物件 ? sc.スケルトン物件_居抜き物件 : ' - '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)">[階数(地上)] </span>@{{sc.階数_地上 ? sc.階数_地上 : ' ー '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)">[階数(地下)] </span>@{{sc.階数_地下 ? sc.階数_地下 : ' ー '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)">[こだわり条件] </span>@{{sc.こだわり条件 ? sc.こだわり条件 : ' ー '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)">[飲食店の種類] </span>@{{sc.飲食店の種類 ? sc.飲食店の種類 : ' ー '}}</span>
+                                            <span><span style="color: rgb(243, 78, 5)"> [スケルトン物件・居抜き物件] </span> @{{sc.スケルトン物件_居抜き物件 ? sc.スケルトン物件_居抜き物件 : ' ー '}}</span>
                                         </p>
                                     </div>
                                     <div class="col-4">
