@@ -593,12 +593,23 @@
                 }
             },
             // -----------------------------------------------------------------
-            getHistoryProperty: function() {
-                let local = localStorage.getItem("visitedPropertyId");
-                let propertyID = JSON.parse(local) || [];
+            getHistoryProperty: async function() {
+                let storageFavorites = [];
                 let propertyIDs = [];
-                for (const key in JSON.parse(local)) {
-                    propertyIDs.push(propertyID[key].id)
+                // if login get from db
+                if(this.items.member_id){
+                    this.getMemberViewedProperty();
+                    storageFavorites = await this.getMemberFavoriteProperty();
+                    for (const key in storageFavorites) {
+                        propertyIDs.push(storageFavorites[key].property_id)
+                    }
+                // else get from local storage
+                } else {
+                    let local = localStorage.getItem("visitedPropertyId");
+                    storageFavorites = JSON.parse(local) || [];
+                    for (const key in storageFavorites) {
+                        propertyIDs.push(storageFavorites[key].id)
+                    }
                 }
 
                 axios.post(root_url + '/api/v1/history/getPropertyHistoryOrFavorite', propertyIDs)
@@ -729,6 +740,14 @@
             },
             getMemberFavoriteProperty: async function(){
                 let response = await axios.get(root_url + '/api/v1/property/getFavorite/' + this.items.member_id);
+                if(response.status == 200){
+                    return response.data;
+                } else {
+                    return [];
+                }
+            },
+            getMemberViewedProperty: async function(){
+                let response = await axios.get(root_url + '/api/v1/property/getViewed/' + this.items.member_id);
                 if(response.status == 200){
                     return response.data;
                 } else {
