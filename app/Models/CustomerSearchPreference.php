@@ -11,6 +11,7 @@ class CustomerSearchPreference extends Model
     const ENABLE_EMAIL = 1;
     const DISABLE_EMAIL = 0;
     protected $fillable = [
+        'member_id',
         'customer_email',
         'is_email_enabled',
         'surface_min',

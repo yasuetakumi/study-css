@@ -17,6 +17,6 @@ class CustomerSearchPreferenceSeeder extends Seeder
         CustomerSearchPreference::truncate();
         Schema::enableForeignKeyConstraints();
 
-        factory(CustomerSearchPreference::class, 50)->create();
+        factory(CustomerSearchPreference::class, 100)->create();
     }
 }

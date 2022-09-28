@@ -12,14 +12,12 @@
     </ol>
 @endsection
 @section('top_buttons')
-    @if (!Auth::check())
-        <div class="text-right">
-            <a id="favorite" type="button" style="color: red" @click="setLikeProperty(items.property_id)">
-                <i v-if="isLiked" class="fas fa-heart fa-2x"></i>
-                <i v-else class="far fa-heart fa-2x"></i>
-            </a>
-        </div>
-    @endif
+    <div class="text-right">
+        <a id="favorite" type="button" style="color: red" @click="setLikeProperty(items.property_id)">
+            <i v-if="isLiked" class="fas fa-heart fa-2x"></i>
+            <i v-else class="far fa-heart fa-2x"></i>
+        </a>
+    </div>
 @endsection
 @section('content')
     @component('frontend._components.text_label', ['label' => __('label.real_estate_agent_in_charge'), 'value' => $item->user_id ? $item->user->display_name : '' ])@endcomponent

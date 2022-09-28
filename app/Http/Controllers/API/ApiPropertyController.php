@@ -4,14 +4,17 @@ namespace App\Http\Controllers\API;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
+use App\Models\Member;
 use App\Models\Property;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
+use Illuminate\Support\Carbon;
 use App\Models\PropertyPreference;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\MemberViewedProperty;
 use Illuminate\Support\Facades\Auth;
+use App\Models\MemberFavoriteProperty;
 use App\Models\PropertyPublicationStatus;
 use App\Models\WalkingDistanceFromStationOption;
 // -----------------------------------------------------------------------------
@@ -253,5 +256,59 @@ class ApiPropertyController extends Controller
 
     }
     // -------------------------------------------------------------------------
+
+    /**
+     * Store favorite property
+     *
+     * @param  int  $memberId
+     * @param  int  $propertyId
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFavoriteProperty($memberId, $propertyId, $distance = null)
+    {
+        // Save to MemberFavoriteProperty
+        $memberFavoriteProperty = new MemberFavoriteProperty();
+        $memberFavoriteProperty->member_id = $memberId;
+        $memberFavoriteProperty->property_id = $propertyId;
+        $memberFavoriteProperty->distance = $distance;
+        $memberFavoriteProperty->save();
+
+        // Response data
+        if($memberFavoriteProperty){
+            return response()->json([
+                'status' => 'success',
+                'result' => $memberFavoriteProperty,
+            ], 200, [], JSON_NUMERIC_CHECK);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'result' => 'Failed to save favorite property',
+            ], 401, [], JSON_NUMERIC_CHECK);
+        }
+    }
+    // -------------------------------------------------------------------------
+    public function storeViewedProperty($memberId, $propertyId)
+    {
+        // Save to MemberViewedProperty
+        $memberViewedProperty = new MemberViewedProperty();
+        $memberViewedProperty->member_id = $memberId;
+        $memberViewedProperty->property_id = $propertyId;
+        $memberViewedProperty->save();
+
+        // Response data
+        if($memberViewedProperty){
+            return response()->json([
+                'status' => 'success',
+                'result' => $memberViewedProperty,
+            ], 200, [], JSON_NUMERIC_CHECK);
+        }
+        else{
+            return response()->json([
+                'status' => 'error',
+                'result' => 'Failed to save viewed property',
+            ], 401, [], JSON_NUMERIC_CHECK);
+        }
+    }
 }
 // -----------------------------------------------------------------------------

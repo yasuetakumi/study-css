@@ -52,6 +52,12 @@ Route::prefix('v1')->group(function () {
     //Get Property
     Route::post('property/getProperties', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
     Route::post('property/getPropertiesCount', 'API\ApiPropertyController@getPropertyByFilter');
+
+    // Property Favorite
+    Route::post('property/favorite', 'API\ApiPropertyController@storeFavoriteProperty')->name('api.property.favorite');
+    // Property Viewed
+    Route::post('property/unfavorite', 'API\ApiPropertyController@storeViewedProperty')->name('api.property.viewed');
+
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'API\ApiDesignStyleController@getDesignByCategory');
     Route::get('/design-styles/getDesignByCategoryFrontentProperty/{category_id}/{property_id}/{paginate?}', 'API\ApiDesignStyleController@getDesignByCategoryFrontentProperty');

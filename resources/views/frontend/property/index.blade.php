@@ -1,3 +1,10 @@
+@php
+    if(auth()->guard('member')->check()){
+        $memberId = auth()->guard('member')->user()->id;
+    } else {
+        $memberId = null;
+    }
+@endphp
 @extends('backend._base.content_form')
 @section('breadcrumbs')
     <ol class="breadcrumb float-sm-right">
@@ -113,6 +120,7 @@
                 // Form result set here
                 // -------------------------------------------------------------
                 items: {
+                    member_id: @json($memberId),
                     prefectures: @json($prefectures),
                     prefectureSelected: null,
                     user_id: null,
@@ -640,9 +648,10 @@
                     });
             },
             registerEmailSearchPreference: function(){
-                let email = {"customer_email" : this.items.email_search_preference};
+                let emailAndMemberId = {"customer_email" : this.items.email_search_preference, "member_id" : this.items.member_id};
                 let data = this.items.current_search_preference;
-                Object.assign(data, email);
+
+                Object.assign(data, emailAndMemberId);
                 console.log(data);
                 axios.post(root_url + '/search-preference', data)
                     .then((result) => {
