@@ -1,3 +1,10 @@
+@php
+    if(auth()->guard('member')->check()){
+        $memberId = auth()->guard('member')->user()->id;
+    } else {
+        $memberId = null;
+    }
+@endphp
 @extends('backend._base.content_form')
 @section('breadcrumbs')
     <ol class="breadcrumb float-sm-right">
@@ -113,6 +120,7 @@
                 // Form result set here
                 // -------------------------------------------------------------
                 items: {
+                    member_id: @json($memberId),
                     prefectures: @json($prefectures),
                     prefectureSelected: null,
                     user_id: null,
@@ -492,60 +500,81 @@
                 });
             },
             // -----------------------------------------------------------------
-            getLikeProperty: function() {
-                this.updateLocalLikeProperty();
-                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+            getLikeProperty: async function() {
+                let propertyFavorites = [];
                 let filterId = [];
-                if(local.length > 0){
-                    for(let i= 0; i < local.length; i++){
-                        // console.log(id);
-                        filterId.push(local[i].id);
+                // if login, get from db
+                if(this.items.member_id){
+                    propertyFavorites = await this.getMemberFavoriteProperty();
+                    if(propertyFavorites.length > 0){
+                        for(let i= 0; i < propertyFavorites.length; i++){
+                            filterId.push(propertyFavorites[i].property_id);
+                        }
+                        if(filterId.length > 0){
+                            this.items.like_property = filterId;
+                        }
                     }
-                    console.log(filterId);
-                    if(filterId.length > 0){
-                        this.items.like_property = filterId;
+                    else {
+                        this.items.like_property = [];
+                    }
+                // else get from storage
+                } else {
+                    this.updateLocalLikeProperty();
+                    propertyFavorites = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                    // let filterId = [];
+                    if(propertyFavorites.length > 0){
+                        for(let i= 0; i < propertyFavorites.length; i++){
+                            filterId.push(propertyFavorites[i].id);
+                        }
+                        if(filterId.length > 0){
+                            this.items.like_property = filterId;
+                        } else {
+                            this.items.like_property = [];
+                        }
+
                     } else {
                         this.items.like_property = [];
                     }
-
-                } else {
-                    this.items.like_property = [];
                 }
             },
             // -----------------------------------------------------------------
             setLikeProperty: function (id) {
-                let propertyID = id;
-                this.items.selectedIdFavorite = id;
-                var properties_like = [];
-                var filterArr = [];
-                let local = localStorage.getItem('favoritePropertyId');
-                properties_like = JSON.parse(local) || [];
-                filterArr = properties_like.filter(x => {return x.id == propertyID});
-                if(filterArr.length > 0){
-                    let index = properties_like.findIndex(object => {return object.id == propertyID});
-                    // console.log("index", index);
-                    properties_like.splice(index, 1);
-                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = 'お気に入り物件から削除しました'; //remove like
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
+                // if login store to db
+                if(this.items.member_id){
+                    this.setMemberFavoriteProperty(id);
                 } else {
-                    const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
+                    // if not login store to local storage
+                    let propertyID = id;
+                    this.items.selectedIdFavorite = id;
+                    var properties_like = [];
+                    var filterArr = [];
+                    let local = localStorage.getItem('favoritePropertyId');
+                    properties_like = JSON.parse(local) || [];
+                    filterArr = properties_like.filter(x => {return x.id == propertyID});
+                    if(filterArr.length > 0){
+                        let index = properties_like.findIndex(object => {return object.id == propertyID});
+                        properties_like.splice(index, 1);
+                        localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                        let msg = 'お気に入り物件から削除しました'; //remove like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    } else {
+                        const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
 
-                    var objectFavorite = {
-                        'id': propertyID,
-                        'distance': this.items.walking_distance,
-                        'date_added': dateTime
-                    };
-                    properties_like.push(objectFavorite);
-                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = 'お気に入り登録しました'; //add like
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
+                        var objectFavorite = {
+                            'id': propertyID,
+                            'distance': this.items.walking_distance,
+                            'date_added': dateTime
+                        };
+                        properties_like.push(objectFavorite);
+                        localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                        let msg = 'お気に入り登録しました'; //add like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
                 }
-
                 this.getLikeProperty();
             },
             // -----------------------------------------------------------------
@@ -640,10 +669,10 @@
                     });
             },
             registerEmailSearchPreference: function(){
-                let email = {"customer_email" : this.items.email_search_preference};
+                let emailAndMemberId = {"customer_email" : this.items.email_search_preference, "member_id" : this.items.member_id, "created_at": moment(new Date()).format("YYYY-MM-DD HH:mm:ss")};
                 let data = this.items.current_search_preference;
-                Object.assign(data, email);
-                console.log(data);
+
+                Object.assign(data, emailAndMemberId);
                 axios.post(root_url + '/search-preference', data)
                     .then((result) => {
                         console.log(result.data);
@@ -673,6 +702,38 @@
                     top: 0,
                     behavior: 'smooth'
                 });
+            },
+            setMemberFavoriteProperty: function(id){
+                let data = {
+                    'property_id': id,
+                    'member_id': this.items.member_id
+                };
+                axios.post(root_url + '/api/v1/property/storeFavorite', data)
+                .then(response => {
+                    if(response.data.status == "success"){
+                        let msg = 'お気に入り登録しました'; //add like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    } else if(response.data.status == "deleted"){
+                        let msg = 'お気に入り物件から削除しました'; //remove like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
+                    this.getLikeProperty();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            },
+            getMemberFavoriteProperty: async function(){
+                let response = await axios.get(root_url + '/api/v1/property/getFavorite/' + this.items.member_id);
+                if(response.status == 200){
+                    return response.data;
+                } else {
+                    return [];
+                }
             },
             // -----------------------------------------------------------------
         }

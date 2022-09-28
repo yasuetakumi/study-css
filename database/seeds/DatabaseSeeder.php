@@ -94,5 +94,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MemberSeeder::class);
         $this->call(SocialAccountSeeder::class);
 
+        // Member Activity
+        $this->call(MemberViewedPropertySeeder::class);
+        $this->call(MemberFavoritePropertySeeder::class);
+
     }
 }

@@ -11,7 +11,7 @@ $factory->define(Member::class, function (Faker $faker) {
     return [
         'company_name' => $faker->company,
         'name' => $faker->name,
-        'name_furigana' => $fakerJp->kanaName(),
+        'name_kana' => $fakerJp->kanaName(),
         'phone_number' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password

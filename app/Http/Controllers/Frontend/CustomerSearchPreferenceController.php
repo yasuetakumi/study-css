@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Exception;
 use App\Models\City;
 use Illuminate\Support\Arr;
 use App\Models\PropertyType;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\PropertyPreference;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\CustomerSearchPreference;
 use App\Models\NumberOfFloorsAboveGround;
 use App\Models\NumberOfFloorsUnderGround;
@@ -19,7 +21,6 @@ use App\Models\CustomerSearchPreferencesFloorAbove;
 use App\Models\CustomerSearchPreferencesFloorUnder;
 use App\Models\CustomerSearchPreferencesPropertyType;
 use App\Models\CustomerSearchPreferencesPropertyPreference;
-use Exception;
 
 class CustomerSearchPreferenceController extends Controller
 {
@@ -80,13 +81,15 @@ class CustomerSearchPreferenceController extends Controller
         }
         //get walking distance
         if(isset($data['徒歩'])){
-            $walking_distance = WalkingDistanceFromStationOption::where('id', $data['徒歩'])->first();
+            $walking_distance = WalkingDistanceFromStationOption::where('label_jp', $data['徒歩'])->first();
         }
 
         DB::beginTransaction();
 
         try {
             $customer = new CustomerSearchPreference();
+            // save member id if logged in
+            $customer->member_id = Auth::guard('member')->check(0) ? Auth::guard('member')->user()->id : null;
             $customer->customer_email = $data['customer_email'];
             $customer->is_email_enabled = CustomerSearchPreference::ENABLE_EMAIL;
 

@@ -2,6 +2,7 @@
 
 use App\Models\WalkingDistanceFromStationOption;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class WalkingDistanceFromStationOptionSeeder extends Seeder
 {
@@ -12,7 +13,10 @@ class WalkingDistanceFromStationOptionSeeder extends Seeder
      */
     public function run()
     {
-        WalkingDistanceFromStationOption::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        WalkingDistanceFromStationOption::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $admin = new WalkingDistanceFromStationOption();
         $admin->insert([
             [
@@ -28,7 +32,7 @@ class WalkingDistanceFromStationOptionSeeder extends Seeder
             [
                 'value'         => 5,
                 'label_en'       => 'Within 5 minutes',
-                'label_jp'      => '5分以内 ',
+                'label_jp'      => '5分以内',
             ],
             [
                 'value'         => 10,
@@ -38,12 +42,12 @@ class WalkingDistanceFromStationOptionSeeder extends Seeder
             [
                 'value'         => 15,
                 'label_en'       => 'Within 15 minutes',
-                'label_jp'      => '15分以内 ',
+                'label_jp'      => '15分以内',
             ],
             [
                 'value'         => 16,
                 'label_en'       => '16 Minutes or more',
-                'label_jp'      => '16分以上 ',
+                'label_jp'      => '16分以上',
             ],
 
         ]);

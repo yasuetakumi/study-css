@@ -4,16 +4,21 @@ namespace App\Http\Controllers\API;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
+use App\Models\Member;
 use App\Models\Property;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 // -----------------------------------------------------------------------------
+use Illuminate\Support\Carbon;
 use App\Models\PropertyPreference;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\MemberViewedProperty;
 use Illuminate\Support\Facades\Auth;
+use App\Models\MemberFavoriteProperty;
 use App\Models\PropertyPublicationStatus;
 use App\Models\WalkingDistanceFromStationOption;
+use LINE\LINEBot\Event\ThingsEvent;
+
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -253,5 +258,118 @@ class ApiPropertyController extends Controller
 
     }
     // -------------------------------------------------------------------------
+
+    public function storeFavoriteProperty(Request $request)
+    {
+        // if request member id is not set, then return error
+        if(!isset($request->member_id)){
+            throw new \Exception('Member id is required');
+        }
+        // if request property id is not set, then return error
+        if(!isset($request->property_id)){
+            throw new \Exception('Property id is required');
+        }
+
+        // Check if member and property exist
+        $checkMemberFavoriteProperty = MemberFavoriteProperty::where('member_id', $request->member_id)->where('property_id', $request->property_id)->first();
+
+        // if exist delete it
+        if($checkMemberFavoriteProperty){
+            $checkMemberFavoriteProperty->delete();
+            return response()->json([
+                'status' => 'deleted',
+                'message' => 'Favorite property deleted',
+            ], 200, [], JSON_NUMERIC_CHECK);
+        } else {
+            // Save to MemberFavoriteProperty
+            $memberFavoriteProperty = new MemberFavoriteProperty();
+            $memberFavoriteProperty->member_id = $request->member_id;
+            $memberFavoriteProperty->property_id = $request->property_id;
+            $memberFavoriteProperty->distance = $request->distance ?? null;
+            $memberFavoriteProperty->save();
+
+            // Response data
+            if($memberFavoriteProperty){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Favorite property saved',
+                    'result' => $memberFavoriteProperty,
+                ], 200, [], JSON_NUMERIC_CHECK);
+            }
+            else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Failed to save favorite property',
+                ], 401, [], JSON_NUMERIC_CHECK);
+            }
+        }
+
+    }
+    // -------------------------------------------------------------------------
+    public function storeViewedProperty(Request $request)
+    {
+        // if request member id is not set, then return error
+        if(!isset($request->member_id)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Member ID is required',
+            ], 401, [], JSON_NUMERIC_CHECK);
+        }
+        // if request property id is not set, then return error
+        if(!isset($request->property_id)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Property ID is required',
+            ], 401, [], JSON_NUMERIC_CHECK);
+        }
+
+        // Check if member and property exist
+        $checkMemberViewedProperty = MemberViewedProperty::where('member_id', $request->member_id)->where('property_id', $request->property_id)->first();
+
+        // if not exist save it
+        if(!$checkMemberViewedProperty){
+            // Save to MemberViewedProperty
+            $memberViewedProperty = new MemberViewedProperty();
+            $memberViewedProperty->member_id = $request->member_id;
+            $memberViewedProperty->property_id = $request->property_id;
+            $memberViewedProperty->save();
+
+            // Response data
+            if($memberViewedProperty){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Viewed property saved',
+                    'result' => $memberViewedProperty,
+                ], 200, [], JSON_NUMERIC_CHECK);
+            }
+            else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Failed to save viewed property',
+                ], 401, [], JSON_NUMERIC_CHECK);
+            }
+
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Viewed property already saved',
+                'result' => $checkMemberViewedProperty,
+            ], 200, [], JSON_NUMERIC_CHECK);
+        }
+    }
+
+    public function getFavoriteProperty($memberId)
+    {
+        $memberFavoriteProperties = MemberFavoriteProperty::where('member_id', $memberId)->get();
+
+        return response()->json($memberFavoriteProperties, 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function getViewedProperty($memberId)
+    {
+        $memberViewedProperties = MemberViewedProperty::where('member_id', $memberId)->get();
+
+        return response()->json($memberViewedProperties, 200, [], JSON_NUMERIC_CHECK);
+    }
+
 }
-// -----------------------------------------------------------------------------
