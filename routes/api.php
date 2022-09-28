@@ -53,10 +53,14 @@ Route::prefix('v1')->group(function () {
     Route::post('property/getProperties', 'API\ApiPropertyController@getPropertyByFilter')->name('api.property.count');
     Route::post('property/getPropertiesCount', 'API\ApiPropertyController@getPropertyByFilter');
 
-    // Property Favorite
-    Route::post('property/favorite', 'API\ApiPropertyController@storeFavoriteProperty')->name('api.property.favorite');
-    // Property Viewed
-    Route::post('property/unfavorite', 'API\ApiPropertyController@storeViewedProperty')->name('api.property.viewed');
+    // Store Member Property Favorite
+    Route::post('property/storeFavorite', 'API\ApiPropertyController@storeFavoriteProperty')->name('api.property.store.favorite');
+    // Strore Member Property Viewed
+    Route::post('property/storeViewed', 'API\ApiPropertyController@storeViewedProperty')->name('api.property.store.viewed');
+    // Get Property Favorite
+    Route::get('property/getFavorite/{memberId}', 'API\ApiPropertyController@getFavoriteProperty')->name('api.property.get.favorite');
+    // Get Property Viewed
+    Route::get('property/getViewed/{memberId}', 'API\ApiPropertyController@getViewedProperty')->name('api.property.get.viewed');
 
     //Design Styles
     Route::get('/design-styles/getDesignByCategory/{category_id}', 'API\ApiDesignStyleController@getDesignByCategory');

@@ -1,3 +1,10 @@
+@php
+    if(auth()->guard('member')->check()){
+        $memberId = auth()->guard('member')->user()->id;
+    } else {
+        $memberId = null;
+    }
+@endphp
 @extends('backend._base.content_form')
 @section('breadcrumbs')
     <ol class="breadcrumb float-sm-right">
@@ -127,6 +134,7 @@
                     // Form result set here
                     // ----------------------------------------------------------
                     items: {
+                        member_id: @json($memberId),
                         list_properties_history: [],
                         list_properties_favorite: [],
                         like_property: [],
@@ -220,9 +228,9 @@
                 getListHistoryOrFavoriteProperty: async function(localKey) {
                     this.items.loading = true;
                     let local = localStorage.getItem(localKey);
-                    let propertyID = JSON.parse(local) || [];
+                    // let propertyID = JSON.parse(local) || [];
                     let propertyIDs = [];
-                    
+
                     for (const key in JSON.parse(local)) {
                         propertyIDs.push(propertyID[key].id)
                     }
@@ -356,6 +364,36 @@
                     } else {
                         return null;
                     }
+                },
+                getMemberFavoriteProperty: async function(){
+                    let response = await axios.get(root_url + '/api/v1/property/getFavorite' + this.items.member_id);
+                    if(response.status == 200){
+                        this.items.list_properties_favorite = response.data;
+                    }
+                },
+                getMemberViewedProperty: async function(){
+                    let response = await axios.get(root_url + '/api/v1/property/getViewed' + this.items.member_id);
+                    if(response.status == 200){
+                        this.items.list_properties_history = response.data;
+                    }
+                },
+                setMemberFavoriteProperty: function(id){
+                    let data = {
+                        'property_id': id,
+                        'member_id': this.items.member_id
+                    };
+                    axios.post(root_url + '/api/v1/property/setFavorite', data)
+                    .then(response => {
+                        if(response.status == 200){
+                            let msg = 'お気に入り物件から削除しました'; //add like
+                            this.$toasted.show( msg, {
+                                type: 'success'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 }
                 // --------------------------------------------------------------
             }
