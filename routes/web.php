@@ -70,6 +70,9 @@ if (Config::get('app.env') === 'production') {
         Route::get('/sign-up', 'Auth\MemberLoginController@showRegisterForm')->name('member-register-create');
         Route::post('/sign-up/confirm', 'Auth\MemberLoginController@confirmRegistration')->name('member-register-confirm');
         Route::post('/sign-up', 'Auth\MemberLoginController@register')->name('member-register-store');
+        Route::get('/register/thanks', function(){
+            return view('auth.thanks-register-member');
+        })->name('member-register-thanks');
 
         // Socialite
         Route::get('/auth/{provider}', 'Auth\SocialLoginController@redirectToProvider')->name('socialite.redirect');
