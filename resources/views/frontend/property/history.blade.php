@@ -228,7 +228,7 @@
                 getListHistoryOrFavoriteProperty: async function(localKey) {
                     this.items.loading = true;
                     let local = localStorage.getItem(localKey);
-                    // let propertyID = JSON.parse(local) || [];
+                    let propertyID = JSON.parse(local) || [];
                     let propertyIDs = [];
 
                     for (const key in JSON.parse(local)) {
