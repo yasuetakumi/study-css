@@ -65,11 +65,16 @@ if (Config::get('app.env') === 'production') {
         Route::get('/company/login', 'Auth\CompanyUserLoginController@showLoginForm')->name('company-user-login');
         Route::post('/company/login', 'Auth\CompanyUserLoginController@login')->name('company-user-login-action');
 
+        // Member Login and Register Routes...
+        // C22
         Route::get('/login', 'Auth\MemberLoginController@showLoginForm')->name('member-login');
         Route::post('/login', 'Auth\MemberLoginController@login')->name('member-login-action');
+        // C24-1
         Route::get('/sign-up', 'Auth\MemberLoginController@showRegisterForm')->name('member-register-create');
+        // C24-2
         Route::post('/sign-up/confirm', 'Auth\MemberLoginController@confirmRegistration')->name('member-register-confirm');
         Route::post('/sign-up', 'Auth\MemberLoginController@register')->name('member-register-store');
+        // C24-3
         Route::get('/register/thanks', function(){
             return view('auth.thanks-register-member');
         })->name('member-register-thanks');
@@ -251,10 +256,7 @@ if (Config::get('app.env') === 'production') {
         Route::get('contact', function() {
             return 'Pending design of static page';
         })->name('contact');
-        // C9
-        Route::get('sitemap', function() {
-            return 'Pending design of static page';
-        });
+
         // C10
         Route::get('privacy-policy', function() {
             return 'Pending design of static page';
