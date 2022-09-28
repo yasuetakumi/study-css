@@ -99,7 +99,17 @@ class PropertyController extends Controller
                                                 });
                                             })
                                             ->addColumn('prefecture_city_location', function(Property $property){
-                                                return $property->prefecture->display_name.' '.$property->city->display_name. ' '.$property->location;
+                                                $prefectureName = $property->prefecture ? $property->prefecture->display_name : null;
+                                                $cityName = $property->city ? $property->city->display_name : null;
+                                                if($prefectureName && $cityName){
+                                                    return $prefectureName . ' ' . $cityName . ' ' . $property->location;
+                                                } else if($prefectureName && !$cityName){
+                                                    return $prefectureName . ' ' . $property->location;
+                                                } else if(!$prefectureName && $cityName){
+                                                    return $cityName . ' ' . $property->location;
+                                                } else {
+                                                    return $property->location;
+                                                }
                                             })
                                             ->toJson();
 
