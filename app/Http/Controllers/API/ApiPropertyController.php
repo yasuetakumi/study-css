@@ -277,10 +277,8 @@ class ApiPropertyController extends Controller
         if($checkMemberFavoriteProperty){
             $checkMemberFavoriteProperty->delete();
             return response()->json([
-                'data' => [
-                    'status' => 'success',
-                    'message' => 'Favorite property deleted',
-                ]
+                'status' => 'deleted',
+                'message' => 'Favorite property deleted',
             ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             // Save to MemberFavoriteProperty
@@ -313,35 +311,23 @@ class ApiPropertyController extends Controller
         // if request member id is not set, then return error
         if(!isset($request->member_id)){
             return response()->json([
-                'data' => [
-                    'status' => 'error',
-                    'message' => 'Member ID is required',
-                ]
+                'status' => 'error',
+                'message' => 'Member ID is required',
             ], 401, [], JSON_NUMERIC_CHECK);
         }
         // if request property id is not set, then return error
         if(!isset($request->property_id)){
             return response()->json([
-                'data' => [
-                    'status' => 'error',
-                    'message' => 'Property ID is required',
-                ]
+                'status' => 'error',
+                'message' => 'Property ID is required',
             ], 401, [], JSON_NUMERIC_CHECK);
         }
 
         // Check if member and property exist
         $checkMemberViewedProperty = MemberViewedProperty::where('member_id', $request->member_id)->where('property_id', $request->property_id)->first();
 
-        // if exist delete it
-        if($checkMemberViewedProperty){
-            $checkMemberViewedProperty->delete();
-            return response()->json([
-                'data' => [
-                    'status' => 'success',
-                    'message' => 'Viewed property deleted',
-                ]
-            ], 200, [], JSON_NUMERIC_CHECK);
-        } else {
+        // if not exist save it
+        if(!$checkMemberViewedProperty){
             // Save to MemberViewedProperty
             $memberViewedProperty = new MemberViewedProperty();
             $memberViewedProperty->member_id = $request->member_id;
@@ -362,8 +348,14 @@ class ApiPropertyController extends Controller
                     'message' => 'Failed to save viewed property',
                 ], 401, [], JSON_NUMERIC_CHECK);
             }
-        }
 
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Viewed property already saved',
+                'result' => $checkMemberViewedProperty,
+            ], 200, [], JSON_NUMERIC_CHECK);
+        }
     }
 
     public function getFavoriteProperty($memberId)
@@ -381,4 +373,3 @@ class ApiPropertyController extends Controller
     }
 
 }
-// -----------------------------------------------------------------------------

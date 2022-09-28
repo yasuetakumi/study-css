@@ -1,6 +1,11 @@
 @php
     $skeleton = 1;
     $furnished = 0;
+    if(auth()->guard('member')->check()){
+        $memberId = auth()->guard('member')->user()->id;
+    } else {
+        $memberId = null;
+    }
 @endphp
 @extends('backend._base.content_form')
 @section('breadcrumbs')
@@ -162,6 +167,7 @@
                 // Form result set here
                 // ----------------------------------------------------------
                 items: {
+                    member_id: @json($memberId),
                     selected_dc: 1,
                     list_design_style: null,
                     initial_list_design_style: null,
@@ -369,22 +375,40 @@
                         this.items.estimation_loading = false;
                     });
             },
-            getLikeProperty: function() {
-                this.updateLocalLikeProperty();
-                let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+            getLikeProperty: async function() {
+                // let local = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                // let filterId = [];
+                let propertyFavorites = [];
                 let filterId = [];
-                if(local.length > 0){
-                    for(let i= 0; i < local.length; i++){
-                        filterId.push(local[i].id);
+                if(this.items.member_id){
+                    propertyFavorites = await this.getMemberFavoriteProperty();
+                    if(propertyFavorites.length > 0){
+                        for(let i= 0; i < propertyFavorites.length; i++){
+                            filterId.push(propertyFavorites[i].property_id);
+                        }
+                        if(filterId.length > 0){
+                            this.items.like_property = filterId;
+                        }
                     }
-                    if(filterId.length > 0){
-                        this.items.like_property = filterId;
+                    else {
+                        this.items.like_property = [];
+                    }
+                } else {
+                    this.updateLocalLikeProperty();
+                    propertyFavorites = JSON.parse(localStorage.getItem('favoritePropertyId')) || [];
+                    if(propertyFavorites.length > 0){
+                        for(let i= 0; i < propertyFavorites.length; i++){
+                            filterId.push(propertyFavorites[i].id);
+                        }
+                        if(filterId.length > 0){
+                            this.items.like_property = filterId;
+                        } else {
+                            this.items.like_property = [];
+                        }
+
                     } else {
                         this.items.like_property = [];
                     }
-
-                } else {
-                    this.items.like_property = [];
                 }
             },
             updateLocalLikeProperty: function() {
@@ -403,65 +427,73 @@
             },
             setLikeProperty: function (id) {
                 //this.items.like_property.push(this.items.property_id)
-                console.log('id', id);
-                let propertyID = id;
-                var properties_like = [];
-                var filterArr = [];
-                let local = localStorage.getItem('favoritePropertyId');
-                properties_like = JSON.parse(local) || [];
-                filterArr = properties_like.filter(x => {return x.id == propertyID});
-
-                if(filterArr.length > 0){
-                    let index = properties_like.findIndex(object => {return object.id == propertyID});
-                    properties_like.splice(index, 1);
-                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = 'お気に入り物件から削除しました'; //remove like
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
+                // if login store to db
+                if(this.items.member_id){
+                    this.setMemberFavoriteProperty(id);
                 } else {
-                    const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
-                    var objectFavorite = {
-                        'id': propertyID,
-                        'distance': null,
-                        'date_added': dateTime
-                    };
-                    properties_like.push(objectFavorite);
-                    localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
-                    let msg = 'お気に入り登録しました'; //add like
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
-                }
+                    // else store to local storage
+                    // console.log('id', id);
+                    let propertyID = id;
+                    var properties_like = [];
+                    var filterArr = [];
+                    let local = localStorage.getItem('favoritePropertyId');
+                    properties_like = JSON.parse(local) || [];
+                    filterArr = properties_like.filter(x => {return x.id == propertyID});
 
+                    if(filterArr.length > 0){
+                        let index = properties_like.findIndex(object => {return object.id == propertyID});
+                        properties_like.splice(index, 1);
+                        localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                        let msg = 'お気に入り物件から削除しました'; //remove like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    } else {
+                        const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
+                        var objectFavorite = {
+                            'id': propertyID,
+                            'distance': null,
+                            'date_added': dateTime
+                        };
+                        properties_like.push(objectFavorite);
+                        localStorage.setItem('favoritePropertyId', JSON.stringify(properties_like));
+                        let msg = 'お気に入り登録しました'; //add like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
+                }
                 this.getLikeProperty();
             },
             setVisitedProperty: function () {
-                var properties_visited = [];
-                var propertyIdsVisited = [];
-                let localVisisted = localStorage.getItem('visitedPropertyId');
-
-                const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
-
-                properties_visited = JSON.parse(localVisisted) || [];
-                for (const key in properties_visited) {
-                    propertyIdsVisited.push(properties_visited[key].id)
-                }
-
-                if(propertyIdsVisited.includes(this.items.property_id)){
-                    console.log("already visited");
-                    const index = properties_visited.findIndex(item => item.id === this.items.property_id);
-                    properties_visited[index] = {
-                        id: this.$store.state.preset.property.id,
-                        date_browsed: dateTime
-                    };
-                    localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
+                if(this.items.member_id){
+                    this.setMemberViewedProperty(this.items.property_id);
                 } else {
-                    properties_visited.push({
-                        id: this.$store.state.preset.property.id,
-                        date_browsed: dateTime
-                    });
-                    localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
+                    var properties_visited = [];
+                    var propertyIdsVisited = [];
+                    let localVisisted = localStorage.getItem('visitedPropertyId');
+
+                    const dateTime = moment(new Date()).format("YYYY/MM/DD HH:mm:ss");
+
+                    properties_visited = JSON.parse(localVisisted) || [];
+                    for (const key in properties_visited) {
+                        propertyIdsVisited.push(properties_visited[key].id)
+                    }
+
+                    if(propertyIdsVisited.includes(this.items.property_id)){
+                        const index = properties_visited.findIndex(item => item.id === this.items.property_id);
+                        properties_visited[index] = {
+                            id: this.$store.state.preset.property.id,
+                            date_browsed: dateTime
+                        };
+                        localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
+                    } else {
+                        properties_visited.push({
+                            id: this.$store.state.preset.property.id,
+                            date_browsed: dateTime
+                        });
+                        localStorage.setItem('visitedPropertyId', JSON.stringify(properties_visited));
+                    }
                 }
             },
             has_kitchen: function(id, kitchen){
@@ -481,6 +513,57 @@
             handleImageNotFound: function(event){
                 let noimage = @json(asset('img/backend/noimage.png'));
                 event.target.src = noimage;
+            },
+            setMemberFavoriteProperty: function(id){
+                let data = {
+                    'property_id': id,
+                    'member_id': this.items.member_id
+                };
+                axios.post(root_url + '/api/v1/property/storeFavorite', data)
+                .then(response => {
+                    if(response.data.status == "success"){
+                        let msg = 'お気に入り登録しました'; //add like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    } else if(response.data.status == "deleted"){
+                        let msg = 'お気に入り物件から削除しました'; //remove like
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
+                    this.getLikeProperty();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            },
+            getMemberFavoriteProperty: async function(){
+                let response = await axios.get(root_url + '/api/v1/property/getFavorite/' + this.items.member_id);
+                if(response.status == 200){
+                    return response.data;
+                } else {
+                    return [];
+                }
+            },
+            setMemberViewedProperty: function(id){
+                let data = {
+                    'property_id': id,
+                    'member_id': this.items.member_id
+                };
+                axios.post(root_url + '/api/v1/property/storeViewed', data)
+                .then(response => {
+                    if(response.data.status == "success"){
+                        // console.log('success');
+                        return true;
+                    } else {
+                        // console.log("aleraedy viewed");
+                        return false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             },
             // --------------------------------------------------------------
         }
