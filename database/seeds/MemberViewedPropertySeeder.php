@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\MemberViewedProperty;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class MemberViewedPropertySeeder extends Seeder
 {
@@ -11,6 +13,10 @@ class MemberViewedPropertySeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\MemberViewedProperty::class, 100)->create();
+        Schema::disableForeignKeyConstraints();
+        MemberViewedProperty::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        factory(App\Models\MemberViewedProperty::class, 50)->create();
     }
 }
