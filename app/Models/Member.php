@@ -46,4 +46,9 @@ class Member extends Model implements AuthenticatableContract, AuthorizableContr
         return $this->hasMany(SocialAccount::class);
     }
 
+    public function member_viewed_properties()
+    {
+        return $this->hasMany(MemberViewedProperty::class, 'member_id');
+    }
+
 }

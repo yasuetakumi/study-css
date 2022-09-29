@@ -80,6 +80,7 @@ Route::prefix('v1')->group(function () {
 
     //History
     Route::post('history/getPropertyHistoryOrFavorite', 'API\ApiPropertyHistoryController@getPropertyHistoryOrFavorite');
+    Route::post('history/clearPropertyHistoryMember', 'API\ApiPropertyHistoryController@clearPropertyHistoryMember')->name('api.history.clear');
 
     //Chat Line
     Route::post('chat/broadcastMessage', 'API\ApiChatController@broadcastMessage')->name('api.chat.broadcast');

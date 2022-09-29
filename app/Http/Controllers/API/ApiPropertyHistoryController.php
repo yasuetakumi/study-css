@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Member;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ApiPropertyHistoryController extends Controller
 {
@@ -23,5 +25,12 @@ class ApiPropertyHistoryController extends Controller
             return response()->json($data);
         }
 
+    }
+
+    public function clearPropertyHistoryMember(Request $request)
+    {
+        $member = Member::find($request->member_id);
+        $member->member_viewed_properties()->delete();
+        return response()->json(['message' => 'success']);
     }
 }
