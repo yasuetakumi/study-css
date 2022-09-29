@@ -410,19 +410,44 @@
                 },
                 clearHistory: function(){
                     if(confirm('物件閲覧履歴を消去してよろしいですか？')){
-                        localStorage.removeItem('visitedPropertyId');
-                        this.items.list_properties_history = '';
+                        if(this.items.member_id){
+                            this.clearMemberViewedProperty();
+                        } else {
+                            localStorage.removeItem('visitedPropertyId');
+                            let msg = '対象のデータを削除しました。';
+                            this.$toasted.show( msg, {
+                                type: 'success'
+                            });
+                            this.items.list_properties_history = '';
+                        }
                     }
                 },
                 isWalkingDistanceSet: function(id){
                     if(this.items.localStorageFavorite.length > 0){
                         for(let i=0; i < this.items.localStorageFavorite.length; i++){
-                        if(this.items.localStorageFavorite[i].id == id){
-                            return this.items.localStorageFavorite[i].distance;
+                            if(this.items.localStorageFavorite[i].id == id){
+                                return this.items.localStorageFavorite[i].distance;
+                            }
                         }
-                    }
                     } else {
                         return null;
+                    }
+                },
+                clearMemberViewedProperty: async function(){
+                    let response = await axios.post(root_url + '/api/v1/history/clearPropertyHistoryMember', {
+                        member_id: this.items.member_id
+                    });
+                    if(response.status == 200){
+                        let msg = '対象のデータを削除しました。';
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                        this.items.list_properties_history = '';
+                    } else {
+                        let msg = '対象のデータを削除できませんでした。';
+                        this.$toasted.show( msg, {
+                            type: 'error'
+                        });
                     }
                 },
                 getMemberFavoriteProperty: async function(){
