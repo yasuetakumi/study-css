@@ -302,4 +302,7 @@ return [
     'term_of_use' => 'I consent to the Terms of Use',
     'privacy_policy' => 'I consent to the Privacy Policy',
     'agree_with_terms' => 'I agree with the Terms & Conditions',
+
+    //C25
+    'member_mypage' => 'Member Mypage',
 ];

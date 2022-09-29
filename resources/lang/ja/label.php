@@ -310,4 +310,7 @@ return [
     'term_of_use' => '利用規約に同意する',
     'privacy_policy' => 'プライバシーポリシーに同意する',
     'agree_with_terms' => '利用規約に同意する',
+
+    //C25
+    'member_mypage' => 'マイページ',
 ];
