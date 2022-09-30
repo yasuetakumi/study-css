@@ -1,4 +1,11 @@
-{{--@extends('auth.layouts.admin_app')--}}
+@php
+    $linkToken = null;
+    // if request has query string link token
+    if (request()->has('linkToken')) {
+        // get link token
+        $linkToken = request()->get('linkToken');
+    }
+@endphp
 @extends('auth.layouts.superadmin')
 
 <!-- title -->
@@ -18,6 +25,11 @@
 
             <form action="{{ route('member-login-action') }}" method="post" class="mb-3">
                 @csrf
+
+                @if($linkToken)
+                    <input type="hidden" name="linkToken" value="{{ $linkToken }}">
+                @endif
+
                 @error('email')
                 <span class="help-block text-sm" role="alert"> <strong>{{ $message }}</strong> </span>
                 @enderror
