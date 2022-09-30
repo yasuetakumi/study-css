@@ -216,6 +216,7 @@ if (Config::get('app.env') === 'production') {
             Route::get('member/logout', 'Auth\MemberLoginController@logout')->name('member.logout');
             Route::get('mypage', 'Frontend\MyPageController@index')->name('member.mypage.index');
             Route::put('mypage', 'Frontend\MyPageController@update')->name('member.mypage.update');
+            Route::get('mypage/cancelsns', 'Frontend\MyPageController@cancelLineSns')->name('member.cancelSns');
         });
 
         // C1

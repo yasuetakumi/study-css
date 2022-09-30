@@ -26,7 +26,7 @@
             @component('backend._components.input_button_anchor',[
                 'label' => __('label.cancel_sns'),
                 'required' => false,
-                'route' => route('admin.member.cancelSns', ['member' => $item->id]),
+                'route' => route('member.cancelSns'),
                 'value' => __('label.cancel_sns')
             ])
             @endcomponent
