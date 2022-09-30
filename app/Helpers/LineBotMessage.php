@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\LineLinkMember;
 use Exception;
 use LINE\LINEBot;
 use App\Models\Member;
@@ -69,24 +70,41 @@ class LineBotMessage
                     $textMessageBuilder = new TextMessageBuilder('こんにちは！'.$userProfile['displayName'].'さん。');
                     $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
 
+                    // create link token
+                    $linkToken = $lineBot->createLinkToken($event->getUserId());
+
                     $template = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
-                        'Welcome to LINE BOT',
-                        'Please select',
+                        'Welcome to Taberuba Official Account',
+                        'Connect your LINE with your taberuba account',
                         'https://placekitten.com/300/200',
                         [
-                            new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('Say message', 'hello'),
-                            new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder('ping', 'ping'),
-                            new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                            new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Link Account', route('login', ['linkToken' => $linkToken->linkToken])),
                         ]
                     );
 
                     $templateMessage = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('Button alt text', $template);
                     // push message
                     $lineBot->pushMessage($event->getUserId(), $templateMessage);
-
-
-
                 }
+
+                // handle link account
+                if ($event instanceof \LINE\LINEBot\Event\AccountLinkEvent) {
+                    if ($event->getResult() == 'ok') {
+                        $nonceToken = $event->getNonce();
+
+                        // find member by nonce token
+                        $member = Member::where('line_nonce_token', $nonceToken)->first();
+
+                        // update member line id
+                        $member->update([
+                            'line_user_id' => $event->getUserId(),
+                        ]);
+
+                        $textMessageBuilder = new TextMessageBuilder('Your Account Taberuba with Email ' . $member->email  .' has been linked');
+                        $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
+                    }
+                }
+
             }
         } catch (Exception $e) {
             Log::error('Error: ' . $e->getMessage());

@@ -35,6 +35,7 @@ class Member extends Model implements AuthenticatableContract, AuthorizableContr
         'phone_number',
         'email',
         'password',
+        'nonce',
         'line_id',
         'remember_token',
         'is_line_notification_enabled',

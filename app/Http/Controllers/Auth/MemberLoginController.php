@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Member;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\LogActivityTrait;
 use App\Http\Controllers\Controller;
+use App\Models\LineLinkMember;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -66,10 +68,10 @@ class MemberLoginController extends Controller
     protected function showLoginForm(Request $request){
 
         // Member loggedin try to access login page
-        if (auth()->guard('member')->check()) {
-            // redirect to home
-            return redirect()->route('home');
-        }
+        // if (auth()->guard('member')->check()) {
+        //     // redirect to home
+        //     return redirect()->route('home');
+        // }
 
         // Company user try to access login page
         if (auth()->guard('user')->check()) {
@@ -147,5 +149,22 @@ class MemberLoginController extends Controller
         // auth()->guard('member')->login($member);
 
         // return redirect()->route('home');
+    }
+
+    protected function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if (auth()->guard('member')->attempt(['email' => $request->email, 'password' => $request->password ])) {
+            if(isset($request->linkToken)){
+                // create nonce token for linking existing account to LINE
+                $lineNonceToken = Str::random(12);
+                Member::find(auth()->guard('member')->user()->id)
+                ->update(['line_nonce_token' => $lineNonceToken]);
+                return redirect()->to('https://access.line.me/dialog/bot/accountLink?linkToken='.$request->linkToken.'&nonce='.$lineNonceToken);
+            }
+            return redirect()->route('home');
+        }
+        return back()->withErrors(['email' => 'Email or password are wrong.']);
     }
 }
