@@ -65,6 +65,7 @@ return [
     'jsSorry'                => 'Sorry, the data could not be deleted',
     'user'                   => 'User',
     'userloginscreen'        => 'User Login',
+    'close'                  => 'Close',
     /** =================================== */
     'name'                   => 'Name',
     'email'                  => 'Email',
@@ -137,6 +138,7 @@ return [
     'email_notif_settings' => 'Email Notification Settings',
     'linked' => 'Linked',
     'cancel_sns' => 'Cancel Certifcation SNS',
+    'cancel_sns_confirm' => 'Are you sure you want to cancel the certification of SNS?',
     'phone_validation' => 'The :attribute must be less than 11 digit without hyphens.',
 
     // A6

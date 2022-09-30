@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\LineBotMessage;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,6 +51,10 @@ class MyPageController extends Controller
     public function cancelLineSns()
     {
         $member = Member::find(auth()->guard('member')->user()->id);
+
+        $lineBot = new LineBotMessage();
+        $lineBot->sendMessageToUser($member->line_id, 'LINE連携を解除しました。');
+
         if($member){
             $member->update([
                 'is_line_notification_enabled' => Member::ID_DISABLE_NOTIF,
