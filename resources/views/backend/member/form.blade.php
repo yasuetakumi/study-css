@@ -25,7 +25,7 @@
                     </div>
                 @endcomponent
             @else
-                @component('backend._components.text_label', ['name' => 'linked_line_id', 'label' => __('label.linked_line_id'), 'value' => $item->line_id ?? '', 'required' => false]) @endcomponent
+                @component('backend._components.text_label', ['name' => 'linked_line_id', 'label' => __('label.linked_line_id'), 'value' => $item->line_display_name ?? '', 'required' => false]) @endcomponent
                 @component('backend._components.input_button_anchor',[
                     'label' => __('label.cancel_sns'),
                     'required' => false,
@@ -42,7 +42,7 @@
             @component('backend._components.input_password_edit') @endcomponent
         @endif
 
-        @if($page_type == 'edit')
+        @if($page_type == 'edit' && $item->line_id)
             @component('backend._components.input_radio', ['is_indexed_value' => true, 'indexStartFrom0' => true, 'options' => $notif_statuses, 'name' => 'is_line_notification_enabled', 'label' => __('label.line_notif_settings'), 'value' => $item->is_line_notification_enabled ?? 1, 'required' => false])
             @endcomponent
         @endif
