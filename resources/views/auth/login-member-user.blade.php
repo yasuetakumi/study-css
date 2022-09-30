@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                @if($linkToken)
+                @if(!$linkToken)
                     <div class="form-group row mt-4">
 
                         <div class="px-2">

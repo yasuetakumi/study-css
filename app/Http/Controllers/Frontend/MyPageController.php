@@ -46,4 +46,20 @@ class MyPageController extends Controller
 
         return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
     }
+
+    public function cancelLineSns()
+    {
+        $member = Member::find(auth()->guard('member')->user()->id);
+        if($member){
+            $member->update([
+                'is_line_notification_enabled' => Member::ID_DISABLE_NOTIF,
+                'line_id' => null,
+                'line_nonce_token' => null,
+                'line_display_name' => null,
+            ]);
+            return redirect()->back()->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
+        } else {
+            return redirect()->back()->with('errors', __('label.FAILED_UPDATE_MESSAGE'));
+        }
+    }
 }
