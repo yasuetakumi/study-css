@@ -53,7 +53,7 @@ class MyPageController extends Controller
         $member = Member::find(auth()->guard('member')->user()->id);
 
         $lineBot = new LineBotMessage();
-        $lineBot->sendMessageToUser($member->line_id, 'LINE連携を解除しました。');
+        $response = $lineBot->sendMessageToUser($member->line_id, 'LINE連携を解除しました。');
 
         if($member){
             $member->update([
