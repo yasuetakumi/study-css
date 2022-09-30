@@ -152,11 +152,9 @@ class MemberLoginController extends Controller
         // return redirect()->route('home');
     }
 
-    protected function login(Request $request)
+    public function login(Request $request)
     {
         $this->validateLogin($request);
-        Log::info('Request' . json_encode($request->all(), JSON_PRETTY_PRINT));
-        $data = $request->all();
 
         if (auth()->guard('member')->attempt(['email' => $request->email, 'password' => $request->password ])) {
             // check query param has linkToken
@@ -165,7 +163,7 @@ class MemberLoginController extends Controller
                 $lineNonceToken = Str::random(12);
                 Member::find(auth()->guard('member')->user()->id)
                 ->update(['line_nonce_token' => $lineNonceToken]);
-                return redirect()->to('https://access.line.me/dialog/bot/accountLink?linkToken='.$data['linkToken'].'&nonce='.$lineNonceToken);
+                return redirect()->to('https://access.line.me/dialog/bot/accountLink?linkToken='.$request->linkToken.'&nonce='.$lineNonceToken);
             }
             return redirect()->route('home');
         }
