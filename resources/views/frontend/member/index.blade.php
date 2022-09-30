@@ -34,7 +34,7 @@
 
         @component('backend._components.input_password_edit') @endcomponent
 
-        @if($item->line_id == null)
+        @if($item->line_id)
             @component('backend._components.input_radio', ['is_indexed_value' => true, 'indexStartFrom0' => true, 'options' => $notif_statuses, 'name' => 'is_line_notification_enabled', 'label' => __('label.line_notif_settings'), 'value' => $item->is_line_notification_enabled ?? 1, 'required' => false])
             @endcomponent
         @endif
