@@ -69,13 +69,21 @@ class LineBotMessage
                     $textMessageBuilder = new TextMessageBuilder('こんにちは！'.$userProfile['displayName'].'さん。');
                     $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
 
-                    // check current logged in member
-                    if(Auth::guard('member')->check()){
-                        $member = Member::find(Auth::guard('member')->user()->id);
-                        $member->update([
-                            'line_id' => $event->getUserId()
-                        ]);
-                    }
+                    $template = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+                        'Welcome to LINE BOT',
+                        'Please select',
+                        'https://placekitten.com/300/200',
+                        [
+                            new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('Say message', 'hello'),
+                            new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder('ping', 'ping'),
+                            new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                        ]
+                    );
+
+                    $templateMessage = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('Button alt text', $template);
+                    $lineBot->replyMessage($event->getReplyToken(), $templateMessage);
+
+
 
                 }
             }
