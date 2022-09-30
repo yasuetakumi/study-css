@@ -78,7 +78,7 @@ class LineBotMessage
                         'Connect your LINE with your taberuba account',
                         'https://placekitten.com/300/200',
                         [
-                            new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Link Account', route('login', ['linkToken' => $linkToken['linkToken']])),
+                            new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Link Account', route('member-login', ['linkToken' => $linkToken['linkToken']])),
                         ]
                     );
 
