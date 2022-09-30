@@ -161,8 +161,11 @@ class MemberLoginController extends Controller
             if($request->has('linkToken')) {
                 // create nonce token for linking existing account to LINE
                 $lineNonceToken = Str::random(12);
-                Member::find(auth()->guard('member')->user()->id)
-                ->update(['line_nonce_token' => $lineNonceToken]);
+
+                $member = Member::find(auth()->guard('member')->user()->id);
+                $member->line_nonce_token = $lineNonceToken;
+                $member->save();
+
                 return redirect()->to('https://access.line.me/dialog/bot/accountLink?linkToken='.$request->linkToken.'&nonce='.$lineNonceToken);
             }
             return redirect()->route('home');

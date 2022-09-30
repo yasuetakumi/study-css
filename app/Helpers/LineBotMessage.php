@@ -96,9 +96,8 @@ class LineBotMessage
                         $member = Member::where('line_nonce_token', $nonceToken)->first();
 
                         // update member line id
-                        $member->update([
-                            'line_user_id' => $event->getUserId(),
-                        ]);
+                        $member->line_id = $event->getUserId();
+                        $member->save();
 
                         $textMessageBuilder = new TextMessageBuilder('Your Account Taberuba with Email ' . $member->email  .' has been linked');
                         $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
