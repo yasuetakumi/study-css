@@ -23,11 +23,14 @@
             @endcomponent
         @else
             @component('backend._components.text_label', ['name' => 'linked_line_id', 'label' => __('label.linked_line_id'), 'value' => $item->line_display_name ?? '', 'required' => false]) @endcomponent
-            @component('backend._components.input_button_anchor',[
+
+            @component('backend._components.input_button_modal',[
                 'label' => __('label.cancel_sns'),
                 'required' => false,
                 'route' => route('member.cancelSns'),
-                'value' => __('label.cancel_sns')
+                'value' => __('label.cancel_sns'),
+                'targetModal' => 'cancelSnsModal',
+                'body'  => __('label.cancel_sns_confirm'),
             ])
             @endcomponent
         @endif

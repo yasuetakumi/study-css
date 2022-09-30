@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Helpers\DatatablesHelper;
 use App\Models\Member;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\SocialAccount;
+use App\Helpers\LineBotMessage;
+use App\Helpers\DatatablesHelper;
+use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
 {
@@ -117,6 +118,10 @@ class MemberController extends Controller
     public function cancelLineSns($id)
     {
         $member = Member::find($id);
+
+        $lineBot = new LineBotMessage();
+        $response = $lineBot->sendMessageToUser($member->line_id, 'LINE連携を解除しました。');
+
         if($member){
             $member->update([
                 'is_line_notification_enabled' => Member::ID_DISABLE_NOTIF,

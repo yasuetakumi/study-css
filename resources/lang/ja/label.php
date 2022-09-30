@@ -65,6 +65,7 @@ return [
     'jsSorry'                => 'データの削除は失敗しました。',
     'user'                   => 'ユーザー',
     'userloginscreen'        => 'ユーザーログイン',
+    'close'                  => '閉じる',
     /** =================================== */
     'name'                   => 'お名前',
     'email'                  => 'メールアドレス',
@@ -139,6 +140,7 @@ return [
     'email_notif_settings' => 'メール通知設定',
     'linked' => 'リンク済み',
     'cancel_sns' => 'ＳＮＳ連携解除',
+    'cancel_sns_confirm' => 'ＳＮＳ連携を解除しますか？',
     'phone_validation' => ':attributeは、ハイフン無しの11桁以内で入力してください。',
 
     // A6
