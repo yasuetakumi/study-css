@@ -117,7 +117,7 @@ class MemberController extends Controller
     public function cancelLineSns($id)
     {
         $member = Member::find($id);
-        if(!empty($member)){
+        if($member){
             $member->update([
                 'is_line_notification_enabled' => Member::ID_DISABLE_NOTIF,
                 'line_id' => null

@@ -14,7 +14,11 @@
 @section('content')
 <div class="login-box" style="width: auto;">
     <div class="login-logo">
-        <a class="text-uppercase" style="letter-spacing: 2px" href="javascript:;">MEMBER LOGIN</a>
+        @if($linkToken)
+            <a class="text-uppercase" style="letter-spacing: 2px" href="javascript:;">MEMBER LINKED LINE ACCOUNT</a>
+        @else
+            <a class="text-uppercase" style="letter-spacing: 2px" href="javascript:;">MEMBER LOGIN</a>
+        @endif
     </div>
     <div class="text-sm">
         @include("backend._includes.alert")
@@ -78,27 +82,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row mt-4">
+                @if($linkToken)
+                    <div class="form-group row mt-4">
 
-                    <div class="px-2">
-                        <a class="btn btn-outline-dark" href="{{ url('auth/google') }}" style="text-transform:none; font-size: 14px;">
-                            <img width="20px" style="margin-bottom:3px; margin-right:5px;" alt="Google sign-in" src="{{asset('images/google.webp')}}" />
-                            でログイン
-                        </a>
+                        <div class="px-2">
+                            <a class="btn btn-outline-dark" href="{{ url('auth/google') }}" style="text-transform:none; font-size: 14px;">
+                                <img width="20px" style="margin-bottom:3px; margin-right:5px;" alt="Google sign-in" src="{{asset('images/google.webp')}}" />
+                                でログイン
+                            </a>
+                        </div>
+                        <div class="px-2">
+                            <a class="btn btn-outline-primary" href="{{ url('auth/facebook') }}" style="text-transform:none; font-size: 14px;">
+                                <img width="20px" style="margin-bottom:3px; margin-right:5px;" alt="Facebook sign-in" src="{{asset('images/facebook.svg')}}" />
+                                でログイン
+                            </a>
+                        </div>
+                        <div class="px-2">
+                            <a class="btn btn-outline-success" href="{{ url('auth/line') }}" style="text-transform:none; font-size: 14px;">
+                                <img width="20px" style="margin-bottom:3px; margin-right:5px;" alt="LINE sign-in" src="{{asset('images/line.svg')}}" />
+                                でログイン
+                            </a>
+                        </div>
                     </div>
-                    <div class="px-2">
-                        <a class="btn btn-outline-primary" href="{{ url('auth/facebook') }}" style="text-transform:none; font-size: 14px;">
-                            <img width="20px" style="margin-bottom:3px; margin-right:5px;" alt="Facebook sign-in" src="{{asset('images/facebook.svg')}}" />
-                            でログイン
-                        </a>
-                    </div>
-                    <div class="px-2">
-                        <a class="btn btn-outline-success" href="{{ url('auth/line') }}" style="text-transform:none; font-size: 14px;">
-                            <img width="20px" style="margin-bottom:3px; margin-right:5px;" alt="LINE sign-in" src="{{asset('images/line.svg')}}" />
-                            でログイン
-                        </a>
-                    </div>
-                </div>
+                @endif
 
             </form>
 

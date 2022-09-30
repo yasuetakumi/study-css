@@ -57,8 +57,33 @@ class LineBotMessage
             foreach ($events as $event) {
                 // handle event message
                 if ($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage) {
-                    $textMessageBuilder = new TextMessageBuilder($event->getText());
-                    $lineBot->replyMessage($event->getReplyToken(), $textMessageBuilder);
+                    // if receive text message 'Link Account'
+                    if($event->getText() == 'Link Account'){
+                        // check if user already linked
+                        $lineLinkMember = Member::where('line_id', $event->getUserId())->first();
+                        // if already linked send message
+                        if($lineLinkMember){
+                            $lineBot->replyText($event->getReplyToken(), 'Your account already linked with email ' . $lineLinkMember->email);
+                        } else {
+                            // if not linked, start link account process
+                            // create link token
+                            $linkToken = $lineBot->createLinkToken($event->getUserId())->getJSONDecodedBody();
+
+                            $template = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+                                'Welcome to Taberuba Official Account',
+                                'Connect your Taberuba account with LINE',
+                                asset('og-taberuba.jpg'),
+                                [
+                                    new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Link Account', route('member-login', ['linkToken' => $linkToken['linkToken']])),
+                                ]
+                            );
+
+                            $templateMessage = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('Link Account Taberuba', $template);
+                            // push message
+                            $lineBot->pushMessage($event->getUserId(), $templateMessage);
+                        }
+
+                    }
                 }
 
                 // handle follow event
@@ -75,14 +100,14 @@ class LineBotMessage
 
                     $template = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
                         'Welcome to Taberuba Official Account',
-                        'Connect your LINE with your taberuba account',
-                        'https://placekitten.com/300/200',
+                        'Connect your Taberuba account with LINE',
+                        asset('og-taberuba.jpg'),
                         [
                             new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('Link Account', route('member-login', ['linkToken' => $linkToken['linkToken']])),
                         ]
                     );
 
-                    $templateMessage = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('Button alt text', $template);
+                    $templateMessage = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('Link Account Taberuba', $template);
                     // push message
                     $lineBot->pushMessage($event->getUserId(), $templateMessage);
                 }
@@ -92,11 +117,15 @@ class LineBotMessage
                     if ($event->getResult() == 'ok') {
                         $nonceToken = $event->getNonce();
 
+                        //get profile LINE
+                        $userProfile = $lineBot->getProfile($event->getUserId())->getJSONDecodedBody();
+
                         // find member by nonce token
                         $member = Member::where('line_nonce_token', $nonceToken)->first();
 
                         // update member line id
                         $member->line_id = $event->getUserId();
+                        $member->line_display_name = $userProfile['displayName'];
                         $member->save();
 
                         $textMessageBuilder = new TextMessageBuilder('Your Account Taberuba with Email ' . $member->email  .' has been linked');
