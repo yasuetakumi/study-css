@@ -150,6 +150,11 @@
                 required: false,
                 default: ""
             },
+            islogin: {
+                type: Number,
+                required: false,
+                default: "",
+            },
         },
 
         data: function(){
@@ -310,7 +315,8 @@
                 let newDate = new Date(date);
                 return newDate.toISOString().split('T')[0]
             },
-
+            getSearchConditionMember: function(){
+            }
         }
 
     });

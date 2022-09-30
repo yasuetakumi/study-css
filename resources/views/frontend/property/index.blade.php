@@ -642,19 +642,35 @@
             // -----------------------------------------------------------------
             registerSearchCondition: function(searchCondition, byPassCondition = false) {
                 if (Object.keys(this.searchCondition).length || byPassCondition) {
-                    // Get local storage
-                    let registeredSearchCondition = localStorage.getItem('searchCondition');
-                    registeredSearchCondition = _.takeRight(JSON.parse(registeredSearchCondition), 9);
-                    registeredSearchCondition.push(searchCondition);
+                    // if login store to db
+                    if(this.items.member_id){
+                        axios.post(root_url + '/search-preference', searchCondition)
+                        .then((result) => {
+                            console.log(result.data);
+                            // Show success alert
+                            let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                            this.$toasted.show( msg, {
+                                type: 'success'
+                            });
+                        }).catch((err) => {
+                            console.log(err);
+                        })
+                    // else, store to localstorage
+                    } else {
+                        // Get local storage
+                        let registeredSearchCondition = localStorage.getItem('searchCondition');
+                        registeredSearchCondition = _.takeRight(JSON.parse(registeredSearchCondition), 9);
+                        registeredSearchCondition.push(searchCondition);
 
-                    // Add search condition to local storage
-                    localStorage.setItem('searchCondition', JSON.stringify(registeredSearchCondition));
+                        // Add search condition to local storage
+                        localStorage.setItem('searchCondition', JSON.stringify(registeredSearchCondition));
 
-                    // Show success alert
-                    let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
+                        // Show success alert
+                        let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
                 }
             },
             // -----------------------------------------------------------------
