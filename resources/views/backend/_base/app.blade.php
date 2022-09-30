@@ -158,6 +158,9 @@
                         <!-- C-0 -->
                         @if(auth()->guard('member')->check())
                         <li class="nav-item">
+                            <a class="nav-link text-light" href="{{route('member.mypage.index')}}">@lang('label.member_mypage')</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" href="{{route('member.logout')}}">@lang('label.logout')</a>
                         </li>
                         @else
