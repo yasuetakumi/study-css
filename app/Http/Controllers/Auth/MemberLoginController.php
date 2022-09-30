@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Member;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Traits\LogActivityTrait;
-use App\Http\Controllers\Controller;
 use App\Models\LineLinkMember;
+use App\Traits\LogActivityTrait;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -154,14 +155,17 @@ class MemberLoginController extends Controller
     protected function login(Request $request)
     {
         $this->validateLogin($request);
+        Log::info('Request' . json_encode($request->all(), JSON_PRETTY_PRINT));
+        $data = $request->all();
 
         if (auth()->guard('member')->attempt(['email' => $request->email, 'password' => $request->password ])) {
-            if(isset($request->linkToken)){
+            // check query param has linkToken
+            if($request->has('linkToken')) {
                 // create nonce token for linking existing account to LINE
                 $lineNonceToken = Str::random(12);
                 Member::find(auth()->guard('member')->user()->id)
                 ->update(['line_nonce_token' => $lineNonceToken]);
-                return redirect()->to('https://access.line.me/dialog/bot/accountLink?linkToken='.$request->linkToken.'&nonce='.$lineNonceToken);
+                return redirect()->to('https://access.line.me/dialog/bot/accountLink?linkToken='.$data['linkToken'].'&nonce='.$lineNonceToken);
             }
             return redirect()->route('home');
         }
