@@ -81,7 +81,8 @@ class LineBotMessage
                     );
 
                     $templateMessage = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('Button alt text', $template);
-                    $lineBot->replyMessage($event->getReplyToken(), $templateMessage);
+                    // push message
+                    $lineBot->pushMessage($event->getUserId(), $templateMessage);
 
 
 
