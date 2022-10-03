@@ -1,18 +1,28 @@
-<p>This is email is to inform you that new properties have been published which match your saved search</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
-<p>Properties</p>
-@foreach ($row->properties as $property)
-    <ul>
-        <li>Property Url: <a href="{{ route('property.detail', $property->id) }}">{{ route('property.detail', $property->id) }}</a></li>
-        <li>Property Location: {{ $property->location }}</li>
-        <li>Property Price: {{ $property->rent_amount }}</li>
-        <li>Property Area: {{ $property->surface_area }}</li>
-    </ul>
-@endforeach
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{AssetHelper::version('css/backend/backend-custom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/frontend/app.css')}}">
+</head>
+<body>
+    <p>This is email is to inform you that new properties have been published which match your saved search</p>
 
-<p>Search Condition</p>
-<ul>
-    @foreach ($row->searchCondition as $conditionKey => $condition)
-        <li>[{{ $conditionKey }}] {{ $condition }}</li>
+    <p>Properties</p>
+    @foreach ($row->properties as $property)
+        @include('mail._components.property_list')
     @endforeach
-</ul>
+
+    <p>Search Condition</p>
+    <ul>
+        @foreach ($row->searchCondition as $conditionKey => $condition)
+            <li>[{{ $conditionKey }}] {{ $condition }}</li>
+        @endforeach
+    </ul>
+</body>
+</html>
