@@ -95,7 +95,35 @@
                                         <p class="text-primary text-lg mb-0">@{{sc.number_of_match_property}}<span class="text-xs">件がマッチ</span></p>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- Handle For LoggedIn Member -->
+                                <div class="row" v-if="islogin">
+                                    <div class="col-8 mt-1">
+                                        <textarea @input="handleTextArea(sc.id)" class="form-control w-100" name="comment" :id="'comment'+sc.id" cols="30" rows="5">@{{sc.comment ? sc.comment : ''}}</textarea>
+                                        <div class="d-flex justify-content-end">
+                                            {{-- Edit Or Save Button --}}
+                                            <div class="text-right">
+                                                <input :id="'btnEdit' + sc.id" value="保存" type="button" class="px-2 py-1 btn btn-secondary rounded-0 d-none" @click="handleEditOrSave(sc.id)">
+                                            </div>
+                                            <!-- Cancel Button-->
+                                            <div class="text-right ml-2">
+                                                <input :id="'btnCancel'+sc.id" type="button" value="キャンセル" class="px-2 py-1 btn btn-secondary rounded-0 d-none" @click="handleCancel(sc.id)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <!-- Link to C2 with Filter -->
+                                        <a :href="sc.url" class="shadow-md w-100 btn btn-primary text-xs ">
+                                            <span><i class="fas fa-search"></i>マッチした物件の一覧を表示</span>
+                                        </a>
+                                        <!-- Delete Button -->
+                                        <button type="button" class="shadow-md w-100 btn btn-danger text-xs mt-3" @click="deleteSearchCondition(sc.id)">
+                                            <span><i class="fas fa-trash"></i>この条件を削除する</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Handle For Non LoggedIn Member-->
+                                <div class="row" v-else>
                                     <div class="col-8 mt-1">
                                         <textarea @input="handleTextArea(index)" class="form-control w-100" name="comment" :id="'comment'+index" cols="30" rows="5">@{{sc.comment ? sc.comment : ''}}</textarea>
                                         <div class="d-flex justify-content-end">
@@ -120,6 +148,7 @@
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -159,12 +188,16 @@
 
         data: function(){
             var data = {
+                root_url: @json(url('/')),
                 items: {
                     controlTextArea: false,
                     comment: null,
                     search_condition: [],
                     active_modal_state: null,
-                    root_url: @json(url('/')),
+                }
+                api: {
+                    store_comment: @json(route('api.search.store.comment')),
+                    delete_search_condition: @json(route('api.search.condition.member.delete')),
                 }
             }
             return data;
@@ -230,6 +263,7 @@
                 document.getElementById("btnEdit"+index).classList.add("d-none");
 
                 this.getLocalStorage();
+                // this.getSearchPreferenceMember(this.islogin)
             },
 
             handleCancel: function(index){
@@ -330,6 +364,18 @@
                 let newDate = new Date(date);
                 return newDate.toISOString().split('T')[0]
             },
+            storeComment: function(id){
+                const getCommentValue = document.getElementById("comment"+id).value;
+                axios.post(this.api.store_comment, {
+                    id: id;
+                }).then((res) => {
+                    console.log(res);
+                    this.items.comment = '';
+                    this.getLocalStorage();
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
         }
 
     });

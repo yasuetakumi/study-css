@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\PropertyController;
 use App\Models\CustomerSearchPreference;
 use App\Models\CustomerSkeletonPreference;
 use App\Models\WalkingDistanceFromStationOption;
@@ -51,30 +52,35 @@ class ApiSearchPreferenceController extends Controller
             // this for response to view
             $object = new \stdClass();
             // this is for getting URL
-            $request = new \stdClass();
+            $queryString = [];
+
+            $object->id = $search->id;
 
             // surface min
             if($search->surface_min){
                 $object->surface_min = toTsubo($search->surface_min, true);
-                $request->surface_min = toTsubo($search->surface_min);
+                $queryString['surface_min'] = toTsubo($search->surface_min);
                 // $object->面積下限 = $search->surface_min . '坪';
             }
 
             // surface max
             if($search->surface_max){
                 $object->surface_max = toTsubo($search->surface_max, true);
+                $queryString['surface_max'] = toTsubo($search->surface_max);
                 // $object->面積上限 = $search->surface_max;
             }
 
             // rent amount min
             if($search->rent_amount_min){
                 $object->rent_amount_min = toMan( $search->rent_amount_min, true);
+                $queryString['rent_amount_min'] = toMan( $search->rent_amount_min);
                 // $object->賃料下限 = $search->rent_amount_min;
             }
 
             // rent amount max
             if($search->rent_amount_max){
                 $object->rent_amount_max = toMan($search->rent_amount_max, true);
+                $queryString['rent_amount_max'] = toMan($search->rent_amount_max);
                 // $object->賃料上限 = $search->rent_amount_max;
             }
 
@@ -83,6 +89,7 @@ class ApiSearchPreferenceController extends Controller
                 $getWalkingDistance = WalkingDistanceFromStationOption::find($search->walking_distance);
                 if($getWalkingDistance){
                     $object->徒歩 = $getWalkingDistance->label_jp;
+                    $queryString['walking_distance'] = $getWalkingDistance->id;
                 }
             }
 
@@ -91,7 +98,23 @@ class ApiSearchPreferenceController extends Controller
                 $getSkeleton = CustomerSkeletonPreference::find($search->skeleton_id);
                 if($getSkeleton){
                     $object->スケルトン物件_居抜き物件 = $getSkeleton->label_jp;
+                    if($getSkeleton->id == CustomerSkeletonPreference::SKELETON){
+                        $queryString['skeleton'] = 1;
+                    }
+                    else if($getSkeleton->id == CustomerSkeletonPreference::FURNISHED){
+                        $queryString['furnished'] = 1;
+                    }
+                    else if($getSkeleton->id == CustomerSkeletonPreference::FURNISHED_AND_SKELETON){
+                        $queryString['furnished'] = 1;
+                        $queryString['skeleton'] = 1;
+                    }
                 }
+            }
+
+            // name
+            if($search->freetext){
+                $object->name = $search->freetext;
+                $queryString['name'] = $search->freetext;
             }
 
             // comment
@@ -105,7 +128,8 @@ class ApiSearchPreferenceController extends Controller
                 foreach($search->customer_search_preferences_floor_aboves as $floorAboveItem){
                     $floorAbove[] = $floorAboveItem->floor_above->label_jp;
                 }
-                $object->階数_地下 = implode(', ', $floorAbove);
+                $object->階数_地下 = implode(',', $floorAbove);
+                $queryString['floor_above'] = implode(',', array_column($search->customer_search_preferences_floor_aboves->toArray(), 'floor_above_id'));
             }
 
             // floor under
@@ -114,7 +138,8 @@ class ApiSearchPreferenceController extends Controller
                 foreach($search->customer_search_preferences_floor_unders as $floorUnderItem){
                     $floorUnder[] = $floorUnderItem->floor_under->label_jp;
                 }
-                $object->階数_地上 = implode(', ', $floorUnder);
+                $object->階数_地上 = implode(',', $floorUnder);
+                $queryString['floor_under'] = implode(',', array_column($search->customer_search_preferences_floor_unders->toArray(), 'floor_under_id'));
             }
 
             // property preference
@@ -123,7 +148,8 @@ class ApiSearchPreferenceController extends Controller
                 foreach($search->customer_search_preferences_property_preferences as $propertyPreferenceItem){
                     $propertyPreference[] = $propertyPreferenceItem->property_preference->label_jp;
                 }
-                $object->こだわり条件 = implode(', ', $propertyPreference);
+                $object->こだわり条件 = implode(',', $propertyPreference);
+                $queryString['property_preference'] = implode(',', array_column($search->customer_search_preferences_property_preferences->toArray(), 'property_preference_id'));
             }
 
             // property type
@@ -132,7 +158,8 @@ class ApiSearchPreferenceController extends Controller
                 foreach($search->customer_search_preferences_property_types as $propertyTypeItem){
                     $propertyType[] = $propertyTypeItem->property_type->label_jp;
                 }
-                $object->飲食店の種類 = implode(', ', $propertyType);
+                $object->飲食店の種類 = implode(',', $propertyType);
+                $queryString['property_type'] = implode(',', array_column($search->customer_search_preferences_property_types->toArray(), 'property_type_id'));
             }
 
             // city
@@ -141,32 +168,56 @@ class ApiSearchPreferenceController extends Controller
                 foreach($search->customer_search_preference_cities as $cityItem){
                     $city[] = $cityItem->city->display_name;
                 }
-                $object->市区町村 = implode(', ', $city);
+                $object->市区町村 = implode(',', $city);
+                $queryString['city'] = implode(',', array_column($search->customer_search_preference_cities->toArray(), 'city_id'));
             }
+
+            // station
+            if(!empty($search->customer_search_preference_stations)){
+                $station = [];
+                foreach($search->customer_search_preference_stations as $stationItem){
+                    $station[] = $stationItem->station->display_name;
+                }
+                $object->駅 = implode(',', $station);
+                $queryString['station'] = implode(',', array_column($search->customer_search_preference_stations->toArray(), 'station_id'));
+            }
+
 
             // created at
             if($search->created_at){
                 $object->created_at = $search->created_at;
             }
 
-            // number of match property
-            $getPropertyFilter = app(ApiPropertyController::class)->getPropertyByFilter($object);
-            $object->number_of_match_property = $getPropertyFilter->getData()->data->count ?? 0;
+            $object->number_of_match_property = 0;
 
             // url
-            $object->url = 'localhost';
-
-            // cuisine
-            // if(!empty($search->customer_search_preference_cuisines)){
-            //     $cuisine = [];
-            //     foreach($search->customer_search_preference_cuisines as $cuisineItem){
-            //         $cuisine[] = $cuisineItem->cuisine;
-            //     }
-            //     $object->ジャンル = implode(', ', $cuisine);
-            // }
+            $object->url = route('property.index', $queryString);
 
             $response[] = $object;
         }
         return response()->json($response);
     }
+
+
+    public function storeComment(Request $request)
+    {
+        $search = CustomerSearchPreference::find($request->id);
+        if($search){
+            $search->comment = $request->comment;
+            $search->save();
+            return response()->json(['status' => true]);
+        }
+        return response()->json(['status' => false], 400);
+    }
+
+    public function deleteSearchConditionMember(Request $request)
+    {
+        $search = CustomerSearchPreference::find($request->id);
+        if($search){
+            $search->delete();
+            return response()->json(['status' => true]);
+        }
+        return response()->json(['status' => false], 400);
+    }
+
 }
