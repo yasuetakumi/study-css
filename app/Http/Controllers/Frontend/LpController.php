@@ -1,17 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class LpController extends Controller
 {
-    public function index()
+    public function partnerPage()
     {
-        return view('lp.home.index');
+        return view('frontend.lp.partner.index');
+    }
+
+    public function thanksPage()
+    {
+        return view('frontend.lp.partner.thanks');
     }
 
     protected function validator( array $data, $type ){

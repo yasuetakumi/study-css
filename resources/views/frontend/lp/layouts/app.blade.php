@@ -44,7 +44,7 @@
 		{
 			"@context": "https://schema.org",
 			"@type": "Organization",
-			"url": "{{route('lp.index')}}",
+			"url": "{{route('lp.partner')}}",
 			"logo": "{{asset('assets/img/logo.png')}}",
 			"name" : "業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば"
 		}
@@ -74,7 +74,7 @@
             <div class="container-fluid mx-lg-64 mx-md-4">
                 <div class="row w-100 justify-content-between align-items-center mx-lg-32">
                     <div>
-                        <a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.index')}}">
+                        <a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.partner')}}">
                             <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
                         </a>
                     </div>
@@ -87,7 +87,7 @@
                     <div class="collapse navbar-collapse pr-3" id="navbarNav0" >
                         <ul class="navbar-nav ml-auto align-items-center">
                             <li class="nav-item">
-                                <a class="btn btn-secondary revert" href="{{route('lp.index') . '#contact'}}">お問い合わせ</a>
+                                <a class="btn btn-secondary revert" href="{{route('lp.partner') . '#contact'}}">お問い合わせ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-secondary revert d-flex align-items-center icon-phone" href="tel:05058072335">

@@ -30,12 +30,11 @@ You can registered routing by this command.
 */
 // check if is productions
 if (Config::get('app.env') === 'production') {
-    Route::get('/partner','LpController@index')->name('lp.index');
-    Route::post('/partner', 'LpController@contact')->name('lp.contact');
-    Route::get('/partner/thanks', function(){
-        return view('lp.home.thanks');
-    })->name('lp.thanks');
-    // catch all route except /thanks and /lp01
+    Route::get('/partner', 'Frontend\LpController@partnerPage')->name('lp.partner');
+    Route::post('/partner', 'Frontend\LpController@contact')->name('lp.contact');
+    Route::get('/partner/thanks','Frontend\LpController@thanksPage')->name('lp.thanks');
+
+    // catch all route except /thanks and /partner
     Route::get('/{any}',function(){
         return redirect()->route('lp.index');
     })->where('any', '^(?!partner|partner/thanks).*$');
@@ -273,11 +272,11 @@ if (Config::get('app.env') === 'production') {
         });
 
     });
-    Route::get('/partner', 'LpController@index')->name('lp.index');
-    Route::post('/partner', 'LpController@contact')->name('lp.contact');
-    Route::get('/partner/thanks', function(){
-        return view('lp.home.thanks');
-    })->name('lp.thanks');
+
+    // LP Route
+    Route::get('/partner', 'Frontend\LpController@partnerPage')->name('lp.partner');
+    Route::post('/partner', 'Frontend\LpController@contact')->name('lp.contact');
+    Route::get('/partner/thanks','Frontend\LpController@thanksPage')->name('lp.thanks');
 }
 
 
