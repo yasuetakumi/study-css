@@ -646,7 +646,6 @@
                     if(this.items.member_id){
                         axios.post(root_url + '/search-preference', searchCondition)
                         .then((result) => {
-                            console.log(result.data);
                             // Show success alert
                             let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
                             this.$toasted.show( msg, {

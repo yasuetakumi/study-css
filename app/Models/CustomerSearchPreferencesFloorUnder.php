@@ -18,4 +18,9 @@ class CustomerSearchPreferencesFloorUnder extends Model
     {
         return $this->belongsTo(CustomerSearchPreference::class, 'customer_search_preference_id');
     }
+
+    public function floor_under()
+    {
+        return $this->belongsTo(NumberOfFloorsUnderGround::class, 'floor_under_id');
+    }
 }

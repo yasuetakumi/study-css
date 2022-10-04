@@ -27,9 +27,14 @@ class ApiPropertyController extends Controller
     // -------------------------------------------------------------------------
     // Filter property
     // -------------------------------------------------------------------------
-    public function getPropertyByFilter(Request $request) {
+    public function getPropertyByFilter(Request $request, $object = null) {
         // Filter data
         $filter = (object) $request->all();
+        // handle if use by getSearchConditionMember (ApiSearchPreferenceController)
+        if($object){
+            $filter = $object;
+        }
+
         // return response()->json($filter);
         // Default value
         $selectedUnderground = array();

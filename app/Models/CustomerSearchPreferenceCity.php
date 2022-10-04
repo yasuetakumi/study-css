@@ -17,4 +17,9 @@ class CustomerSearchPreferenceCity extends Model
     {
         return $this->belongsTo(CustomerSearchPreference::class, 'customer_search_preference_id');
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
 }

@@ -90,7 +90,7 @@ class CustomerSearchPreferenceController extends Controller
             $customer = new CustomerSearchPreference();
             // save member id if logged in
             $customer->member_id = Auth::guard('member')->check(0) ? Auth::guard('member')->user()->id : null;
-            $customer->customer_email = $data['customer_email'];
+            $customer->customer_email = $data['customer_email'] ?? null;
             $customer->is_email_enabled = CustomerSearchPreference::ENABLE_EMAIL;
 
             $customer->surface_min = isset($data['面積下限']) ? (int) toTsubo(filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT)) : '';

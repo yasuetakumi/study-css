@@ -164,19 +164,26 @@
                     comment: null,
                     search_condition: [],
                     active_modal_state: null,
+                    root_url: @json(url('/')),
                 }
             }
             return data;
         },
 
         mounted: function(){
-            this.getLocalStorage();
+            if(this.islogin){
+                this.getSearchPreferenceMember(this.islogin);
+            } else {
+                this.getLocalStorage();
+            }
             this.$nextTick(() => {
-                if(this.items.search_condition && this.items.search_condition.length > 0)
+                if(this.items.search_condition && this.items.search_condition.length > 0){
                     for(let i=0; i < this.items.search_condition.length; i++){
                         this.titleEditOrSave(i);
                         // this.showCancelButton(i);
                     }
+                }
+
             });
         },
         updated: function(){
@@ -242,6 +249,14 @@
                 console.log("local", JSON.parse(local));
                 let localArr = local != null ? JSON.parse(local) : [] ; // parse to array
                 this.items.search_condition = localArr;
+            },
+            getSearchPreferenceMember: function(){
+                axios.get(this.items.root_url + '/api/v1/search/getSearchConditionMember/' + this.islogin)
+                .then((res) => {
+                    this.items.search_condition = res.data;
+                }).catch((err) => {
+                    console.log(err);
+                });
             },
             deleteSearchCondition: function(index){
                 console.log(index);
@@ -315,8 +330,6 @@
                 let newDate = new Date(date);
                 return newDate.toISOString().split('T')[0]
             },
-            getSearchConditionMember: function(){
-            }
         }
 
     });
