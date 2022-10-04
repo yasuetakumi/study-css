@@ -1,4 +1,4 @@
-@extends('lp.layouts.app')
+@extends('frontend.lp.layouts.app')
 @section('title', 'お問い合わせ受付完了 | たべるば')
 
 @section('description', 'たべるばのお問い合わせ完了ページです。')
@@ -12,7 +12,7 @@
                     <p class="title">お問い合わせ<br class="d-block d-lg-none">ありがとうございます。</p>
                     <p class="subtitle">いただいたお問い合わせは数営業日以内にご返信いたします。<br>
                     今しばらくお待ちくださいますようお願いいたします。</p>
-                    <a href="{{route('lp.index')}}" class="btn btn-secondary btn-thanks border-0">
+                    <a href="{{route('lp.partner')}}" class="btn btn-secondary btn-thanks border-0">
                         トップページへ戻る
                     </a>
                 </div>

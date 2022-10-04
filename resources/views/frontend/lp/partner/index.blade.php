@@ -1,4 +1,4 @@
-@extends('lp.layouts.app')
+@extends('frontend.lp.layouts.app')
 
 @section('title', '業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば')
 
