@@ -3,7 +3,6 @@
         <div class="card-header">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1">
-                    {{-- //TODO Check condition --}}
                     <p class="text-black mb-0">
                         @if ($property->city_id != null && $property->property_stations[0])
                         {{ $property->prefecture->display_name . $property->city->display_name . $property->location }}
@@ -14,7 +13,6 @@
                     </p>
 
                 </div>
-                <i class="fas fa-chevron-right"></i>
             </div>
         </div>
     </a>
@@ -37,7 +35,16 @@
                         <dt class="text-info">賃料/坪単価 <span class="text-dark">{{ $property->man }} / {{ number_format($property->yen_per_tsubo) }}円</span></dt>
                         <dt class="text-info">面積 <span class="text-dark">{{ $property->surface_area }}㎡ / {{ $property->tsubo }}</span></dt>
                         <dt class="text-info">所在地 <span class="text-dark">{{ $property->location }}</span></dt>
-                        <dt class="text-info">前業態/希望譲渡料 <span class="text-dark">@{{cuisineOrTransfer}}</span></dt>
+                        <dt class="text-info">前業態/希望譲渡料
+                            <span class="text-dark">
+                                @if ($property->cuisine !== null)
+                                    {{ $property->cuisine->label_jp }}/
+                                @endif
+                                @if ($property->interior_transfer_price !== 0 && $property->interior_transfer_price !== null)
+                                    {{ ($property->interior_transfer_price / 10000) . '万円' }}
+                                @endif
+                            </span>
+                        </dt>
                     </dl>
                 </div>
             </div>

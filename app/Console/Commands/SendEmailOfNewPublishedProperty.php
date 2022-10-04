@@ -141,6 +141,17 @@ class SendEmailOfNewPublishedProperty extends Command {
         foreach ($data as $key => $row) {
             $row = (object) $row;
 
+            $requiredSearchConditionKey = [
+                'surfaceMin', 'surfaceMax', '譲渡額下限', '譲渡額上限', 'rentAmountMin', 'rentAmountMax'
+            ];
+
+            // Assign unfound key to null so we dont have to check the if the key exist in blade
+            foreach ($requiredSearchConditionKey as $key) {
+                if (!array_key_exists($key, $row->searchCondition->toArray())) {
+                    $row->searchCondition[$key] = null;
+                }
+            }
+
             env('BCC_PROPERTY_INQUIRY') ?
                 Mail::to($row->email)->bcc(env('BCC_PROPERTY_INQUIRY'))->send(new NewPropertyPublished($row))
                 : Mail::to($row->email)->send(new NewPropertyPublished($row));
