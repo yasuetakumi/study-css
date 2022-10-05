@@ -10,8 +10,6 @@
 .footer{
     position: relative;
     z-index: 9;
-    background: #000;
-    height: 3.5rem;
 
     .label-copyright{
         padding: 1rem 0;
@@ -23,4 +21,29 @@
     position: sticky;
     width: 100%;
     text-align: center;
+}
+
+
+.to-top{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    padding: 3rem 0 1.5rem;
+    @include breakpoint-down(sm){
+        padding: 3.375rem 0 3.375rem;
+    }
+
+    .btn-dark{
+        width: 3.125rem;
+        height: 3.125rem;
+        line-height: 0;
+        padding: 1rem;
+        background: #000!important;
+        position: relative;
+        box-shadow: 0px 3px 6px #00000029;
+        -webkit-box-shadow: 0px 3px 6px #00000029;
+        -moz-box-shadow: 0px 3px 6px #00000029;
+        -mz-transition: 0px 3px 6px #00000029;
+        -o-transition: 0px 3px 6px #00000029;
+    }
 }

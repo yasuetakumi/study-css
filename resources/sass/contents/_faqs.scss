@@ -1,0 +1,81 @@
+.page-header{
+    border-right: 1px solid;
+    border-left: 1px solid;
+
+    .heading-title{
+        color: $primary-color;
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 1.15px;
+    }
+
+    .sub-title{
+        font-size: 2rem;
+        @include breakpoint-down(sm){
+            font-size: 1.5rem;
+        }
+    }
+    .top-brand-logo{
+        position: absolute;
+        top: 5%;
+        left: 5%;
+    }
+}
+
+.heading-title{
+    font-family: 'Ostrich Sans Medium', sans-serif !important;
+    @include breakpoint-down(sm){
+        height: auto;
+        font-size: 1.25rem;
+    }
+}
+
+.sub-title{
+    font-size: 2rem;
+    @include breakpoint-down(sm){
+        font-size: 1.5rem;
+    }
+}
+
+.third-title.faq-category{
+    font-family: 'Noto Sans JP';
+    font-size: 24px;
+    margin-bottom: 24px;
+    margin-top: 40px;
+    color: #AACF52;
+    font-weight: bold;
+    padding: 4px 0px 4px 14px;
+    line-height: 24px;
+    position: relative;
+}
+.third-title.faq-category:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 2px;
+    background: #AACF52;
+    width: 6px;
+}
+
+.pl-15{
+    padding-left: 15px;
+}
+
+.px-8{
+    padding-left: 8rem !important;
+    padding-right: 8rem !important;
+}
+
+.mt-5{
+    margin-top: 5rem !important;
+}
+
+.mb-5{
+    margin-bottom: 5rem !important;
+}
+
+.box-shadow{
+    box-shadow: none;
+}

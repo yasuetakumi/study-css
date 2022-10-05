@@ -30,11 +30,12 @@ You can registered routing by this command.
 */
 // check if is productions
 if (Config::get('app.env') === 'production') {
+
     Route::get('/partner', 'Frontend\LpController@partnerPage')->name('lp.partner');
     Route::post('/partner', 'Frontend\LpController@contact')->name('lp.contact');
     Route::get('/partner/thanks','Frontend\LpController@thanksPage')->name('lp.thanks');
+    Route::get('/faqs','Frontend\LpController@faqs')->name('lp.faqs');
 
-    // catch all route except /thanks and /partner
     Route::get('/{any}',function(){
         return redirect()->route('lp.index');
     })->where('any', '^(?!partner|partner/thanks).*$');
@@ -277,6 +278,7 @@ if (Config::get('app.env') === 'production') {
     Route::get('/partner', 'Frontend\LpController@partnerPage')->name('lp.partner');
     Route::post('/partner', 'Frontend\LpController@contact')->name('lp.contact');
     Route::get('/partner/thanks','Frontend\LpController@thanksPage')->name('lp.thanks');
+    Route::get('/faqs', 'Frontend\LpController@faqs')->name('lp.faqs');
 }
 
 

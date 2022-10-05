@@ -20,6 +20,11 @@ class LpController extends Controller
         return view('frontend.lp.partner.thanks');
     }
 
+    public function faqs()
+    {
+        return view('frontend.lp.faqs.index');
+    }
+
     protected function validator( array $data, $type ){
         return Validator::make($data, [
             'category'      => 'required',
