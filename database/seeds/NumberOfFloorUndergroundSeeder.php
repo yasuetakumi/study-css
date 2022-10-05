@@ -2,6 +2,7 @@
 
 use App\Models\NumberOfFloorsUnderGround;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class NumberOfFloorUndergroundSeeder extends Seeder
 {
@@ -12,7 +13,10 @@ class NumberOfFloorUndergroundSeeder extends Seeder
      */
     public function run()
     {
-        NumberOfFloorsUnderGround::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        NumberOfFloorsUnderGround::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $data = new NumberOfFloorsUnderGround();
         $data->insert([
             [
@@ -23,7 +27,7 @@ class NumberOfFloorUndergroundSeeder extends Seeder
             [
                 'value'         => 2,
                 'label_en'       => '2nd floor',
-                'label_jp'      => '2階 ',
+                'label_jp'      => '2階',
             ],
             [
                 'value'         => 3,
@@ -33,22 +37,22 @@ class NumberOfFloorUndergroundSeeder extends Seeder
             [
                 'value'         => 4,
                 'label_en'       => '4th floor',
-                'label_jp'      => '4階 ',
+                'label_jp'      => '4階',
             ],
             [
                 'value'         => 5,
                 'label_en'       => '5th floor',
-                'label_jp'      => '5階 ',
+                'label_jp'      => '5階',
             ],
             [
                 'value'         => 6,
                 'label_en'       => '6th floor',
-                'label_jp'      => '5階 ',
+                'label_jp'      => '6階',
             ],
             [
                 'value'         => 7,
                 'label_en'       => '7th floor',
-                'label_jp'      => '7階 ',
+                'label_jp'      => '7階',
             ],
 
         ]);

@@ -23,6 +23,7 @@ class CustomerSearchPreference extends Model
         'transfer_price_min',
         'transfer_price_max',
         'skeleton_id',
+        'comment',
     ];
 
     public function walking_distance_option()
@@ -68,6 +69,41 @@ class CustomerSearchPreference extends Model
     public function cuisines()
     {
         return $this->belongsToMany(Cuisine::class, 'customer_search_preference_cuisines');
+    }
+
+    public function customer_search_preference_cities()
+    {
+        return $this->hasMany(CustomerSearchPreferenceCity::class, 'customer_search_preference_id');
+    }
+
+    public function customer_search_preference_stations()
+    {
+        return $this->hasMany(CustomerSearchPreferenceStation::class, 'customer_search_preference_id');
+    }
+
+    public function customer_search_preferences_floor_aboves()
+    {
+        return $this->hasMany(CustomerSearchPreferencesFloorAbove::class, 'customer_search_preference_id');
+    }
+
+    public function customer_search_preferences_floor_unders()
+    {
+        return $this->hasMany(CustomerSearchPreferencesFloorUnder::class, 'customer_search_preference_id');
+    }
+
+    public function customer_search_preferences_property_preferences()
+    {
+        return $this->hasMany(CustomerSearchPreferencesPropertyPreference::class, 'customer_search_preference_id');
+    }
+
+    public function customer_search_preferences_property_types()
+    {
+        return $this->hasMany(CustomerSearchPreferencesPropertyType::class, 'customer_search_preference_id');
+    }
+
+    public function customer_search_preference_cuisines()
+    {
+        return $this->hasMany(CustomerSearchPreferenceCuisine::class, 'customer_search_preference_id');
     }
 
 }
