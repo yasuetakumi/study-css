@@ -12,4 +12,14 @@ class CustomerSearchPreferenceStation extends Model
         'customer_search_preference_id',
         'station_id'
     ];
+
+    public function customer_search_preference()
+    {
+        return $this->belongsTo(CustomerSearchPreference::class, 'customer_search_preference_id');
+    }
+
+    public function station()
+    {
+        return $this->belongsTo(Station::class, 'station_id');
+    }
 }

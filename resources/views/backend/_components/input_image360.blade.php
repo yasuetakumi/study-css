@@ -7,11 +7,10 @@
             <input {{isset($isDisabled) && $isDisabled == true ? 'disabled' : '' }} type="file" id="input-{{ $name }}" name="{{ $name }}" accept="image/jpeg,image/jpg" class="input-image-360 @error($name) is-invalid @enderror" {{ !empty($required) && empty($value) ? 'required' : '' }} />
 
             <div id="image-preview-{{$name}}" class="image-preview">
-                @if(!empty($value) && empty($required))
-                    <a id="remove-image-360-{{$name}}" class="remove-image remove-image-360 btn btn-xs btn-default" style="right: -45px; top: 0px">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                @endif
+                <a id="remove-image-360-{{$name}}" class="remove-image remove-image-360 btn btn-xs btn-default">
+                    <i class="fa fa-trash"></i>
+                </a>
+
                 <input type="hidden" class="input-remove-image input-remove-image-360" name="removable_image[{{$name}}]" value="false" />
                 <img src="{{ !empty($value) ? asset('uploads/' . $value) : asset('img/backend/noimage.png') }}" data-default="{{ !empty($value) ? asset($value) : asset('img/backend/noimage.png') }}" data-empty="{{ asset('img/backend/noimage.png') }}" class="img-thumbnail">
                 @if (!empty($value))

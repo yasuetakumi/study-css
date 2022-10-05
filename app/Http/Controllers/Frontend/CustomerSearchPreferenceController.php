@@ -90,17 +90,17 @@ class CustomerSearchPreferenceController extends Controller
             $customer = new CustomerSearchPreference();
             // save member id if logged in
             $customer->member_id = Auth::guard('member')->check(0) ? Auth::guard('member')->user()->id : null;
-            $customer->customer_email = $data['customer_email'];
+            $customer->customer_email = $data['customer_email'] ?? null;
             $customer->is_email_enabled = CustomerSearchPreference::ENABLE_EMAIL;
 
-            $customer->surface_min = isset($data['面積下限']) ? (int) toTsubo(filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT)) : '';
-            $customer->surface_max = isset($data['面積上限']) ? (int) toTsubo(filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT)) : '';
-            $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : '';
-            $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : '';
+            $customer->surface_min = isset($data['面積下限']) ? (int) toTsubo(filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT)) : null;
+            $customer->surface_max = isset($data['面積上限']) ? (int) toTsubo(filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT)) : null;
+            $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : null;
+            $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : null;
             $customer->freetext = isset($data['フリーワード']) ? $data['フリーワード'] : null;
             $customer->walking_distance = isset($data['徒歩']) ? $walking_distance->id : null ;
-            $customer->transfer_price_min = isset($data['譲渡額下限'] ) ? (int) filter_var($data['譲渡額下限'], FILTER_SANITIZE_NUMBER_INT) : '';
-            $customer->transfer_price_max = isset($data['譲渡額上限']) ? (int) filter_var($data['譲渡額上限'], FILTER_SANITIZE_NUMBER_INT) : '';
+            $customer->transfer_price_min = isset($data['譲渡額下限'] ) ? (int) filter_var($data['譲渡額下限'], FILTER_SANITIZE_NUMBER_INT) : null;
+            $customer->transfer_price_max = isset($data['譲渡額上限']) ? (int) filter_var($data['譲渡額上限'], FILTER_SANITIZE_NUMBER_INT) : null;
 
             $customer->skeleton_id = !empty($skeleton) ? $skeleton : null;
             $customer->save();

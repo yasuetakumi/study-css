@@ -104,22 +104,7 @@
             'url'               => route('select2.postcode'),
             'value'             => $item->postcode_id ?? ''])
         @endcomponent
-        {{-- @component('backend._components.input_select_ajax',[
-            'name'              => 'prefecture_id',
-            'options'           => [empty($item->prefecture->display_name) ? '' : $item->prefecture->display_name],
-            'label'             => __('label.prefecture'),
-            'required'          => 1,
-            'url'               => route('select2.prefecture'),
-            'value'             => $item->prefecture_id ?? ''])
-        @endcomponent
-        @component('backend._components.input_select_ajax',[
-            'name'              => 'city_id',
-            'options'           => [empty($item->city->display_name) ? '' : $item->city->display_name],
-            'label'             => __('label.cities'),
-            'required'          => 1,
-            'url'               => route('select2.city'),
-            'value'             => $item->city_id ?? ''])
-        @endcomponent --}}
+
         @component('backend._components.vue.form.vue-select', [
             'name'          => 'prefecture_id',
             'label'         => __('label.prefecture'),
@@ -158,6 +143,10 @@
             @component('backend._components.input_select', ['name' => 'walking_distance_id', 'options' => $walking_distances, 'label' => __('label.walk_from_nearest_station'), 'required' => false, 'value' => $item->property_stations_closest->distance_from_station ?? '', 'isDisabled' => $disableForm]) @endcomponent
         </div>
         @component('backend._components.input_decimal', ['name' => 'surface_area', 'label' => __('label.surface_area_tsubo'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toTsubo($item->surface_area, false, 2), 'isReadOnly' => $disableForm, 'method' => 'changePlanBySurfaceArea' ]) @endcomponent
+        {{-- Plan --}}
+        @if ($page_type == 'create' || $page_type == 'edit')
+            @include('backend.property.components.plans_design_category')
+        @endif
 
         @component('backend._components.input_decimal', ['name' => 'rent_amount', 'label' => __('label.rent_amount_man'), 'required' => 1, 'value' => $page_type == 'create' ? '' : toMan($item->rent_amount, false, 2), 'isReadOnly' => $disableForm]) @endcomponent
 
@@ -181,10 +170,7 @@
 
         @component('backend._components.input_select', ['name' => 'cuisine_id', 'options' => $cuisines, 'label' => __('label.restaurant_cuisine'), 'required' => null, 'value' => $item->cuisine_id ?? '', 'isDisabled' => $disableForm]) @endcomponent
         @component('backend._components.input_number', ['name' => 'interior_transfer_price', 'label' => __('label.interior_transfer_price') . '(万)', 'required' => null, 'value' => $page_type == 'create' ? '' : toMan($item->interior_transfer_price), 'isReadOnly' => $disableForm ]) @endcomponent
-        {{-- Plan --}}
-        @if ($page_type == 'create' || $page_type == 'edit')
-            @include('backend.property.components.plans_design_category')
-        @endif
+
         @component('backend._components.input_image', ['name' => 'thumbnail_image_main', 'label' => __('label.thumbnail_image_main'), 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_main ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'thumbnail_image_1', 'label' => __('label.thumbnail_image') . ' 1', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_1 ?? '']) @endcomponent
         @component('backend._components.input_image', ['name' => 'thumbnail_image_2', 'label' => __('label.thumbnail_image') . ' 2', 'required' => null, 'isDisabled' => $disableForm, 'value' => $item->thumbnail_image_2 ?? '']) @endcomponent
