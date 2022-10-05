@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="col-4">
                                         <!-- Total of Matches Property-->
-                                        <p class="text-primary text-lg mb-0">@{{sc.number_of_match_property}}<span class="text-xs">件がマッチ</span></p>
+                                        <p class="text-primary text-lg mb-0">@{{countedProperties[index]}}<span class="text-xs">件がマッチ</span></p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -159,7 +159,8 @@
                     comment: null,
                     search_condition: [],
                     active_modal_state: null,
-                }
+                },
+                countedProperties: [],
             }
             return data;
         },
@@ -174,6 +175,7 @@
                     }
             });
         },
+
         updated: function(){
             if(this.items.search_condition && this.items.search_condition.length > 0){
                 for(let i=0; i < this.items.search_condition.length; i++){
@@ -203,6 +205,133 @@
             }
         },
         methods: {
+            setCountedProperties: function() {
+                // empty countedProperties
+                this.countedProperties = [];
+
+                // count properties for each seach condition
+                this.items.search_condition.map((sc, index) => {
+                    this.setCountedProperty(sc.url, index);
+                });
+            },
+
+            setCountedProperty: async function(url, index) {
+                let data = this.getFilterFormData(url);
+
+                await axios.post(root_url + '/api/v1/property/getPropertiesCount', data)
+                    .then((result) => {
+                        return result.data.data.count;
+                    }).then((result) => {
+                        // Set countedProperties
+                        this.$set(this.countedProperties, index, result);
+                        return result;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                });
+            },
+
+            getFilterFormData: function(rawUrl) {
+                let url = new URL(rawUrl);
+                let queries = new URLSearchParams(url.search);
+                let fromPrefecture = queries.get('from_prefecture');
+                let getUndergroundQs = queries.getAll('floor_under'); //filter for floor underground
+                let getUAbovegroundQs = queries.getAll('floor_above'); //filter for floor aboveground
+                let getPreferenceQs = queries.getAll('property_preference'); //filter for property preference
+                let getTypesQs = queries.getAll('property_type'); //filter for property types
+                let getCuisineQs = queries.getAll('cuisine');
+                let getSurfaceMinQs = queries.get('surface_min');
+                let getSurfaceMaxQs = queries.get('surface_max');
+                let getRentAmountMinQs = queries.get('rent_amount_min');
+                let getRentAmountMaxQs = queries.get('rent_amount_max');
+                let getTransferPriceMinQs = queries.get('transfer_price_min');
+                let getTransferPriceMaxQs = queries.get('transfer_price_max');
+                let getNameQs = queries.get('name');
+                let getWalkingDistanceQs = queries.get('walking_distance');
+                let getFurnishedQs = queries.get('furnished');
+                let getSkeletonQs = queries.get('skeleton');
+                let getCityQs = queries.getAll('city');
+                let getStationQs = queries.getAll('station');
+
+                let data = new FormData();
+
+                if(fromPrefecture != null) data.append('from_prefecture', fromPrefecture)
+
+                if(getSurfaceMinQs != null) data.append('surface_min', getSurfaceMinQs);
+                if(getSurfaceMaxQs != null) data.append('surface_max', getSurfaceMaxQs);
+
+                if(getRentAmountMinQs != null) data.append('rent_amount_min', getRentAmountMinQs);
+                if(getRentAmountMaxQs != null) data.append('rent_amount_max', getRentAmountMaxQs);
+
+                if(getTransferPriceMinQs != null) data.append('transfer_price_min', getTransferPriceMinQs);
+                if(getTransferPriceMaxQs != null) data.append('transfer_price_max', getTransferPriceMaxQs);
+
+                if(getNameQs != null) data.append('name', getNameQs);
+                if(getWalkingDistanceQs != null) data.append('walking_distance', getWalkingDistanceQs);
+                if(getFurnishedQs != null) data.append('furnished', getFurnishedQs);
+                if(getSkeletonQs != null) data.append('skeleton', getSkeletonQs);
+
+                // extract value query string of underground
+                if(getUndergroundQs.length > 0){
+                    let undergroundSplit = getUndergroundQs[0].split(",") || [];
+                        for(under of undergroundSplit){
+                            data.append('floor_under[]', under);
+                        }
+                }
+
+                // extract value query string of aboveground
+                if(getUAbovegroundQs.length > 0){
+                    let abovegroundSplit = getUAbovegroundQs[0].split(",") || [];
+                        for(above of abovegroundSplit){
+                            data.append('floor_above[]', above);
+                        }
+                }
+
+                // extract value query string of property preference
+                if(getPreferenceQs.length > 0){
+                    let preferencedSplit = getPreferenceQs[0].split(",") || [];
+                        for(pref of preferencedSplit){
+                            data.append('property_preference[]', pref);
+                        }
+                }
+
+                // extract value query string of property types
+                if(getTypesQs.length > 0){
+                    let typesSplit = getTypesQs[0].split(",") || [];
+                        for(type of typesSplit){
+                            data.append('property_type[]', type);
+                        }
+                }
+
+                if(getCuisineQs.length > 0){
+                    let cuisineSplit = getCuisineQs[0].split(",") || [];
+                        for(cuisine of cuisineSplit){
+                            data.append('cuisines[]', cuisine);
+                        }
+                }
+
+                // extract value query string of city
+                if(getCityQs.length > 0){
+                    let citySplit = getCityQs[0].split(",") || [];
+                        for(city of citySplit){
+                            data.append('city[]', city);
+                        }
+                }
+
+                // extract value query string of station
+                if(getStationQs.length > 0){
+                    let stationSplit = getStationQs[0].split(",") || [];
+                        for(station of stationSplit){
+                            data.append('station[]', station);
+                            this.items.filter.stations.push(station);
+                        }
+                }
+
+                data.append('count', 1);
+
+                return data;
+            },
+
             handleEditOrSave: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
                 let local = localStorage.getItem('searchCondition');
@@ -232,12 +361,14 @@
                 document.getElementById("btnEdit"+index).classList.add("d-none");
 
             },
+
             getLocalStorage: function(){
                 let local = localStorage.getItem("searchCondition");
                 console.log("local", JSON.parse(local));
                 let localArr = local != null ? JSON.parse(local) : [] ; // parse to array
                 this.items.search_condition = localArr;
             },
+
             deleteSearchCondition: function(index){
                 console.log(index);
                 var conditions = [];
@@ -267,6 +398,7 @@
 
                 this.getLocalStorage();
             },
+
             titleEditOrSave: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
                 if(currentTextArea.hasAttribute("readonly")){
@@ -277,6 +409,7 @@
                     // return false;
                 }
             },
+
             showCancelButton: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
                 if( currentTextArea.hasAttribute("readonly") ){

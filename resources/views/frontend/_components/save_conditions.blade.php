@@ -9,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        条件を保存しました <br/> 
+                        条件を保存しました <br/>
                         <a href="#" @click="displaySavedConditions">
                             保存された条件の一覧を表示する
                         </a>
@@ -45,6 +45,9 @@
                     closeModalSearchCondition.close();
                 }, 100);
                 modalSearchCondition.click();
+
+                // get the number of matched properties in each search condition
+                this.$parent.$refs.SearchConditionList.setCountedProperties();
             }
         }
 

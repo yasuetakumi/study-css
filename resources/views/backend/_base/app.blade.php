@@ -132,7 +132,7 @@
                         </li>
                         <!-- C-1-2 -->
                         <li class="nav-item border-right">
-                            <search-condition-list isbutton="false" label="希望にマッチした物件"></search-condition-list>
+                            <search-condition-list isbutton="false" label="希望にマッチした物件" ref="SearchConditionList"></search-condition-list>
                         </li>
                         <!-- C-1-3 -->
                         <!--<li class="nav-item dropdown border-right">
