@@ -15,7 +15,7 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 text-md">
         {{-- search history --}}
         @include('frontend.property.component.search-history')
 
