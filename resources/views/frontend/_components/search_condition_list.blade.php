@@ -2,7 +2,15 @@
     <div>
 
         <!-- if its used on navbar then show navlink -->
-        <a href="" v-if="isbutton=='false'" class="nav-link text-light" id="btnOpenModal" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">@{{label}}</a>
+        <div v-if="islogin">
+            <a href="" v-if="isbutton=='false'" class="nav-link text-light" id="btnOpenModal" data-toggle="modal" :data-target="activeModal" @click="getSearchPreferenceMember">@{{label}}</a>
+        </div>
+
+         <!-- if its used on navbar then show navlink -->
+        <div v-else>
+            <a href="" v-if="isbutton=='false'" class="nav-link text-light" id="btnOpenModal" data-toggle="modal" :data-target="activeModal" @click="getLocalStorage">@{{label}}</a>
+        </div>
+
 
         <div class="modal fade" id="modalAlert" tabindex="-1" aria-labelledby="modalAlertLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -81,7 +89,7 @@
                                     </div>
                                     <div class="col-4">
                                         <!-- Button Mail-->
-                                        <button type="button" class="shadow-md w-100 btn btn-secondary text-xs" data-toggle="modal" data-target="#emailPreferenceModal" @click="getIndexSearchPref(sc)">
+                                        <button type="button" class="shadow-md w-100 btn btn-secondary text-xs" data-toggle="modal" data-target="#emailPreferenceModal">
                                             <span><i class="fas fa-envelope"></i>メール配信登録</span>
                                         </button>
                                     </div>
@@ -95,6 +103,7 @@
                                         <p class="text-primary text-lg mb-0">@{{sc.number_of_match_property}}<span class="text-xs">件がマッチ</span></p>
                                     </div>
                                 </div>
+
                                 <!-- Handle For LoggedIn Member -->
                                 <div class="row" v-if="islogin">
                                     <div class="col-8 mt-1">
@@ -180,7 +189,7 @@
                 default: ""
             },
             islogin: {
-                type: Number,
+                type: String,
                 required: false,
                 default: "",
             },
@@ -194,26 +203,36 @@
                     comment: null,
                     search_condition: [],
                     active_modal_state: null,
-                }
+                },
                 api: {
                     store_comment: @json(route('api.search.store.comment')),
                     delete_search_condition: @json(route('api.search.condition.member.delete')),
-                }
+                },
             }
             return data;
         },
 
         mounted: function(){
             if(this.islogin){
-                this.getSearchPreferenceMember(this.islogin);
+                this.getSearchPreferenceMember();
             } else {
                 this.getLocalStorage();
             }
             this.$nextTick(() => {
                 if(this.items.search_condition && this.items.search_condition.length > 0){
-                    for(let i=0; i < this.items.search_condition.length; i++){
-                        this.titleEditOrSave(i);
-                        // this.showCancelButton(i);
+
+                    // handle for logged in member
+                    if(this.islogin){
+                        for(let i=0; i < this.items.search_condition.length; i++){
+                            this.titleEditOrSave(this.items.search_condition[i].id);
+
+                        }
+                    // handle for non logged in member
+                    } else {
+                        for(let i=0; i < this.items.search_condition.length; i++){
+                            this.titleEditOrSave(i);
+
+                        }
                     }
                 }
 
@@ -221,9 +240,18 @@
         },
         updated: function(){
             if(this.items.search_condition && this.items.search_condition.length > 0){
-                for(let i=0; i < this.items.search_condition.length; i++){
-                    this.titleEditOrSave(i);
-                    // this.showCancelButton(i);
+                // handle for logged in member
+                if(this.islogin){
+                    for(let i=0; i < this.items.search_condition.length; i++){
+                        this.titleEditOrSave(this.items.search_condition[i].id);
+
+                    }
+                // handle for non logged in member
+                } else {
+                    for(let i=0; i < this.items.search_condition.length; i++){
+                        this.titleEditOrSave(i);
+
+                    }
                 }
             }
         },
@@ -250,28 +278,50 @@
         methods: {
             handleEditOrSave: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
-                let local = localStorage.getItem('searchCondition');
-                conditions = JSON.parse(local) || [];
-                const newData = Object.assign(conditions[index], {"comment" : currentTextArea.value})
-                conditions[index] = newData;
-                localStorage.setItem('searchCondition', JSON.stringify(conditions));
 
-                document.getElementById("btnCancel"+index).classList.remove("d-block")
-                document.getElementById("btnCancel"+index).classList.add("d-none");
+                // handle for logged in member
+                if(this.islogin){
+                    this.storeCommentMember(index);
 
-                document.getElementById("btnEdit"+index).classList.remove("d-block");
-                document.getElementById("btnEdit"+index).classList.add("d-none");
+                    document.getElementById("btnCancel"+index).classList.remove("d-block")
+                    document.getElementById("btnCancel"+index).classList.add("d-none");
 
-                this.getLocalStorage();
-                // this.getSearchPreferenceMember(this.islogin)
+                    document.getElementById("btnEdit"+index).classList.remove("d-block");
+                    document.getElementById("btnEdit"+index).classList.add("d-none");
+
+                    this.getSearchPreferenceMember();
+
+                // handle for non logged in member
+                } else {
+                    let local = localStorage.getItem('searchCondition');
+                    conditions = JSON.parse(local) || [];
+                    const newData = Object.assign(conditions[index], {"comment" : currentTextArea.value})
+                    conditions[index] = newData;
+                    localStorage.setItem('searchCondition', JSON.stringify(conditions));
+
+                    document.getElementById("btnCancel"+index).classList.remove("d-block")
+                    document.getElementById("btnCancel"+index).classList.add("d-none");
+
+                    document.getElementById("btnEdit"+index).classList.remove("d-block");
+                    document.getElementById("btnEdit"+index).classList.add("d-none");
+
+                    this.getLocalStorage();
+                }
+
             },
 
             handleCancel: function(index){
-                let local = localStorage.getItem('searchCondition');
-                conditions = JSON.parse(local) || [];
                 let currentTextArea = document.getElementById("comment"+index);
                 let currentBtnCancel = document.getElementById("btnCancel"+index);
-                currentTextArea.value = conditions[index].comment == undefined ? null : conditions[index].comment;
+
+
+                if(this.islogin){
+                    const storage = this.items.search_condition.find((item) => item.id === index);
+                    currentTextArea.value = storage.comment == undefined ? null : storage.comment;
+                } else {
+                    currentTextArea.value = this.items.search_condition[index].comment == undefined ? null : this.items.search_condition[index].comment;
+                }
+
                 currentBtnCancel.classList.remove("d-block");
                 currentBtnCancel.classList.add("d-none");
                 document.getElementById("btnEdit"+index).classList.remove("d-block");
@@ -285,7 +335,7 @@
                 this.items.search_condition = localArr;
             },
             getSearchPreferenceMember: function(){
-                axios.get(this.items.root_url + '/api/v1/search/getSearchConditionMember/' + this.islogin)
+                axios.get(this.root_url + '/api/v1/search/getSearchConditionMember/' + parseInt(this.islogin))
                 .then((res) => {
                     this.items.search_condition = res.data;
                 }).catch((err) => {
@@ -293,21 +343,28 @@
                 });
             },
             deleteSearchCondition: function(index){
-                console.log(index);
-                var conditions = [];
-                let local = localStorage.getItem('searchCondition');
-                conditions = JSON.parse(local) || [];
-                console.log(conditions);
-                if(conditions.length > 0){
-                    conditions.splice(index, 1);
-                    localStorage.setItem('searchCondition', JSON.stringify(conditions));
-                    let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
-                    this.$toasted.show( msg, {
-                        type: 'success'
-                    });
-                }
-                this.getLocalStorage();
+                // handle for logged in member
+                if(this.islogin){
+                    this.deleteSearchConditionMember(index);
+                // handle for non logged in member
+                } else {
 
+                    var conditions = [];
+                    let local = localStorage.getItem('searchCondition');
+                    conditions = JSON.parse(local) || [];
+
+                    if(conditions.length > 0){
+                        conditions.splice(index, 1);
+                        localStorage.setItem('searchCondition', JSON.stringify(conditions));
+                        let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
+                        this.$toasted.show( msg, {
+                            type: 'success'
+                        });
+                    }
+                    this.getLocalStorage();
+                }
+
+                // handle for search condition all deleted
                 if(this.items.search_condition.length === 0){
                     let close = document.getElementById("btnCloseModal");
                     let open = document.getElementById("btnOpenModal");
@@ -319,41 +376,41 @@
                     }, 500);
                 }
 
-                this.getLocalStorage();
+                if(this.islogin){
+                    this.getSearchPreferenceMember();
+                } else {
+                    this.getLocalStorage();
+                }
             },
             titleEditOrSave: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
                 if(currentTextArea.hasAttribute("readonly")){
                     document.getElementById("btnEdit"+index).setAttribute("value", "編集"); //edit
-                    // return true;
+
                 } else {
                     document.getElementById("btnEdit"+index).setAttribute("value", "保存"); //save
-                    // return false;
+
                 }
             },
             showCancelButton: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
                 if( currentTextArea.hasAttribute("readonly") ){
                     document.getElementById("btnCancel"+index).classList.add("d-none");
-                    // return false;
+
                 } else {
                     document.getElementById("btnCancel"+index).classList.add("d-block");
-                    // return true;
+
                 }
             },
 
             handleTextArea: function(index){
                 let currentTextArea = document.getElementById("comment"+index);
-                let local = localStorage.getItem('searchCondition');
-                conditions = JSON.parse(local) || [];
-                if(currentTextArea.value != conditions[index]){
-                    // document.getElementById("btnEdit"+index).setAttribute("value", "保存");
+                if(currentTextArea.value){
                     document.getElementById("btnEdit"+index).classList.remove("d-none");
                     document.getElementById("btnEdit"+index).classList.add("d-block");
                     document.getElementById("btnCancel"+index).classList.remove("d-none");
                     document.getElementById("btnCancel"+index).classList.add("d-block");
                 } else {
-                    // document.getElementById("btnEdit"+index).setAttribute("value", "保存");
                     document.getElementById("btnEdit"+index).classList.remove("d-block");
                     document.getElementById("btnEdit"+index).classList.add("d-none");
                     document.getElementById("btnCancel"+index).classList.remove("d-block");
@@ -364,14 +421,28 @@
                 let newDate = new Date(date);
                 return newDate.toISOString().split('T')[0]
             },
-            storeComment: function(id){
+            storeCommentMember: function(id){
                 const getCommentValue = document.getElementById("comment"+id).value;
                 axios.post(this.api.store_comment, {
-                    id: id;
+                    comment: getCommentValue,
+                    id: id,
                 }).then((res) => {
-                    console.log(res);
-                    this.items.comment = '';
-                    this.getLocalStorage();
+                    // console.log(res);
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
+            deleteSearchConditionMember: function(id){
+                axios.post(this.api.delete_search_condition, {
+                    id: id
+                }).then((res) => {
+                    // console.log(res);
+                    let msg = '@lang('label.SUCCESS_DELETE_MESSAGE')';
+                    this.$toasted.show( msg, {
+                        type: 'success'
+                    });
+                    this.getSearchPreferenceMember();
                 }).catch((err) => {
                     console.log(err);
                 });
