@@ -1,5 +1,5 @@
 <script type="text/x-template" id="property-list-tpl">
-    <div class="card card-secondary">
+    <div class="card card-secondary text-md">
         <a :href="routeToPropertyDetail">
             <div class="card-header">
                 <div class="d-flex align-items-center">

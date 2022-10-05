@@ -6,7 +6,7 @@
     <hr class="my-0 mx-2">
 
     <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
-        <div class="card-body">
+        <div class="card-body text-sm">
             <div class="row mb-4">
                 @foreach ($station_lines as $station)
                     <div class="col-lg-2 col-6">

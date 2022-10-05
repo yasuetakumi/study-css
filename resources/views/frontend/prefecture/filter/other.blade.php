@@ -5,7 +5,7 @@
         </h3>
     </div>
 
-    <div class="card-body clearfix">
+    <div class="card-body clearfix text-sm">
         <div class="row">
 
             <!-- Start - Surface Area Filter -->
