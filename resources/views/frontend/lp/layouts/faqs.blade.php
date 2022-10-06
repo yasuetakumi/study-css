@@ -107,11 +107,11 @@
             </div>
         </header>
 
-        <div class="breadcrumb-wrap breadcrumb-mt">
+        <div class="breadcrumb-wrap is-breadcrumb mt-5 mb-2">
             <div class="container">
                 <div class="row interset">
                     <div class="col-12">
-                        <nav>
+                        <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item active" aria-current="page">
                                     <a href="">トップページ</a>

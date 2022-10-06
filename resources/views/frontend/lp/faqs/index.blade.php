@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- FAQs -->
-<div class="banner-wrapper mb-5 faq-b">
+<div class="banner-wrapper mb-5">
     <div class="section-wrapper faq-content">
         <div class="container">
             <div class="row justify-content-center">
@@ -20,15 +20,15 @@
                         </div>
 
 
-                        <div class="col-10 col-md-12 col- page-body pb-32 faq-content">
+                        <div class="col-10 col-md-12 page-body pb-32">
                             <div class="row">
                                 {{-- 会員登録について --}}
-                                <div class="col-12 col-sm-">
-                                    <h3 class="third-title faq-category text-left">
+                                <div class="pl-15">
+                                    <h3 class="third-title faq-category">
                                         会員登録について
                                     </h3>
                                 </div>
-                                <div class="col-12 col-sm-">
+                                <div class="col-12">
                                     <div class="cursor-pointer" x-data="{faq1: false}">
                                         {{-- faq 1 --}}
                                         <a class="d-block faq-wrapper mb-3" x-bind:class="faq1 ? 'text-white bg-green-primary' : '' "
@@ -119,12 +119,12 @@
                                 </div>
 
                                 {{-- ログインについて --}}
-                                <div class="col-12 col-sm-">
-                                    <h3 class="third-title faq-category text-left">
+                                <div class="pl-15">
+                                    <h3 class="third-title faq-category">
                                         ログインについて
                                     </h3>
                                 </div>
-                                <div class="col-12 col-sm-">
+                                <div class="col-12">
                                     <div class="cursor-pointer" x-data="{faq5: false}">
                                         {{-- faq 5 --}}
                                         <a class="d-block faq-wrapper mb-3" x-bind:class="faq5 ? 'text-white bg-green-primary' : '' "
@@ -200,12 +200,12 @@
                                 </div>
 
                                 {{-- 登録情報の変更について --}}
-                                <div class="col-12 col-sm-">
-                                    <h3 class="third-title faq-category text-left">
+                                <div class="pl-15">
+                                    <h3 class="third-title faq-category">
                                         登録情報の変更について
                                     </h3>
                                 </div>
-                                <div class="col-12 col-sm-">
+                                <div class="col-12">
                                     <div class="cursor-pointer" x-data="{faq8: false}">
                                         {{-- faq 7 --}}
                                         <a class="d-block faq-wrapper mb-3" x-bind:class="faq8 ? 'text-white bg-green-primary' : '' "
@@ -309,12 +309,12 @@
                                 </div>
 
                                 {{-- 退会について --}}
-                                <div class="col-12 col-sm-">
-                                    <h3 class="third-title faq-category text-left">
+                                <div class="pl-15">
+                                    <h3 class="third-title faq-category">
                                         退会について
                                     </h3>
                                 </div>
-                                <div class="col-12 col-sm-">
+                                <div class="col-12">
                                     <div class="cursor-pointer" x-data="{faq13: false}">
                                         {{-- faq 13 --}}
                                         <a class="d-block faq-wrapper mb-3" x-bind:class="faq13 ? 'text-white bg-green-primary' : '' "
@@ -358,12 +358,12 @@
                                 </div>
 
                                 {{-- その他 --}}
-                                <div class="col-12 col-sm-">
-                                    <h3 class="third-title faq-category text-left">
+                                <div class="pl-15">
+                                    <h3 class="third-title faq-category">
                                         その他
                                     </h3>
                                 </div>
-                                <div class="col-12 col-sm-">
+                                <div class="col-12">
                                     <div class="cursor-pointer" x-data="{faq15: false}">
                                         {{-- faq 15 --}}
                                         <a class="d-block faq-wrapper mb-3" x-bind:class="faq15 ? 'text-white bg-green-primary' : '' "
@@ -464,8 +464,8 @@
 
 
                         <div class="row justify-content-center wrapper-btn-contact">
-                            <div class="col-12 col-sm- px-lg-0">
-                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill faq-home-btn border-0">
+                            <div class="col-12 px-lg-0">
+                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-8 border-0">
                                     <span>ホームへ戻る</span>
                                 </a>
                             </div>
