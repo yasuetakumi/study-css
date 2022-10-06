@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use App\Models\NumberOfFloorsAboveGround;
 
 class NumberOfFloorAbovegroundSeeder extends Seeder
@@ -13,7 +14,10 @@ class NumberOfFloorAbovegroundSeeder extends Seeder
      */
     public function run()
     {
-        NumberOfFloorsAboveGround::query()->delete();
+        Schema::disableForeignKeyConstraints();
+        NumberOfFloorsAboveGround::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $data = new NumberOfFloorsAboveGround();
         $data->insert([
             [
@@ -24,7 +28,7 @@ class NumberOfFloorAbovegroundSeeder extends Seeder
             [
                 'value'         => 2,
                 'label_en'       => '2nd floor',
-                'label_jp'      => '2階 ',
+                'label_jp'      => '2階',
             ],
             [
                 'value'         => 3,
@@ -34,17 +38,17 @@ class NumberOfFloorAbovegroundSeeder extends Seeder
             [
                 'value'         => 4,
                 'label_en'       => '4th floor',
-                'label_jp'      => '4階 ',
+                'label_jp'      => '4階',
             ],
             [
                 'value'         => 5,
                 'label_en'       => '5th floor',
-                'label_jp'      => '5階 ',
+                'label_jp'      => '5階',
             ],
             [
                 'value'         => 6,
                 'label_en'       => '6th floor',
-                'label_jp'      => '5階 ',
+                'label_jp'      => '6階',
             ],
             [
                 'value'         => 7,

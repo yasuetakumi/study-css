@@ -34,7 +34,8 @@ if (Config::get('app.env') === 'production') {
     Route::get('/partner', 'Frontend\LpController@partnerPage')->name('lp.partner');
     Route::post('/partner', 'Frontend\LpController@contact')->name('lp.contact');
     Route::get('/partner/thanks','Frontend\LpController@thanksPage')->name('lp.thanks');
-    Route::get('/faqs','Frontend\LpController@faqs')->name('lp.faqs');
+    // Uncomment if the page is released to live server
+    // Route::get('/faqs','Frontend\LpController@faqs')->name('lp.faqs');
 
     Route::get('/{any}',function(){
         return redirect()->route('lp.index');
@@ -279,6 +280,11 @@ if (Config::get('app.env') === 'production') {
     Route::post('/partner', 'Frontend\LpController@contact')->name('lp.contact');
     Route::get('/partner/thanks','Frontend\LpController@thanksPage')->name('lp.thanks');
     Route::get('/faqs', 'Frontend\LpController@faqs')->name('lp.faqs');
+
+    // Example
+    Route::get('example', function() {
+        return view('frontend.lp.example.index');
+    });
 }
 
 

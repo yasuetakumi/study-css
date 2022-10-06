@@ -15,7 +15,7 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 text-md">
         {{-- search history --}}
         @include('frontend.property.component.search-history')
 
@@ -266,35 +266,44 @@
                         Vue.delete(searchCondition, '飲食店の種類');
                     }
 
-                    if(this.containsKey(searchCondition, '面積下限')){
-                        Vue.set(searchCondition, '面積下限', searchCondition.surfaceMin);
-                        Vue.delete(searchCondition, 'surfaceMin');
+                    if(this.containsKey(searchCondition, 'customer_email')){
+                        Vue.delete(searchCondition, 'customer_email');
                     }
 
-                    if(this.containsKey(searchCondition, '面積上限')){
-                        Vue.set(searchCondition, '面積上限', searchCondition.surfaceMax);
-                        Vue.delete(searchCondition, 'surfaceMax');
+                    if(this.containsKey(searchCondition, 'member_id')){
+                        Vue.delete(searchCondition, 'member_id');
                     }
 
-                    if(this.containsKey(searchCondition, '賃料下限')){
-                        Vue.set(searchCondition, '賃料下限', searchCondition.rentAmountMin);
-                        Vue.delete(searchCondition, 'rentAmountMin');
-                    }
 
-                    if(this.containsKey(searchCondition, '賃料上限')){
-                        Vue.set(searchCondition, '賃料上限', searchCondition.rentAmountMax);
-                        Vue.delete(searchCondition, 'rentAmountMax');
-                    }
+                    // if(this.containsKey(searchCondition, '面積下限')){
+                    //     Vue.set(searchCondition, '面積下限', searchCondition.surfaceMin);
+                    //     Vue.delete(searchCondition, 'surfaceMin');
+                    // }
 
-                    if(this.containsKey(searchCondition, '譲渡額下限')){
-                        Vue.set(searchCondition, '譲渡額下限', searchCondition.transferPriceMin);
-                        Vue.delete(searchCondition, 'transferPriceMin');
-                    }
+                    // if(this.containsKey(searchCondition, '面積上限')){
+                    //     Vue.set(searchCondition, '面積上限', searchCondition.surfaceMax);
+                    //     Vue.delete(searchCondition, 'surfaceMax');
+                    // }
 
-                    if(this.containsKey(searchCondition, '譲渡額上限')){
-                        Vue.set(searchCondition, '譲渡額上限', searchCondition.transferPriceMax);
-                        Vue.delete(searchCondition, 'transferPriceMax');
-                    }
+                    // if(this.containsKey(searchCondition, '賃料下限')){
+                    //     Vue.set(searchCondition, '賃料下限', searchCondition.rentAmountMin);
+                    //     Vue.delete(searchCondition, 'rentAmountMin');
+                    // }
+
+                    // if(this.containsKey(searchCondition, '賃料上限')){
+                    //     Vue.set(searchCondition, '賃料上限', searchCondition.rentAmountMax);
+                    //     Vue.delete(searchCondition, 'rentAmountMax');
+                    // }
+
+                    // if(this.containsKey(searchCondition, '譲渡額下限')){
+                    //     Vue.set(searchCondition, '譲渡額下限', searchCondition.transferPriceMin);
+                    //     Vue.delete(searchCondition, 'transferPriceMin');
+                    // }
+
+                    // if(this.containsKey(searchCondition, '譲渡額上限')){
+                    //     Vue.set(searchCondition, '譲渡額上限', searchCondition.transferPriceMax);
+                    //     Vue.delete(searchCondition, 'transferPriceMax');
+                    // }
                 }
 
                 return searchCondition;
@@ -642,6 +651,23 @@
             // -----------------------------------------------------------------
             registerSearchCondition: function(searchCondition, byPassCondition = false) {
                 if (Object.keys(this.searchCondition).length || byPassCondition) {
+                    // // if login store to db
+                    // if(this.items.member_id){
+                    //     axios.post(root_url + '/search-preference', searchCondition)
+                    //     .then((result) => {
+                    //         // Show success alert
+                    //         let msg = '@lang('label.SUCCESS_CREATE_MESSAGE')';
+                    //         this.$toasted.show( msg, {
+                    //             type: 'success'
+                    //         });
+                    //     }).catch((err) => {
+                    //         console.log(err);
+                    //     })
+                    // // else, store to localstorage
+                    // } else {
+
+                    // }
+
                     // Get local storage
                     let registeredSearchCondition = localStorage.getItem('searchCondition');
                     registeredSearchCondition = _.takeRight(JSON.parse(registeredSearchCondition), 9);

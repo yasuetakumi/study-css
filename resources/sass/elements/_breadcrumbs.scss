@@ -5,14 +5,11 @@
 // Breadcrumbs
 // --------------------------------------------------------------------------
 .breadcrumb-wrap{
-    position: relative;
-    margin-bottom: 6rem;
-    @include breakpoint-down(sm){
-        margin-bottom: 2rem;
-    }
+    margin-top: 4.5rem;
 
     .breadcrumb{
-        background: #EFFEFF;
+        background: transparent;
+        padding: 1rem 0 0;
         border-radius: 0;
         margin-bottom: 0;
 
@@ -45,7 +42,7 @@
         }
 
         li.active{
-            color: #3098A8;
+            color: $primary-color;
         }
     }
 }

@@ -12,4 +12,14 @@ class CustomerSearchPreferenceCuisine extends Model
         'customer_search_preference_id',
         'cuisine_id'
     ];
+
+    public function customer_search_preference()
+    {
+        return $this->belongsTo(CustomerSearchPreference::class, 'customer_search_preference_id');
+    }
+
+    public function cuisine()
+    {
+        return $this->belongsTo(Cuisine::class, 'cuisine_id');
+    }
 }

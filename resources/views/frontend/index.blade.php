@@ -15,7 +15,7 @@
                 </div>
                 <hr class="my-0 mx-2">
                 <!-- /.card-header -->
-                <div class="card-body">
+                <div class="card-body text-md">
                     <ul class="list-multi-columns">
                         @foreach ($prefectures as $pr)
                             <li>
