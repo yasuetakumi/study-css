@@ -245,10 +245,12 @@
                     {"orderable": false, "targets": 'no-sort'},
                 ],
                 "columns": column,
-                @if(App::isLocale('ja'))
+                @if(App::isLocale('en'))
+
+                @else
                 "language": {
                     "url": "{{asset('js/backend/adminlte/Japanese.json')}}"
-                }
+                },
                 @endif
             });
             // for debug.
