@@ -10,8 +10,6 @@
 .footer{
     position: relative;
     z-index: 9;
-    background: #000;
-    height: 3.5rem;
 
     .label-copyright{
         padding: 1rem 0;
@@ -23,4 +21,52 @@
     position: sticky;
     width: 100%;
     text-align: center;
+}
+
+
+
+
+.footer-app {
+    position: relative;
+    background: $green-color-1;
+    padding: 1.5rem 0 2rem;
+
+    .content {
+        .img-logo {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+
+            margin-right: calc(1.5rem + 3.75rem);
+        }
+    }
+
+    .to-top{
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        @include transform(translateY(-50%));
+
+        .btn-to-top{
+            position: relative;
+            background: $black-color;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 3.75rem;
+            height: 3.75rem;
+            line-height: 1;
+            @include box-shadow(0rem 3rem 6rem #00000029);
+            border-radius: 50%;
+            color: $white-color;
+
+            &:hover, &:focus {
+                color: $black-color;
+            }
+        }
+    }
 }

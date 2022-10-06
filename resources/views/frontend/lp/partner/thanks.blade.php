@@ -1,4 +1,4 @@
-@extends('frontend.lp.layouts.app')
+@extends('frontend.lp.layouts.app-partner')
 @section('title', 'お問い合わせ受付完了 | たべるば')
 
 @section('description', 'たべるばのお問い合わせ完了ページです。')

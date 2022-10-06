@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K7994SH');</script>
-    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -63,33 +56,92 @@
 
 </head>
 <body class="d-flex flex-column min-100vh">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7994SH"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <!-- Header -->
+    {{-- Header --}}
     <div x-data="{ scrollAtTop: true }">
-        <header class="navbar navbar-expand-lg navbar-top header-border-top fixed-top" id="navbarMenu"
+        <header class="header-app"  id="navbarMenu"
+            :class="{ 'bg-nav-scroll': !scrollAtTop }"
+            @scroll.window="scrollAtTop = (window.pageYOffset > 50) ? false : true">
+            <div class="container px-xl-0">
+                <div class="content">
+                    <div class="content-logo">
+                        <img class="img-logo" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
+                    </div>
+
+                    <div class="content-menu">
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <a href="#">閲覧履歴</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">お気に入り</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">物件掲載希望の方はこちら</a>
+                            </li>
+                        </ul>
+
+                        <ul class="menu-list-sp">
+                            <li class="menu-item">
+                                <a href="#">
+                                    <img src="{{asset('assets/img/menu/heart-icon.png')}}" alt="heart icon" class="icon">
+                                    <span class="text">お気に入り</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">
+                                    <img src="{{asset('assets/img/menu/history-icon.png')}}" alt="heart icon" class="icon">
+                                    <span class="text">閲覧履歴</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0)" id="openMenu">
+                                    <div class="toggle-icon">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <span class="text">メニュー</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="button-wrapper">
+                            <a class="btn btn-secondary revert" href="{{route('lp.partner') . '#contact'}}">お問い合わせ</a>
+                            <a class="btn btn-secondary revert d-flex align-items-center icon-phone" href="tel:05058072335">
+                                050-5807-2335
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        {{-- <header class="header navbar navbar-expand-lg navbar-top header-border-top fixed-top" id="navbarMenu"
                 :class="{ 'bg-nav-scroll': !scrollAtTop }" @scroll.window="scrollAtTop = (window.pageYOffset > 50) ? false : true">
-            <div class="container-fluid mx-lg-64 mx-md-4">
-                <div class="row w-100 justify-content-between align-items-center mx-lg-32">
+            <div class="container px-xl-0">
+                <div class="w-100 d-flex justify-content-between align-items-center">
                     <div>
                         <a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.partner')}}">
                             <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
                         </a>
                     </div>
-                    <div class="d-lg-none d-flex menu-btn-sp">
-                        <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 mr-2 fs-12" href="#contact">お問い合わせ</a>
-                        <a class="btn btn-secondary revert d-flex align-items-center h-auto py-1 px-2 fs-12 icon-phone" href="tel:05058072335">
-                            050-5807-2335
-                        </a>
-                    </div>
-                    <div class="collapse navbar-collapse pr-3" id="navbarNav0" >
-                        <ul class="navbar-nav ml-auto align-items-center">
-                            <li class="nav-item">
+                    <div class="d-none d-lg-flex justify-content-between align-items-center" id="navbarNav0">
+                        <ul class="navbar-menu">
+                            <li class="menu-item">
+                                <a href="#">閲覧履歴</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">お気に入り</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">物件掲載希望の方はこちら</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item mr-3">
                                 <a class="btn btn-secondary revert" href="{{route('lp.partner') . '#contact'}}">お問い合わせ</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mr-0">
                                 <a class="btn btn-secondary revert d-flex align-items-center icon-phone" href="tel:05058072335">
                                     050-5807-2335
                                 </a>
@@ -98,22 +150,61 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> --}}
     </div>
+    {{-- End Header --}}
 
-    <!-- End -->
-    <!-- header -->
+    {{-- Content --}}
     @yield('content')
-    <!-- vue init -->
-    <footer class="bg-black p-3 text-center w-100">
-       <div class="text-white fs-14">&copy; 2022 Taberuba inc.</div>
+    {{-- End Content --}}
+
+    {{-- Footer --}}
+    <footer class="footer-app">
+        <div class="container px-xl-0">
+            <div class="content">
+                <div class="row mx-xl-0">
+                    <div class="col-12 px-xl-0">
+                        <img src="{{ asset('assets/img/logo.png') }}" alt="" class="img-logo">
+
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <a href="#">運営会社</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">よくあるご質問</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">プライバシーポリシー</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">利用規約</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">お問い合わせ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="to-top">
+            <a class="btn btn-to-top" href="#top">
+                <i class="fa fa-angle-up">
+                </i>
+            </a>
+        </div>
     </footer>
+    {{-- End Footer --}}
+
+    <!-- vue init -->
     <script src="{{asset('js/manifest.js')}}"></script>
     <script src="{{asset('js/vendor.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
+
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    {{-- <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script> --}}
+
     <!-- Bootstrap 4 -->
     <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script>
@@ -134,6 +225,13 @@
                 if(theEvent.preventDefault) theEvent.preventDefault();
             }
         }
+
+        $('#openMenu').click(function () {
+            let $this = $(this);
+            let toggler = $this.find('.toggle-icon');
+
+            toggler.toggleClass('open');
+        });
     </script>
     @stack('scripts')
 </body>
