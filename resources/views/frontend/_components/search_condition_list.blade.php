@@ -51,20 +51,20 @@
                                         <p class="mb-0">検索条件:
                                             <span><span style="color: rgb(243, 78, 5)">[市区町村] </span>@{{sc.市区町村 ? sc.市区町村 : ' ー '}} </span>
                                             <!-- If min and max surface-->
-                                            <span v-if="sc.surfaceMin && sc.surfaceMax"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{sc.surfaceMin + '〜' + sc.surfaceMax}}</span>
+                                            <span v-if="sc.面積下限 && sc.面積上限"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{sc.面積下限 + '〜' + sc.面積上限}}</span>
                                             <!-- If min != null and max == null surface-->
-                                            <span v-else-if="sc.surfaceMin && !sc.surfaceMax"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{sc.surfaceMin + '〜' + '上限なし'}}</span>
+                                            <span v-else-if="sc.面積下限 && !sc.面積上限"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{sc.面積下限 + '〜' + '上限なし'}}</span>
                                             <!-- If min == null and max != null surface-->
-                                            <span v-else-if="!sc.surfaceMin && sc.surfaceMax"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{'下限なし' + '〜' + sc.surfaceMax}}</span>
+                                            <span v-else-if="!sc.面積下限 && sc.面積上限"><span style="color: rgb(243, 78, 5)">[面積] </span>@{{'下限なし' + '〜' + sc.面積上限}}</span>
                                             <!-- If min == null and max == null surface-->
                                             <span v-else><span style="color: rgb(243, 78, 5)">[面積] </span> ー </span>
 
                                             <!-- If min and max rent_amount-->
-                                            <span v-if="sc.rentAmountMin && sc.rentAmountMax"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{sc.rentAmountMin + '〜' + sc.rentAmountMax}}</span>
+                                            <span v-if="sc.賃料下限 && sc.賃料上限"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{sc.賃料下限 + '〜' + sc.賃料上限}}</span>
                                             <!-- If min != null and max == null rent_amount-->
-                                            <span v-else-if="sc.rentAmountMin && !sc.rentAmountMax"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{sc.rentAmountMin + '〜' + '上限なし'}}</span>
+                                            <span v-else-if="sc.賃料下限 && !sc.賃料上限"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{sc.賃料下限 + '〜' + '上限なし'}}</span>
                                             <!-- If min == null and max != null rent_amount-->
-                                            <span v-else-if="!sc.rentAmountMin && sc.rentAmountMax"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{'下限なし' + '〜' + sc.rentAmountMax}}</span>
+                                            <span v-else-if="!sc.賃料下限 && sc.賃料上限"><span style="color: rgb(243, 78, 5)">[賃料] </span>@{{'下限なし' + '〜' + sc.賃料上限}}</span>
                                             <!-- If min == null and max == null rent_amount-->
                                             <span v-else><span style="color: rgb(243, 78, 5)">[賃料] </span> ー </span>
 

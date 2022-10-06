@@ -392,7 +392,7 @@
                         return item.id == this.items.station_line_id;
                     }.bind(this));
                 } else {
-                    return nu;
+                    return null;
                 }
             },
             getSelectedStations: function(){

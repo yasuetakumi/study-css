@@ -192,27 +192,29 @@
     <p>検索条件:
         <span><span style="color: rgb(243, 78, 5)">[市区町村] </span>{{ $row->searchCondition['市区町村'] ?? ' ー '}} </span>
 
+        {{-- Surface Area --}}
         <span>
             <span style="color: rgb(243, 78, 5)">[面積] </span>
-            @if ($row->searchCondition['surfaceMin'] && $row->searchCondition['surfaceMax'])
-                {{ $row->searchCondition['surfaceMin'] . '〜' . $row->searchCondition['surfaceMax'] }}
-            @elseif ($row->searchCondition['surfaceMin'] && !$row->searchCondition['surfaceMax'])
-                {{ $row->searchCondition['surfaceMin'] . '〜上限なし' }}
-            @elseif (!$row->searchCondition['surfaceMin'] && $row->searchCondition['surfaceMax'])
-                {{ '下限なし〜' . $row->searchCondition['surfaceMax'] }}
+            @if ($row->searchCondition['面積下限'] && $row->searchCondition['面積上限'])
+                {{ $row->searchCondition['面積下限'] . '〜' . $row->searchCondition['面積上限'] }}
+            @elseif ($row->searchCondition['面積下限'] && !$row->searchCondition['面積上限'])
+                {{ $row->searchCondition['面積下限'] . '〜上限なし' }}
+            @elseif (!$row->searchCondition['面積下限'] && $row->searchCondition['面積上限'])
+                {{ '下限なし〜' . $row->searchCondition['面積上限'] }}
             @else
             ー
             @endif
         </span>
 
+        {{-- Rent Amount --}}
         <span>
             <span style="color: rgb(243, 78, 5)">[賃料] </span>
-            @if ($row->searchCondition['rentAmountMin'] && $row->searchCondition['rentAmountMax'])
-                {{ $row->searchCondition['rentAmountMin'] . '〜' . $row->searchCondition['rentAmountMax'] }}
-            @elseif ($row->searchCondition['rentAmountMin'] && !$row->searchCondition['rentAmountMax'])
-                {{ $row->searchCondition['rentAmountMin'] . '〜上限なし'}}
-            @elseif (!$row->searchCondition['rentAmountMin'] && $row->searchCondition['rentAmountMax'])
-                {{ '下限なし〜' . $row->searchCondition['rentAmountMax'] }}
+            @if ($row->searchCondition['賃料下限'] && $row->searchCondition['賃料上限'])
+                {{ $row->searchCondition['賃料下限'] . '〜' . $row->searchCondition['賃料上限'] }}
+            @elseif ($row->searchCondition['賃料下限'] && !$row->searchCondition['賃料上限'])
+                {{ $row->searchCondition['賃料下限'] . '〜上限なし'}}
+            @elseif (!$row->searchCondition['賃料下限'] && $row->searchCondition['賃料上限'])
+                {{ '下限なし〜' . $row->searchCondition['賃料上限'] }}
             @else
             ー
             @endif

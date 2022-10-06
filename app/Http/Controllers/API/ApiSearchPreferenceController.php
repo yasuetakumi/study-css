@@ -63,31 +63,40 @@ class ApiSearchPreferenceController extends Controller
 
             // surface min
             if($search->surface_min){
-                $object->surfaceMin = $search->surface_min . '坪';
+                $object->面積下限 = $search->surface_min . '坪';
                 $queryString['surface_min'] = $search->surface_min;
-                // $object->面積下限 = $search->surface_min . '坪';
             }
 
             // surface max
             if($search->surface_max){
-                $object->surfaceMax = $search->surface_max . '坪';
+                $object->面積上限 = $search->surface_max . '坪';
                 $queryString['surface_max'] = $search->surface_max;
-                // $object->面積上限 = $search->surface_max;
             }
 
             // rent amount min
             if($search->rent_amount_min){
-                $object->rentAmountMin = toMan( $search->rent_amount_min, true);
-                $queryString['rent_amount_min'] = toMan( $search->rent_amount_min);
-                // $object->賃料下限 = $search->rent_amount_min;
+                $object->賃料下限 = $search->rent_amount_min . '万円';
+                $queryString['rent_amount_min'] = $search->rent_amount_min;
             }
 
             // rent amount max
             if($search->rent_amount_max){
-                $object->rentAmountMax = toMan($search->rent_amount_max, true);
-                $queryString['rent_amount_max'] = toMan($search->rent_amount_max);
-                // $object->賃料上限 = $search->rent_amount_max;
+                $object->賃料上限 = $search->rent_amount_max . '万円';
+                $queryString['rent_amount_max'] = $search->rent_amount_max;
             }
+
+            // transfer price min
+            if($search->transfer_price_min){
+                $object->譲渡額下限 = $search->transfer_price_min;
+                $queryString['transfer_price_min'] = $search->transfer_price_min;
+            }
+
+            // transfer price max
+            if($search->transfer_price_max){
+                $object->譲渡額上限 = $search->transfer_price_max;
+                $queryString['transfer_price_max'] = $search->transfer_price_max;
+            }
+
 
             // walking distance
             if($search->walking_distance){
