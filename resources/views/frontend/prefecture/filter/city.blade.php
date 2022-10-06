@@ -5,7 +5,7 @@
 
     <hr class="my-0 mx-2">
 
-    <div class="card-body">
+    <div class="card-body text-sm">
         <input type="hidden" name="prefecture_id" value="{{ $prefecture->id }}">
         <div class="row">
             <div class="col-12">

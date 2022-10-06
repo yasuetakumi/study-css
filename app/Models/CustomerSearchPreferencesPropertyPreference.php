@@ -18,4 +18,9 @@ class CustomerSearchPreferencesPropertyPreference extends Model
     {
         return $this->belongsTo(CustomerSearchPreference::class, 'customer_search_preference_id');
     }
+
+    public function property_preference()
+    {
+        return $this->belongsTo(PropertyPreference::class, 'property_preference_id');
+    }
 }

@@ -74,6 +74,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PropertyPlanSeeder::class);
 
+        $this->call(MemberSeeder::class);
+
         //Customer Search Preference
         $this->call(CustomerSkeletonPreferenceSeeder::class);
         $this->call(CustomerSearchPreferenceSeeder::class);
@@ -91,7 +93,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PointTypeSeeder::class);
         $this->call(CompanyPointSeeder::class);
 
-        $this->call(MemberSeeder::class);
         $this->call(SocialAccountSeeder::class);
 
         // Member Activity

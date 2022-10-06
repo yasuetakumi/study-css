@@ -10,8 +10,8 @@ if(!function_exists('toTsubo')){
 }
 
 if(!function_exists('fromTsubo')){
-    function fromTsubo($value){
-        $result = round($value * 3.30579);
+    function fromTsubo($value, $precision = 0){
+        $result = round($value * 3.30579, $precision);
         return $result;
     }
 }

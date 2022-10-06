@@ -219,8 +219,8 @@ li.breadcrumb-item{
 }
 .remove-image, .remove-video {
     position: absolute;
-    right: -30px;
-    top: 5px;
+    right: -38px;
+    top: 0px;
 }
 .form-control{
     font-size: 12px;

@@ -50,6 +50,28 @@ class PropertyController extends Controller
             'plan_id_dc_2'  => isset($data['plan_id_dc_2']) ? 'required' : '',
             'plan_id_dc_3'  => isset($data['plan_id_dc_3']) ? 'required' : '',
             'plan_id_dc_4'  => isset($data['plan_id_dc_4']) ? 'required' : '',
+            'thumbnail_image_main' => 'max:1024|mime_types:image/jpeg,image/png',
+            'thumbnail_image_1' => 'max:1024|mime_types:image/jpeg,image/png',
+            'thumbnail_image_2' => 'max:1024|mime_types:image/jpeg,image/png',
+            'thumbnail_image_3' => 'max:1024|mime_types:image/jpeg,image/png',
+            'thumbnail_image_4' => 'max:1024|mime_types:image/jpeg,image/png',
+            'thumbnail_image_5' => 'max:1024|mime_types:image/jpeg,image/png',
+            'thumbnail_image_6' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_1' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_2' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_3' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_4' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_5' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_6' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_7' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_8' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_9' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_10' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_360_1' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_360_2' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_360_3' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_360_4' => 'max:1024|mime_types:image/jpeg,image/png',
+            'image_360_5' => 'max:1024|mime_types:image/jpeg,image/png',
 
         ], [
             'location.regex'        => 'Only Japanase Characther Allowed!',
@@ -57,7 +79,29 @@ class PropertyController extends Controller
             'plan_id_dc_1.required' => 'Plan for Design Category 居酒屋 is Required',
             'plan_id_dc_2.required' => 'Plan for Design Category カフェ is Required',
             'plan_id_dc_3.required' => 'Plan for Design Category バー is Required',
-            'plan_id_dc_4.required' => 'Plan for Design Category ラーメン is Required'
+            'plan_id_dc_4.required' => 'Plan for Design Category ラーメン is Required',
+            'thumbnail_image_main.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image_main'), 'max' => 1024]),
+            'thumbnail_image_1.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image') . '1', 'max' => 1024]),
+            'thumbnail_image_2.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image') . '2', 'max' => 1024]),
+            'thumbnail_image_3.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image') . '3', 'max' => 1024]),
+            'thumbnail_image_4.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image') . '4', 'max' => 1024]),
+            'thumbnail_image_5.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image') . '5', 'max' => 1024]),
+            'thumbnail_image_6.max' => __('validation.max.file', ['attribute' => __('label.thumbnail_image') . '6', 'max' => 1024]),
+            'image_1.max' => __('validation.max.file', ['attribute' => __('label.image') . '1', 'max' => 1024]),
+            'image_2.max' => __('validation.max.file', ['attribute' => __('label.image') . '2', 'max' => 1024]),
+            'image_3.max' => __('validation.max.file', ['attribute' => __('label.image') . '3', 'max' => 1024]),
+            'image_4.max' => __('validation.max.file', ['attribute' => __('label.image') . '4', 'max' => 1024]),
+            'image_5.max' => __('validation.max.file', ['attribute' => __('label.image') . '5', 'max' => 1024]),
+            'image_6.max' => __('validation.max.file', ['attribute' => __('label.image') . '6', 'max' => 1024]),
+            'image_7.max' => __('validation.max.file', ['attribute' => __('label.image') . '7', 'max' => 1024]),
+            'image_8.max' => __('validation.max.file', ['attribute' => __('label.image') . '8', 'max' => 1024]),
+            'image_9.max' => __('validation.max.file', ['attribute' => __('label.image') . '9', 'max' => 1024]),
+            'image_10.max' => __('validation.max.file', ['attribute' => __('label.image') . '10', 'max' => 1024]),
+            'image_360_1.max' => __('validation.max.file', ['attribute' => __('label.image_360') . '1', 'max' => 1024]),
+            'image_360_2.max' => __('validation.max.file', ['attribute' => __('label.image_360') . '2', 'max' => 1024]),
+            'image_360_3.max' => __('validation.max.file', ['attribute' => __('label.image_360') . '3', 'max' => 1024]),
+            'image_360_4.max' => __('validation.max.file', ['attribute' => __('label.image_360') . '4', 'max' => 1024]),
+            'image_360_5.max' => __('validation.max.file', ['attribute' => __('label.image_360') . '5', 'max' => 1024]),
         ]);
     }
 
@@ -247,7 +291,7 @@ class PropertyController extends Controller
         $data['image_360_5']     = ImageHelper::upload( $request->file('image_360_5'));
 
         // change to meter and yen before save
-        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['surface_area'] = fromTsubo($data['surface_area'], 2);
         $data['rent_amount'] = fromMan($data['rent_amount']);
         // change to yen before save
         $data['deposit_amount'] = fromMan($data['deposit_amount']);
@@ -416,7 +460,7 @@ class PropertyController extends Controller
         $data['image_360_5']     = ImageHelper::update( $request->file('image_360_5'), $edit->image_360_5, $data['removable_image']['image_360_5']);
 
         // change to meter and yen before update
-        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['surface_area'] = fromTsubo($data['surface_area'], 2);
         $data['rent_amount'] = fromMan($data['rent_amount']);
         // change to yen before save
         $data['deposit_amount'] = fromMan($data['deposit_amount']);
@@ -450,24 +494,25 @@ class PropertyController extends Controller
             $edit->plans()->attach($properties_plans);
         }
 
-        $property_stations_old = array();
-        foreach($edit->property_stations as $ps){
-            array_push($property_stations_old, $ps->station_id);
-        }
-        $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
-        if($shouldUpdatePropertyStations){
-            Log::info("message: should update property stations");
-            $edit->property_stations()->delete();
-            // handle properties stations
-            foreach($properties_stations as $ps){
-                PropertiesStations::create([
-                    'station_id' => $ps,
-                    'property_id' => $edit->id,
-                    'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
-                    'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
-                ]);
-            }
-        }
+        // Still Pending [A13] Add modal to save stations+ distance to the property table. Comment out for now
+        // $property_stations_old = array();
+        // foreach($edit->property_stations as $ps){
+        //     array_push($property_stations_old, $ps->station_id);
+        // }
+        // $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
+        // if($shouldUpdatePropertyStations){
+        //     Log::info("message: should update property stations");
+        //     $edit->property_stations()->delete();
+        //     // handle properties stations
+        //     foreach($properties_stations as $ps){
+        //         PropertiesStations::create([
+        //             'station_id' => $ps,
+        //             'property_id' => $edit->id,
+        //             'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
+        //             'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
+        //         ]);
+        //     }
+        // }
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {

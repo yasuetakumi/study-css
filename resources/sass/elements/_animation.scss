@@ -4,25 +4,3 @@
 // --------------------------------------------------------------------------
 // Animation
 // --------------------------------------------------------------------------
-
-@keyframes sidebarSlidein {
-    0% {
-        opacity: 0;
-        @include transform( translate3d( -50%,0,0 ));
-    }
-    100% {
-        opacity: .9;
-        @include transform( translate3d( 0,0,0 ));
-    }
-}
-
-.sidebar-slidein {
-    @include animation-name( sidebarSlidein );
-}
-
-.animated {
-    @include animation-duration( .3s );
-    @include animation-fill-mode( both );
-    @include animation-timing-function( $easeOutExpo );
-}
-// --------------------------------------------------------------------------

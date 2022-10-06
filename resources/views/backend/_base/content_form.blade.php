@@ -245,7 +245,8 @@
             // this is for remove image 360
             $('body').on('click', '.remove-image-360', function(){
                 var img = $(this).closest('.field-group').find('img');
-                var img360wrapper = $(this).closest('.field-group').find('.panorama-image-edit')
+                var img360wrapper = $(this).closest('.field-group').find('.panorama-image-edit');
+                var img360wrapperCreate = $(this).closest('.field-group').find('.panorama-image');
 
                 $(this).closest('.field-group').find('.input-image-360').val('');
                 $(this).closest('.image-preview').find('.input-remove-image-360').val( 'true' );
@@ -257,6 +258,7 @@
                 img.attr('src', img.data('empty'));
                 // hidden image 360 on delete image
                 img360wrapper.addClass('d-none');
+                img360wrapperCreate.addClass('d-none');
             })
 
             $('body').on('click', '.remove-video', function(){
@@ -360,6 +362,18 @@
                 validateString: function(value, element) {
                     regex = /^\d{1,4}-\d{1,4}-\d{4}$/;
                     return regex.test(value);
+                }
+            });
+
+            // image max size 1024
+            window.Parsley.addValidator("maxsize", {
+                validateString: function(value, element) {
+                    var size = element.files[0].size;
+                    var maxSize = 1024 * 1024 * 2;
+                    return size <= maxSize;
+                },
+                messages: {
+                    en: 'The file size is too large. The maximum file size is 2MB.'
                 }
             });
 
