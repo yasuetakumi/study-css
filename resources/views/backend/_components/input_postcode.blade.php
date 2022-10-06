@@ -2,12 +2,17 @@
 
     @include('backend._components._input_header',['label'=>$label, 'required'=>$required])
 
-    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-        <input data-parsley-required-message="@lang('validation.required', ['attribute' => $label])" type="text" id="input-{{ $name }}" name="{{ $name }}" style="width:50%;display:inline-block;vertical-align: middle;" class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
-        {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }} />
-        <button type="button" id="postcodeserch" class="address-search btn btn-primary postcode-button" style="line-height:normal;" {{isset($isReadOnly) && $isReadOnly == true ? 'disabled' : '' }}>
-            @lang('label.submit')
-        </button>
+    <div class="d-flex flex-grow-1">
+        <div class="col-lg-5 col-8 col-md-5 col-content pr-0">
+            <input data-parsley-required-message="@lang('validation.required', ['attribute' => $label])" type="text" id="input-{{ $name }}" name="{{ $name }}" style="display:inline-block;vertical-align: middle;" class="form-control @error($name) is-invalid @enderror" value="{{ !empty($value) ? $value : old($name) }}" {{ !empty($required) ? 'required' : '' }}
+            {{isset($isReadOnly) && $isReadOnly == true ? 'readonly' : '' }} />
+
+        </div>
+        <div class="col-auto align-self-start">
+            <button type="button" id="postcodeserch" class="address-search btn btn-primary postcode-button" style="line-height:normal;" {{isset($isReadOnly) && $isReadOnly == true ? 'disabled' : '' }}>
+                @lang('label.submit')
+            </button>
+        </div>
     </div>
 </div>
 

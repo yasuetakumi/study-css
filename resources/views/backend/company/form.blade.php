@@ -61,7 +61,7 @@
         @component('backend._components.input_text', ['name' => 'address', 'label' => __('label.address'), 'required' => 1, 'value' => $item->address, 'isReadOnly' => $isApproval]) @endcomponent
         @component('backend._components.input_text', ['name' => 'phone', 'label' => __('label.phone'), 'required' => 1, 'value' => $item->phone, 'isReadOnly' => $isApproval]) @endcomponent
         @if(!Auth::guard('user')->check())
-            @component('backend._components.input_radio', ['name' => 'status', 'options' => [__('label.pending'), __('label.active'), __('label.block')], 'label' => __('label.approval_status'), 'required' => 1, 'value' => $item->status, 'isDisabled' => $isApproval]) @endcomponent
+            @component('backend._components.input_radio', ['name' => 'status', 'options' => $statuses, 'isObject' => true, 'label' => __('label.approval_status'), 'required' => 1, 'value' => $item->status, 'isDisabled' => $isApproval]) @endcomponent
         @endif
         @if($isApproval)
             <div class="card-footer text-center">

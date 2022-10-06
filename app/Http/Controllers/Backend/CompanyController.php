@@ -77,7 +77,20 @@ class CompanyController extends Controller
         $data['page_title'] = __('label.add') . __('label.company');
         $data['form_action']= route('admin.company.store');
         $data['page_type']  = 'create';
-
+        $data['statuses'] = [
+            (object)[
+                'value'=> 'pending',
+                'label'=> __('label.pending'),
+            ],
+            (object)[
+                'value'=> 'active',
+                'label'=> __('label.active'),
+            ],
+            (object)[
+                'value'=> 'block',
+                'label'=> __('label.block'),
+            ],
+        ];
         return view('backend.company.form', $data);
     }
 
@@ -105,7 +118,20 @@ class CompanyController extends Controller
         $data['page_title']     = __('label.edit') . __('label.company');
         $data['form_action']    = route('admin.company.update', $id);
         $data['page_type']      = 'edit';
-
+        $data['statuses'] = [
+            (object)[
+                'value'=> 'pending',
+                'label'=> __('label.pending'),
+            ],
+            (object)[
+                'value'=> 'active',
+                'label'=> __('label.active'),
+            ],
+            (object)[
+                'value'=> 'block',
+                'label'=> __('label.block'),
+            ],
+        ];
         return view('backend.company.form', $data);
     }
 

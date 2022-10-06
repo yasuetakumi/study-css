@@ -10,6 +10,10 @@
                     if(isset($indexStartFrom0) && $indexStartFrom0){
                         $current_value = $loop->index;
                     }
+                    elseif(isset($isObject) && $isObject){
+                        $current_value = $option->value;
+                        $option = $option->label;
+                    }
                 @endphp
                 <div class="icheck-cyan d-inline">
                     <input type="radio" value="{{ $current_value }}" id="input-{{ $name }}-{{ $loop->index }}"
