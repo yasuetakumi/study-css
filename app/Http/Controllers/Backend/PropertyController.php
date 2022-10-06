@@ -291,7 +291,7 @@ class PropertyController extends Controller
         $data['image_360_5']     = ImageHelper::upload( $request->file('image_360_5'));
 
         // change to meter and yen before save
-        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['surface_area'] = fromTsubo($data['surface_area'], 2);
         $data['rent_amount'] = fromMan($data['rent_amount']);
         // change to yen before save
         $data['deposit_amount'] = fromMan($data['deposit_amount']);
@@ -460,7 +460,7 @@ class PropertyController extends Controller
         $data['image_360_5']     = ImageHelper::update( $request->file('image_360_5'), $edit->image_360_5, $data['removable_image']['image_360_5']);
 
         // change to meter and yen before update
-        $data['surface_area'] = fromTsubo($data['surface_area']);
+        $data['surface_area'] = fromTsubo($data['surface_area'], 2);
         $data['rent_amount'] = fromMan($data['rent_amount']);
         // change to yen before save
         $data['deposit_amount'] = fromMan($data['deposit_amount']);
@@ -482,18 +482,19 @@ class PropertyController extends Controller
         if($data['publication_status_id'] != $publicationStatusBeforeUpdate){
             $this->updatePublicationStatus($edit->id);
         }
+
+        $property_plans_old = array();
+        foreach($edit->plans as $plan){
+            array_push($property_plans_old, $plan->pivot->plan_id);
+        }
+
+        $shouldUpdatePlan = ($property_plans_old != $properties_plans); //check if property plan need update
+        if($shouldUpdatePlan){
+            $edit->plans()->detach();
+            $edit->plans()->attach($properties_plans);
+        }
+
         // Still Pending [A13] Add modal to save stations+ distance to the property table. Comment out for now
-        // $property_plans_old = array();
-        // foreach($edit->plans as $plan){
-        //     array_push($property_plans_old, $plan->pivot->plan_id);
-        // }
-
-        // $shouldUpdatePlan = ($property_plans_old != $properties_plans); //check if property plan need update
-        // if($shouldUpdatePlan){
-        //     $edit->plans()->detach();
-        //     $edit->plans()->attach($properties_plans);
-        // }
-
         // $property_stations_old = array();
         // foreach($edit->property_stations as $ps){
         //     array_push($property_stations_old, $ps->station_id);
