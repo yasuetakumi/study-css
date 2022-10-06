@@ -1,4 +1,4 @@
-@extends('frontend.lp.layouts.faqs')
+@extends('frontend.lp.layouts.app')
 
 @section('title', '業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば')
 
@@ -6,7 +6,22 @@
 
 @section('content')
 <!-- FAQs -->
-<div class="banner-wrapper mb-5">
+<div class="breadcrumb-wrap">
+    <div class="container">
+        <div class="row mx-0">
+            <div class="col-12 p-0">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"><a href="#">トップページ</a></li>
+                        <li class="breadcrumb-item"><a href="">よくあるご質問</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="banner-wrapper mb-5 faq-title">
     <div class="section-wrapper faq-content">
         <div class="container">
             <div class="row justify-content-center">
