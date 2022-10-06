@@ -76,7 +76,7 @@ class SendEmailOfNewPublishedProperty extends Command {
             if (count($search->cities)) $request->merge(['city' => $search->cities->pluck('id')->toArray()]);
             if (count($search->stations)) $request->merge(['station' => $search->stations->pluck('id')->toArray()]);
             if ($search->surface_min) $request->merge(['surface_min' => $search->surface_min]);
-            if ($search->surface_mac) $request->merge(['surface_mac' => $search->surface_mac]);
+            if ($search->surface_max) $request->merge(['surface_max' => $search->surface_max]);
             if ($search->rent_amount_min) $request->merge(['rent_amount_min' => $search->rent_amount_min]);
             if ($search->rent_amount_max) $request->merge(['rent_amount_max' => $search->rent_amount_max]);
             if ($search->rent_amount_min) $request->merge(['rent_amount_min' => $search->rent_amount_min]);
@@ -142,7 +142,12 @@ class SendEmailOfNewPublishedProperty extends Command {
             $row = (object) $row;
 
             $requiredSearchConditionKey = [
-                'surfaceMin', 'surfaceMax', '譲渡額下限', '譲渡額上限', 'rentAmountMin', 'rentAmountMax'
+                '面積下限', // surface_min
+                '面積上限', // surface_max
+                '譲渡額下限', // transfer_price_min
+                '譲渡額上限', // transfer_price_max
+                '賃料下限', // rent_amount_min
+                '賃料上限' // rent_amount_max
             ];
 
             // Assign unfound key to null so we dont have to check the if the key exist in blade
@@ -151,6 +156,7 @@ class SendEmailOfNewPublishedProperty extends Command {
                     $row->searchCondition[$key] = null;
                 }
             }
+            // dd($row);
 
             env('BCC_PROPERTY_INQUIRY') ?
                 Mail::to($row->email)->bcc(env('BCC_PROPERTY_INQUIRY'))->send(new NewPropertyPublished($row))

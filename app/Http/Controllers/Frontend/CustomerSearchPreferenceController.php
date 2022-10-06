@@ -93,8 +93,8 @@ class CustomerSearchPreferenceController extends Controller
             $customer->customer_email = $data['customer_email'] ?? null;
             $customer->is_email_enabled = CustomerSearchPreference::ENABLE_EMAIL;
 
-            $customer->surface_min = isset($data['面積下限']) ? (int) toTsubo(filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT)) : null;
-            $customer->surface_max = isset($data['面積上限']) ? (int) toTsubo(filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT)) : null;
+            $customer->surface_min = isset($data['面積下限']) ? (int) filter_var($data['面積下限'], FILTER_SANITIZE_NUMBER_INT) : null;
+            $customer->surface_max = isset($data['面積上限']) ? (int) filter_var($data['面積上限'], FILTER_SANITIZE_NUMBER_INT): null;
             $customer->rent_amount_min = isset($data['賃料下限']) ? (int) filter_var($data['賃料下限'], FILTER_SANITIZE_NUMBER_INT) : null;
             $customer->rent_amount_max = isset($data['賃料上限']) ? (int) filter_var($data['賃料上限'], FILTER_SANITIZE_NUMBER_INT) : null;
             $customer->freetext = isset($data['フリーワード']) ? $data['フリーワード'] : null;

@@ -482,36 +482,36 @@ class PropertyController extends Controller
         if($data['publication_status_id'] != $publicationStatusBeforeUpdate){
             $this->updatePublicationStatus($edit->id);
         }
+        // Still Pending [A13] Add modal to save stations+ distance to the property table. Comment out for now
+        // $property_plans_old = array();
+        // foreach($edit->plans as $plan){
+        //     array_push($property_plans_old, $plan->pivot->plan_id);
+        // }
 
-        $property_plans_old = array();
-        foreach($edit->plans as $plan){
-            array_push($property_plans_old, $plan->pivot->plan_id);
-        }
+        // $shouldUpdatePlan = ($property_plans_old != $properties_plans); //check if property plan need update
+        // if($shouldUpdatePlan){
+        //     $edit->plans()->detach();
+        //     $edit->plans()->attach($properties_plans);
+        // }
 
-        $shouldUpdatePlan = ($property_plans_old != $properties_plans); //check if property plan need update
-        if($shouldUpdatePlan){
-            $edit->plans()->detach();
-            $edit->plans()->attach($properties_plans);
-        }
-
-        $property_stations_old = array();
-        foreach($edit->property_stations as $ps){
-            array_push($property_stations_old, $ps->station_id);
-        }
-        $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
-        if($shouldUpdatePropertyStations){
-            Log::info("message: should update property stations");
-            $edit->property_stations()->delete();
-            // handle properties stations
-            foreach($properties_stations as $ps){
-                PropertiesStations::create([
-                    'station_id' => $ps,
-                    'property_id' => $edit->id,
-                    'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
-                    'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
-                ]);
-            }
-        }
+        // $property_stations_old = array();
+        // foreach($edit->property_stations as $ps){
+        //     array_push($property_stations_old, $ps->station_id);
+        // }
+        // $shouldUpdatePropertyStations = ($property_stations_old != $properties_stations); //check if property station need update
+        // if($shouldUpdatePropertyStations){
+        //     Log::info("message: should update property stations");
+        //     $edit->property_stations()->delete();
+        //     // handle properties stations
+        //     foreach($properties_stations as $ps){
+        //         PropertiesStations::create([
+        //             'station_id' => $ps,
+        //             'property_id' => $edit->id,
+        //             'distance_from_station' => $ps == $closest_station_id && $closest_station_id != null ? $distance_closest_station : null,
+        //             'is_closest' => $ps == $closest_station_id && $closest_station_id != null ? 1 : 0,
+        //         ]);
+        //     }
+        // }
         if(Auth::guard('user')->check()){
             return redirect()->route('company.property.edit', $id)->with('success', __('label.SUCCESS_UPDATE_MESSAGE'));
         } else {
