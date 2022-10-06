@@ -9,8 +9,8 @@
 <div class="banner-wrapper mb-5">
     <div class="section-wrapper faq-content">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
+            <div class="row justify-content-center">
+                <div class="col-10">
                     <div class="row justify-content-center">
                         <div class="col-12 col-lg-10">
                             <div class="page-header">

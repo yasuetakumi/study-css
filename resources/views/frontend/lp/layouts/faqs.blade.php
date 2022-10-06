@@ -69,51 +69,44 @@
     <!-- End Google Tag Manager (noscript) -->
     <!-- Header -->
     <div x-data="{ scrollAtTop: true }">
-        <header class="navbar navbar-expand-lg navbar-top header-border-top fixed-top box-shadow" id="navbarMenu"
+        <header class="header navbar navbar-expand-lg navbar-top header-border-top fixed-top box-shadow" id="navbarMenu"
                 :class="{ 'bg-nav-scroll': !scrollAtTop }" @scroll.window="scrollAtTop = (window.pageYOffset > 50) ? false : true">
             <div class="container-fluid mx-lg-64 mx-md-4">
                 <div class="row w-100 justify-content-between align-items-center mx-lg-32">
-                    <div>
-                        <a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.partner')}}">
-                            <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
-                        </a>
-                    </div>
-                    <div class="col-7 col-sm-4 wrapp-btn-sp">
-                        <div class="menu-bar" class="navbar-toggler">
-                            <div class="navbar-toggler-icon">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
+                        <div>
+                            <a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.partner')}}">
+                                <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
+                            </a>
                         </div>
-                    </div>
-                    <div class="collapse navbar-collapse pr-3 col-md-9" id="navbarNav0" >
-                        <ul class="navbar-nav ml-auto align-items-center" :class="{ 'nav-text': !scrollAtTop }">
-                            <div class="header-mt d-flex">
+
+                        <div class="collapse navbar-collapse pr-3 col-md-9" id="navbarNav0">
+                            <ul class="navbar-nav ml-auto align-items-center" :class="{ 'nav-text': !scrollAtTop }">
+                                <div class="header-mt d-flex fw-bold">
+                                    <li class="nav-item">
+                                        <a href="#">閲覧履歴</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#">お気に入り</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#">物件掲載希望の方はこちら</a>
+                                    </li>
+                                </div>
                                 <li class="nav-item">
-                                    <a href="#">閲覧履歴</a>
+                                    <a class="btn btn-secondary revert btn-top" href="#">会員登録／ログイン</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#">お気に入り</a>
+                                    <a class="btn btn-secondary revert btn-top" href="#">
+                                        お問い合わせはこちら
+                                    </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#">物件掲載希望の方はこちら</a>
-                                </li>
-                            </div>
-                            <li class="nav-item">
-                                <a class="btn btn-secondary revert btn-top" href="#">会員登録／ログイン</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="btn btn-secondary revert btn-top" href="#">
-                                    お問い合わせはこちら
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
 
                 </div>
             </div>
         </header>
+
         <div class="breadcrumb-wrap is-breadcrumb mt-5 mb-2">
             <div class="container">
                 <div class="row interset">
@@ -132,6 +125,46 @@
                 </div>
             </div>
         </div>
+
+        {{-- <header id="header">
+            <div class="nav-sp container">
+                <nav class="row">
+                    <div class="col-5 col-sm-8 col-md-3 text-left col-logo">
+                        <h1><a class="navbar-brand pl-3 pt-0 mr-0" href="{{route('lp.partner')}}">
+                            <img class="img-logo h-auto mt-0 navbar-logo-mobile" src="{{asset('assets/img/logo.png')}}" alt="Taberuba Logo">
+                        </a></h1>
+                    </div>
+                    <div class="col-7 col-sm-4 sp-only wrapp-btn-sp">
+                        <div id="menu-bar" class="navbar-toggler">
+                            <div class="navbar-toggler-icon"><span></span><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <div id="navbarNav0" class="col-md-9">
+                        <ul class="navbar-nav justify-content-end">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="https://tsubotan.net/service">サービスについて</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="https://tsubotan.net/faq">よくあるご質問</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="https://tsubotan.net/gallery">実績</a>
+                            </li>
+
+                            <li class="nav-item d-block d-md-none ">
+                                <a class="nav-link" href="https://tsubotan.net/contractor-application">協力業者募集</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="https://tsubotan.net/smoking-space">喫煙ブース設置</a>
+                            </li>
+                            <li class="nav-item d-block d-md-none ">
+                                <a class="nav-link" href="https://tsubotan.net/utilities">お役立ち情報</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header> --}}
     </div>
 
     <!-- End -->
@@ -147,7 +180,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-md-8 col-footer-menu pc-only">
-                    <ul class="nav nav-footer-left justify-content-start">
+                    <ul class="nav nav-footer-left justify-content-start nav-bold">
                         <li class="nav-item">
                             <a class="nav-link" href="#">運営会社</a>
                         </li>

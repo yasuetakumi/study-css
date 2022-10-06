@@ -26,8 +26,8 @@
 
 .to-top{
     position: absolute;
-    bottom: 10px;
-    right: 20px;
+    bottom: 0.5rem;
+    right: 1rem;
     padding: 3rem 0 1.5rem;
     @include breakpoint-down(sm){
         padding: 3.375rem 0 3.375rem;
@@ -40,10 +40,10 @@
         padding: 1rem;
         background: #000!important;
         position: relative;
-        box-shadow: 0px 3px 6px #00000029;
-        -webkit-box-shadow: 0px 3px 6px #00000029;
-        -moz-box-shadow: 0px 3px 6px #00000029;
-        -mz-transition: 0px 3px 6px #00000029;
-        -o-transition: 0px 3px 6px #00000029;
+        box-shadow: 0rem 3rem 6rem #00000029;
+        -webkit-box-shadow: 0rem 3rem 6rem #00000029;
+        -moz-box-shadow: 0rem 3rem 6rem #00000029;
+        -mz-transition: 0rem 3rem 6rem #00000029;
+        -o-transition: 0rem 3rem 6rem #00000029;
     }
 }

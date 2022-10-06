@@ -422,61 +422,8 @@ header.navbar-top {
 
 .container-fluid {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 15rem;
+    padding-left: 15rem;
     margin-right: auto;
     margin-left: auto;
-}
-
-.mt-5 {
-    margin-top: 5rem !important;
-}
-
-.header-mt {
-    margin-top: 0.3rem !important;
-    font-weight: bold;
-    margin-right: 3rem !important;
-}
-
-.mb-5 {
-    margin-bottom: 5rem !important;
-}
-
-.mb-2 {
-    margin-bottom: 2rem !important;
-}
-
-.btn-top {
-    padding-top: 0.7rem;
-}
-
-@media (max-width: 767.98px) {
-    .is-breadcrumb {
-        display: none;
-    }
-}
-
-.navbar-toggler {
-    padding: 0.25rem 0.75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-}
-.navbar-toggler:focus,
-.navbar-toggler:hover {
-    text-decoration: none;
-}
-.navbar-toggler:not(:disabled):not(.disabled) {
-    cursor: pointer;
-}
-.navbar-toggler-icon {
-    display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: middle;
-    content: "";
-    background: no-repeat center center;
-    background-size: 100% 100%;
 }
