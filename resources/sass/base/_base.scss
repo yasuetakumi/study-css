@@ -143,6 +143,12 @@ body {
     padding: 0 .9375rem;
 }
 
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1080px!important;
+    }
+}
+
 .container-full{
     position: relative;
     width: 100%;

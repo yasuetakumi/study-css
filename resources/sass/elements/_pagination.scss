@@ -2,38 +2,3 @@
 // --------------------------------------------------------------------------
 // Support Utilities Style
 // --------------------------------------------------------------------------
-
-.content{
-    .content-footer{
-        .pagination{
-            align-items: center;
-            justify-content: center;
-            padding-top: 2.5rem;
-            margin: 0;
-            .page-item{
-                .page-link{
-                    color: #646464;
-                    border: 1px solid #CACACA;
-                    padding: 0.5rem 1rem;
-                    text-align: center;
-                }
-                &.active .page-link{
-                    background: transparent;
-                    color:#DE8E17;
-                    border-color: #CACACA;
-                }
-            }
-        }
-        @include breakpoint-down(md){
-            .pagination{
-                @include flex(0);
-                align-items: flex-start;
-                justify-content: flex-start;
-                .page-item{
-                    width: 100%;
-                }
-            }
-        }
-    }
-
-}
