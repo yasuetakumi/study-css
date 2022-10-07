@@ -1,18 +1,34 @@
-@extends('frontend.lp.layouts.faqs')
+@extends('frontend.lp.layouts.app')
 
 @section('title', '業界初のキャッシュバック制度がある【飲食店物件専門】の不動産ポータルサイトです。 | たべるば')
 
 @section('description', '飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。')
 
 @section('content')
+{{-- Breadcrumbs --}}
+<div class="breadcrumb-wrap">
+    <div class="container">
+        <div class="row mx-0">
+            <div class="col-12 p-0">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"><a href="#">トップページ</a></li>
+                        <li class="breadcrumb-item"><a href="">よくあるご質問</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- FAQs -->
-<div class="banner-wrapper mb-5">
+<div class="banner-wrapper mb-3 faq-title">
     <div class="section-wrapper faq-content">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-10">
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-lg-10">
+
+
+                        <div class="col-12 col-lg-7 col-md-10 col-sm-10">
                             <div class="page-header">
                                 <p class="heading-title text-uppercase">faq</p>
                                 <h2 class="sub-title ff-base font-weight-bold">よくあるご質問</h2>
@@ -20,11 +36,11 @@
                         </div>
 
 
-                        <div class="col-10 col-md-12 page-body pb-32">
+                        <div class="col-10 col-lg-9 col-md-12 page-body pb-32">
                             <div class="row">
                                 {{-- 会員登録について --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         会員登録について
                                     </h3>
                                 </div>
@@ -119,8 +135,8 @@
                                 </div>
 
                                 {{-- ログインについて --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         ログインについて
                                     </h3>
                                 </div>
@@ -200,8 +216,8 @@
                                 </div>
 
                                 {{-- 登録情報の変更について --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         登録情報の変更について
                                     </h3>
                                 </div>
@@ -309,8 +325,8 @@
                                 </div>
 
                                 {{-- 退会について --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         退会について
                                     </h3>
                                 </div>
@@ -358,8 +374,8 @@
                                 </div>
 
                                 {{-- その他 --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         その他
                                     </h3>
                                 </div>
@@ -465,13 +481,13 @@
 
                         <div class="row justify-content-center wrapper-btn-contact">
                             <div class="col-12 px-lg-0">
-                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-8 border-0">
+                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill content-btn border-0">
                                     <span>ホームへ戻る</span>
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
