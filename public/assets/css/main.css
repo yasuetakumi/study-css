@@ -8289,7 +8289,7 @@ header.navbar-top .navbar-nav li.active a.nav-link::after {
 }
 
 .privacy-policy-page .content-title {
-  padding: 0rem;
+  padding: 0rem 1rem;
 }
 
 .privacy-policy-page .privacy-policy-color p {

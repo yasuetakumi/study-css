@@ -29,7 +29,7 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="row justify-content-center">
-                        <div class="col-12 col-lg-8 content-title">
+                        <div class="col-12 col-lg-7 col-md-10 col-sm-10 content-title">
                             <div class="page-header">
                                 <p class="heading-title text-uppercase">PRIVACY POLICE</p>
                                 <h2 class="sub-title ff-base font-weight-bold">プライバシーポリシー</h2>
