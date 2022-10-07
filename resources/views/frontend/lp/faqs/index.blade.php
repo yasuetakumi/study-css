@@ -5,7 +5,7 @@
 @section('description', '飲食店専門の新しい不動産ポータルサイト「たべるば」に掲載する飲食店向けの物件を大募集しています。業界初、内装工事成約で紹介料を支給！掲載料無料！成約手数料無料！の不動産ポータルサイトです。')
 
 @section('content')
-<!-- FAQs -->
+{{-- Breadcrumbs --}}
 <div class="breadcrumb-wrap">
     <div class="container">
         <div class="row mx-0">
@@ -21,13 +21,12 @@
     </div>
 </div>
 
-<div class="banner-wrapper mb-5 faq-title">
-    <div class="section-wrapper faq-content">
+<!-- FAQs -->
+
+    <div class="section-wrapper faq-content faq-page">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-10">
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-lg-10">
+                        <div class="col-12 col-lg-7 col-md-10 col-sm-10">
                             <div class="page-header">
                                 <p class="heading-title text-uppercase">faq</p>
                                 <h2 class="sub-title ff-base font-weight-bold">よくあるご質問</h2>
@@ -35,11 +34,11 @@
                         </div>
 
 
-                        <div class="col-10 col-md-12 page-body pb-32">
+                        <div class="col-10 col-lg-9 col-md-12 page-body pb-32">
                             <div class="row">
                                 {{-- 会員登録について --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         会員登録について
                                     </h3>
                                 </div>
@@ -108,7 +107,7 @@
 
                                     <div class="cursor-pointer" x-data="{faq4: false}">
                                         {{-- faq 4 --}}
-                                        <a class="d-block faq-wrapper mb-3" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' "
+                                        <a class="d-block faq-wrapper mb-0" x-bind:class="faq4 ? 'text-white bg-green-primary' : '' "
                                             role="button" x-on:click="faq4 = !faq4" data-toggle="collapse"
                                             href="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
                                             <div class="d-flex align-items-center">
@@ -134,8 +133,8 @@
                                 </div>
 
                                 {{-- ログインについて --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         ログインについて
                                     </h3>
                                 </div>
@@ -185,7 +184,7 @@
                                     </div>
                                     <div class="cursor-pointer" x-data="{faq7: false}">
                                         {{-- faq 7 --}}
-                                        <a class="d-block faq-wrapper mb-3" x-bind:class="faq7 ? 'text-white bg-green-primary' : '' "
+                                        <a class="d-block faq-wrapper mb-0" x-bind:class="faq7 ? 'text-white bg-green-primary' : '' "
                                             role="button" x-on:click="faq7 = !faq7" data-toggle="collapse"
                                             href="#faqCollapse7" aria-expanded="false" aria-controls="faqCollapse7">
                                             <div class="d-flex align-items-center" >
@@ -215,8 +214,8 @@
                                 </div>
 
                                 {{-- 登録情報の変更について --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         登録情報の変更について
                                     </h3>
                                 </div>
@@ -303,7 +302,7 @@
                                     </div>
                                     <div class="cursor-pointer" x-data="{faq12: false}">
                                         {{-- faq 12 --}}
-                                        <a class="d-block faq-wrapper mb-3" x-bind:class="faq12 ? 'text-white bg-green-primary' : '' "
+                                        <a class="d-block faq-wrapper mb-0" x-bind:class="faq12 ? 'text-white bg-green-primary' : '' "
                                             role="button" x-on:click="faq12 = !faq12" data-toggle="collapse"
                                             href="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
                                             <div class="d-flex align-items-center" >
@@ -324,8 +323,8 @@
                                 </div>
 
                                 {{-- 退会について --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         退会について
                                     </h3>
                                 </div>
@@ -352,7 +351,7 @@
                                     </div>
                                     <div class="cursor-pointer" x-data="{faq14: false}">
                                         {{-- faq 14 --}}
-                                        <a class="d-block faq-wrapper mb-3" x-bind:class="faq14 ? 'text-white bg-green-primary' : '' "
+                                        <a class="d-block faq-wrapper mb-0" x-bind:class="faq14 ? 'text-white bg-green-primary' : '' "
                                             role="button" x-on:click="faq14 = !faq14" data-toggle="collapse"
                                             href="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
                                             <div class="d-flex align-items-center" >
@@ -373,8 +372,8 @@
                                 </div>
 
                                 {{-- その他 --}}
-                                <div class="pl-15">
-                                    <h3 class="third-title faq-category">
+                                <div class="col-12">
+                                    <h3 class="third-title faq-category text-left">
                                         その他
                                     </h3>
                                 </div>
@@ -453,7 +452,7 @@
                                     </div>
                                     <div class="cursor-pointer" x-data="{faq17: false}">
                                         {{-- faq 17 --}}
-                                        <a class="d-block faq-wrapper mb-3" x-bind:class="faq17 ? 'text-white bg-green-primary' : '' "
+                                        <a class="d-block faq-wrapper mb-0" x-bind:class="faq17 ? 'text-white bg-green-primary' : '' "
                                             role="button" x-on:click="faq17 = !faq17" data-toggle="collapse"
                                             href="#faqCollapse17" aria-expanded="false" aria-controls="faqCollapse17">
                                             <div class="d-flex align-items-center" >
@@ -480,17 +479,17 @@
 
                         <div class="row justify-content-center wrapper-btn-contact">
                             <div class="col-12 px-lg-0">
-                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill px-8 border-0">
+                                <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill content-btn border-0">
                                     <span>ホームへ戻る</span>
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
-</div>
+
 <!-- End -->
 
 @endsection

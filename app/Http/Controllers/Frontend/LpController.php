@@ -25,6 +25,11 @@ class LpController extends Controller
         return view('frontend.lp.faqs.index');
     }
 
+    public function privacy_policy()
+    {
+        return view('frontend.lp.privacy-policy.index');
+    }
+
     protected function validator( array $data, $type ){
         return Validator::make($data, [
             'category'      => 'required',
