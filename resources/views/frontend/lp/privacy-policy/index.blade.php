@@ -23,7 +23,7 @@
 
 
 {{-- content --}}
-<div id="contact-content" class="banner-wrapper mb-5 privacy-policy-page ">
+<div id="contact-content" class=" mb-5 privacy-policy-page ">
     <div class="section-wrapper faq-content">
         <div class="container">
             <div class="row justify-content-center">
@@ -56,7 +56,7 @@
                                                   <li class="sub-numbering-list delete-marker">
                                                     <b>個人情報の取得</b>
                                                     <p>本サービスにおいて当社が収集する利用者情報は、その収集方法に応じて、以下のようなものとなります。</p>
-                                                    <ol class="sub-list"> {{-- ml-4 --}}
+                                                    <ol class="sub-list">
                                                         <li class="circle-numbering mb-4 delete-marker">
                                                             お客様からご提供いただく情報<br>
                                                             <p class="policy-content-list">本サービスを利用するために、お客様からご提供いただく情報は以下のとおりです。</p>
@@ -203,12 +203,10 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-center wrapper-btn-contact content-btn">
-                            <div class="col-12 px-lg-0">
+                        <div class="row justify-content-center wrapper-btn-contact">
                                 <a href="#" class="btn btn-secondary d-flex align-items-center justify-content-center text-center btn-about rounded-pill content-btn border-0">
                                     <span>ホームへ戻る</span>
                                 </a>
-                            </div>
                         </div>
                     </div>
                 </div>

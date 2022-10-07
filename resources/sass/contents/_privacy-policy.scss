@@ -42,10 +42,10 @@
     }
 
     .content-btn{
-        padding-left: 8rem !important;
-        padding-right: 8rem !important;
-        margin-top: 1rem !important;
-        margin-bottom: 2rem !important;
+        padding-left: 8rem;
+        padding-right: 8rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
     }
 
     .content-list-style{
@@ -88,7 +88,7 @@
     }
 
     ul.ml-70 {
-        margin-left: 50px;
+        margin-left: 3rem;
     }
 
     .content-title{
@@ -99,7 +99,7 @@
         color: #707070 !important;
     }
 
-    .privacy-line-height p li{
+    .privacy-line-height p{
         line-height: 1.8rem !important;
     }
 }
